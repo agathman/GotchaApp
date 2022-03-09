@@ -1,0 +1,31 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+
+    {% block content %}
+        <div class="container">          
+            <div class="p-5 mb-4 rounded-3">
+                <div class="container-fluid py-5 text-center">                           
+                    <p>
+                       <table class="table">
+                        <thead>
+                            <tr>
+                                <th>Test Header
+                                   </th>
+                                   <th>Test Column</th>
+                                   </tr>
+                                   </thead>
+                                   <tbody>
+                                   {% for data in test_table %}
+                                   <tr>
+                                        <td>{{data.Test_Data}}</td>
+                                        <td>{{data.Test_Data2}}</td>
+                                   </tr>                   
+                                        {% endfor%}
+                                    </tbody>
+                                        </table>
+                     
+                    </p>
+                </div>
+            </div>     
+        </div>
+        {% endblock %}
