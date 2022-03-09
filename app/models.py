@@ -1,8 +1,5 @@
 from . import db
 
-from . import db
-
-
 class Appointment(db.Model):
     __tablename__ = 'Appointment'
     Appointment_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
