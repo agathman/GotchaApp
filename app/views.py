@@ -18,3 +18,7 @@ def viewTables():
 @my_view.route('/eventOrder')
 def viewEventOrder():
     return render_template('tables/eventorder.html', test_table = Test_Table.query.all())
+
+@my_view.route('/createDB')
+def createdb():
+    return render_template('/', db.create_all())
