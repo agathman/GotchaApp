@@ -1,0 +1,16 @@
+insatll these in a new terminal
+
+Python -m venv venv
+
+venv\Scrips\Activate
+
+venv\Scripts\activate.ps1
+
+python -m pip install flask
+
+python -m pip install flask-sqlalchemy
+
+python -m pip install pymssql
+
+flask run
+

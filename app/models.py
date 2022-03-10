@@ -99,7 +99,25 @@ class Event_Order(db.Model):
 class Event_Order_Line(db.Model):
     __tablename__ = 'Event_Order_Line'
     Event_Order_Line_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    Vendor_ID = db.Column(db.Integer(10), db.ForeignKey('Vendor.Vendor_ID'), nullable=True)
+    Event_Order_Status_ID = db.Column(db.Integer(10),db.ForeignKey('Event_Category.Event_Category_ID'), nullable=False)
+    Event_Order_Line_Date = db.Column(db.Date(10), nullable=False)
+    Event_Order_ID = db.Column(db.Integer(10), db.ForeignKey('Event_Order.Event_Order_ID'), nullable=True)
+    Product_Services_ID = db.Column(db.Integer(10), db.ForeignKey('Product_Service.Peoduct_Service_ID'), nullable=False)
 
+# Class method to GET from DB
+
+    def __repr__(self, Event_Order_Line_ID, Vendor_ID, Event_Order_Status_ID,
+     Event_Order_Line_Date, Event_Order_ID, Product_Services_ID):
+# Defines representation for object
+
+            self.Event_Order_Line_ID = Event_Order_Line_ID
+            self.Vendor_ID = Vendor_ID
+            self.Event_Order_Status_ID = Event_Order_Status_ID
+            self.Event_Order_Line_Date = Event_Order_Line_Date
+            self.Event_Order_ID = Event_Order_ID
+            self.Product_Services_ID = Product_Services_ID
+            
 class Event_Status(db.Model):
     __tablename__ = 'Event_Status'
     Event_Status_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
