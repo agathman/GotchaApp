@@ -1,5 +1,5 @@
 from flask import Blueprint, render_template
-from .models import Test_Table
+
 from . import db
 
 
@@ -13,12 +13,12 @@ def index():
 
 @my_view.route('/viewTables')
 def viewTables():
-    return render_template('viewtables.html', test_table = Test_Table.query.all())
+    return render_template('viewtables.html')
 
 @my_view.route('/eventOrder')
 def viewEventOrder():
-    return render_template('tables/eventorder.html', test_table = Test_Table.query.all())
+    return render_template('tables/eventorder.html')
 
 @my_view.route('/createDB')
 def createdb():
-    return render_template('/', db.create_all())
+    return render_template('index.html', db.create_all())
