@@ -3,8 +3,8 @@ from . import db
 class Appointment(db.Model):
     __tablename__ = 'Appointment'
     Appointment_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    Customer_ID = db.Column(db.Integer, db.ForeignKey('Customer.Customer_ID)'))
-    Event_Order_ID = db.Column(db.Integer, db.ForeignKey('Event_Order.Event_Order_ID)'))
+    Customer_ID = db.Column(db.Integer, db.ForeignKey('Customer.Customer_ID'), nullable=False)
+    Event_Order_ID = db.Column(db.Integer, db.ForeignKey('Event_Order.Event_Order_ID'), nullable=False)
 
     def __repr__(self, Appointment_ID, Customer_ID, Event_Order_ID):
         self.Appointment_ID = Appointment_ID
@@ -12,7 +12,7 @@ class Appointment(db.Model):
         self.Event_Order_ID = Event_Order_ID
 
 class Customer(db.Model):
-    __tablename__ = ''
+    __tablename__ = 'Customer'
     Customer_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
     Contact_Date = db.Column(db.Date)
     First_Name = db.Column(db.String)
@@ -26,8 +26,8 @@ class Customer(db.Model):
 
 
 class Employee(db.Model):
-    __tablename__ = ''
-    Employee_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    __tablename__ = 'Employee'
+    Emp_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
     Emp_First_Name = db.Column(db.String)
     Emp_Last_Name = db.Column(db.String)
     Emp_Mailing_City = db.Column(db.String)
@@ -38,64 +38,39 @@ class Employee(db.Model):
     Emp_Position = db.Column(db.String)
 
 class Employee_Assignment(db.Model):
-    __tablename__ = ''
+    __tablename__ = 'Employee_Assignment'
     Employee_Assignment_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
     Assignment_Start_Date = db.Column(db.Date)
     Employee_ID = db.Column(db.Integer, db.ForeignKey('Employee.Emp_ID'))
 
 class Event_Category(db.Model):
-    __tablename__ = ''
-    Event_Category_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    __tablename__ = 'Event_Category'
+    Event_Category_ID = db.Column('Event_Category_ID', db.Integer, primary_key=True, autoincrement=True)
             
 
 class Event_Order(db.Model):
-    __tablename__ = ''
+    __tablename__ = 'Event_Order'
     Event_Order_ID = db.Column(db.Integer, primary_key=True, autoincrement= True)
-    Event_Category_ID = db.Column(db.Integer, db.ForeignKey('Event_Category.Event_Category_ID'))
-    Customer_ID = db.Column(db.Integer, db.ForeignKey('Customer.Customer_ID)'))
-    Event_Order_Status_ID = db.Column(db.Integer, db.ForeignKey('Event_Order_Status.Event_Order_Status_ID'))
-    Event_Time = db.Column(db.Date) 
-    Event_Theme = db.Column(db.String)
-    Event_Order_Desc = db.Column(db.String)
-    Event_Delivery = db.Column(db.String)
-    Event_Setup = db.Column(db.String)
-    Event_Location_Name = db.Column(db.String)
-    Event_Delivery = db.Column(db.String)
-    Event_Setup = db.Column(db.String)
-    Event_Restriction_Desc = db.Column(db.String)
-    Event_Order_Desc = db.Column(db.String)
-    Event_Address = db.Column(db.String)
-    Event_City = db.Column(db.String)
-    State_ID = db.Column(db.Integer, db.ForeignKey('State.State_ID'))
-    Event_Zip_Code = db.Column(db.Integer)
+    Event_Category_ID = db.Column(db.Integer, db.ForeignKey('Event_Category.Event_Category_ID'), nullable=False)
+    Customer_ID = db.Column(db.Integer, db.ForeignKey('Customer.Customer_ID'), nullable=False)
+    Event_Status_ID = db.Column(db.Integer, db.ForeignKey('Event_Status.Event_Status_ID'), nullable=False)
+    Event_Time = db.Column(db.Date, nullable=False)
+    Event_Theme = db.Column(db.String, nullable=False)
+    Event_Order_Desc = db.Column(db.String, nullable=False)
+    Event_Delivery = db.Column(db.String, nullable=False)
+    Event_Setup = db.Column(db.String, nullable=False)
+    Event_Location_Name = db.Column(db.String, nullable=False)
+    Event_Delivery = db.Column(db.String, nullable=False)
+    Event_Setup = db.Column(db.String, nullable=False)
+    Event_Restriction_Desc = db.Column(db.String, nullable=False)
+    Event_Order_Desc = db.Column(db.String, nullable=False)
+    Event_Address = db.Column(db.String, nullable=False)
+    Event_City = db.Column(db.String, nullable=False)
+    State_ID = db.Column(db.Integer, db.ForeignKey('State.State_ID'), nullable=False)
+    Event_Zip_Code = db.Column(db.Integer, nullable=False)
     Employee_Assignment_ID = db.Column(db.Integer, db.ForeignKey('Employee_Assignment.Employee_Assignment_ID'))
     Feedback = db.Column(db.Integer)
 
-    Event_Category_ID = db.relationship(
-        "Event_Category_ID",
-        backref = db.backref('Event_Order')
-    )
-    Customer_ID = db.relationship(
-        "Customer_ID",
-        backref = db.backref('Customer_ID')
-    )
-    Customer_ID = db.relationship(
-        "Event_Order",
-        backref = db.backref('Customer_ID')
-    )
-    Event_Order_Status_ID = db.relationship(
-        "Event_Order_Status_ID",
-        backref = db.backref('Event_Order_Statud_ID')
-    )
-    State_ID = db.relationship(
-        "State",
-        backref = db.backref('State_ID')
-    )
-    Employee_Assignment_ID = db.relationship(
-        "Employee_Assignment_ID",
-        backref = db.backref('Employee_Assignment_ID')
-    )
- 
 
 # Class method to GET from DB
 
@@ -122,35 +97,35 @@ class Event_Order(db.Model):
             
 
 class Event_Order_Line(db.Model):
-    __tablename__ = ''
+    __tablename__ = 'Event_Order_Line'
     Event_Order_Line_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
 
 class Event_Status(db.Model):
-    __tablename__ = ''
+    __tablename__ = 'Event_Status'
     Event_Status_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
 
 class Payment(db.Model):
-    __tablename__ = ''
+    __tablename__ = 'Payment'
     Payment_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
 
 class Payment_Type(db.Model):
-    __tablename__ = ''
+    __tablename__ = 'Payment_Type'
     Payment_Type_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
 
 class Product_Service(db.Model):
-    __tablename__ = ''
+    __tablename__ = 'Product_Service'
     Product_Service_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
 
 class State(db.Model):
-    __tablename__ = ''
+    __tablename__ = 'State'
     State_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
 
 class Vendor(db.Model):
-    __tablename__ = ''
+    __tablename__ = 'Vendor'
     Vender_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
 
 class Vendor_Service(db.Model):
-    __tablename__ = ''
+    __tablename__ = 'Vendor_Service'
     Vendor_Service_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
 
 
