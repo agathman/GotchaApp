@@ -4,4 +4,5 @@ app/__pycache__/views.cpython-39.pyc
 __pycache__/__init__.cpython-39.pyc
 __pycache__/models.cpython-39.pyc
 __pycache__/views.cpython-39.pyc
-/venv
+venv
+
