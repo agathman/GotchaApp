@@ -118,31 +118,78 @@ class Event_Order_Line(db.Model):
             
 class Event_Status(db.Model):
     __tablename__ = 'Event_Status'
-    Event_Status_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    Event_Status_ID = db.Column(db.Integer(10), primary_key=True, autoincrement=True)
+    Event_Status = db.Column(db.String(50), nullable=False)
+
+    def __repr__(self, Event_Status_ID, Event_Status):
+        self.Event_Status_ID = Event_Status_ID
+        self.Event_Status
 
 class Payment(db.Model):
     __tablename__ = 'Payment'
     Payment_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    Payment_Type_ID = db.Column(db.Integer(10), db.ForeignKey('Payment_Type.Payment_Type_ID'), nullable=False)
+    Event_Order_ID = db.Column(db.Integer(10), db.ForeignKey('Event_Order.Event_Order_ID'), nullable=False)
+    Payment_Date_Init = db.Column(db.Date(10), nullable=False)
+    Payment_Date_Full = db.Column(db.Date(10), nullable=False)
+
+    def __repr__(self, Payment_ID, Payment_Type_ID, Event_Order_ID, Payment_Date_Init, Payment_Date_Full):
+        self.Payment_ID = Payment_ID
+        self.Payment_Type_ID = Payment_Type_ID
+        self.Event_Order_ID = Event_Order_ID
+        self.Payment_Date_Init = Payment_Date_Init
+        self.Payment_Date_Full = Payment_Date_Full
 
 class Payment_Type(db.Model):
     __tablename__ = 'Payment_Type'
-    Payment_Type_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    Payment_Type_ID = db.Column(db.Integer(10), primary_key=True, autoincrement=True)
+    Payment_Type_Name = db.Column(db.String(50), nullable=False)
+
+    def __repr__(self, Payment_Type_ID, Payment_Type_Name):
+        self.Payment_Type_ID = Payment_Type_ID
+        self.Payment_Type_Name = Payment_Type_Name
 
 class Product_Service(db.Model):
     __tablename__ = 'Product_Service'
-    Product_Service_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    Product_Service_ID = db.Column(db.Integer(10), primary_key=True, autoincrement=True)
+    Product_Service = db.Column(db.String(50), nullable=False)
+
+    def __repr__(self, Product_Service_ID, Product_Service):
+        self.Product_Service_ID = Product_Service_ID
+        self.Product_Service = Product_Service
 
 class State(db.Model):
     __tablename__ = 'State'
-    State_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    State_ID = db.Column(db.Integer(10), primary_key=True, autoincrement=True)
+    State_Name = db.Column(db.String(20), nullable=False)
+    State_Abbreviation = db.Column(db.String(2), nullable=False)
+
+    def __repr__(self, State_ID, State_Name, State_Abbreviation):
+        self.State_ID = State_ID
+        self.State_Name = State_Name
+        self.State_Abbreviation = State_Abbreviation
 
 class Vendor(db.Model):
     __tablename__ = 'Vendor'
-    Vender_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    Vender_ID = db.Column(db.Integer(10), primary_key=True, autoincrement=True)
+    Vendor_Name = db.Column(db.String(50), nullable=False)
+    Vendor_Services_ID = db.Columnn(db.Integer(10), db.ForeignKey('Vendor_Services.Vendor_Services_ID'), nullable=False)
+    Vendor_Desc = db.Column(db.String(250), nullable=False)
+
+    def __repr__(self, Vendor_ID, Vendor_Name, Vendor_Services_ID, Vendor_Desc):
+        self.Vendor_ID = Vendor_ID
+        self.Vendor_Name = Vendor_Name
+        self.Vendor_Services_ID = Vendor_Services_ID
+        self.Vendor_Desc = Vendor_Desc
 
 class Vendor_Service(db.Model):
     __tablename__ = 'Vendor_Service'
-    Vendor_Service_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    Vendor_Service_ID = db.Column(db.Integer(10), primary_key=True, autoincrement=True)
+    Vendor_Services = db.Column(db.String(50), nullable=False)
+
+    def __repr__(self, Vendor_Service_ID, Vendor_Services):
+            self.Vendor_Service_ID = Vendor_Service_ID
+            self.Vendor_Services = Vendor_Services
 
 
 
