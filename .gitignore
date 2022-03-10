@@ -6,5 +6,3 @@ __pycache__/models.cpython-39.pyc
 __pycache__/views.cpython-39.pyc
 venv
 
-venv/Scripts/flask.exe
-venv/Scripts/python.exe
