@@ -2,9 +2,9 @@ from . import db
 
 class Appointment(db.Model):
     __tablename__ = 'Appointment'
-    Appointment_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    Customer_ID = db.Column(db.Integer, db.ForeignKey('Customer.Customer_ID'), nullable=False)
-    Event_Order_ID = db.Column(db.Integer, db.ForeignKey('Event_Order.Event_Order_ID'), nullable=False)
+    Appointment_ID = db.Column(db.Integer (10), primary_key=True, autoincrement=True)
+    Customer_ID = db.Column(db.Integer(10), db.ForeignKey('Customer.Customer_ID'), nullable=False)
+    Event_Order_ID = db.Column(db.Integer (10), db.ForeignKey('Event_Order.Event_Order_ID'), nullable=False)
 
     def __repr__(self, Appointment_ID, Customer_ID, Event_Order_ID):
         self.Appointment_ID = Appointment_ID
@@ -13,63 +13,61 @@ class Appointment(db.Model):
 
 class Customer(db.Model):
     __tablename__ = 'Customer'
-    Customer_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    Contact_Date = db.Column(db.Date)
-    First_Name = db.Column(db.String)
-    Last_Name = db.Column(db.String)
-    Phone = db.Column(db.String)
-    Email = db.Column(db.String)
-    Mailing_Address = db.Column(db.String)
-    Mailing_City = db.Column(db.String)
-    State_ID = db.Column(db.Integer, db.ForeignKey('State.State_ID'))
-    Mailing_Zip_Code = db.Column(db.String)
+    Customer_ID = db.Column(db.Integer (10), primary_key=True, autoincrement=True)
+    Contact_Date = db.Column(db.Date (10))
+    First_Name = db.Column(db.String(250))
+    Last_Name = db.Column(db.String (250))
+    Phone = db.Column(db.String (12))
+    Email = db.Column(db.String (250))
+    Mailing_Address = db.Column(db.String (250))
+    Mailing_City = db.Column(db.String (250))
+    State_ID = db.Column(db.Integer (10), db.ForeignKey('State.State_ID'))
+    Mailing_Zip_Code = db.Column(db.String (10))
 
 
 class Employee(db.Model):
     __tablename__ = 'Employee'
-    Emp_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    Emp_First_Name = db.Column(db.String)
-    Emp_Last_Name = db.Column(db.String)
-    Emp_Mailing_City = db.Column(db.String)
-    State_ID = db.Column(db.Integer, db.ForeignKey('State.State_ID'))
-    Emp_Zip_Code = db.Column(db.String)
-    Emp_Phone = db.Column(db.String)
-    Emp_Email = db.Column(db.String)
-    Emp_Position = db.Column(db.String)
+    Emp_ID = db.Column(db.Integer(10), primary_key=True, autoincrement=True)
+    Emp_First_Name = db.Column(db.String (50))
+    Emp_Last_Name = db.Column(db.String (50))
+    Emp_Mailing_Address = db.Column(db.String (250))
+    Emp_Mailing_City = db.Column(db.String (100))
+    State_ID = db.Column(db.Integer (10), db.ForeignKey('State.State_ID'))
+    Emp_Zip_Code = db.Column(db.String (10))
+    Emp_Phone = db.Column(db.String (12))
+    Emp_Email = db.Column(db.String (100) )
+    Emp_Position = db.Column(db.String (50))
 
 class Employee_Assignment(db.Model):
     __tablename__ = 'Employee_Assignment'
-    Employee_Assignment_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    Assignment_Start_Date = db.Column(db.Date)
-    Employee_ID = db.Column(db.Integer, db.ForeignKey('Employee.Emp_ID'))
+    Employee_Assignment_ID = db.Column(db.Integer (10), primary_key=True, autoincrement=True)
+    Assignment_Start_Date = db.Column(db.Date (10))
+    Employee_ID = db.Column(db.Integer (10), db.ForeignKey('Employee.Emp_ID'))
 
 class Event_Category(db.Model):
     __tablename__ = 'Event_Category'
-    Event_Category_ID = db.Column('Event_Category_ID', db.Integer, primary_key=True, autoincrement=True)
-            
+    Event_Category_ID = db.Column('Event_Category_ID', db.Integer (10), primary_key=True, autoincrement=True)
+    Event_Category_Name = db.Column(db.String (150))       
 
 class Event_Order(db.Model):
     __tablename__ = 'Event_Order'
-    Event_Order_ID = db.Column(db.Integer, primary_key=True, autoincrement= True)
-    Event_Category_ID = db.Column(db.Integer, db.ForeignKey('Event_Category.Event_Category_ID'), nullable=False)
-    Customer_ID = db.Column(db.Integer, db.ForeignKey('Customer.Customer_ID'), nullable=False)
-    Event_Status_ID = db.Column(db.Integer, db.ForeignKey('Event_Status.Event_Status_ID'), nullable=False)
-    Event_Time = db.Column(db.Date, nullable=False)
-    Event_Theme = db.Column(db.String, nullable=False)
-    Event_Order_Desc = db.Column(db.String, nullable=False)
-    Event_Delivery = db.Column(db.String, nullable=False)
-    Event_Setup = db.Column(db.String, nullable=False)
-    Event_Location_Name = db.Column(db.String, nullable=False)
-    Event_Delivery = db.Column(db.String, nullable=False)
-    Event_Setup = db.Column(db.String, nullable=False)
-    Event_Restriction_Desc = db.Column(db.String, nullable=False)
-    Event_Order_Desc = db.Column(db.String, nullable=False)
-    Event_Address = db.Column(db.String, nullable=False)
-    Event_City = db.Column(db.String, nullable=False)
-    State_ID = db.Column(db.Integer, db.ForeignKey('State.State_ID'), nullable=False)
-    Event_Zip_Code = db.Column(db.Integer, nullable=False)
-    Employee_Assignment_ID = db.Column(db.Integer, db.ForeignKey('Employee_Assignment.Employee_Assignment_ID'))
-    Feedback = db.Column(db.Integer)
+    Event_Order_ID = db.Column(db.Integer (10), primary_key=True, autoincrement= True)
+    Event_Category_ID = db.Column(db.Integer (10), db.ForeignKey('Event_Category.Event_Category_ID'), nullable=False)
+    Customer_ID = db.Column(db.Integer (10), db.ForeignKey('Customer.Customer_ID'), nullable=False)
+    Event_Status_ID = db.Column(db.Integer (10), db.ForeignKey('Event_Status.Event_Status_ID'), nullable=False)
+    Event_Time = db.Column(db.Date (15), nullable=False)
+    Event_Theme = db.Column(db.String (250), nullable=False)
+    Event_Order_Desc = db.Column(db.String (250), nullable=False)
+    Event_Delivery = db.Column(db.String (100), nullable=False)
+    Event_Setup = db.Column(db.String (250), nullable=False)
+    Event_Location_Name = db.Column(db.String (250), nullable=False)
+    Event_Restriction_Desc = db.Column(db.String (250), nullable=False)
+    Event_Address = db.Column(db.String (250), nullable=False)
+    Event_City = db.Column(db.String (100), nullable=False)
+    State_ID = db.Column(db.Integer (2), db.ForeignKey('State.State_ID'), nullable=False)
+    Event_Zip_Code = db.Column(db.Integer (10), nullable=False)
+    Employee_Assignment_ID = db.Column(db.Integer(10), db.ForeignKey('Employee_Assignment.Employee_Assignment_ID'))
+    Feedback = db.Column(db.Integer (250))
 
 
 # Class method to GET from DB
