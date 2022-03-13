@@ -1,14 +1,11 @@
-<!DOCTYPE html>
 {% extends "base.html" %}
-<html lang="en">
- <body>
+
      {% block content %}
      <div class="container">
             <div class="p-5 mb-4 bg-light rounded-3">
                 <div class="container-fluid py-5 text-center">
                     <h1 class="display-5 fw-bold">Cha Cha App</h1>
-                        <button class="btn btn-primary">New Appointment</button>
-                    <h2>Events from </h2>
+                      
                         <table class="table">
                             <thead>
                             <tr>
@@ -18,27 +15,26 @@
                                 <th>
                                     Event Date
                                 </th>
-                                <th>View</th>
+                                <th>Event Location</th>
                             </tr>
                             </thead>
                             <tbody>
-                                {% for customer in customers %}
                                 <tr>
-                                <td>{{ customer.First_Name }} {{ customer.Last_Name }}</td>
-                                 
-                                <td>{{ customer.Event_Time }}</td>
-                                <td><a href="/event/{{customer.Customer_ID}}">View</a></td>
+                                    {% for events in  event %}
+                                <td>{{ events.First_Name }} {{ events.Last_Name }}</td>
+                            
+                                <td>{{ events.Event_Time }}</td>
+                                <td>{{events.Event_Location_Name}}</td>
                                 </tr>
-                                    {% endfor %}
+                            {% endfor %}
                             </tbody>
                                     
                         </table>
     
 
-                    {% endblock %}
+                   
 
                 </div>
             </div>        
         </div>
-    </body>
-</html>
+        {% endblock %}

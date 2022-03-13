@@ -1,0 +1,45 @@
+{% extends "base.html" %}
+<!DOCTYPE html>
+
+    {% block content %}
+        <div class="container">          
+            <div class="p-5 mb-4 rounded-3">
+                <div class="container-fluid py-5 text-center">
+                    <button class="btn btn-primary">Add Appointment</button>                           
+                    <p>
+                       <table class="table">
+                        <thead>
+                            <tr>
+                                <th>
+                                    Appointment ID
+                                   </th>
+                                <th>
+                                    Customer ID
+                                   </th>
+                                <th>
+                                    Event Order ID
+                                   </th>
+                               <th>
+                                    Edit</th>
+                                <th>
+                                    Delete</th>
+                                   </tr>
+                                   </thead>
+                                   <tbody>
+                                   {% for data in appointment %}
+                                   <tr>
+                                        <td>{{data.Appointment_ID}}</td>
+                                        <td>{{data.Customer_ID}}</td>
+                                        <kd>{{data.Event_Order_ID}}</kd>
+                                        <td><a href="#">Edit</a></td>
+                                        <td><a href="#"></a>Delete</td>
+                                   </tr>                   
+                                        {% endfor%}
+                                    </tbody>
+                                        </table>
+                     
+                    </p>
+                </div>
+            </div>     
+        </div>
+        {% endblock %}

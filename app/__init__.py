@@ -14,8 +14,8 @@ with app.app_context():
     from .views import my_view  # Import routess
     app.register_blueprint(my_view)
     from .models import Appointment, Customer, Employee, Employee_Assignment, Event_Status, Event_Category, Event_Order, Event_Order_Line, Payment, Payment_Type, Product_Service, State, Vendor, Vendor_Service
-    db.create_all()
-    db.session.commit()
+    #db.create_all()
+    #db.session.commit()
      
     if __name__ == '__main__':
          app.run(debug = True)

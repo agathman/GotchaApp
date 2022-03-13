@@ -1,4 +1,5 @@
 from . import db
+from sqlalchemy.orm import relationship
 
 class Appointment(db.Model):
     __tablename__ = 'Appointment'
@@ -23,6 +24,8 @@ class Customer(db.Model):
     Mailing_City = db.Column(db.String(250))
     State_ID = db.Column(db.Integer, db.ForeignKey('State.State_ID'))
     Mailing_Zip_Code = db.Column(db.String(10))
+
+    Event_Order = relationship("Event_Order", backref="Customer")
 
     def __repr__(self, Customer_ID, Contact_Date, First_Name, Last_Name, Phone, Email, Mailing_Address, Mailing_City, State_ID):
         self.Customer_ID = Customer_ID
@@ -99,6 +102,8 @@ class Event_Order(db.Model):
     Event_Zip_Code = db.Column(db.Integer, nullable=False)
     Employee_Assignment_ID = db.Column(db.Integer, db.ForeignKey('Employee_Assignment.Employee_Assignment_ID'))
     Feedback = db.Column(db.Integer)
+
+    
 
     def __repr__(self, Event_Order_ID, Event_Category_ID, Customer_ID, Event_Order_Status_ID, Event_Time, Event_Theme, Event_Order_Desc, Event_Delivery, Event_Setup, 
                                 Event_Location_Name, Event_Restriction_Desc, Event_Address, Event_City, State_ID, Event_Zip_Code, Employee_Assignment_ID, Feedback):
