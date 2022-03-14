@@ -3,7 +3,9 @@ from .models import Appointment, Customer, Employee, Employee_Assignment, Event_
 from . import db
 
 
+
 my_view = Blueprint('my_view', __name__)
+
 
 
 # Routes to html views with GET requests
@@ -34,6 +36,7 @@ def addCustomerModal():
 
     return(render_template("addCustomerModal.html"))
 
+#View single event info
 @my_view.route('/event/<eventID>')
 def event(eventID):
 

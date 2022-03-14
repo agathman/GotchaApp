@@ -121,7 +121,7 @@
                                 <tr>
                                 <td>{{ customer.First_Name }} {{ customer.Last_Name }}</td>
                                  
-                                <td>{{ customer.Event_Time }}</td>
+                                <td>{{ customer.Event_Time.strftime('%m-%d-%Y') }}</td>
                                 <td><a href="/event/{{customer.Customer_ID}}">View</a></td>
                                 </tr>
                                     {% endfor %}
@@ -145,7 +145,7 @@
                                             {% for appointment in appointments %}
                                             <tr>
                                                 <td>{{appointment.First_Name}} {{appointment.Last_Name}}</td>
-                                                <td>{{appointment.Date}}</td>
+                                                <td>{{appointment.Date.strftime('%m-%d-%Y') }}</td>
                                             </tr>
                                             {% endfor %}
                                         </thead>

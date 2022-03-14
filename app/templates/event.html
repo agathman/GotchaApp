@@ -4,7 +4,7 @@
      <div class="container">
             <div class="p-5 mb-4 bg-light rounded-3">
                 <div class="container-fluid py-5 text-center">
-                    <h1 class="display-5 fw-bold">Cha Cha App</h1>
+                    <h1 class="display-5 fw-bold">{% for events in event %} Event for {{ events.Event_Time.strftime('%m-%d-%Y')}} {% endfor %}</h1>
                       
                         <table class="table">
                             <thead>

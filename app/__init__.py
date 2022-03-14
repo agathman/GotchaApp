@@ -1,5 +1,6 @@
 from flask import Flask, request, session
 from flask_sqlalchemy import SQLAlchemy
+from datetime import datetime
 
   
 app = Flask(__name__, template_folder="templates", instance_relative_config=False)
@@ -11,6 +12,8 @@ db = SQLAlchemy()
     
 db.init_app(app)
     #app.config.from_object('config.config')
+
+
 
 with app.app_context():
     from .views import my_view  # Import routess
