@@ -1,5 +1,6 @@
 from flask import Blueprint, redirect, render_template, request, flash, url_for, redirect
-from .models import Appointment, Customer, Employee, Employee_Assignment, Event_Status, Event_Category, Event_Order, Event_Order_Line, Payment, Payment_Type, Product_Service, State, Vendor, Vendor_Service
+from .models import Appointment, Customer, Employee, Employee_Assignment, Event_Status, Event_Category, Event_Order,\
+                    Event_Order_Line, Payment, Payment_Type, Product_Service, State, Vendor, Vendor_Service
 from . import db
 
 
@@ -11,17 +12,20 @@ my_view = Blueprint('my_view', __name__)
 # Routes to html views with GET requests
 @my_view.route("/", methods=['GET', 'POST'])
 def index():
-
+    
     if request.method == 'POST':
+        #Form request to add customer
         if request.form['check'] == 'customer':
             customer = Customer(request.form['firstName'], request.form['lastName'], request.form['phone'],
                         request.form['email'], request.form['address'], request.form['city'], request.form['zip'], request.form['date'], request.form['state'])
             db.session.add(customer)
             db.session.commit()
+        #Form request to add appointment
         elif request.form['check'] == 'appointment':
             appointment = Appointment(request.form['customerID'], request.form['date'])
             db.session.add(appointment)
             db.session.commit()
+        #Form request to add event
         elif request.form['check'] == 'event':
             event = Event_Order(request.form['category'], request.form['customer'], request.form['status'], request.form['eventTime'], request.form['theme'], request.form['eventDesc'],
                         request.form['delivery'], request.form['setup'], request.form['location'], request.form['restrictions'], request.form['address'], request.form['city'],
@@ -84,7 +88,13 @@ def viewAppointment():
 
 @my_view.route('/Customer')
 def viewCustomer():
-    return render_template('tables/Customer.html', test_table = Test_Table.query.all())
+
+    Customers = Customer.query.join(State, Customer.State_ID == State.State_ID)\
+        .add_columns(Customer.First_Name, Customer.Last_Name, Customer.Phone, Customer.Email, Customer.Mailing_Address, Customer.Mailing_City, 
+                     Customer.Mailing_Zip_Code, Customer.Contact_Date, State.State_Abbreviation)
+
+
+    return render_template('tables/customer.html', customers = Customers )
 
 
 @my_view.route('/Employee')

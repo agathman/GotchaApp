@@ -1,5 +1,6 @@
 from . import db
 from sqlalchemy.orm import relationship
+from datetime import datetime
 
 class Appointment(db.Model):
     __tablename__ = 'Appointment'
@@ -15,7 +16,7 @@ class Appointment(db.Model):
 class Customer(db.Model):
     __tablename__ = 'Customer'
     Customer_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    Contact_Date = db.Column(db.Date)
+    Contact_Date = db.Column(db.Date, nullable=False)
     First_Name = db.Column(db.String(250))
     Last_Name = db.Column(db.String (250))
     Phone = db.Column(db.String(12))
@@ -27,7 +28,7 @@ class Customer(db.Model):
 
     Event_Order = relationship("Event_Order", backref="Customer")
 
-    def __init__(self, First_Name, Last_Name, Phone, Email, Mailing_Address, Mailing_City, Mailing_Zip_Code, Contact_Date, State_ID):
+    def __init__(self, Contact_Date, First_Name, Last_Name, Phone, Email, Mailing_Address, Mailing_City, Mailing_Zip_Code, State_ID):
        
         self.First_Name = First_Name
         self.Last_Name = Last_Name
@@ -54,7 +55,7 @@ class Employee(db.Model):
     Emp_Email = db.Column(db.String(100) )
     Emp_Position = db.Column(db.String(50))
 
-    def __repr__(self, Emp_ID,Emp_First_Name, Emp_Last_Name, Emp_Mailing_Address, Emp_Mailing_City, State_ID):
+    def __init__(self, Emp_ID,Emp_First_Name, Emp_Last_Name, Emp_Mailing_Address, Emp_Mailing_City, State_ID):
         self. Emp_ID = Emp_ID
         self.Emp_First_Name = Emp_First_Name
         self.Emp_Last_Name = Emp_Last_Name
