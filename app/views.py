@@ -11,24 +11,28 @@ my_view = Blueprint('my_view', __name__)
 def index():
 
     if request.method == 'POST':
-        customer = Customer(request.form['firstName'], request.form['lastName'], request.form['phone'],
-                    request.form['email'], request.form['address'], request.form['city'], request.form['zip'], request.form['state'])
-        appointment = Appointment
-        db.session.add(customer)
-        db.session.commit()
-
-        flash('Appointment added successfully')
-
-    
+        if request.form['check'] == 'customer':
+            customer = Customer(request.form['firstName'], request.form['lastName'], request.form['phone'],
+                        request.form['email'], request.form['address'], request.form['city'], request.form['zip'], request.form['date'], request.form['state'])
+            db.session.add(customer)
+            db.session.commit()
+        elif request.form['check'] == 'appointment':
+            appointment = Appointment(request.form['customerID'], request.form['date'])
+            db.session.add(appointment)
+            db.session.commit()
         
-
-
     CustomerList = Customer.query.join(Event_Order, Customer.Customer_ID == Event_Order.Customer_ID)\
         .add_columns(Customer.First_Name, Customer.Last_Name, Event_Order.Event_Time, Customer.Customer_ID)
     
-    return render_template('index.html', customers = CustomerList)
+    AppointmentList = Appointment.query.join(Customer, Appointment.Customer_ID == Customer.Customer_ID)\
+        .add_columns(Customer.First_Name, Customer.Last_Name, Appointment.Date)
+    
+    return render_template('index.html', customers = CustomerList, newAppointment = Customer.query.all(), appointments = AppointmentList)
 
+@my_view.route("/", methods=['GET', 'POST'])
+def addCustomerModal():
 
+    return(render_template("addCustomerModal.html"))
 
 @my_view.route('/event/<eventID>')
 def event(eventID):
@@ -56,7 +60,9 @@ def viewTables():
 
 @my_view.route('/Appointment')
 def viewAppointment():
-    return render_template('tables/Appointment.html')
+
+
+    return render_template('tables/Appointment.html', appointment = Appointment.query.all())
 
 
 @my_view.route('/Customer')

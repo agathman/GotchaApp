@@ -4,50 +4,105 @@
  <body>
      {% block content %}
      <div class="container">
-            <div class="p-5 mb-4 bg-light rounded-3">
-                <div class="container-fluid py-5 text-center">
-                    <h1 class="display-5 fw-bold">Cha Cha App</h1>
+        <div class="p-5 mb-4 bg-light rounded-3">
+<!-- Modal Button for Customer -->
+            <div class="row container-fluid py-5 text-center">
+                <div class="col">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                        New Appointment
+                        New Customer
                       </button>
-                        <!-- Modal -->
-                        <!-- Button trigger modal -->
-  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">New Appointment</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        </div>
-        <div class="modal-body">
-            <form action = "{{ request.path }}" method = "post">
-                <label>First Name</label>
-                <input type="text" class="form-control" name="firstName" required>
-                <label>Last Name</label> 
-                <input type="text" class="form-control" name="lastName" required>
-                <label>Phone</label>
-                <input type="text" class="form-control" name="phone" required>
-                <label>Email</label>
-                <input type="text" class="form-control" name="email" required>
-                <label>Address</label>
-                <input type="text" class="form-control" name="address" required>
-                <label>City</label>
-                <input type="text" class="form-control" name="city" required>
-                <label>Zip Code</label>
-                <input type="text" class="form-control" name="zip" required>
-                <input type="hidden" name="state" value="1">
-        </div>
-        <div class="modal-footer">
-            <input type='submit' class="btn btn-secondary" value="Save">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </form>
-        </div>
-    </div>
-    </div>
-</div>
+
+<!-- Modal body for Customer -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">New Customer</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action = "{{ request.path }}" method = "post">
+                                    <input type="hidden" name="check" value="customer">
+                                    <label>First Name</label>
+                                    <input type="text" class="form-control" name="firstName" required>
+                                    <label>Last Name</label> 
+                                    <input type="text" class="form-control" name="lastName" required>
+                                    <label>Phone</label>
+                                    <input type="text" class="form-control" name="phone" required>
+                                    <label>Email</label>
+                                    <input type="text" class="form-control" name="email" required>
+                                    <label>Address</label>
+                                    <input type="text" class="form-control" name="address" required>
+                                    <label>City</label>
+                                    <input type="text" class="form-control" name="city" required>
+                                    <label>Zip Code</label>
+                                    <input type="text" class="form-control" name="zip" required>
+                                    <label>Date Contacted</label>
+                                    <input type="date" class="form-control" name="date" required>
+                                    <input type="hidden" name="state" value="1">
+                            </div>
+                            <div class="modal-footer">
+                                
+                                <input type='submit' class="btn btn-secondary" value="Save">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </form>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+                    <div class="col">
+<!-- Modal button for new appointment-->
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#AppointmentModal">
+                            Add Appointment
+                        </button>
+<!-- Modal body for new appointment -->
+                        <div class="modal fade" id="AppointmentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal-dialog" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">New Appointment</h5>
+                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                    <span aria-hidden="true">&times;</span>
+                                </button>
+                                </div>
+                                <div class="modal-body">
+                                    <form action = "{{ request.path }}" method = "post">
+                                        <input type="hidden" name="check" value="appointment">
+                                        <label>Appointment</label>
+                                        <select class="form-control" name="customerID">
+                                        {% for customer in newAppointment %}
+                                            <option value="{{customer.Customer_ID}}">{{customer.First_Name}} {{customer.Last_Name}} </option>
+                                            {% endfor %}
+                                        </select>
+                                        <label>Appointment Date</label>
+                                        <input type="date" name="date" class="form-control">
+                                    
+                                </div>
+                                <div class="modal-footer">
+                                    <input type='submit' class="btn btn-secondary" value="Save">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </form>
+                                </div>
+                            </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col">
+                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#EventModal">
+                            Add Event
+                        </button>
                         
+                    </div>
+                    </div>
+                    
+                        <div class="container-fluid py-5 text-center">
+                            <h1 class="display-5 fw-bold">Cha Cha App</h1>
+
+                        <div class="row">
+                            <div class="col">
                     <h2>Events</h2>
                         <table class="table">
                             <thead>
@@ -73,7 +128,31 @@
                             </tbody>
                                     
                         </table>
-    
+                            </div>
+                            <div class="col">
+                                <h2>Appointments</h2>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>
+                                                    Customer Name
+                                                </th>
+                                                <th>
+                                                    Appointment Date
+                                                </th>
+                                            </tr>
+                                            </thead>
+                                            {% for appointment in appointments %}
+                                            <tr>
+                                                <td>{{appointment.First_Name}} {{appointment.Last_Name}}</td>
+                                                <td>{{appointment.Date}}</td>
+                                            </tr>
+                                            {% endfor %}
+                                        </thead>
+                                    </table>
+                            </div>
+                        </div>
+
 
                     {% endblock %}
 
