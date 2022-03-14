@@ -106,7 +106,7 @@ def viewEmployee():
 
 @my_view.route('/EmployeeAssignment')
 def viewEmployeeAssignment():
-    return render_template('tables/EmployeeAssignment.html', test_table = Test_Table.query.all())
+    return render_template('tables/employee_assignment.html')
 
 @my_view.route('/EventCategory')
 def viewEventCategory():
