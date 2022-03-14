@@ -22,14 +22,22 @@ def index():
             appointment = Appointment(request.form['customerID'], request.form['date'])
             db.session.add(appointment)
             db.session.commit()
-        
+        elif request.form['check'] == 'event':
+            event = Event_Order(request.form['category'], request.form['customer'], request.form['status'], request.form['eventTime'], request.form['theme'], request.form['eventDesc'],
+                        request.form['delivery'], request.form['setup'], request.form['location'], request.form['restrictions'], request.form['address'], request.form['city'],
+                        request.form['zip'],2, 1, 'Due after event')
+            db.session.add(event)
+            db.session.commit()
+    
+    #Query to find customer names with associated events    
     CustomerList = Customer.query.join(Event_Order, Customer.Customer_ID == Event_Order.Customer_ID)\
         .add_columns(Customer.First_Name, Customer.Last_Name, Event_Order.Event_Time, Customer.Customer_ID)
     
+    #Query to find customer names with associated appointments
     AppointmentList = Appointment.query.join(Customer, Appointment.Customer_ID == Customer.Customer_ID)\
         .add_columns(Customer.First_Name, Customer.Last_Name, Appointment.Date)
     
-    return render_template('index.html', customers = CustomerList, newAppointment = Customer.query.all(), appointments = AppointmentList)
+    return render_template('index.html', customers = CustomerList, newAppointment = Customer.query.all(), appointments = AppointmentList, eventCategory = Event_Category.query.all(), statuses = Event_Status.query.all())
 
 @my_view.route("/", methods=['GET', 'POST'])
 def addCustomerModal():
@@ -45,27 +53,33 @@ def event(eventID):
         Event_Order.Event_Theme, Event_Order.Event_Order_Desc, Event_Order.Event_Delivery, Event_Order.Event_Setup, Event_Order.Event_Location_Name,
         Event_Order.Event_Restriction_Desc, Event_Order.Event_Address, Event_Order.Event_City)\
             .filter_by(Customer_ID = eventID)
-    
-    eStatus = Event_Order.query.join(Event_Status, Event_Order.Event_Status_ID == Event_Status.Event_Status_ID)\
-        .add_columns(Event_Status.Event_Status)\
                 
     
     return render_template('event.html', event = Event)
-
-@my_view.route('/event')
+#View all events
+@my_view.route('/events')
 def viewEvent():
-    return render_template('event.html')
+    
+    Events = Event_Order.query.join(Customer, Event_Order.Customer_ID == Customer.Customer_ID)\
+        .add_columns(Customer.First_Name, Customer.Last_Name, Customer.Email, Customer.Phone, Event_Order.Event_Time, 
+        Event_Order.Event_Theme, Event_Order.Event_Order_Desc, Event_Order.Event_Delivery, Event_Order.Event_Setup, Event_Order.Event_Location_Name,
+        Event_Order.Event_Restriction_Desc, Event_Order.Event_Address, Event_Order.Event_City)\
+
+    return render_template('tables/events.html', events = Events)
 
 
 @my_view.route('/viewTables')
 def viewTables():
     return render_template('viewtables.html')
 
-@my_view.route('/Appointment')
+#View Appointments
+@my_view.route('/Appointments')
 def viewAppointment():
+    
+    Appointments = Appointment.query.join(Customer, Appointment.Customer_ID == Customer.Customer_ID)\
+        .add_columns(Appointment.Appointment_ID, Customer.Customer_ID, Customer.First_Name, Customer.Last_Name, Customer.Phone, Customer.Email, Appointment.Date)
 
-
-    return render_template('tables/Appointment.html', appointment = Appointment.query.all())
+    return render_template('tables/Appointment.html', appointments = Appointments, customers = Customer.query.all())
 
 
 @my_view.route('/Customer')

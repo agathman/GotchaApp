@@ -47,11 +47,15 @@
                                     Appointment ID
                                    </th>
                                 <th>
-                                    Customer ID
+                                    Customer
                                    </th>
                                 <th>
-                                    Event Order ID
+                                    Appointmnet Date
+                                </th>
+                                <th>
+                                    Event Order
                                    </th>
+                            
                                <th>
                                     Edit</th>
                                 <th>
@@ -59,13 +63,14 @@
                                    </tr>
                                    </thead>
                                    <tbody>
-                                   {% for data in appointment %}
+                                   {% for data in appointments %}
                                    <tr>
                                         <td>{{data.Appointment_ID}}</td>
-                                        <td>{{data.Customer_ID}}</td>
-                                        <kd>{{data.Event_Order_ID}}</kd>
+                                        <td>{{data.First_Name}} {{data.Last_Name}}</td>
+                                        <td>{{data.Date.strftime('%m-%d-%Y')}}</td>
+                                        <td><a href=/event/{{data.Customer_ID}}>View Event</a></td>
                                         <td><a href="#">Edit</a></td>
-                                        <td><a href="#"></a>Delete</td>
+                                        <td><a href="#">Delete</a></td>
                                    </tr>                   
                                         {% endfor%}
                                     </tbody>

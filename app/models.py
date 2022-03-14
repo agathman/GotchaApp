@@ -6,7 +6,7 @@ class Appointment(db.Model):
     Appointment_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
     Customer_ID = db.Column(db.Integer, db.ForeignKey('Customer.Customer_ID'), nullable=False)
     Event_Order_ID = db.Column(db.Integer, db.ForeignKey('Event_Order.Event_Order_ID'), nullable=True)
-    Date = db.Column(db.Date, nullable=False)
+    Date = db.Column(db.DateTime, nullable=False)
 
     def __init__(self, Customer_ID, Date):
         self.Customer_ID = Customer_ID
@@ -90,7 +90,7 @@ class Event_Order(db.Model):
     Event_Order_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
     Event_Category_ID = db.Column(db.Integer, db.ForeignKey('Event_Category.Event_Category_ID'), nullable=False)
     Customer_ID = db.Column(db.Integer, db.ForeignKey('Customer.Customer_ID'), nullable=False)
-    Event_Status_ID = db.Column(db.Integer, db.ForeignKey('Event_Status.Event_Status_ID'), nullable=False)
+    Event_Order_Status_ID = db.Column(db.Integer, db.ForeignKey('Event_Status.Event_Status_ID'), nullable=False)
     Event_Time = db.Column(db.Date, nullable=False)
     Event_Theme = db.Column(db.String(250), nullable=False)
     Event_Order_Desc = db.Column(db.String (250), nullable=False)
@@ -107,10 +107,10 @@ class Event_Order(db.Model):
 
     
 
-    def __repr__(self, Event_Order_ID, Event_Category_ID, Customer_ID, Event_Order_Status_ID, Event_Time, Event_Theme, Event_Order_Desc, Event_Delivery, Event_Setup, 
-                                Event_Location_Name, Event_Restriction_Desc, Event_Address, Event_City, State_ID, Event_Zip_Code, Employee_Assignment_ID, Feedback):
+    def __init__(self, Event_Category_ID, Customer_ID, Event_Order_Status_ID, Event_Time, Event_Theme, Event_Order_Desc, Event_Delivery, Event_Setup, 
+                                Event_Location_Name, Event_Restriction_Desc, Event_Address, Event_City, Event_Zip_Code, Employee_Assignment_ID, State, Feedback):
         # Defines representation for object
-            self.Event_Order_ID = Event_Order_ID
+            
             self.Event_Category_ID = Event_Category_ID
             self.Customer_ID = Customer_ID
             self.Event_Order_Status_ID = Event_Order_Status_ID
@@ -123,7 +123,7 @@ class Event_Order(db.Model):
             self.Event_Restriction_Desc = Event_Restriction_Desc
             self.Event_Address = Event_Address
             self.Event_City = Event_City
-            self.State_ID = State_ID
+            self.State_ID = State
             self.Event_Zip_Code = Event_Zip_Code
             self.Employee_Assignment_ID = Employee_Assignment_ID
             self.Feedback = Feedback
