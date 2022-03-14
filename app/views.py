@@ -98,8 +98,11 @@ def viewCustomer():
 
 @my_view.route('/Employee')
 def viewEmployee():
-    #only for all 
-    return render_template('tables/Employee.html', test_table = Test_Table.query.all())
+    Employees = Employee.query.join(State, Employee.State_ID == State.State_ID)\
+        .add_columns(Employee.Emp_ID, Employee.Emp_First_Name, Employee.Emp_Last_Name, Employee.Emp_Mailing_Address, Customer.Emp_Mailing_City, 
+                     Employee.State_Abbreviation, Employee.Emp_Zip_Code, Employee.Emp_Phone, Employee.Emp_Email, Employee.Emp_Position)
+ 
+    return render_template('tables/employee.html', employees = Employees )
 
 @my_view.route('/EmployeeAssignment')
 def viewEmployeeAssignment():

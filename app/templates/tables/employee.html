@@ -27,6 +27,18 @@
                                 <th>
                                     State
                                 </th>
+                                <th>
+                                    Zip Code
+                                </th>
+                                <th>
+                                    Phone
+                                </th>
+                                <th>
+                                    Email
+                                </th>
+                                <th>
+                                    Position
+                                </th>
                             </tr>
                             </thead>
                             <tbody>
@@ -38,6 +50,10 @@
                                 <td>{{ employee.Emp_Mailing_Address }}</td>
                                 <td>{{ employee.Emp_Mailing_City }}</td>
                                 <td>{{ employee.State_Abbreviation }}</td>
+                                <td>{{ employee.Emp_Zip_code }}</td>
+                                <td>{{ employee.Emp_Phone }}</td>
+                                <td>{{ employee.Emp_Email }}</td>
+                                <td>{{ employee.Emp_Position }}</td>
                             </tr>
                             {% endfor %}
                             </tbody>

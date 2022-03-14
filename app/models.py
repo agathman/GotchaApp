@@ -55,13 +55,19 @@ class Employee(db.Model):
     Emp_Email = db.Column(db.String(100) )
     Emp_Position = db.Column(db.String(50))
 
-    def __init__(self, Emp_ID,Emp_First_Name, Emp_Last_Name, Emp_Mailing_Address, Emp_Mailing_City, State_ID):
+    def __init__(self, Emp_ID,Emp_First_Name, Emp_Last_Name, Emp_Mailing_Address, Emp_Mailing_City, State_ID,Emp_Zip_Code, Emp_Phone, Emp_Email, Emp_Position):
         self. Emp_ID = Emp_ID
         self.Emp_First_Name = Emp_First_Name
         self.Emp_Last_Name = Emp_Last_Name
         self.Emp_Mailing_Address = Emp_Mailing_Address
         self.Emp_Mailing_City =Emp_Mailing_City
         self.State_ID = State_ID
+        # Tanya- I added this
+        self.Emp_Zip_Code= Emp_Zip_Code
+        self.Emp_Phone = Emp_Phone
+        self.Emp_Email =Emp_Email
+        self.Emp_Position =Emp_Position
+
 
 
 class Employee_Assignment(db.Model):
