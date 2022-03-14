@@ -88,17 +88,17 @@ def viewAppointment():
 
 @my_view.route('/Customer')
 def viewCustomer():
-
+#State abb
     Customers = Customer.query.join(State, Customer.State_ID == State.State_ID)\
         .add_columns(Customer.First_Name, Customer.Last_Name, Customer.Phone, Customer.Email, Customer.Mailing_Address, Customer.Mailing_City, 
                      Customer.Mailing_Zip_Code, Customer.Contact_Date, State.State_Abbreviation)
-
 
     return render_template('tables/customer.html', customers = Customers )
 
 
 @my_view.route('/Employee')
 def viewEmployee():
+    #only for all 
     return render_template('tables/Employee.html', test_table = Test_Table.query.all())
 
 @my_view.route('/EmployeeAssignment')

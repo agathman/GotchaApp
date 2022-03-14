@@ -1,0 +1,53 @@
+{% extends "base.html" %}
+
+     {% block content %}
+     <div class="container">
+            <div class="p-5 mb-4 bg-light rounded-3">
+                <div class="container-fluid py-5 text-center">
+                    <h1 class="display-5 fw-bold">Employees</h1>
+                   
+                      
+                        
+                            <table class='table'>
+                                <th>
+                                    Employee ID
+                                </th>
+                                <th>
+                                    First Name
+                                </th>
+                                <th>
+                                    Last Name
+                                </th>
+                                <th>
+                                    Address
+                                </th>
+                                <th>
+                                    City
+                                </th>
+                                <th>
+                                    State
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for employee in employees %}
+                                <tr>
+                                <td>{{ employee.Emp_ID }}</td>
+                                <td>{{ employee.Emp_First_Name}}</td>
+                                <td>{{ employee.Emp_Last_Name }}</td>
+                                <td>{{ employee.Emp_Mailing_Address }}</td>
+                                <td>{{ employee.Emp_Mailing_City }}</td>
+                                <td>{{ employee.State_Abbreviation }}</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                                    
+                        </table>
+    
+
+                   
+
+                </div>
+            </div>        
+        </div>
+        {% endblock %}
