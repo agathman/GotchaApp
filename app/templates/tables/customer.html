@@ -1,0 +1,65 @@
+{% extends "base.html" %}
+
+     {% block content %}
+     <div class="container">
+            <div class="p-5 mb-4 bg-light rounded-3">
+                <div class="container-fluid py-5 text-center">
+                    <h1 class="display-5 fw-bold">Customers</h1>
+                   
+                      {% for customer in customers %}
+                        
+                            <table class='table'>
+                                <th>
+                                    First Name
+                                </th>
+                                <th>
+                                    Last Name
+                                </th>
+                                <th>
+                                    Phone 
+                                </th>
+                                <th>
+                                    Email
+                                </th>
+                                <th>
+                                    Address
+                                </th>
+                                <th>
+                                    City
+                                </th>
+                                <th>
+                                    Zip Code
+                                </th>
+                                <th>
+                                    Contact Date
+                                </th>
+                                <th>
+                                    State
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                            
+                                <td>{{ customer.First_Name}}</td>
+                                <td>{{ customer.Last_Name }}</td>
+                                <td>{{ customer.Phone }}</td>
+                                <td>{{ customer.Email }}</td>
+                                <td>{{ customer.Mailing_Address }}</td>
+                                <td>{{ customer.Mailing_City }}</td>
+                                <td>{{ customer.Mailing_Zip_Code }}</td>
+                                <td>{{ customer.Contact_Date }}</td>
+                                <td>{{ customer.State_ID }}</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                                    
+                        </table>
+    
+
+                   
+
+                </div>
+            </div>        
+        </div>
+        {% endblock %}
