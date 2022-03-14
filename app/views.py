@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, redirect, render_template, request, flash, url_for, redirect
 from .models import Appointment, Customer, Employee, Employee_Assignment, Event_Status, Event_Category, Event_Order, Event_Order_Line, Payment, Payment_Type, Product_Service, State, Vendor, Vendor_Service
 from . import db
 
@@ -7,20 +7,36 @@ my_view = Blueprint('my_view', __name__)
 
 
 # Routes to html views with GET requests
-@my_view.route("/")
+@my_view.route("/", methods=['GET', 'POST'])
 def index():
+
+    if request.method == 'POST':
+        customer = Customer(request.form['firstName'], request.form['lastName'], request.form['phone'],
+                    request.form['email'], request.form['address'], request.form['city'], request.form['zip'], request.form['state'])
+        appointment = Appointment
+        db.session.add(customer)
+        db.session.commit()
+
+        flash('Appointment added successfully')
+
+    
+        
+
 
     CustomerList = Customer.query.join(Event_Order, Customer.Customer_ID == Event_Order.Customer_ID)\
         .add_columns(Customer.First_Name, Customer.Last_Name, Event_Order.Event_Time, Customer.Customer_ID)
     
     return render_template('index.html', customers = CustomerList)
 
+
+
 @my_view.route('/event/<eventID>')
 def event(eventID):
 
     Event = Event_Order.query.join(Customer, Event_Order.Customer_ID == Customer.Customer_ID)\
-        .add_columns(Customer.First_Name, Customer.Last_Name, Customer.Email, Customer.Phone, Event_Order.Event_Location_Name, 
-        Event_Order.Event_Order_Desc, Event_Order.Event_Time, Event_Order.Event_Setup, Event_Order.Event_Delivery, Event_Order.Event_Restriction_Desc)\
+        .add_columns(Customer.First_Name, Customer.Last_Name, Customer.Email, Customer.Phone, Event_Order.Event_Time, 
+        Event_Order.Event_Theme, Event_Order.Event_Order_Desc, Event_Order.Event_Delivery, Event_Order.Event_Setup, Event_Order.Event_Location_Name,
+        Event_Order.Event_Restriction_Desc, Event_Order.Event_Address, Event_Order.Event_City)\
             .filter_by(Customer_ID = eventID)
     
     eStatus = Event_Order.query.join(Event_Status, Event_Order.Event_Status_ID == Event_Status.Event_Status_ID)\

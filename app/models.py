@@ -27,15 +27,15 @@ class Customer(db.Model):
 
     Event_Order = relationship("Event_Order", backref="Customer")
 
-    def __repr__(self, Customer_ID, Contact_Date, First_Name, Last_Name, Phone, Email, Mailing_Address, Mailing_City, State_ID):
-        self.Customer_ID = Customer_ID
-        self.Contact_Date = Contact_Date
+    def __init__(self, First_Name, Last_Name, Phone, Email, Mailing_Address, Mailing_City, Mailing_Zip_Code, State_ID):
+       
         self.First_Name = First_Name
         self.Last_Name = Last_Name
         self.Phone = Phone
         self.Email = Email
         self.Mailing_Address = Mailing_Address
         self.Mailing_City = Mailing_City
+        self.Mailing_Zip_Code = Mailing_Zip_Code
         self.State_ID = State_ID
 
 

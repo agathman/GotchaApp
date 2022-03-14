@@ -13,19 +13,64 @@
                                     Customer Name
                                 </th>
                                 <th>
+                                    Phone Number  
+                                </th>
+                                <th>
+                                    Email
+                                </th>
+                            </tr>
+                            </thead>
+                            <tr>
+                                {% for events in  event %}
+                                <td>{{ events.First_Name }} {{ events.Last_Name }}</td>
+                                <td>{{ events.Phone }}</td>
+                                <td>{{ events.Email }}</td>
+                                {% endfor %}
+                            </tr>
+                            </table>
+                            <table class='table'>
+                                <th>
                                     Event Date
                                 </th>
-                                <th>Event Location</th>
+                                <th>
+                                    Theme
+                                </th>
+                                <th>
+                                    Order Description
+                                </th>
+                                <th>
+                                    Delivery
+                                </th>
+                                <th>
+                                    Setup
+                                </th>
+                                <th>
+                                    Location
+                                </th>
+                                <th>
+                                    Restrictions
+                                </th>
+                                <th>
+                                    Address
+                                </th>
+                                <th>
+                                    City
+                                </th>
                             </tr>
                             </thead>
                             <tbody>
                                 <tr>
                                     {% for events in  event %}
-                                <td>{{ events.First_Name }} {{ events.Last_Name }}</td>
-                            
                                 <td>{{ events.Event_Time }}</td>
-                                <td>{{events.Event_Location_Name}}</td>
-                                </tr>
+                                <td>{{ events.Event_Theme }}</td>
+                                <td>{{ events.Event_Order_Desc }}</td>
+                                <td>{{ events.Event_Setup }}</td>
+                                <td>{{ events.Event_Delivery }}</td>
+                                <td>{{ events.Event_Location_Name }}</td>
+                                <td>{{ events.Event_Restriction_Desc }}</td>
+                                <td>{{ events.Event_Address }}</td>
+                                <td>{{ events.Event_City }}</td>
+                            </tr>
                             {% endfor %}
                             </tbody>
                                     
