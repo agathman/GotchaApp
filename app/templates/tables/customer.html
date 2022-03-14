@@ -6,7 +6,7 @@
                 <div class="container-fluid py-5 text-center">
                     <h1 class="display-5 fw-bold">Customers</h1>
                    
-                      {% for customer in customers %}
+                      
                         
                             <table class='table'>
                                 <th>
@@ -39,6 +39,7 @@
                             </tr>
                             </thead>
                             <tbody>
+                                {% for customer in customers %}
                                 <tr>
                             
                                 <td>{{ customer.First_Name}}</td>
@@ -48,8 +49,8 @@
                                 <td>{{ customer.Mailing_Address }}</td>
                                 <td>{{ customer.Mailing_City }}</td>
                                 <td>{{ customer.Mailing_Zip_Code }}</td>
-                                <td>{{ customer.Contact_Date }}</td>
-                                <td>{{ customer.State_ID }}</td>
+                                <td>{{ customer.Contact_Date.strftime('%m-%d-%Y') }}</td>
+                                <td>{{ customer.State_Abbreviation }}</td>
                             </tr>
                             {% endfor %}
                             </tbody>
