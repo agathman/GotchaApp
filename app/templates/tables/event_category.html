@@ -9,9 +9,7 @@
                       
                         
                             <table class='table'>
-                                <th>
-                                    Event Category
-                                </th>
+                               
                                 <th>
                                     Event Category Name
                                 </th>
@@ -21,7 +19,6 @@
                             <tbody>
                                 {% for event_category in event_categories %}
                                 <tr>
-                                <td>{{ event_category.Event_Category_ID }}</td>
                                 <td>{{ event_category.Event_Category_Name}}</td>
                             </tr>
                             {% endfor %}
