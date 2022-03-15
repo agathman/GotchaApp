@@ -191,7 +191,7 @@ class Payment_Type(db.Model):
     def __repr__(self, Payment_Type_ID, Payment_Type_Name):
         self.Payment_Type_ID = Payment_Type_ID
         self.Payment_Type_Name = Payment_Type_Name
-
+#form created
 class Product_Service(db.Model):
     __tablename__ = 'Product_Service'
     Product_Service_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -200,7 +200,7 @@ class Product_Service(db.Model):
     def __repr__(self, Product_Service_ID, Product_Service):
         self.Product_Service_ID = Product_Service_ID
         self.Product_Service = Product_Service
-
+#form created
 class State(db.Model):
     __tablename__ = 'State'
     State_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
