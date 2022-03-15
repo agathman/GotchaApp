@@ -182,7 +182,7 @@ class Payment(db.Model):
         self.Event_Order_ID = Event_Order_ID
         self.Payment_Date_Init = Payment_Date_Init
         self.Payment_Date_Full = Payment_Date_Full
-
+#form created
 class Payment_Type(db.Model):
     __tablename__ = 'Payment_Type'
     Payment_Type_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
