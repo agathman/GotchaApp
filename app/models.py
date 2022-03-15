@@ -41,7 +41,7 @@ class Customer(db.Model):
         self.State_ID = State_ID
 
 
-
+#form created
 class Employee(db.Model):
     __tablename__ = 'Employee'
     Emp_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -68,7 +68,7 @@ class Employee(db.Model):
         self.Emp_Email =Emp_Email
         self.Emp_Position =Emp_Position
 
-
+#form created
 
 class Employee_Assignment(db.Model):
     __tablename__ = 'Employee_Assignment'
@@ -82,7 +82,7 @@ class Employee_Assignment(db.Model):
         self.Employee_ID = Employee_ID
 
 
-
+#form created
 class Event_Category(db.Model):
     __tablename__ = 'Event_Category'
     Event_Category_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
