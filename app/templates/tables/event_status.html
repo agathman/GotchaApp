@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+     {% block content %}
+     <div class="container">
+            <div class="p-5 mb-4 bg-light rounded-3">
+                <div class="container-fluid py-5 text-center">
+                    <h1 class="display-5 fw-bold">Event Status</h1>
+                   
+                      
+                        
+                            <table class='table'>
+                               
+                                <th>
+                                    Event Status
+                                </th>
+                                 
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for event_status in events_status %}
+                                <tr>
+                                <td>{{ event_status.Event_Status}}</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                                    
+                        </table>
+    
+
+                   
+
+                </div>
+            </div>        
+        </div>
+        {% endblock %}

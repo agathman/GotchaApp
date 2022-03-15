@@ -91,7 +91,7 @@ class Event_Category(db.Model):
     def __repr__(self,Event_Category_ID, Event_Category_Name):
         self.Event_Category_ID = Event_Category_ID
         self.Event_Category_Name = Event_Category_Name       
-
+#form created
 class Event_Order(db.Model):
     __tablename__ = 'Event_Order'
     Event_Order_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -135,7 +135,7 @@ class Event_Order(db.Model):
             self.Employee_Assignment_ID = Employee_Assignment_ID
             self.Feedback = Feedback
             
-
+#form created
 class Event_Order_Line(db.Model):
     __tablename__ = 'Event_Order_Line'
     Event_Order_Line_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -158,19 +158,7 @@ class Event_Order_Line(db.Model):
             self.Event_Order_ID = Event_Order_ID
             self.Product_Service_ID = Product_Service_ID
 
-# Class method to GET from DB
-
-    def __repr__(self, Event_Order_Line_ID, Vendor_ID, Event_Order_Status_ID,
-     Event_Order_Line_Date, Event_Order_ID, Product_Services_ID):
-# Defines representation for object
-
-            self.Event_Order_Line_ID = Event_Order_Line_ID
-            self.Vendor_ID = Vendor_ID
-            self.Event_Order_Status_ID = Event_Order_Status_ID
-            self.Event_Order_Line_Date = Event_Order_Line_Date
-            self.Event_Order_ID = Event_Order_ID
-            self.Product_Services_ID = Product_Services_ID
-            
+#form created
 class Event_Status(db.Model):
     __tablename__ = 'Event_Status'
     Event_Status_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
