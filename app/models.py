@@ -211,7 +211,7 @@ class State(db.Model):
         self.State_ID = State_ID
         self.State_Name = State_Name
         self.State_Abbreviation = State_Abbreviation
-
+#form created
 class Vendor(db.Model):
     __tablename__ = 'Vendor'
     Vendor_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
@@ -224,7 +224,7 @@ class Vendor(db.Model):
         self.Vendor_Name = Vendor_Name
         self.Vendor_Services_ID = Vendor_Services_ID
         self.Vendor_Desc = Vendor_Desc
-
+#form creation
 class Vendor_Service(db.Model):
     __tablename__ = 'Vendor_Service'
     Vendor_Service_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
