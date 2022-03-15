@@ -1,0 +1,48 @@
+{% extends "base.html" %}
+
+     {% block content %}
+     <div class="container">
+            <div class="p-5 mb-4 bg-light rounded-3">
+                <div class="container-fluid py-5 text-center">
+                    <h1 class="display-5 fw-bold">Payment</h1>
+                   
+                      
+                        
+                            <table class='table'>
+                                <th>
+                                    Payment Type ID
+                                </th>
+                                <th>
+                                    Event Order ID
+                                </th>
+                                <th>
+                                    Payment Date Init
+                                </th>
+                                <th>
+                                    Payment Date Full
+                                </th>
+                               
+                                 
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for payment in payments %}
+                                <tr>
+                                <td>{{ payment.Payment_Type_ID }}</td>
+                                <td>{{ payment.Event_Order_ID }}</td>
+                                <td>{{ payment.Payment_Date_Init }}</td>
+                                <td>{{ payment.Payment_Date_Full }}</td>
+                                
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                                    
+                        </table>
+    
+
+                   
+
+                </div>
+            </div>        
+        </div>
+        {% endblock %}
