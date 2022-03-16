@@ -28,7 +28,7 @@ class Customer(db.Model):
 
     Event_Order = relationship("Event_Order", backref="Customer")
 
-    def __init__(self, Contact_Date, First_Name, Last_Name, Phone, Email, Mailing_Address, Mailing_City, Mailing_Zip_Code, State_ID):
+    def __init__(self, First_Name, Last_Name, Phone, Email, Mailing_Address, Mailing_City, Mailing_Zip_Code, Contact_Date, State_ID):
        
         self.First_Name = First_Name
         self.Last_Name = Last_Name
@@ -55,8 +55,7 @@ class Employee(db.Model):
     Emp_Email = db.Column(db.String(100) )
     Emp_Position = db.Column(db.String(50))
 
-    def __init__(self, Emp_ID,Emp_First_Name, Emp_Last_Name, Emp_Mailing_Address, Emp_Mailing_City, State_ID,Emp_Zip_Code, Emp_Phone, Emp_Email, Emp_Position):
-        self. Emp_ID = Emp_ID
+    def __init__(self,Emp_First_Name, Emp_Last_Name, Emp_Mailing_Address, Emp_Mailing_City, State_ID,Emp_Zip_Code, Emp_Phone, Emp_Email, Emp_Position):
         self.Emp_First_Name = Emp_First_Name
         self.Emp_Last_Name = Emp_Last_Name
         self.Emp_Mailing_Address = Emp_Mailing_Address
@@ -76,8 +75,7 @@ class Employee_Assignment(db.Model):
     Assignment_Start_Date = db.Column(db.Date)
     Employee_ID = db.Column(db.Integer, db.ForeignKey('Employee.Emp_ID'))
 
-    def __repr__(self, Employee_Assignment_ID, Assignment_Start_Date, Employee_ID):
-        self.Employee_Assignment_ID = Employee_Assignment_ID
+    def __init__(self, Assignment_Start_Date, Employee_ID):
         self.Assignment_Start_Date = Assignment_Start_Date
         self.Employee_ID = Employee_ID
 
@@ -88,8 +86,7 @@ class Event_Category(db.Model):
     Event_Category_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
     Event_Category_Name = db.Column(db.String(150), nullable=False)
 
-    def __repr__(self,Event_Category_ID, Event_Category_Name):
-        self.Event_Category_ID = Event_Category_ID
+    def __init__(self, Event_Category_Name):
         self.Event_Category_Name = Event_Category_Name       
 #form created
 class Event_Order(db.Model):
@@ -147,11 +144,10 @@ class Event_Order_Line(db.Model):
 
 # Class method to GET from DB
 
-    def __repr__(self, Event_Order_Line_ID, Vendor_ID, Event_Order_Status_ID,
+    def __init__(self, Vendor_ID, Event_Order_Status_ID,
                 Event_Order_Line_Date, Event_Order_ID, Product_Service_ID):
 # Defines representation for object
 
-            self.Event_Order_Line_ID = Event_Order_Line_ID
             self.Vendor_ID = Vendor_ID
             self.Event_Order_Status_ID = Event_Order_Status_ID
             self.Event_Order_Line_Date = Event_Order_Line_Date
@@ -164,7 +160,7 @@ class Event_Status(db.Model):
     Event_Status_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
     Event_Status = db.Column(db.String(50), nullable=False)
 
-    def __repr__(self, Event_Status_ID, Event_Status):
+    def __init__(self, Event_Status_ID, Event_Status):
         self.Event_Status_ID = Event_Status_ID
         self.Event_Status = Event_Status
 #form created
@@ -176,7 +172,7 @@ class Payment(db.Model):
     Payment_Date_Init = db.Column(db.Date, nullable=False)
     Payment_Date_Full = db.Column(db.Date, nullable=False)
 
-    def __repr__(self, Payment_ID, Payment_Type_ID, Event_Order_ID, Payment_Date_Init, Payment_Date_Full):
+    def __init__(self, Payment_ID, Payment_Type_ID, Event_Order_ID, Payment_Date_Init, Payment_Date_Full):
         self.Payment_ID = Payment_ID
         self.Payment_Type_ID = Payment_Type_ID
         self.Event_Order_ID = Event_Order_ID
@@ -188,7 +184,7 @@ class Payment_Type(db.Model):
     Payment_Type_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
     Payment_Type_Name = db.Column(db.String(50), nullable=False)
 
-    def __repr__(self, Payment_Type_ID, Payment_Type_Name):
+    def __init__(self, Payment_Type_ID, Payment_Type_Name):
         self.Payment_Type_ID = Payment_Type_ID
         self.Payment_Type_Name = Payment_Type_Name
 #form created
@@ -197,7 +193,7 @@ class Product_Service(db.Model):
     Product_Service_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
     Product_Service = db.Column(db.String(50), nullable=False)
 
-    def __repr__(self, Product_Service_ID, Product_Service):
+    def __init__(self, Product_Service_ID, Product_Service):
         self.Product_Service_ID = Product_Service_ID
         self.Product_Service = Product_Service
 #form created
@@ -207,7 +203,7 @@ class State(db.Model):
     State_Name = db.Column(db.String(20), nullable=False)
     State_Abbreviation = db.Column(db.String(2), nullable=False)
 
-    def __repr__(self, State_ID, State_Name, State_Abbreviation):
+    def __init__(self, State_ID, State_Name, State_Abbreviation):
         self.State_ID = State_ID
         self.State_Name = State_Name
         self.State_Abbreviation = State_Abbreviation
@@ -219,7 +215,7 @@ class Vendor(db.Model):
     Vendor_Service_ID = db.Column(db.Integer, db.ForeignKey('Vendor_Service.Vendor_Service_ID'), nullable=False)
     Vendor_Desc = db.Column(db.String(250), nullable=False)
 
-    def __repr__(self, Vendor_ID, Vendor_Name, Vendor_Services_ID, Vendor_Desc):
+    def __init__(self, Vendor_ID, Vendor_Name, Vendor_Services_ID, Vendor_Desc):
         self.Vendor_ID = Vendor_ID
         self.Vendor_Name = Vendor_Name
         self.Vendor_Services_ID = Vendor_Services_ID
@@ -230,7 +226,7 @@ class Vendor_Service(db.Model):
     Vendor_Service_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
     Vendor_Services = db.Column(db.String(50), nullable=False)
 
-    def __repr__(self, Vendor_Service_ID, Vendor_Services):
+    def __init__(self, Vendor_Service_ID, Vendor_Services):
             self.Vendor_Service_ID = Vendor_Service_ID
             self.Vendor_Services = Vendor_Services
 

@@ -15,6 +15,7 @@ def index():
     
     if request.method == 'POST':
         #Form request to add customer
+        #Checks which form to add from
         if request.form['check'] == 'customer':
             customer = Customer(request.form['firstName'], request.form['lastName'], request.form['phone'],
                         request.form['email'], request.form['address'], request.form['city'], request.form['zip'], request.form['date'], request.form['state'])
@@ -131,7 +132,7 @@ def viewPayment():
 
 @my_view.route('/PaymentType')
 def viewPaymentType():
-    return render_template('tables/payment_type.html')
+    return render_template('tables/payment_type.html', payment = Payment.query.all())
 
 
 @my_view.route('/ProductService')
