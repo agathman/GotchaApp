@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+     {% block content %}
+     <div class="container">
+            <div class="p-5 mb-4 bg-light rounded-3">
+                <div class="container-fluid py-5 text-center">
+                    <h1 class="display-5 fw-bold">Event Category</h1>
+                   
+                      <!-- Will be added to event -->
+                        
+                            <table class='table'>
+                               
+                                <th>
+                                    Event Category Name
+                                </th>
+                                 
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for event_category in event_categories %}
+                                <tr>
+                                <td>{{ event_category.Event_Category_Name}}</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                                    
+                        </table>
+    
+
+                   
+
+                </div>
+            </div>        
+        </div>
+        {% endblock %}

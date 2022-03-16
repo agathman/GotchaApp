@@ -1,0 +1,40 @@
+{% extends "base.html" %}
+
+     {% block content %}
+     <div class="container">
+            <div class="p-5 mb-4 bg-light rounded-3">
+                <div class="container-fluid py-5 text-center">
+                    <h1 class="display-5 fw-bold">Employee Assignment</h1>
+                   
+                      <!-- Will be added to employee -->
+                        
+                            <table class='table'>
+                               
+                                <th>
+                                    Assignment Date
+                                </th>
+                                <th>
+                                    Employee ID
+                                </th>
+                                
+                                
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for employee_assignment in employee_assignments %}
+                                <tr>>
+                                <td>{{ employee_assignment.Assignment_Start_Date}}</td>
+                                <td>{{ employee_assignment.Employee_ID }}</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                                    
+                        </table>
+    
+
+                   
+
+                </div>
+            </div>        
+        </div>
+        {% endblock %}

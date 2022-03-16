@@ -1,0 +1,85 @@
+{% extends "base.html" %}
+
+     {% block content %}
+     <div class="container">
+            <div class="p-5 mb-4 bg-light rounded-3">
+                <div class="container-fluid py-5 text-center">
+                    <h1 class="display-5 fw-bold">Events</h1>
+                   
+                      {% for event in events %}
+                        <table class="table">
+                        
+                            <thead>
+                            <tr>
+                                <th>
+                                    Customer Name
+                                </th>
+                                <th>
+                                    Phone Number  
+                                </th>
+                                <th>
+                                    Email
+                                </th>
+                            </tr>
+                            </thead>
+                            <tr>
+                                <td>{{ event.First_Name }} {{ event.Last_Name }}</td>
+                                <td>{{ event.Phone }}</td>
+                                <td>{{ event.Email }}</td>
+                            </tr>
+                            </table>
+                            <table class='table'>
+                                <th>
+                                    Event Date
+                                </th>
+                                <th>
+                                    Theme
+                                </th>
+                                <th>
+                                    Order Description
+                                </th>
+                                <th>
+                                    Delivery
+                                </th>
+                                <th>
+                                    Setup
+                                </th>
+                                <th>
+                                    Location
+                                </th>
+                                <th>
+                                    Restrictions
+                                </th>
+                                <th>
+                                    Address
+                                </th>
+                                <th>
+                                    City
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                            
+                                <td>{{ event.Event_Time }}</td>
+                                <td>{{ event.Event_Theme }}</td>
+                                <td>{{ event.Event_Order_Desc }}</td>
+                                <td>{{ event.Event_Setup }}</td>
+                                <td>{{ event.Event_Delivery }}</td>
+                                <td>{{ event.Event_Location_Name }}</td>
+                                <td>{{ event.Event_Restriction_Desc }}</td>
+                                <td>{{ event.Event_Address }}</td>
+                                <td>{{ event.Event_City }}</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                                    
+                        </table>
+    
+
+                   
+
+                </div>
+            </div>        
+        </div>
+        {% endblock %}

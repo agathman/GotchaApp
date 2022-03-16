@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+     {% block content %}
+     <div class="container">
+            <div class="p-5 mb-4 bg-light rounded-3">
+                <div class="container-fluid py-5 text-center">
+                    <h1 class="display-5 fw-bold">Product Service</h1>
+                   
+                            <table class='table'>
+                        <!-- Will be added to event -->
+
+                                <th>
+                                    Product Service
+                                </th>
+                                 
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for product_service in product_services %}
+                                <tr>
+                                <td>{{ product_service.Product_Service}}</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                                    
+                        </table>
+    
+
+                   
+
+                </div>
+            </div>        
+        </div>
+        {% endblock %}

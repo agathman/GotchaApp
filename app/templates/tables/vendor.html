@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+     {% block content %}
+     <div class="container">
+            <div class="p-5 mb-4 bg-light rounded-3">
+                <div class="container-fluid py-5 text-center">
+                    <h1 class="display-5 fw-bold">Vendor</h1>
+
+                        
+                      
+                        
+                            
+                        <table class='table'>
+                            
+                                <th>
+                                    Vendor Name
+                                </th>
+                                <th>
+                                    Vendor Service ID
+                                </th>
+                                <th>
+                                     Description
+                                </th>
+                                
+                                
+                            </tr>
+                            </thead>
+                            <tbody>
+                                {% for vendor in vendors %}
+                                <tr>>
+                                <td>{{ vendor.Vendor_Name}}</td>
+                                <td>{{ vendor.Vendor_Services_ID }}</td>
+                                <td>{{ vendor.Vendor_Desc }}</td>
+                            </tr>
+                            {% endfor %}
+                            </tbody>
+                                    
+                        </table>
+    
+
+                   
+
+                </div>
+            </div>        
+        </div>
+        {% endblock %}
