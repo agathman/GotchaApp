@@ -4,7 +4,7 @@ from datetime import datetime
 
   
 app = Flask(__name__, template_folder="templates", instance_relative_config=False)
-app.config["SQLALCHEMY_DATABASE_URI"] = 'mssql+pymssql://gotchadata:Got1234!@COT-CIS4375-08:1433/GotchaData'
+app.config["SQLALCHEMY_DATABASE_URI"] = 'mssql+pymssql://gotchadata:Got1234!@COT-CIS4375-08.cougarnet.uh.edu:1433/GotchaData'
 app.config['SECRET_KEY'] = 'secretkey'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 

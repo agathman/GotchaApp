@@ -2,7 +2,6 @@ insatll these in a new terminal
 
 Python -m venv venv
 
-venv\Scrips\Activate
 
 venv\Scripts\activate.ps1
 
