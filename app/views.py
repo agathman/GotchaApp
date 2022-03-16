@@ -99,8 +99,8 @@ def viewCustomer():
 @my_view.route('/Employee')
 def viewEmployee():
     Employees = Employee.query.join(State, Employee.State_ID == State.State_ID)\
-        .add_columns(Employee.Emp_ID, Employee.Emp_First_Name, Employee.Emp_Last_Name, Employee.Emp_Mailing_Address, Customer.Emp_Mailing_City, 
-                     Employee.State_Abbreviation, Employee.Emp_Zip_Code, Employee.Emp_Phone, Employee.Emp_Email, Employee.Emp_Position)
+        .add_columns(Employee.Emp_ID, Employee.Emp_First_Name, Employee.Emp_Last_Name, Employee.Emp_Mailing_Address, Employee.Emp_Mailing_City, 
+                     State.State_Abbreviation, Employee.Emp_Zip_Code, Employee.Emp_Phone, Employee.Emp_Email, Employee.Emp_Position)
  
     return render_template('tables/employee.html', employees = Employees )
 
@@ -110,46 +110,46 @@ def viewEmployeeAssignment():
 
 @my_view.route('/EventCategory')
 def viewEventCategory():
-    return render_template('tables/event_category.html', test_table = Test_Table.query.all())
+    return render_template('tables/event_category.html')
 
 
 @my_view.route('/EventOrder')
 def viewEventOrder():
-    return render_template('tables/event.html', test_table = Test_Table.query.all())
+    return render_template('tables/event.html')
   
 @my_view.route('/EventOrderLine')
 def vEventOrderLine():
-    return render_template('tables/event_order_line.html', test_table = Test_Table.query.all())
+    return render_template('tables/event_order_line.html')
 
 @my_view.route('/EventStatus')
 def viewEventStatus():
-    return render_template('tables/event_status.html', test_table = Test_Table.query.all())
+    return render_template('tables/event_status.html')
 
 @my_view.route('/Payment')
 def viewPayment():
-    return render_template('tables/payment.html', test_table = Test_Table.query.all())
+    return render_template('tables/payment.html')
 
 @my_view.route('/PaymentType')
 def viewPaymentType():
-    return render_template('tables/payment_type.html', test_table = Test_Table.query.all())
+    return render_template('tables/payment_type.html')
 
 
 @my_view.route('/ProductService')
 def viewProductService():
-    return render_template('tables/product_service.html', test_table = Test_Table.query.all())
+    return render_template('tables/product_service.html')
 
 
 @my_view.route('/State')
 def viewState():
-    return render_template('tables/state.html', test_table = Test_Table.query.all())
+    return render_template('tables/state.html')
 
 @my_view.route('/Vendor')
 def viewVendor():
-    return render_template('tables/vendor.html', test_table = Test_Table.query.all())
+    return render_template('tables/vendor.html')
 
 @my_view.route('/VendorService')
 def viewVendorService():
-    return render_template('tables/vendor_service.html', test_table = Test_Table.query.all())
+    return render_template('tables/vendor_service.html')
 
 @my_view.route('/createDB')
 def createdb():
