@@ -215,9 +215,9 @@ class Vendor(db.Model):
     Vendor_Service_ID = db.Column(db.Integer, db.ForeignKey('Vendor_Service.Vendor_Service_ID'), nullable=False)
     Vendor_Desc = db.Column(db.String(250), nullable=False)
 
-    def __init__(self,Vendor_Name, Vendor_Services_ID, Vendor_Desc):
+    def __init__(self,Vendor_Name, Vendor_Service_ID, Vendor_Desc):
         self.Vendor_Name = Vendor_Name
-        self.Vendor_Services_ID = Vendor_Services_ID
+        self.Vendor_Service_ID = Vendor_Service_ID
         self.Vendor_Desc = Vendor_Desc
 #form creation
 class Vendor_Service(db.Model):
