@@ -21,13 +21,13 @@
                             <div class="modal-body">
                                 <form action = "{{ request.path }}" method = "post">
                                     <label>Customer</label>
-                                    <select class="form-control">
-                                     {% for customer in customers %}
-                                        <option>{{customer.First_Name}} {{customer.Last_Name}} </option>
-                                        {% endfor %}
-                                      </select>
-                                    <label>Appointment Date</label>
-                                    <input type="data" class="form-control">
+                                    <select class="form-control" name="customerID">
+                                        {% for customer in newAppointment %}
+                                            <option value="{{customer.Customer_ID}}">{{customer.First_Name}} {{customer.Last_Name}} </option> 
+                                            {% endfor %}
+                                        </select>
+                                        <label>Appointment Date</label>
+                                        <input type="date" name="date" class="form-control">
                                   
                             </div>
                             <div class="modal-footer">
