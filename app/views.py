@@ -107,15 +107,27 @@ def viewEmployee():
 
 @my_view.route('/EmployeeAssignment')
 def viewEmployeeAssignment():
+    Employee_Assignment = Employee_Assignment.query.join(Employee, Employee_Assignment.Emp_ID == Employee.Emp_ID)\
+        .add_columns(Employee_Assignment.Employee_Assignment_ID, Employee_Assignment.Assignment_Start_Date,
+         Employee.Emp_ID)
+
     return render_template('tables/employee_assignment.html')
 
 @my_view.route('/EventCategory')
 def viewEventCategory():
+
+    Event_Category .add_columns(Event_Category.Event_Category_ID, Event_Category.Event_Category_Name)
     return render_template('tables/event_category.html')
 
 
 @my_view.route('/EventOrder')
 def viewEventOrder():
+    Event_Order = Event_Order.query.join(Event_Category, Event_Order.Event_Category_ID == Event_Category.Event_Category_ID),(Customer, Event_Order.Customer_ID == Customer.Customer_ID),
+    (Event_Status, Event_Order.Event_Order_Status_ID == Event_Status.Event_Status_ID),(State, Event_Order.State_ID == State.State_ID),
+    (Employee_Assignment, Event_Order.Employee_Assignment_ID == Employee_Assignment.Employee_Assignment_ID)\
+        .add_columns(Event_Order.Event_Order_ID, Event_Category.Event_Category_ID, Customer.Customer_ID, Event_Status.Event_Status_ID, Event_Order.Event_Time,
+         Event_Order.Event_Theme, Event_Order.Event_Order_Desc, Event_Order.Event_Delivery, Event_Order.Event_Delivery, Event_Order.Event_Location_Name, Event_Order.Event_Restriction_Desc, 
+         Event_Order.Event_Address, Event_Order.Event_City, State.State_ID, Event_Order.Event_Zip_Code, Employee_Assignment.Employee_Assignment_ID, Event_Order.Feedback)
     return render_template('tables/event.html')
   
 @my_view.route('/EventOrderLine')
