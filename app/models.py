@@ -225,8 +225,7 @@ class Vendor_Service(db.Model):
     Vendor_Service_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
     Vendor_Services = db.Column(db.String(50), nullable=False)
 
-    def __init__(self, Vendor_Service_ID, Vendor_Services):
-            self.Vendor_Service_ID = Vendor_Service_ID
+    def __init__(self, Vendor_Services):
             self.Vendor_Services = Vendor_Services
 
 

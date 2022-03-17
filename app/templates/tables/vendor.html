@@ -32,8 +32,8 @@
                                     <input type="text" class="form-control" name="vendorName" required>
                                     <label>Vendor Service</label> 
                                     <select class="form-control" name="vendorService" required>                                           
-                                        {% for vendor in vendors %}
-                                            <option value="{{vendor.Vendor_Service_ID}}">{{vendor.Vendor_Services}}</option>
+                                        {% for vendorService in vendorServices %}
+                                            <option value="{{vendorService.Vendor_Service_ID}}">{{vendorService.Vendor_Services}}</option>
                                             {% endfor %}
                                             <option disabled selected value> -- Select an option -- </option>
                                         </select>
