@@ -162,7 +162,8 @@ def viewVendor():
     if request.method == 'POST':
         #Form request to add customer
         #Checks which form to add from
-            vendor = Vendor(request.form['vendorName'], request.form['vendorService'], request.form['vendorDesc'])
+            vendor = Vendor(request.form['vendorName'], request.form['vendorService'], request.form['vendorDesc'],request.form['firstName'],
+                request.form['lastName'],request.form['Phone'],request.form['Email'])
                        
             db.session.add(vendor)
             db.session.commit()
@@ -174,9 +175,17 @@ def viewVendor():
     return render_template('tables/vendor.html', vendors = vendorlist, vendorServices = Vendor_Service.query.all())
 
 
+
+
+
+
+
+
 @my_view.route('/VendorService')
 def viewVendorService():
     return render_template('tables/vendor_service.html')
+
+
 
 @my_view.route('/createDB')
 def createdb():
