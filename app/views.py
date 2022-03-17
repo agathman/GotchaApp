@@ -163,7 +163,7 @@ def viewVendor():
         #Form request to add customer
         #Checks which form to add from
             vendor = Vendor(request.form['vendorName'], request.form['vendorService'], request.form['vendorDesc'],request.form['firstName'],
-                request.form['lastName'],request.form['Phone'],request.form['Email'])
+                request.form['lastName'],request.form['phone'],request.form['email'])
                        
             db.session.add(vendor)
             db.session.commit()
