@@ -115,8 +115,8 @@ def viewEmployeeAssignment():
 
 @my_view.route('/EventCategory')
 def viewEventCategory():
-
-    Event_Category .add_columns(Event_Category.Event_Category_ID, Event_Category.Event_Category_Name)
+    Event_Category = Event_Category()\
+        .add_columns(Event_Category.Event_Category_ID, Event_Category.Event_Category_Name)
     return render_template('tables/event_category.html')
 
 
@@ -132,10 +132,15 @@ def viewEventOrder():
   
 @my_view.route('/EventOrderLine')
 def vEventOrderLine():
+    Event_Order_Line = Event_Order_Line.query.join(Vendor, Event_Order_Line.Vendor_ID == Vendor.Vendor_ID), (Event_Order, Event_Order_Line.Event_Order_ID == Event_Order.Event_Order_ID), (Product_Service, Event_Order_Line.Product_Services_ID == Product_Service.Product_Service_ID)\
+        .add_columns(Event_Order_Line.Event_Order_Line_ID, )
     return render_template('tables/event_order_line.html')
+    # (Event_Order_Line, Event_Order_Line.Event_Order_Status_ID ==  )
 
 @my_view.route('/EventStatus')
 def viewEventStatus():
+    Event_Status = Event_Status()\
+        .add_columns(Event_Status.Event_Status_ID, Event_Status.Event_Status)
     return render_template('tables/event_status.html')
 
 @my_view.route('/Payment')
