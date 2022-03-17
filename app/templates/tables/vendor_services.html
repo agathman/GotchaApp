@@ -30,7 +30,7 @@
                         <div class="modal-body">
                             <form action = "{{ request.path }}" method = "post">   
 
-                                <label>Vendor Name</label> 
+                                <label>Vendor Service</label> 
                                 <select class="form-control" name="vendorService" required>                                           
                                     {% for vendorService in vendorServices %}
                                         <option value="{{vendorService.Vendor_Service_ID}}">{{vendorService.Vendor_Services}}</option>
@@ -38,9 +38,6 @@
                                         <option disabled selected value> -- Select an option -- </option>
                                     </select>
 
-                                <label>Vendor Service</label>
-                                <input type="text" class="form-control" name="vendorService" required>
-                                
                         </div>
                         <div class="modal-footer">
                             
