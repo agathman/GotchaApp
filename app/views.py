@@ -168,7 +168,8 @@ def viewVendor():
             db.session.commit()
 
     vendorlist = Vendor.query.join(Vendor_Service,Vendor_Service.Vendor_Service_ID == Vendor.Vendor_Service_ID)\
-        .add_columns(Vendor.Vendor_Name, Vendor.Vendor_Desc, Vendor_Service.Vendor_Services, Vendor_Service.Vendor_Service_ID)
+        .add_columns(Vendor.Vendor_Name, Vendor.Vendor_Desc, Vendor.First_Name, Vendor.Last_Name, Vendor.Phone, Vendor.Email,
+         Vendor_Service.Vendor_Services, Vendor_Service.Vendor_Service_ID)
 
     return render_template('tables/vendor.html', vendors = vendorlist, vendorServices = Vendor_Service.query.all())
 
