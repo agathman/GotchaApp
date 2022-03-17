@@ -6,9 +6,53 @@
                 <div class="container-fluid py-5 text-center">
                     <h1 class="display-5 fw-bold">Vendor</h1>
 
-                        
-                      
-                        
+                <!-- Modal Button for Vendor -->
+
+                    <div class="row container-fluid py-5 text-center">
+                        <div class="col">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                New Vendor
+                              </button>
+
+
+                    <!-- Modal Body for Vendor -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">New Vendor</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action = "{{ request.path }}" method = "post">   
+
+                                    <label>Vendor Name</label>
+                                    <input type="text" class="form-control" name="vendorName" required>
+                                    <label>Vendor Service</label> 
+                                    <select class="form-control" name="vendorService" required>                                           
+                                        {% for vendor in vendors %}
+                                            <option value="{{vendor.Vendor_Service_ID}}">{{vendor.Vendor_Services}}</option>
+                                            {% endfor %}
+                                            <option disabled selected value> -- Select an option -- </option>
+                                        </select>
+                                    <label>Vendor Description</label> 
+                                    <input type="text" class="form-control" name="vendorDesc" required>
+                                    
+                            </div>
+                            <div class="modal-footer">
+                                
+                                <input type='submit' class="btn btn-secondary" value="Save">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </form>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
+
+
                             
                         <table class='table'>
                             
@@ -21,26 +65,27 @@
                                 <th>
                                      Description
                                 </th>
-                                
-                                
                             </tr>
                             </thead>
                             <tbody>
                                 {% for vendor in vendors %}
-                                <tr>>
+                                <tr>
                                 <td>{{ vendor.Vendor_Name}}</td>
-                                <td>{{ vendor.Vendor_Services_ID }}</td>
+                                <td>{{ vendor.Vendor_Services }}</td>
                                 <td>{{ vendor.Vendor_Desc }}</td>
                             </tr>
                             {% endfor %}
                             </tbody>
-                                    
-                        </table>
-    
+                                
 
-                   
+                        </table>
 
                 </div>
             </div>        
         </div>
         {% endblock %}
+
+
+
+
+
