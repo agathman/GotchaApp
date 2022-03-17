@@ -37,6 +37,15 @@
                                             {% endfor %}
                                             <option disabled selected value> -- Select an option -- </option>
                                         </select>
+                                    <input type="text" class="form-control" name="firstName" required>
+                                    <label>First Name</label>
+                                    <input type="text" class="form-control" name="firstName" required>
+                                    <label>Last Name</label> 
+                                    <input type="text" class="form-control" name="lastName" required>
+                                    <label>Phone</label>
+                                    <input type="text" class="form-control" name="phone" required>
+                                    <label>Email</label>
+                                    <input type="email" class="form-control" name="email" required>
                                     <label>Vendor Description</label> 
                                     <input type="text" class="form-control" name="vendorDesc" required>
                                     
@@ -69,7 +78,6 @@
                                 <th>
                                     Last Name
                                 </th>
-                              
                                 <th>
                                     Phone
                                 </th>
@@ -87,10 +95,10 @@
                                 <tr>
                                 <td>{{ vendor.Vendor_Name}}</td>
                                 <td>{{ vendor.Vendor_Services }}</td>
-                                <td>{{ vendor.firstName}}</td>
-                                <td>{{ vendor.lastName}}</td>
-                                <td>{{ vendor.phone}}</td>
-                                <td>{{ vendor.email}}</td>
+                                <td>{{ vendor.First_Name}}</td>
+                                <td>{{ vendor.Last_Name}}</td>
+                                <td>{{ vendor.Phone}}</td>
+                                <td>{{ vendor.Email}}</td>
                                 <td>{{ vendor.Vendor_Desc }}</td>
                             </tr>
                             {% endfor %}
