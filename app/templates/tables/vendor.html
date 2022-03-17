@@ -56,15 +56,30 @@
                             
                         <table class='table'>
                             
+                              
                                 <th>
                                     Vendor Name
                                 </th>
                                 <th>
-                                    Vendor Service ID
+                                    Vendor Service
                                 </th>
                                 <th>
-                                     Description
+                                    First Name
                                 </th>
+                                <th>
+                                    Last Name
+                                </th>
+                              
+                                <th>
+                                    Phone
+                                </th>
+                                <th>
+                                    Email
+                                </th>
+                                <th>
+                                    Description
+                                </th>
+ 
                             </tr>
                             </thead>
                             <tbody>
@@ -72,12 +87,15 @@
                                 <tr>
                                 <td>{{ vendor.Vendor_Name}}</td>
                                 <td>{{ vendor.Vendor_Services }}</td>
+                                <td>{{ vendor.firstName}}</td>
+                                <td>{{ vendor.lastName}}</td>
+                                <td>{{ vendor.phone}}</td>
+                                <td>{{ vendor.email}}</td>
                                 <td>{{ vendor.Vendor_Desc }}</td>
                             </tr>
                             {% endfor %}
                             </tbody>
                                 
-
                         </table>
 
                 </div>
