@@ -161,13 +161,36 @@ def viewProductService():
 def viewState():
     return render_template('tables/state.html')
 
-@my_view.route('/Vendor')
+@my_view.route('/Vendor', methods = ["GET" ,"POST"])
 def viewVendor():
-    return render_template('tables/vendor.html')
+
+    if request.method == 'POST':
+        #Form request to add customer
+        #Checks which form to add from
+            vendor = Vendor(request.form['vendorName'], request.form['vendorService'], request.form['vendorDesc'],request.form['firstName'],
+                request.form['lastName'],request.form['phone'],request.form['email'])
+                       
+            db.session.add(vendor)
+            db.session.commit()
+
+    vendorlist = Vendor.query.join(Vendor_Service,Vendor_Service.Vendor_Service_ID == Vendor.Vendor_Service_ID)\
+        .add_columns(Vendor.Vendor_Name, Vendor.Vendor_Desc, Vendor.First_Name, Vendor.Last_Name, Vendor.Phone, Vendor.Email,
+         Vendor_Service.Vendor_Services, Vendor_Service.Vendor_Service_ID)
+
+    return render_template('tables/vendor.html', vendors = vendorlist, vendorServices = Vendor_Service.query.all())
+
+
+
+
+
+
+
 
 @my_view.route('/VendorService')
 def viewVendorService():
     return render_template('tables/vendor_service.html')
+
+
 
 @my_view.route('/createDB')
 def createdb():
