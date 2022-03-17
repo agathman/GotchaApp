@@ -13,7 +13,7 @@
                 <div class="row container-fluid py-5 text-center">
                     <div class="col">
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                            New Vendor
+                            Add Vendor Service
                           </button>
 
 
@@ -30,15 +30,16 @@
                         <div class="modal-body">
                             <form action = "{{ request.path }}" method = "post">   
 
-                                <label>Vendor Name</label>
-                                <input type="text" class="form-control" name="vendorName" required>
-                                <label>Vendor Service</label> 
+                                <label>Vendor Name</label> 
                                 <select class="form-control" name="vendorService" required>                                           
                                     {% for vendorService in vendorServices %}
                                         <option value="{{vendorService.Vendor_Service_ID}}">{{vendorService.Vendor_Services}}</option>
                                         {% endfor %}
                                         <option disabled selected value> -- Select an option -- </option>
                                     </select>
+
+                                <label>Vendor Service</label>
+                                <input type="text" class="form-control" name="vendorService" required>
                                 
                         </div>
                         <div class="modal-footer">
