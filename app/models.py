@@ -214,11 +214,20 @@ class Vendor(db.Model):
     Vendor_Name = db.Column(db.String(50), nullable=False)
     Vendor_Service_ID = db.Column(db.Integer, db.ForeignKey('Vendor_Service.Vendor_Service_ID'), nullable=False)
     Vendor_Desc = db.Column(db.String(250), nullable=False)
+    First_Name = db.Column(db.String(250), nullable=False)
+    Last_Name = db.Column(db.String(250), nullable=False)
+    Phone = db.Column(db.String, nullable=False)
+    Email = db.Column(db.String(250), nullable=False)
 
-    def __init__(self,Vendor_Name, Vendor_Service_ID, Vendor_Desc):
+    def __init__(self,Vendor_Name, Vendor_Service_ID, Vendor_Desc, First_Name, Last_Name, Phone, Email):
         self.Vendor_Name = Vendor_Name
         self.Vendor_Service_ID = Vendor_Service_ID
         self.Vendor_Desc = Vendor_Desc
+        self.First_Name = First_Name
+        self.Last_Name = Last_Name
+        self.Phone = Phone
+        self.Email = Email
+
 #form creation
 class Vendor_Service(db.Model):
     __tablename__ = 'Vendor_Service'
