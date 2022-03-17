@@ -30,7 +30,7 @@ def index():
         elif request.form['check'] == 'event':
             event = Event_Order(request.form['category'], request.form['customer'], request.form['status'], request.form['eventTime'], request.form['theme'], request.form['eventDesc'],
                         request.form['delivery'], request.form['setup'], request.form['location'], request.form['restrictions'], request.form['address'], request.form['city'],
-                        request.form['zip'],2, 1, 'Due after event')
+                        request.form['zip'],2, request.form['state'], 'Due after event')
             db.session.add(event)
             db.session.commit()
     
@@ -42,7 +42,7 @@ def index():
     AppointmentList = Appointment.query.join(Customer, Appointment.Customer_ID == Customer.Customer_ID)\
         .add_columns(Customer.First_Name, Customer.Last_Name, Appointment.Date)
     
-    return render_template('index.html', customers = CustomerList, newAppointment = Customer.query.all(), appointments = AppointmentList, eventCategory = Event_Category.query.all(), statuses = Event_Status.query.all())
+    return render_template('index.html', customers = CustomerList, stateList = State.query.all(), newAppointment = Customer.query.all(), appointments = AppointmentList, eventCategory = Event_Category.query.all(), statuses = Event_Status.query.all())
 
 @my_view.route("/", methods=['GET', 'POST'])
 def addCustomerModal():

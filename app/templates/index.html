@@ -37,11 +37,17 @@
                                     <input type="text" class="form-control" name="address" required>
                                     <label>City</label>
                                     <input type="text" class="form-control" name="city" required>
+                                    <label>State</label>
+                                    <select class="form-control" name="state" value="1">
+                                        {% for state in stateList %}
+                                            <option value="{{state.State_ID}}">{{state.State_Name}}</option> 
+                                        {% endfor %}
+                                    </select>
                                     <label>Zip Code</label>
                                     <input type="number" min="0" step="1"  class="form-control" name="zip" input required >
                                     <label>Date Contacted</label>
                                     <input type="date" class="form-control" name="date" required>
-                                    <input type="hidden" name="state" value="1">
+                                    
                             </div>
                             <div class="modal-footer">
                                 
@@ -159,6 +165,12 @@
                                         <input type="text" class="form-control" name="address" required>
                                         <label>City</label>
                                         <input type="text" class="form-control" name="city" required>
+                                        <label>State</label>
+                                        <select class="form-control" name="state" value="1">
+                                        {% for state in stateList %}
+                                            <option value="{{state.State_ID}}">{{state.State_Name}}</option> 
+                                        {% endfor %}
+                                        </select>
                                         <label>Zip Code</label>
                                         <input type="number" min="0" step="1" class="form-control" name="zip" required>
 
