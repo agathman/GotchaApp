@@ -206,6 +206,7 @@
                                     Event Date
                                 </th>
                                 <th>View</th>
+                                <th>Status</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -215,6 +216,7 @@
                                  
                                 <td>{{ customer.Event_Time.strftime('%m-%d-%Y') }}</td>
                                 <td><a href="/event/{{customer.Customer_ID}}">View</a></td>
+                                <td>{{ customer.Event_Status }}</td>
                                 </tr>
                                     {% endfor %}
                             </tbody>

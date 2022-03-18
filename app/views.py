@@ -35,8 +35,8 @@ def index():
             db.session.commit()
     
     #Query to find customer names with associated events    
-    CustomerList = Customer.query.join(Event_Order, Customer.Customer_ID == Event_Order.Customer_ID)\
-        .add_columns(Customer.First_Name, Customer.Last_Name, Event_Order.Event_Time, Customer.Customer_ID)
+    CustomerList = Customer.query.join(Event_Order, Customer.Customer_ID == Event_Order.Customer_ID).join(Event_Status, Event_Order.Event_Order_Status_ID == Event_Status.Event_Status_ID)\
+        .add_columns(Customer.First_Name, Customer.Last_Name, Event_Order.Event_Time, Customer.Customer_ID, Event_Status.Event_Status)
     
     #Query to find customer names with associated appointments
     AppointmentList = Appointment.query.join(Customer, Appointment.Customer_ID == Customer.Customer_ID)\
@@ -69,7 +69,7 @@ def event(eventID):
 @my_view.route('/events')
 def viewEvent():
     
-    Events = Event_Order.query.join(Customer, Event_Order.Customer_ID == Customer.Customer_ID),(Event_Status, Event_Order.Event_Order_Status_ID == Event_Status.Event_Status_ID)\
+    Events = Event_Order.query.join(Customer, Event_Order.Customer_ID == Customer.Customer_ID).join(Event_Status, Event_Order.Event_Order_Status_ID == Event_Status.Event_Status_ID)\
         .add_columns(Customer.First_Name, Customer.Last_Name, Customer.Email, Customer.Phone, Event_Order.Event_Time, Event_Status.Event_Status,
         Event_Order.Event_Theme, Event_Order.Event_Order_Desc, Event_Order.Event_Delivery, Event_Order.Event_Setup, Event_Order.Event_Location_Name,
         Event_Order.Event_Restriction_Desc, Event_Order.Event_Address, Event_Order.Event_City)\
@@ -130,7 +130,7 @@ def viewEventOrder():
         .add_columns(Event_Category.Event_Category_ID, Event_Category.Event_Category_Name,Event_Order.Event_Time,
          Event_Order.Event_Theme, Event_Order.Event_Order_Desc, Event_Order.Event_Delivery, Event_Order.Event_Location_Name, Event_Order.Event_Restriction_Desc, 
          Event_Order.Event_Address, Event_Order.Event_City, Event_Order.Event_Zip_Code, Event_Order.Feedback, Customer.Customer_ID, Customer.First_Name, Customer.Last_Name, Customer.Phone)
-         
+
     return render_template('tables/eventorder.html', EO =event_order, states = State.query.all(), customerlists= Customer.query.all())
   
 @my_view.route('/EventOrderLine')
