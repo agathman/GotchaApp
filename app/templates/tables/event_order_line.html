@@ -7,7 +7,8 @@
                     <h1 class="display-5 fw-bold">Event Order Line</h1>
                    
                       <!-- Will be added to event -->
-                        
+
+
                             <table class='table'>
                                 <th>
                                     Vendor ID
@@ -28,13 +29,14 @@
                             </tr>
                             </thead>
                             <tbody>
-                                {% for event_order_line in event_order_lines %}
+                                {% for order_line in EOL %}
                                 <tr>
-                                <td>{{ event_order_line.Vendor_ID }}</td>
-                                <td>{{ event_order_line.Event_Order_Status_ID }}</td>
-                                <td>{{ event_order_line.Event_Order_Line_Date }}</td>
-                                <td>{{ event_order_line.Event_Order_ID }}</td>
-                                <td>{{ event_order_line.Product_Services_ID}}</td>
+
+                                <td>{{ order_line.Vendor_ID }}</td>
+                                <td>{{ order_line.Event_Status }}</td>
+                                <td>{{ order_line.Event_Order_Line_Date }}</td>
+                                <td>{{ order_line.Product_Services_ID}}</td>
+                                <td>{{ order_line.Product_Service }}</td>
                             </tr>
                             {% endfor %}
                             </tbody>

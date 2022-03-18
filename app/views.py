@@ -135,10 +135,10 @@ def viewEventOrder():
   
 @my_view.route('/EventOrderLine')
 def viewEventOrderLine():
-    event_order_line = Event_Order_Line.query.join(Event_Status, Event_Order_Line.Event_Order_Status_ID == Event_Status.Event_Status)\
-        .add_columns(Event_Order_Line.Event_Order_Line_ID, Event_Status.Event_Order_Status_ID)
+    event_order_line = Event_Order_Line.query.join(Event_Status, Event_Order_Line.Event_Order_Status_ID == Event_Status.Event_Status_ID).join(Vendor,Event_Order_Line.Vendor_ID==Vendor.Vendor_ID).join(Event_Order, Event_Order_Line.Event_Order_ID==Event_Order.Event_Order_ID).join(Product_Service,Event_Order_Line.Product_Service_ID==Product_Service.Product_Service_ID)\
+        .add_columns(Event_Order_Line.Event_Order_Line_ID, Event_Order_Line.Event_Order_Status_ID, Event_Status.Event_Status, Event_Order_Line.Event_Order_Line_Date, Vendor.Vendor_ID, Vendor.First_Name, Vendor.Last_Name, Event_Order.Event_Order_ID,Event_Order.Customer_ID,Event_Order_Line.Product_Service_ID,Product_Service.Product_Service)\
 
-    return render_template('tables/event_order_line.html',EOL = event_order_line,vend = Vendor.query.all())
+    return render_template('tables/event_order_line.html',EOL = event_order_line)
 
 @my_view.route('/EventStatus')
 def viewEventStatus():
