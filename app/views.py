@@ -171,9 +171,10 @@ def viewState():
 
 @my_view.route('/Vendor', methods = ["GET" ,"POST"])
 def viewVendor():
-    Vendor = Vendor.query.join(Vendor_Service, Vendor.Vendor_Services_ID == Vendor_Service.Vendor_Services_ID)\
-        .add_columns(Vendor.Vendor_ID, Vendor.Vendor_Name, Vendor_Service.Vendor_Services_ID, Vendor.Vendor_Desc, 
-        Vendor.First_Name, Vendor.Last_Name, Vendor.Phone, Vendor.Email )
+    # Vendor = Vendor.query.join(Vendor_Service, Vendor.Vendor_Services_ID == Vendor_Service.Vendor_Services_ID)\
+    #     .add_columns(Vendor.Vendor_ID, Vendor.Vendor_Name, Vendor_Service.Vendor_Services_ID, Vendor.Vendor_Desc, 
+    #     Vendor.First_Name, Vendor.Last_Name, Vendor.Phone, Vendor.Email )
+    #^^^^This view route causes vendor page to not open when running application
 
     if request.method == 'POST':
 
