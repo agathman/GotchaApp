@@ -126,10 +126,11 @@ def viewEventCategory():
 
 @my_view.route('/EventOrder')
 def viewEventOrder():
-    event_order = Event_Order.query.join(Event_Category, Event_Order.Event_Category_ID == Event_Category.Event_Category_ID)\
+    event_order = Event_Order.query.join(Event_Category, Event_Order.Event_Category_ID == Event_Category.Event_Category_ID).join(Customer, Event_Order.Customer_ID == Customer.Customer_ID)\
         .add_columns(Event_Category.Event_Category_ID, Event_Category.Event_Category_Name,Event_Order.Event_Time,
          Event_Order.Event_Theme, Event_Order.Event_Order_Desc, Event_Order.Event_Delivery, Event_Order.Event_Location_Name, Event_Order.Event_Restriction_Desc, 
-         Event_Order.Event_Address, Event_Order.Event_City, Event_Order.Event_Zip_Code, Event_Order.Feedback)
+         Event_Order.Event_Address, Event_Order.Event_City, Event_Order.Event_Zip_Code, Event_Order.Feedback, Customer.Customer_ID, Customer.First_Name, Customer.Last_Name, Customer.Phone)
+         
     return render_template('tables/eventorder.html', EO =event_order, states = State.query.all(), customerlists= Customer.query.all())
   
 @my_view.route('/EventOrderLine')
