@@ -6,23 +6,70 @@
             <div class="p-5 mb-4 rounded-3">
                 <div class="container-fluid py-5 text-center">                           
                     <p>
-                       <table class="table">
-                        <thead>
-                            <tr>
-                                <th>Test Header
-                                   </th>
-                                   <th>Test Column</th>
-                                   </tr>
-                                   </thead>
-                                   <tbody>
-                                   {% for data in test_table %}
-                                   <tr>
-                                        <td>{{data.Test_Data}}</td>
-                                        <td>{{data.Test_Data2}}</td>
-                                   </tr>                   
-                                        {% endfor%}
-                                    </tbody>
-                                        </table>
+                        <table class="table">
+
+                            <table class='table'>
+                                <th>
+                                    Customer Name
+                                </th>
+                                <th>
+                                    Phone Number  
+                                </th>
+                                <th>
+                                    Event Date
+                                </th>
+                                <th>
+                                    Theme
+                                </th>
+                                <th>
+                                    Category
+                                </th>
+                                <th>
+                                    Order Description
+                                </th>
+                                <th>
+                                    Delivery
+                                </th>
+                                <th>
+                                    Setup
+                                </th>
+                                <th>
+                                    Location
+                                </th>
+                                <th>
+                                    Restrictions
+                                </th>
+                                <th>
+                                    Address
+                                </th>
+                                <th>
+                                    City
+                                </th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                                <tr>
+                                {% for c in customerlists %}
+                                {% for e in EO %}
+                                <td>{{ c.First_Name }} {{ c.Last_Name }}</td>
+                                <td>{{ c.Phone }}</td>
+                                <td>{{ e.Event_Time }}</td>
+                                <td>{{ e.Event_Theme }}</td>
+                                <td>{{ e.Event_Category_Name }}</td>
+                                <td>{{ e.Event_Order_Desc }}</td>
+                                <td>{{ e.Event_Setup }}</td>
+                                <td>{{ e.Event_Delivery }}</td>
+                                <td>{{ e.Event_Location_Name }}</td>
+                                <td>{{ e.Event_Restriction_Desc }}</td>
+                                <td>{{ e.Event_Address }}</td>
+                                <td>{{ e.Event_City }}</td>
+                                
+                            </tr>
+                            {% endfor %}
+                            {% endfor %}
+                            </tbody>
+                                    
+                        </table>
                      
                     </p>
                 </div>

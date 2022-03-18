@@ -2,10 +2,24 @@
 
      {% block content %}
      <div class="container">
-            <div class="p-5 mb-4 bg-light rounded-3">
+            <div class="p-5 mb-4 bg-light rounded-3 ">
                 <div class="container-fluid py-5 text-center">
-                    <h1 class="display-5 fw-bold">{% for events in event %} Event for {{ events.Event_Time.strftime('%m-%d-%Y')}} {% endfor %}</h1>
-                      
+                    <h1 class="display-5 center fw-bold">{% for events in event %} Event for {{ events.Event_Time.strftime('%m-%d-%Y')}} {% endfor %}</h1>
+                        <div class="row container-fluid py-2 text-center">
+                            <div class="col">
+                                <tr>
+                                {% for events in event%}
+                                <td>{{ events.Event_Status}}</td>
+                                {% endfor %}
+                                </tr>
+
+                                <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal">
+                                    Change Status
+                                  </button>
+                            </div>
+                        </div>
+
+
                         <table class="table">
                             <thead>
                             <tr>

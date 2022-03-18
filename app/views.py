@@ -44,6 +44,8 @@ def index():
     
     return render_template('index.html', customers = CustomerList, stateList = State.query.all(), newAppointment = Customer.query.all(), appointments = AppointmentList, eventCategory = Event_Category.query.all(), statuses = Event_Status.query.all())
 
+    
+
 @my_view.route("/", methods=['GET', 'POST'])
 def addCustomerModal():
 
@@ -54,19 +56,21 @@ def addCustomerModal():
 def event(eventID):
 
     Event = Event_Order.query.join(Customer, Event_Order.Customer_ID == Customer.Customer_ID)\
-        .add_columns(Customer.First_Name, Customer.Last_Name, Customer.Email, Customer.Phone, Event_Order.Event_Time, 
+        .add_columns(Customer.First_Name, Customer.Last_Name, Customer.Email, Customer.Phone, Event_Order.Event_Time, Event_Order.Event_Order_Status_ID,
         Event_Order.Event_Theme, Event_Order.Event_Order_Desc, Event_Order.Event_Delivery, Event_Order.Event_Setup, Event_Order.Event_Location_Name,
         Event_Order.Event_Restriction_Desc, Event_Order.Event_Address, Event_Order.Event_City)\
             .filter_by(Customer_ID = eventID)
-                
-    
-    return render_template('event.html', event = Event)
+
+
+
+    return render_template('event.html', event = Event, Events_Status=Event_Status.query.all())
+
 #View all events
 @my_view.route('/events')
 def viewEvent():
     
-    Events = Event_Order.query.join(Customer, Event_Order.Customer_ID == Customer.Customer_ID)\
-        .add_columns(Customer.First_Name, Customer.Last_Name, Customer.Email, Customer.Phone, Event_Order.Event_Time, 
+    Events = Event_Order.query.join(Customer, Event_Order.Customer_ID == Customer.Customer_ID),(Event_Status, Event_Order.Event_Order_Status_ID == Event_Status.Event_Status_ID)\
+        .add_columns(Customer.First_Name, Customer.Last_Name, Customer.Email, Customer.Phone, Event_Order.Event_Time, Event_Status.Event_Status,
         Event_Order.Event_Theme, Event_Order.Event_Order_Desc, Event_Order.Event_Delivery, Event_Order.Event_Setup, Event_Order.Event_Location_Name,
         Event_Order.Event_Restriction_Desc, Event_Order.Event_Address, Event_Order.Event_City)\
 
@@ -122,20 +126,18 @@ def viewEventCategory():
 
 @my_view.route('/EventOrder')
 def viewEventOrder():
-    Event_Order = Event_Order.query.join(Event_Category, Event_Order.Event_Category_ID == Event_Category.Event_Category_ID),(Customer, Event_Order.Customer_ID == Customer.Customer_ID),
-    (Event_Status, Event_Order.Event_Order_Status_ID == Event_Status.Event_Status_ID),(State, Event_Order.State_ID == State.State_ID),
-    (Employee_Assignment, Event_Order.Employee_Assignment_ID == Employee_Assignment.Employee_Assignment_ID)\
-        .add_columns(Event_Order.Event_Order_ID, Event_Category.Event_Category_ID, Customer.Customer_ID, Event_Status.Event_Status_ID, Event_Order.Event_Time,
-         Event_Order.Event_Theme, Event_Order.Event_Order_Desc, Event_Order.Event_Delivery, Event_Order.Event_Delivery, Event_Order.Event_Location_Name, Event_Order.Event_Restriction_Desc, 
-         Event_Order.Event_Address, Event_Order.Event_City, State.State_ID, Event_Order.Event_Zip_Code, Employee_Assignment.Employee_Assignment_ID, Event_Order.Feedback)
-    return render_template('tables/event.html')
+    event_order = Event_Order.query.join(Event_Category, Event_Order.Event_Category_ID == Event_Category.Event_Category_ID)\
+        .add_columns(Event_Category.Event_Category_ID, Event_Category.Event_Category_Name,Event_Order.Event_Time,
+         Event_Order.Event_Theme, Event_Order.Event_Order_Desc, Event_Order.Event_Delivery, Event_Order.Event_Location_Name, Event_Order.Event_Restriction_Desc, 
+         Event_Order.Event_Address, Event_Order.Event_City, Event_Order.Event_Zip_Code, Event_Order.Feedback)
+    return render_template('tables/eventorder.html', EO =event_order, states = State.query.all(), customerlists= Customer.query.all())
   
 @my_view.route('/EventOrderLine')
 def viewEventOrderLine():
-    Event_Order_Line = Event_Order_Line.query.join(Vendor, Event_Order_Line.Vendor_ID == Vendor.Vendor_ID), (Event_Status, Event_Order_Line.Event_Order_Status_ID == Event_Status.Event_Order_Status_ID), (Event_Order, Event_Order_Line.Event_Order_ID == Event_Order.Event_Order_ID), (Product_Service, Event_Order_Line.Product_Services_ID == Product_Service.Product_Service_ID)\
-        .add_columns(Event_Order_Line.Event_Order_Line_ID, Vendor.Vendor_ID, Event_Status.Event_Order_Status_ID,
-         Event_Order_Line.Event_Order_Line_Date, Event_Order.Event_Order_ID, Product_Service.Product_Service_ID)
-    return render_template('tables/event_order_line.html')
+    event_order_line = Event_Order_Line.query.join(Event_Status, Event_Order_Line.Event_Order_Status_ID == Event_Status.Event_Status)\
+        .add_columns(Event_Order_Line.Event_Order_Line_ID, Event_Status.Event_Order_Status_ID)
+
+    return render_template('tables/event_order_line.html',EOL = event_order_line,vend = Vendor.query.all())
 
 @my_view.route('/EventStatus')
 def viewEventStatus():
