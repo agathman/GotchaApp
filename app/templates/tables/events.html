@@ -1,16 +1,22 @@
 {% extends "base.html" %}
 
      {% block content %}
-     <div class="container">
-            <div class="p-5 mb-4 bg-light rounded-3">
-                <div class="container-fluid py-5 text-center">
+     <div class="container-fluid">
+            <div class="bg-light">
+                <div class="container-fluid">
+                    <div class="row">
+                    <div class="col">
+                        <!-- Modal button for add event-->
+                                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#UpdateEventModal">
+                                                    Add Event
+                                                </button>
+                                            </div>
+                    <div class="col">
                     <h1 class="display-5 fw-bold">Events</h1>
-                   
-                      {% for event in events %}
-                        <table class="table">
-                        
-                            <thead>
-                            <tr>
+                    </div>
+                    </div>
+                     
+                            <table class='table'>
                                 <th>
                                     Customer Name
                                 </th>
@@ -20,23 +26,17 @@
                                 <th>
                                     Email
                                 </th>
-                            </tr>
-                            </thead>
-                            <tr>
-                                <td>{{ event.First_Name }} {{ event.Last_Name }}</td>
-                                <td>{{ event.Phone }}</td>
-                                <td>{{ event.Email }}</td>
-                            </tr>
-                            </table>
-                            <table class='table'>
                                 <th>
                                     Event Date
+                                </th>
+                                <th>
+                                    Status
                                 </th>
                                 <th>
                                     Theme
                                 </th>
                                 <th>
-                                    Order Description
+                                    Description
                                 </th>
                                 <th>
                                     Delivery
@@ -56,12 +56,22 @@
                                 <th>
                                     City
                                 </th>
+                                <th>
+                                    Edit
+                                </th>
+                                <th>
+                                    Delete
+                                </th>
                             </tr>
                             </thead>
                             <tbody>
+                                {% for event in events %}
                                 <tr>
-                            
-                                <td>{{ event.Event_Time }}</td>
+                                <td>{{ event.First_Name }} {{ event.Last_Name }}</td>
+                                <td>{{ event.Phone }}</td>
+                                <td>{{ event.Email }}</td>
+                                <td>{{ event.Event_Time.strftime('%m-%d-%Y') }}</td>
+                                <td>{{ event.Event_Status}}</td>
                                 <td>{{ event.Event_Theme }}</td>
                                 <td>{{ event.Event_Order_Desc }}</td>
                                 <td>{{ event.Event_Setup }}</td>
@@ -70,12 +80,17 @@
                                 <td>{{ event.Event_Restriction_Desc }}</td>
                                 <td>{{ event.Event_Address }}</td>
                                 <td>{{ event.Event_City }}</td>
+                                <td><a href="/updateevent/{{event.Event_Order_ID}}"><button type="button" class="btn btn-primary">
+                                    Update Event
+                                </button></a></td>
+                                <td><a href="/deleteevent/{{event.Event_Order_ID}}">Delete</a></td>
+
                             </tr>
                             {% endfor %}
                             </tbody>
                                     
                         </table>
-    
+
 
                    
 

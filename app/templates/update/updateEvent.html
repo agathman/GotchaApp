@@ -1,0 +1,72 @@
+{% extends 'base.html' %}
+
+
+{% block content %}
+                            <!-- Modal Body for event -->
+                                    </div>
+                                        <form action = "{{ request.path }}" method = "post">
+                                            {% for event in selected %}
+                                            <div class="row">
+                                                <div class="col">
+                                            <input type="hidden" name="check" value="event">                                     
+                                            <label>Category</label>
+                                            <select class="form-control" name="category" required>
+                                                {% for category in eventCategory %}
+                                                <option value="{{category.Event_Category_ID}}">{{category.Event_Category_Name}}</option>
+                                                {% endfor %}
+                                                <option selected value="{{event.Event_Category_ID}}"> {{event.Event_Category_Name}} </option>
+                                            </select>                            
+                                            <label>Customer</label>
+                                            <input type="text" class="form-control" name="customer" value="{{event.Customer_ID}}" placeholder="{{event.First_Name}} {{event.Last_Name}}">
+                                            <label>Order Status</label>
+                                            <select class="form-control" name="status" required>                                           
+                                                {% for status in statuses %}
+                                                    <option value="{{status.Event_Status_ID}}">{{status.Event_Status}}</option>
+                                                    {% endfor %}
+                                                    <option selected value="event.Event_Status_ID">{{event.Event_Status}}</option>
+                                                </select>
+                                            <label>Date</label>
+                                            <input type="date" class="form-control" name="eventTime" value="{{event.Event_Time}}" required>
+                                            <label>Theme</label>
+                                            <input type="text" class="form-control" name="theme" value="{{event.Event_Theme}}">
+                                            <label>Event Description</label>
+                                            <input type="text" class="form-control" name="eventDesc" value="{{event.Event_Order_Desc}}" placeholder="{{event.Event_Order_Desc}}" required>
+                                            <label>Delivery</label>
+                                            <select class="form-control" name="delivery" required>                                            
+                                                <option value="Yes">Yes</option>
+                                                <option value="No">No</option>
+                                                <option selected value="{{event.Event_Delivery}}">{{event.Event_Delivery}}</option>
+                                            </select>
+                                            </div>
+                                            <div class="col">
+                                            <label>Setup</label>
+                                            <select class="form-control" name="setup" required>                                           
+                                                <option value="Yes">Yes</option>
+                                                <option value="No">No</option>
+                                                <option selected value="{{event.Event_Setup}}">{{event.Event_Setup}}</option>
+                                            </select>
+                                            <label>Location</label>
+                                            <input type="text" class="form-control" name="location" value="{{event.Event_Location_Name}}" placeholder="{{Event_Location_Name}}" required>
+                                            <label>Restrictions</label>
+                                            <input type="text" class="form-control" name="restrictions" value="{{event.Event_Restriction_Desc}}" placeholder="{{event.Event_Restriction_Desc}}" required>
+                                            <label>Address</label>
+                                            <input type="text" class="form-control" name="address" value="{{event.Event_Address}}" placeholder="{{event.Event_Address}}" required>
+                                            <label>City</label>
+                                            <input type="text" class="form-control" name="city" value="{{event.Event_City}}" required>
+                                            <label>Zip Code</label>
+                                            <input type="number" min="0" step="1" class="form-control" name="zip" value="{{event.Event_Zip_Code}}" required>
+                                            <label>EmployeeAssignment</label>
+                                           
+    {% endfor %}
+                                           </div>
+                                    </div>
+                                    <div class="modal-footer">
+                                        
+                                        <input type='submit' class="btn btn-secondary" value="Save">
+                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    </form>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+{% endblock %}
