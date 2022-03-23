@@ -26,22 +26,28 @@
                                 <form action = "{{ request.path }}" method = "post">
                                     <input type="hidden" name="check" value="customer">
                                     <label>First Name</label>
-                                    <input type="text" class="form-control" name="firstName" required>
+                                    <input type="text" class="form-control" name="firstName" maxlength="250" required>
                                     <label>Last Name</label> 
-                                    <input type="text" class="form-control" name="lastName" required>
+                                    <input type="text" class="form-control" name="lastName" maxlength="250" required>
                                     <label>Phone</label>
-                                    <input type="text" class="form-control" name="phone" required>
+                                    <input type="text" class="form-control" name="phone"  required>
                                     <label>Email</label>
-                                    <input type="email" class="form-control" name="email" required>
+                                    <input type="email" class="form-control" name="email" maxlength="250" required>
                                     <label>Address</label>
-                                    <input type="text" class="form-control" name="address" required>
+                                    <input type="text" class="form-control" name="address" maxlength="250" required>
                                     <label>City</label>
-                                    <input type="text" class="form-control" name="city" required>
+                                    <input type="text" class="form-control" name="city" maxlength="250" required>
+                                    <label>State</label>
+                                    <select class="form-control" name="state" value="1">
+                                        {% for state in stateList %}
+                                            <option value="{{state.State_ID}}">{{state.State_Name}}</option> 
+                                        {% endfor %}
+                                    </select>
                                     <label>Zip Code</label>
-                                    <input type="number" min="0" step="1"  class="form-control" name="zip" input required >
+                                    <input type="number" min="0" step="1" maxlength="10"  class="form-control" name="zip" input required >
                                     <label>Date Contacted</label>
                                     <input type="date" class="form-control" name="date" required>
-                                    <input type="hidden" name="state" value="1">
+                                    
                             </div>
                             <div class="modal-footer">
                                 
@@ -159,6 +165,12 @@
                                         <input type="text" class="form-control" name="address" required>
                                         <label>City</label>
                                         <input type="text" class="form-control" name="city" required>
+                                        <label>State</label>
+                                        <select class="form-control" name="state" value="1">
+                                        {% for state in stateList %}
+                                            <option value="{{state.State_ID}}">{{state.State_Name}}</option> 
+                                        {% endfor %}
+                                        </select>
                                         <label>Zip Code</label>
                                         <input type="number" min="0" step="1" class="form-control" name="zip" required>
 
@@ -183,7 +195,8 @@
 
                         <div class="row">
                             <div class="col">
-                    <h2>Events</h2>
+                    <h2><a href="/events">Events</a></h2>
+
                         <table class="table">
                             <thead>
                             <tr>
@@ -194,6 +207,7 @@
                                     Event Date
                                 </th>
                                 <th>View</th>
+                                <th>Status</th>
                             </tr>
                             </thead>
                             <tbody>
@@ -203,6 +217,7 @@
                                  
                                 <td>{{ customer.Event_Time.strftime('%m-%d-%Y') }}</td>
                                 <td><a href="/event/{{customer.Customer_ID}}">View</a></td>
+                                <td>{{ customer.Event_Status }}</td>
                                 </tr>
                                     {% endfor %}
                             </tbody>

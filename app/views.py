@@ -30,7 +30,7 @@ def index():
         elif request.form['check'] == 'event':
             event = Event_Order(request.form['category'], request.form['customer'], request.form['status'], request.form['eventTime'], request.form['theme'], request.form['eventDesc'],
                         request.form['delivery'], request.form['setup'], request.form['location'], request.form['restrictions'], request.form['address'], request.form['city'],
-                        request.form['zip'],2, 1, 'Due after event')
+                        request.form['zip'],2, request.form['state'], 'Due after event')
             db.session.add(event)
             db.session.commit()
     
@@ -43,7 +43,9 @@ def index():
     AppointmentList = Appointment.query.join(Customer, Appointment.Customer_ID == Customer.Customer_ID)\
         .add_columns(Customer.First_Name, Customer.Last_Name, Appointment.Date)
     
-    return render_template('index.html', customers = CustomerList, newAppointment = Customer.query.all(), appointments = AppointmentList, eventCategory = Event_Category.query.all(), statuses = Event_Status.query.all())
+    return render_template('index.html', customers = CustomerList, stateList = State.query.all(), newAppointment = Customer.query.all(), appointments = AppointmentList, eventCategory = Event_Category.query.all(), statuses = Event_Status.query.all())
+
+    
 
 @my_view.route("/", methods=['GET', 'POST'])
 def addCustomerModal():
@@ -182,11 +184,11 @@ def updateEvent(eventID):
 
   
 @my_view.route('/EventOrderLine')
-def vEventOrderLine():
-    Event_Order_Line = Event_Order_Line.query.join(Vendor, Event_Order_Line.Vendor_ID == Vendor.Vendor_ID), (Event_Order, Event_Order_Line.Event_Order_ID == Event_Order.Event_Order_ID), (Product_Service, Event_Order_Line.Product_Services_ID == Product_Service.Product_Service_ID)\
-        .add_columns(Event_Order_Line.Event_Order_Line_ID, )
-    return render_template('tables/event_order_line.html')
-    # (Event_Order_Line, Event_Order_Line.Event_Order_Status_ID ==  )
+def viewEventOrderLine():
+    event_order_line = Event_Order_Line.query.join(Event_Status, Event_Order_Line.Event_Order_Status_ID == Event_Status.Event_Status_ID).join(Vendor,Event_Order_Line.Vendor_ID==Vendor.Vendor_ID).join(Event_Order, Event_Order_Line.Event_Order_ID==Event_Order.Event_Order_ID).join(Product_Service,Event_Order_Line.Product_Service_ID==Product_Service.Product_Service_ID)\
+        .add_columns(Event_Order_Line.Event_Order_Line_ID, Event_Order_Line.Event_Order_Status_ID, Event_Status.Event_Status, Event_Order_Line.Event_Order_Line_Date, Vendor.Vendor_ID, Vendor.First_Name, Vendor.Last_Name, Event_Order.Event_Order_ID,Event_Order.Customer_ID,Event_Order_Line.Product_Service_ID,Product_Service.Product_Service)\
+
+    return render_template('tables/event_order_line.html',EOL = event_order_line)
 
 @my_view.route('/EventStatus')
 def viewEventStatus():
@@ -196,26 +198,39 @@ def viewEventStatus():
 
 @my_view.route('/Payment')
 def viewPayment():
+    Payment = Payment.query.join(Payment_Type, Payment.Payment_Type_ID == Payment_Type.Payment_Type_ID), (Event_Order, Payment.Event_Order_ID == Event_Order.Event_Order_ID)\
+        .add_columns(Payment.Payment_ID, Payment_Type.Payment_Type_ID, Event_Order.Event_Order_ID, Payment.Payment_Date_Init, Payment.Payment_Date_Full)
     return render_template('tables/payment.html')
 
 @my_view.route('/PaymentType')
 def viewPaymentType():
+    Payment_Type = Payment_Type()\
+        .add_columns(Payment_Type.Payment_ID, Payment_Type.Payment_Type_ID)
     return render_template('tables/payment_type.html', payment = Payment.query.all())
 
 
 @my_view.route('/ProductService')
 def viewProductService():
+    Product_Service = Product_Service()\
+        .add_columns(Product_Service.Product_Service_ID, Product_Service.Product_Service)
     return render_template('tables/product_service.html')
 
 
 @my_view.route('/State')
 def viewState():
+    State = State()\
+        .add_columns(State.State_ID, State.State_Name, State.State_Abbreviation)
     return render_template('tables/state.html')
 
 @my_view.route('/Vendor', methods = ["GET" ,"POST"])
 def viewVendor():
+    # Vendor = Vendor.query.join(Vendor_Service, Vendor.Vendor_Services_ID == Vendor_Service.Vendor_Services_ID)\
+    #     .add_columns(Vendor.Vendor_ID, Vendor.Vendor_Name, Vendor_Service.Vendor_Services_ID, Vendor.Vendor_Desc, 
+    #     Vendor.First_Name, Vendor.Last_Name, Vendor.Phone, Vendor.Email )
+    #^^^^This view route causes vendor page to not open when running application
 
     if request.method == 'POST':
+
         #Form request to add customer
         #Checks which form to add from
             vendor = Vendor(request.form['vendorName'], request.form['vendorService'], request.form['vendorDesc'],request.form['firstName'],
@@ -239,6 +254,8 @@ def viewVendor():
 
 @my_view.route('/VendorService')
 def viewVendorService():
+    Vendor_Service = Vendor_Service()\
+        .add_columns(Vendor_Service.Vendor_Service_ID, Vendor_Service.Vendor_Services)
     return render_template('tables/vendor_service.html')
 
 
