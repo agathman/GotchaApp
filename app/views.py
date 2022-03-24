@@ -47,8 +47,6 @@ def index():
     
     return render_template('index.html', customers = CustomerList, stateList = State.query.all(), newAppointment = Customer.query.all(), appointments = AppointmentList, eventCategory = Event_Category.query.all(), statuses = Event_Status.query.all())
 
-    
-
 @my_view.route("/", methods=['GET', 'POST'])
 def addCustomerModal():
 
@@ -103,19 +101,6 @@ def viewEventCategory():
     Event_Category = Event_Category()\
         .add_columns(Event_Category.Event_Category_ID, Event_Category.Event_Category_Name)
     return render_template('tables/event_category.html')
-
-#View single event info
-@my_view.route('/event/<eventID>')
-def event(eventID):
-
-    Event = Event_Order.query.join(Customer, Event_Order.Customer_ID == Customer.Customer_ID)\
-        .add_columns(Customer.First_Name, Customer.Last_Name, Customer.Email, Customer.Phone, Event_Order.Event_Time, 
-        Event_Order.Event_Theme, Event_Order.Event_Order_Desc, Event_Order.Event_Delivery, Event_Order.Event_Setup, Event_Order.Event_Location_Name,
-        Event_Order.Event_Restriction_Desc, Event_Order.Event_Address, Event_Order.Event_City)\
-            .filter_by(Customer_ID = eventID)
-           
-    
-    return render_template('event.html', event = Event)
 
 
 @my_view.route('/EventOrders', methods = ['GET', 'POST'])
@@ -261,10 +246,9 @@ def viewState():
 
 @my_view.route('/Vendor', methods = ["GET" ,"POST"])
 def viewVendor():
-    # Vendor = Vendor.query.join(Vendor_Service, Vendor.Vendor_Services_ID == Vendor_Service.Vendor_Services_ID)\
-    #     .add_columns(Vendor.Vendor_ID, Vendor.Vendor_Name, Vendor_Service.Vendor_Services_ID, Vendor.Vendor_Desc, 
-    #     Vendor.First_Name, Vendor.Last_Name, Vendor.Phone, Vendor.Email )
-    #^^^^This view route causes vendor page to not open when running application
+    Vendor = Vendor.query.join(Vendor_Service, Vendor.Vendor_Services_ID == Vendor_Service.Vendor_Services_ID)\
+        .add_columns(Vendor.Vendor_ID, Vendor.Vendor_Name, Vendor_Service.Vendor_Services_ID, Vendor.Vendor_Desc, 
+        Vendor.First_Name, Vendor.Last_Name, Vendor.Phone, Vendor.Email )
 
     if request.method == 'POST':
 

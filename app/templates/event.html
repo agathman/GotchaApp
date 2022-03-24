@@ -2,12 +2,10 @@
 
      {% block content %}
      <div class="container">
-            <div class="p-5 mb-4 bg-light rounded-3 ">
+            <div class="p-5 mb-4 bg-light rounded-3">
                 <div class="container-fluid py-5 text-center">
-                    <h1 class="display-5 center fw-bold">{% for events in event %} Event for {{ events.Event_Time.strftime('%m-%d-%Y')}} {% endfor %}</h1>
-                        <div class="row container-fluid py-2 text-center">
- 
-
+                    <h1 class="display-5 fw-bold">{% for events in event %} Event for {{ events.Event_Time.strftime('%m-%d-%Y')}} {% endfor %}</h1>
+                      
                         <table class="table">
                             <thead>
                             <tr>
@@ -27,7 +25,6 @@
                                 <td>{{ events.First_Name }} {{ events.Last_Name }}</td>
                                 <td>{{ events.Phone }}</td>
                                 <td>{{ events.Email }}</td>
-                                <td><a href=/EventOrderLine>View Event Order Line</a></td>
                                 {% endfor %}
                             </tr>
                             </table>

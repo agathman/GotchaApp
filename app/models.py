@@ -78,8 +78,7 @@ class Employee_Assignment(db.Model):
     def __init__(self, Assignment_Start_Date, Employee_ID):
         self.Assignment_Start_Date = Assignment_Start_Date
         self.Employee_ID = Employee_ID
-    
-    Event_Order = relationship("Event_Order", backref="Employee_Assignemnt")
+
 
 #form created
 class Event_Category(db.Model):
@@ -89,8 +88,6 @@ class Event_Category(db.Model):
 
     def __init__(self, Event_Category_Name):
         self.Event_Category_Name = Event_Category_Name       
-
-    Event_Order = relationship("Event_Order", backref="Event_Category")
 #form created
 class Event_Order(db.Model):
     __tablename__ = 'Event_Order'
@@ -156,8 +153,6 @@ class Event_Order_Line(db.Model):
             self.Event_Order_Line_Date = Event_Order_Line_Date
             self.Event_Order_ID = Event_Order_ID
             self.Product_Service_ID = Product_Service_ID
-    
-    Event_Order = relationship("Event_Order", backref="Event_Order_Line")
 
 #form created
 class Event_Status(db.Model):
@@ -168,8 +163,6 @@ class Event_Status(db.Model):
     def __init__(self, Event_Status_ID, Event_Status):
         self.Event_Status_ID = Event_Status_ID
         self.Event_Status = Event_Status
-    
-    
 #form created
 class Payment(db.Model):
     __tablename__ = 'Payment'
