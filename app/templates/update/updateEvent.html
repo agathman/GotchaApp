@@ -1,6 +1,29 @@
 {% extends 'base.html' %}
 
 
+{% block active %}
+<a class="nav-link " href="/">Home</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/Appointments">Appointments</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/Customer">Customers</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/Employee">Employees</a>
+</li>
+<li class="nav-item">
+<a class="nav-link active" href="/EventOrders">Event Orders</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/Payment">Payments</a> 
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/Vendor">Vendors</a>  
+</li>
+{% endblock %}
+
 {% block content %}
                             <!-- Modal Body for event -->
                                     </div>
@@ -55,7 +78,11 @@
                                             <input type="text" class="form-control" name="city" value="{{event.Event_City}}" required>
                                             <label>Zip Code</label>
                                             <input type="number" min="0" step="1" class="form-control" name="zip" value="{{event.Event_Zip_Code}}" required>
-                                            <label>EmployeeAssignment</label>
+                                            <label>EmployeeAssignment - Adding Assignment Tab to Event</label>
+                                            
+                                             
+                                                   
+                                                </select>
                                            
     {% endfor %}
                                            </div>
@@ -64,7 +91,7 @@
                                         
                                         <input type='submit' class="btn btn-secondary" value="Save">
                                        <a href="/EventOrders"><button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></a>
-                                       
+
                                     </form>
                                     </div>
                                 </div>
