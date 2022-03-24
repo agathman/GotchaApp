@@ -45,7 +45,7 @@
                     <div class="col-6 text-center">
                     <h1 class="display-5 fw-bold ">Events</h1>
                     </div>                
-                     
+                                             
                             <table class='table'>
                                 <th>
                                     Customer Name
@@ -59,15 +59,6 @@
                                 <th>
                                     Email
                                 </th>
-                            </tr>
-                            </thead>
-                            <tr>
-                                <td>{{ event.First_Name }} {{ event.Last_Name }}</td>
-                                <td>{{ event.Phone }}</td>
-                                <td>{{ event.Email }}</td>
-                            </tr>
-                            </table>
-                            <table class='table'>
                                 <th>
                                     Event Date
                                 </th>
@@ -95,7 +86,6 @@
                                 <th>
                                     City
                                 </th>
-<<<<<<< HEAD
                                 <th>
                                     Order Lines
                                 </th>
@@ -105,23 +95,17 @@
                                 <th>
                                     Delete
                                 </th>
-=======
->>>>>>> c536b3aa1d4a752a3c326958b6a8c94ad597fc24
                             </tr>
                             </thead>
                             <tbody>
+                                {% for event in events %}
                                 <tr>
-<<<<<<< HEAD
                                 <td>{{ event.First_Name }} {{ event.Last_Name }}</td>
                                 <td>{{ event.Event_Order_ID}}</td>
                                 <td>{{ event.Phone }}</td>
                                 <td>{{ event.Email }}</td>
                                 <td>{{ event.Event_Time.strftime('%m-%d-%Y') }}</td>
                                 <td>{{ event.Event_Status}}</td>
-=======
-                            
-                                <td>{{ event.Event_Time }}</td>
->>>>>>> c536b3aa1d4a752a3c326958b6a8c94ad597fc24
                                 <td>{{ event.Event_Theme }}</td>
                                 <td>{{ event.Event_Order_Desc }}</td>
                                 <td>{{ event.Event_Setup }}</td>
@@ -130,15 +114,12 @@
                                 <td>{{ event.Event_Restriction_Desc }}</td>
                                 <td>{{ event.Event_Address }}</td>
                                 <td>{{ event.Event_City }}</td>
-<<<<<<< HEAD
                                 <td><a href="/EventOrderLine/{{event.Event_Order_ID}}">Order Lines</a></td>
                                 <td><a href="/updateevent/{{event.Event_Order_ID}}"><button type="button" class="btn btn-primary">
                                     Update Event
                                 </button></a></td>
                                 <td><a href="/deleteevent/{{event.Event_Order_ID}}">Delete</a></td>
 
-=======
->>>>>>> c536b3aa1d4a752a3c326958b6a8c94ad597fc24
                             </tr>
                             {% endfor %}
                             </tbody>
