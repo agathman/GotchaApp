@@ -83,14 +83,21 @@ def viewAppointment():
     return render_template('tables/appointment.html', appointments = appointmentList, customers = Customer.query.all(), events = Event_Order.query.all())
 
 
-@my_view.route('/Customer')
+@my_view.route('/Customer', methods = ['GET', 'POST'])
 def viewCustomer():
 #State abb
     Customers = Customer.query.join(State, Customer.State_ID == State.State_ID)\
         .add_columns(Customer.First_Name, Customer.Last_Name, Customer.Phone, Customer.Email, Customer.Mailing_Address, Customer.Mailing_City, 
-                     Customer.Mailing_Zip_Code, Customer.Contact_Date, State.State_Abbreviation)
+                     Customer.Mailing_Zip_Code, Customer.Contact_Date, State.State_Abbreviation)\
+                         .order_by(Customer.Last_Name)
+    if request.method == 'POST':
+    #Form request to add customer
+        customer = Customer(request.form['firstName'], request.form['lastName'], request.form['phone'],
+                    request.form['email'], request.form['address'], request.form['city'], request.form['zip'], request.form['date'], request.form['state'])
+        db.session.add(customer)
+        db.session.commit()
 
-    return render_template('tables/customer.html', customers = Customers )
+    return render_template('tables/customer.html', customers = Customers, stateList = State.query.all() )
 
 
 @my_view.route('/Employee', methods = ['GET', 'POST'])
@@ -177,15 +184,24 @@ def viewEvent(eventID):
         State.State_Abbreviation, Event_Order.Event_Zip_Code)
     
     orderLines = Event_Order_Line.query.filter_by(Event_Order_ID = eventID)\
+        .join(Vendor, Vendor.Vendor_ID == Event_Order_Line.Vendor_ID)\
         .join(Event_Order, Event_Order.Event_Order_ID == Event_Order_Line.Event_Order_ID)\
         .join(Product_Service, Product_Service.Product_Service_ID == Event_Order_Line.Product_Service_ID)\
         .join(Event_Status, Event_Status.Event_Status_ID == Event_Order_Line.Event_Order_Status_ID)\
-        .add_columns(Event_Order_Line.Event_Order_Line_Date, Event_Status.Event_Status, Product_Service.Product_Service)\
+        .add_columns(Event_Order_Line.Vendor_ID, Vendor.Vendor_Name, Event_Order_Line.Event_Order_Line_Date, Event_Status.Event_Status, Product_Service.Product_Service)\
         .order_by(Event_Order_Line.Event_Order_Line_Date)
+
+    if request.method == 'POST':
+        if request.form['check'] == 'orderLine':
+            orderLine = Event_Order_Line(request.form['vendor'], request.form['status'], request.form['date'], eventID, request.form['service'])                       
+            db.session.add(orderLine)
+            db.session.commit()
+
+    
             
 
 
-    return render_template('tables/viewEvent.html', events = eventOrder, orderLines = orderLines)
+    return render_template('tables/viewEvent.html', events = eventOrder, orderLines = orderLines, vendors = Vendor.query.all(), statuses = Event_Status.query.all(), services = Product_Service.query.all())
 
 
 

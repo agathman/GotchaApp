@@ -24,16 +24,21 @@
 
 
      {% block content %}
-     <div class="container-fluid">
-            <div class="bg-light py-2">
-                  
-                        <div class="d-flex justify-content-start px-3 py-4">
+     <div class="container-fluid text-center">          
+        <div class="p-5 mb-4 rounded-3">
+            <h1 class="display-5 fw-bold">Events</h1>
+            <div class="container py-5 text-center">
+                  <div class="row">
+                      <div class="col">
+                      </div>
+                      <div class="col">                    
                         <!-- Modal button for Event-->
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#EventModal">
                             Add Event
                         </button>
-                        
-                       
+                        </div>
+                        <div class="col">
+                        <div class="d-flex justify-content-end px-1 py-1">
                             <button type="button" class="btn btn-link" data-toggle="modal" data-target="#CatModal">
                                 Add Category
                                 </button>                        
@@ -41,11 +46,10 @@
                                 Add Product Service
                                 </button>
                             </div>
-                               
-    
-                            
-                                             
-                            <table class='table'>
+                            </div>
+
+                            <table class="table table-striped">
+                                <thead class="thead-dark">
                                 <th>
                                     Customer Name
                                 </th>
@@ -61,40 +65,8 @@
                                 <th>
                                     Event Date
                                 </th>
-                                <th>
-                                    Theme
+                                <th></th>
                                 </th>
-                                <th>
-                                    Order Description
-                                </th>
-                                <th>
-                                    Delivery
-                                </th>
-                                <th>
-                                    Setup
-                                </th>
-                                <th>
-                                    Location
-                                </th>
-                                <th>
-                                    Restrictions
-                                </th>
-                                <th>
-                                    Address
-                                </th>
-                                <th>
-                                    City
-                                </th>
-                                <th>
-                                    Order Lines
-                                </th>
-                                <th>
-                                    Edit
-                                </th>
-                                <th>
-                                    Delete
-                                </th>
-                            </tr>
                             </thead>
                             <tbody>
                                 {% for event in events %}
@@ -104,21 +76,7 @@
                                 <td>{{ event.Phone }}</td>
                                 <td>{{ event.Email }}</td>
                                 <td>{{ event.Event_Time.strftime('%m-%d-%Y') }}</td>
-                                <td>{{ event.Event_Status}}</td>
-                                <td>{{ event.Event_Theme }}</td>
-                                <td>{{ event.Event_Order_Desc }}</td>
-                                <td>{{ event.Event_Setup }}</td>
-                                <td>{{ event.Event_Delivery }}</td>
-                                <td>{{ event.Event_Location_Name }}</td>
-                                <td>{{ event.Event_Restriction_Desc }}</td>
-                                <td>{{ event.Event_Address }}</td>
-                                <td>{{ event.Event_City }}</td>
-                                <td><a href="/EventOrderLine/{{event.Event_Order_ID}}">Order Lines</a></td>
-                                <td><a href="/updateevent/{{event.Event_Order_ID}}"><button type="button" class="btn btn-primary">
-                                    Update Event
-                                </button></a></td>
-                                <td><a href="/deleteevent/{{event.Event_Order_ID}}">Delete</a></td>
-
+                                <td><a href=/viewEvent/{{event.Event_Order_ID}}>View Details</a></td>
                             </tr>
                             {% endfor %}
                             </tbody>
@@ -161,7 +119,7 @@
     <div class="modal-dialog" role="document">
     <div class="modal-content">
         <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">New Category</h5>
+        <h5 class="modal-title" id="exampleModalLabel">New Product Service</h5>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
         </button>

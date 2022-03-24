@@ -28,16 +28,19 @@
      <div class="container-fluid">
         <div class="bg-light rounded-3">
             <div class="py-5 text-center">
-
-<div class="d-flex justify-content-end py-2 px-5">
+<div class="row">
+<div class="col"></div>
+<div class="col col-lg-3 py-2 px-5">
      <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#OrderLineModal">
         Add Order Line
     </button> 
     </div>
+    </div>
 
     <div class="row justify-content-start">
-        <div class="col ">
-  <table class='table py-2'>
+        <div class="col">
+  <table class='table table-responsive py-2'>
+    <thead class="thead-dark">
     <th>
         Event ID
     </th>
@@ -53,6 +56,7 @@
     <th>
         Event Date
     </th>
+    </thead>
     <tbody>
         {% for event in events %}
         <tr>
@@ -67,8 +71,8 @@
         </table>
     
 
-<table class="table">
-
+<table class="table table-bordered table-responsive">
+<thead class="thead-light">
     <th>
         Status
     </th>
@@ -96,7 +100,7 @@
     <th>
         City
     </th>
-</tr>
+
 </thead>
 <tbody>
     {% for event in events %}
@@ -110,8 +114,7 @@
     <td>{{ event.Event_Restriction_Desc }}</td>
     <td>{{ event.Event_Address }}</td>
     <td>{{ event.Event_City }}</td>
-    
-</tr>
+    </tr>
 {% endfor %}
 </tbody>        
 </table>
@@ -134,10 +137,11 @@
     {% endfor %}
     </div>
     </div>
-    <div class="col col-lg-2">
+    <div class="col col-lg-3">
 
-    <table class="table">
-        <thead>
+    <table class="table table-responsive table-bordered">
+        <thead class="thead-light">
+            <th>Vendor</th>
             <th>
                 Date
             </th>
@@ -147,10 +151,12 @@
             <th>
                 Service
             </th>
+            <th></th>
         </thead>
         <tbody>
-            {% for orderline in orderLines %}
+            {% for orderLine in orderLines %}
             <tr>
+                <td>{{orderLine.Vendor_Name}}</td>
                 <td>
                     {{orderLine.Event_Order_Line_Date}}
                 </td>
@@ -160,6 +166,7 @@
                 <td>
                     {{orderLine.Product_Service}}
                 </td>
+                <td><a href="/deleteOrderLine/{{orderLine.Event_Order_Line_ID}}"><img src="{{url_for('static', filename='trash3-fill.svg')}}"></a></td>
 
             </tr>
             {% endfor %}
@@ -173,6 +180,50 @@
 
 </div>
 </div>
+</div>
+
+<div class="modal fade" id="OrderLineModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New Order Line</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+            <form action = "{{ request.path }}" method = "POST">
+                <input type="hidden" name="check" value="orderLine">
+                <label>Vendor</label>
+                <select class="form-control" name="vendor">
+                {% for vendor in vendors %}
+                    <option value="{{vendor.Vendor_ID}}">{{vendor.Vendor_Name}}</option> 
+                    {% endfor %}
+                </select>
+                <label>Status</label>
+                <select class="form-control" name="status" required>                                           
+                    {% for status in statuses %}
+                        <option value="{{status.Event_Status_ID}}">{{status.Event_Status}}</option>
+                        {% endfor %}
+                        <option disabled selected value> -- Select an option -- </option>
+                    </select>
+                <label>Date</label>
+                <input type="date" name="date" class="form-control">                                
+                <label>Product Service</label>
+                <select class="form-control" name="service" required>
+                    {% for service in services %}
+                    <option value="{{service.Product_Service_ID}}">{{service.Product_Service}}</option>
+                    {% endfor %}
+                </select>
+            
+        </div>
+        <div class="modal-footer">
+            <input type='submit' class="btn btn-secondary" value="Save">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </form>
+        </div>
+    </div>
+    </div>
 </div>
 
 

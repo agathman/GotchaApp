@@ -38,8 +38,8 @@
 
                       
                         
-                            <table class='table'>
-                               
+                            <table class='table table-striped'>
+                               <thead class="thead-dark">
                                 <th>
                                     First Name
                                 </th>
@@ -67,7 +67,7 @@
                                 <th>
                                     Position
                                 </th>
-                            </tr>
+                                <th></th>
                             </thead>
                             <tbody>
                                 {% for employee in employees %}
@@ -81,6 +81,8 @@
                                 <td>{{ employee.Emp_Phone }}</td>
                                 <td>{{ employee.Emp_Email }}</td>
                                 <td>{{ employee.Emp_Position }}</td>
+                                <td><a href="/deleteEmployee/{{employee.Emp_ID}}"><button class="btn btn-danger">Delete</button></a></td>
+
                             </tr>
                             {% endfor %}
                             </tbody>

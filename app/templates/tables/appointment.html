@@ -23,9 +23,10 @@
 {% endblock %}
 
     {% block content %}
-        <div class="container">          
-            <div class="p-5 mb-4 rounded-3">
-                <div class="container-fluid py-5 text-center">
+    <div class="container-fluid text-center">          
+        <div class="p-5 mb-4 rounded-3">
+            <h1 class="display-5 fw-bold">Appointments</h1>
+                <div class="container py-5 text-center">
                     
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                         New Appointment
@@ -63,8 +64,8 @@
                         </div>
                     </div>
                     <p>
-                       <table class="table">
-                        <thead>
+                       <table class="table table-striped">
+                        <thead class="thead-dark">
                             <tr>
                                 <th>
                                     Customer
