@@ -47,11 +47,6 @@ def index():
     
     return render_template('index.html', customers = CustomerList, stateList = State.query.all(), newAppointment = Customer.query.all(), appointments = AppointmentList, eventCategory = Event_Category.query.all(), statuses = Event_Status.query.all())
 
-@my_view.route("/", methods=['GET', 'POST'])
-def addCustomerModal():
-
-    return(render_template("addCustomerModal.html"))
-
 #View Appointments
 @my_view.route('/Appointments', methods=['GET', 'POST'])
 def viewAppointment():
@@ -87,15 +82,33 @@ def viewAppointment():
 def viewCustomer():
 #State abb
     Customers = Customer.query.join(State, Customer.State_ID == State.State_ID)\
-        .add_columns(Customer.First_Name, Customer.Last_Name, Customer.Phone, Customer.Email, Customer.Mailing_Address, Customer.Mailing_City, 
-                     Customer.Mailing_Zip_Code, Customer.Contact_Date, State.State_Abbreviation)\
+        .add_columns(Customer.Customer_ID, Customer.First_Name, Customer.Last_Name, Customer.Phone, Customer.Email, Customer.Mailing_Address, Customer.Mailing_City, 
+                     Customer.Mailing_Zip_Code, Customer.Contact_Date, Customer.State_ID, State.State_Abbreviation)\
                          .order_by(Customer.Last_Name)
     if request.method == 'POST':
     #Form request to add customer
-        customer = Customer(request.form['firstName'], request.form['lastName'], request.form['phone'],
-                    request.form['email'], request.form['address'], request.form['city'], request.form['zip'], request.form['date'], request.form['state'])
-        db.session.add(customer)
-        db.session.commit()
+        if request.form['check'] == 'addCustomer':
+            customer = Customer(request.form['firstName'], request.form['lastName'], request.form['phone'],
+                        request.form['email'], request.form['address'], request.form['city'], request.form['zip'], request.form['date'], request.form['state'])
+            db.session.add(customer)
+            db.session.commit()
+        
+        if request.form['check'] == 'updateCustomer':
+            customerID = request.form['customerID']
+            customerFound = Customer.query.get(customerID)
+            customerFound.First_Name = request.form['firstName']
+            customerFound.Last_Name = request.form['lastName']
+            customerFound.Phone = request.form['phone']
+            customerFound.Email = request.form['email']
+            customerFound.Mailing_Address = request.form['address']
+            customerFound.Mailing_City = request.form['city']
+            customerFound.Mailing_Zip = request.form['zip']
+            customerFound.Contact_Date = request.form['date']
+            customerFound.State_ID = request.form['state']
+            db.session.commit()
+        
+
+
 
     return render_template('tables/customer.html', customers = Customers, stateList = State.query.all() )
 
