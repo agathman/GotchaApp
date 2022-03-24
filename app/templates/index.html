@@ -128,10 +128,10 @@
                                         <input type="hidden" name="check" value="event">                                     
                                         <label>Category</label>
                                         <select class="form-control" name="category" required>
+                                            <option disabled selected value> -- Select an option -- </option>
                                             {% for category in eventCategory %}
                                             <option value="{{category.Event_Category_ID}}">{{category.Event_Category_Name}}</option>
                                             {% endfor %}
-                                            <option disabled selected value> -- Select an option -- </option>
                                         </select>                            
                                         <label>Customer</label>
                                         <select class="form-control" name="customer" required>

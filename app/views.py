@@ -53,13 +53,34 @@ def addCustomerModal():
     return(render_template("addCustomerModal.html"))
 
 #View Appointments
-@my_view.route('/Appointments')
+@my_view.route('/Appointments', methods=['GET', 'POST'])
 def viewAppointment():
     
-    Appointments = Appointment.query.join(Customer, Appointment.Customer_ID == Customer.Customer_ID)\
-        .add_columns(Appointment.Appointment_ID, Customer.Customer_ID, Customer.First_Name, Customer.Last_Name, Customer.Phone, Customer.Email, Appointment.Date)
+    appointmentList = Appointment.query.join(Customer, Appointment.Customer_ID == Customer.Customer_ID)\
+        .add_columns(Appointment.Appointment_ID, Customer.Customer_ID, Customer.First_Name, Customer.Last_Name, Customer.Phone, 
+                        Customer.Email, Appointment.Date, Appointment.Event_Order_ID)\
+        .order_by(Appointment.Date)
 
-    return render_template('tables/appointment.html', appointments = Appointments, customers = Customer.query.all())
+    if request.method == 'POST':
+        #date update
+        if request.form['check'] == 'dateUpdate':
+            appointmentFound = request.form['appointment']
+            appointment = Appointment.query.get(appointmentFound)
+            appointment.date = request.form['date']
+            db.session.commit()
+        # new appointment
+        elif request.form['check'] == 'newAppointment':
+            appointment = Appointment(request.form['customerID'], request.form['date'])
+        # Add Event to appointment
+        elif request.form['check'] == 'addEvent':
+            appointmentFound = request.form['apptID'] 
+            appointment = Appointment.query.get(appointmentFound)
+            appointment.Event_Order_ID = request.form['event']
+            db.session.commit()
+
+
+
+    return render_template('tables/appointment.html', appointments = appointmentList, customers = Customer.query.all(), events = Event_Order.query.all())
 
 
 @my_view.route('/Customer')
@@ -141,6 +162,31 @@ def viewEventOrder():
     
 
     return render_template('tables/events.html', events = eventOrder, eventCategory = Event_Category.query.all(), statuses = Event_Status.query.all(), customers = Customer.query.all(), employees = Employee.query.all())
+
+@my_view.route('/viewEvent/<eventID>', methods=['GET', 'POST'])
+def viewEvent(eventID):
+    
+    eventOrder = Event_Order.query.filter_by(Event_Order_ID = eventID)\
+        .join(Event_Category, Event_Category.Event_Category_ID == Event_Order.Event_Category_ID)\
+        .join(Customer, Customer.Customer_ID == Event_Order.Customer_ID)\
+        .join(Event_Status, Event_Status.Event_Status_ID == Event_Order.Event_Order_Status_ID)\
+        .join(State, State.State_ID == Event_Order.State_ID)\
+        .join(Employee_Assignment, Employee_Assignment.Employee_Assignment_ID == Event_Order.Employee_Assignment_ID)\
+        .add_columns(Event_Order.Event_Order_ID, Event_Category.Event_Category_Name, Event_Order.Event_Category_ID, Customer.First_Name, Customer.Last_Name, Customer.Phone, Customer.Email, Event_Status.Event_Status, Event_Order.Event_Time, 
+        Event_Order.Event_Theme, Event_Order.Event_Order_Desc, Event_Order.Event_Delivery, Event_Order.Event_Setup, Event_Order.Event_Restriction_Desc, Event_Order.Event_Location_Name, Event_Order.Event_Address, Event_Order.Event_City,
+        State.State_Abbreviation, Event_Order.Event_Zip_Code)
+    
+    orderLines = Event_Order_Line.query.filter_by(Event_Order_ID = eventID)\
+        .join(Event_Order, Event_Order.Event_Order_ID == Event_Order_Line.Event_Order_ID)\
+        .join(Product_Service, Product_Service.Product_Service_ID == Event_Order_Line.Product_Service_ID)\
+        .join(Event_Status, Event_Status.Event_Status_ID == Event_Order_Line.Event_Order_Status_ID)\
+        .add_columns(Event_Order_Line.Event_Order_Line_Date, Event_Status.Event_Status, Product_Service.Product_Service)\
+        .order_by(Event_Order_Line.Event_Order_Line_Date)
+            
+
+
+    return render_template('tables/viewEvent.html', events = eventOrder, orderLines = orderLines)
+
 
 
 # Update an Event record

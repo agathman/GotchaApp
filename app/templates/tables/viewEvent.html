@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+{% block active %}
+<a class="nav-link " href="/">Home</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/Appointments">Appointments</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/Customer">Customers</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/Employee">Employees</a>
+</li>
+<li class="nav-item">
+<a class="nav-link active" href="/EventOrders">Event Orders</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/Payment">Payments</a> 
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/Vendor">Vendors</a>  
+</li>
+{% endblock %}
+
+
+     {% block content %}
+
+     <div class="container-fluid">
+        <div class="bg-light rounded-3">
+            <div class="py-5 text-center">
+
+<div class="d-flex justify-content-end py-2 px-5">
+     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#OrderLineModal">
+        Add Order Line
+    </button> 
+    </div>
+
+    <div class="row justify-content-start">
+        <div class="col ">
+  <table class='table py-2'>
+    <th>
+        Event ID
+    </th>
+    <th>
+        Customer
+    </th>
+    <th>
+        Phone Number  
+    </th>       
+    <th>
+        Email
+    </th>
+    <th>
+        Event Date
+    </th>
+    <tbody>
+        {% for event in events %}
+        <tr>
+        <td>{{ event.Event_Order_ID}}</td>    
+        <td>{{ event.First_Name }} {{ event.Last_Name }}</td>
+        <td>{{ event.Phone }}</td>
+        <td>{{ event.Email }}</td>
+        <td>{{ event.Event_Time.strftime('%m-%d-%Y') }}</td>
+        </tr>
+        {% endfor %}
+        </tbody>
+        </table>
+    
+
+<table class="table">
+
+    <th>
+        Status
+    </th>
+    <th>
+        Theme
+    </th>
+    <th>
+        Order Description
+    </th>
+    <th>
+        Delivery
+    </th>
+    <th>
+        Setup
+    </th>
+    <th>
+        Location
+    </th>
+    <th>
+        Restrictions
+    </th>
+    <th>
+        Address
+    </th>
+    <th>
+        City
+    </th>
+</tr>
+</thead>
+<tbody>
+    {% for event in events %}
+    <tr>
+    <td>{{ event.Event_Status}}</td>
+    <td>{{ event.Event_Theme }}</td>
+    <td>{{ event.Event_Order_Desc }}</td>
+    <td>{{ event.Event_Setup }}</td>
+    <td>{{ event.Event_Delivery }}</td>
+    <td>{{ event.Event_Location_Name }}</td>
+    <td>{{ event.Event_Restriction_Desc }}</td>
+    <td>{{ event.Event_Address }}</td>
+    <td>{{ event.Event_City }}</td>
+    
+</tr>
+{% endfor %}
+</tbody>        
+</table>
+
+
+{% for event in events %}
+<div class="container py-5">
+    <div class="row">
+      <div class="col-sm">
+          </div>
+    <div class="col-sm">
+<a href="/updateevent/{{event.Event_Order_ID}}"><button type="button" class="btn btn-primary px-2">
+    Update Event
+</button></a>
+<a href="/deleteevent/{{event.Event_Order_ID}}"><button type="button" class="btn btn-danger px-2">Delete</button></a>
+</div>
+<div class="col-sm">
+    </div>
+</div>
+    {% endfor %}
+    </div>
+    </div>
+    <div class="col col-lg-2">
+
+    <table class="table">
+        <thead>
+            <th>
+                Date
+            </th>
+            <th>
+                Status
+            </th>
+            <th>
+                Service
+            </th>
+        </thead>
+        <tbody>
+            {% for orderline in orderLines %}
+            <tr>
+                <td>
+                    {{orderLine.Event_Order_Line_Date}}
+                </td>
+                <td>
+                    {{orderLine.Event_Status}}
+                </td>
+                <td>
+                    {{orderLine.Product_Service}}
+                </td>
+
+            </tr>
+            {% endfor %}
+        </tbody>
+
+    </table>
+</div>
+
+
+</div>
+
+</div>
+</div>
+</div>
+
+
+{% endblock %}
