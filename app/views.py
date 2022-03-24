@@ -41,7 +41,8 @@ def index():
     
     #Query to find customer names with associated appointments
     AppointmentList = Appointment.query.join(Customer, Appointment.Customer_ID == Customer.Customer_ID)\
-        .add_columns(Customer.First_Name, Customer.Last_Name, Appointment.Date)
+        .add_columns(Customer.First_Name, Customer.Last_Name, Appointment.Date)\
+            .order_by(Appointment.Date)
     
     return render_template('index.html', customers = CustomerList, stateList = State.query.all(), newAppointment = Customer.query.all(), appointments = AppointmentList, eventCategory = Event_Category.query.all(), statuses = Event_Status.query.all())
 
