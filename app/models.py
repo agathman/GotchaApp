@@ -179,8 +179,7 @@ class Payment(db.Model):
     Payment_Date_Init = db.Column(db.Date, nullable=False)
     Payment_Date_Full = db.Column(db.Date, nullable=False)
 
-    def __init__(self, Payment_ID, Payment_Type_ID, Event_Order_ID, Payment_Date_Init, Payment_Date_Full):
-        self.Payment_ID = Payment_ID
+    def __init__(self, Payment_Type_ID, Event_Order_ID, Payment_Date_Init, Payment_Date_Full):
         self.Payment_Type_ID = Payment_Type_ID
         self.Event_Order_ID = Event_Order_ID
         self.Payment_Date_Init = Payment_Date_Init

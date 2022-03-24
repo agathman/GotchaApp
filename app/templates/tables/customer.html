@@ -1,5 +1,28 @@
 {% extends "base.html" %}
 
+{% block active %}
+<a class="nav-link " href="/">Home</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/Appointments">Appointments</a>
+</li>
+<li class="nav-item">
+<a class="nav-link active" href="/Customer">Customers</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/Employee">Employees</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/EventOrders">Event Orders</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/Payment">Payments</a> 
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/Vendor">Vendors</a>  
+</li>
+{% endblock %}
+
      {% block content %}
      <div class="container">
             <div class="p-5 mb-4 bg-light rounded-3">

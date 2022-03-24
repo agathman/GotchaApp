@@ -36,7 +36,8 @@ def index():
     
     #Query to find customer names with associated events    
     CustomerList = Customer.query.join(Event_Order, Customer.Customer_ID == Event_Order.Customer_ID)\
-        .add_columns(Customer.First_Name, Customer.Last_Name, Event_Order.Event_Time, Customer.Customer_ID)\
+        .join(Event_Status, Event_Order.Event_Order_Status_ID == Event_Status.Event_Status_ID)\
+        .add_columns(Customer.First_Name, Customer.Last_Name, Event_Status.Event_Status, Event_Order.Event_Time, Customer.Customer_ID)\
         .order_by(Event_Order.Event_Time)
     
     #Query to find customer names with associated appointments
@@ -52,11 +53,6 @@ def index():
 def addCustomerModal():
 
     return(render_template("addCustomerModal.html"))
-
-
-@my_view.route('/viewTables')
-def viewTables():
-    return render_template('viewtables.html')
 
 #View Appointments
 @my_view.route('/Appointments')
@@ -78,13 +74,21 @@ def viewCustomer():
     return render_template('tables/customer.html', customers = Customers )
 
 
-@my_view.route('/Employee')
+@my_view.route('/Employee', methods = ['GET', 'POST'])
 def viewEmployee():
     Employees = Employee.query.join(State, Employee.State_ID == State.State_ID)\
         .add_columns(Employee.Emp_ID, Employee.Emp_First_Name, Employee.Emp_Last_Name, Employee.Emp_Mailing_Address, Employee.Emp_Mailing_City, 
                      State.State_Abbreviation, Employee.Emp_Zip_Code, Employee.Emp_Phone, Employee.Emp_Email, Employee.Emp_Position)
+
+    if request.method == 'POST':
+        employee = Employee(request.form['firstName'], request.form['lastName'], request.form['address'], request.form['city'], request.form['state'], request.form['zip'],
+                                request.form['phone'], request.form['email'], request.form['position'])
+        db.session.add(employee)
+        db.session.commit()
+        return redirect(url_for('my_view.viewEmployee'))
+    
  
-    return render_template('tables/employee.html', employees = Employees )
+    return render_template('tables/employee.html', employees = Employees, stateList = State.query.all() )
 
 @my_view.route('/EmployeeAssignment')
 def viewEmployeeAssignment():
@@ -114,7 +118,7 @@ def event(eventID):
     return render_template('event.html', event = Event)
 
 
-@my_view.route('/EventOrder')
+@my_view.route('/EventOrders', methods = ['GET', 'POST'])
 def viewEventOrder():
 
 
@@ -128,14 +132,30 @@ def viewEventOrder():
         .add_columns(Event_Order.Event_Order_ID, Event_Category.Event_Category_Name, Customer.First_Name, Customer.Last_Name, Customer.Phone, Customer.Email, Event_Status.Event_Status, Event_Order.Event_Time, Event_Order.Event_Theme,
         Event_Order.Event_Order_Desc, Event_Order.Event_Delivery, Event_Order.Event_Setup, Event_Order.Event_Location_Name, Event_Order.Event_Restriction_Desc, Event_Order.Event_Address, Event_Order.Event_City,
         State.State_Abbreviation, Event_Order.Event_Zip_Code).all()
-    
-    #eventOrder = Event_Order.query.join(Event_Category, Event_Order.Event_Category_ID == Event_Category.Event_Category_ID, Customer, Event_Order.Customer_ID == Customer.Customer_ID,
-    #Event_Status, Event_Order.Event_Order_Status_ID == Event_Status.Event_Status_ID,State, Event_Order.State_ID == State.State_ID,Employee_Assignment, Event_Order.Employee_Assignment_ID == Employee_Assignment.Employee_Assignment_ID)\
-    #    .add_columns(Event_Order.Event_Order_ID, Event_Category.Event_Category_ID, Customer.Customer_ID, Event_Status.Event_Status_ID, Event_Order.Event_Time,
-    #     Event_Order.Event_Theme, Event_Order.Event_Order_Desc, Event_Order.Event_Delivery, Event_Order.Event_Delivery, Event_Order.Event_Location_Name, Event_Order.Event_Restriction_Desc, 
-    #     Event_Order.Event_Address, Event_Order.Event_City, State.State_ID, Event_Order.Event_Zip_Code, Employee.Emp_First_Name, Employee.Emp_Last_Name, Event_Order.Feedback)
 
-    return render_template('tables/events.html', events = eventOrder)
+    if request.method == 'POST':
+        #Form request to add Category
+        #Checks which form to add from
+        if request.form['check'] == 'catCheck':
+            category = Event_Category(request.form['category'])
+            db.session.add(category)
+            db.session.commit()
+        # Service Form Handling
+        elif request.form['check'] == 'serviceCheck':
+            service = Product_Service(request.form['service'])
+            db.session.add(service)
+            db.session.commit()           
+        # Event Form Handling
+        elif request.form['check'] == 'event':
+            event = Event_Order(request.form['category'], request.form['customer'], request.form['status'], request.form['eventTime'], request.form['theme'], request.form['eventDesc'],
+                        request.form['delivery'], request.form['setup'], request.form['location'], request.form['restrictions'], request.form['address'], request.form['city'],
+                        request.form['zip'],2, 1, 'Due after event')
+            db.session.add(event)
+            db.session.commit()
+            return redirect(url_for('my_view.viewEventOrder'))
+    
+
+    return render_template('tables/events.html', events = eventOrder, eventCategory = Event_Category.query.all(), statuses = Event_Status.query.all(), customers = Customer.query.all(), employees = Employee.query.all())
 
 
 # Update an Event record
@@ -152,9 +172,6 @@ def updateEvent(eventID):
         .add_columns(Event_Order.Event_Order_ID, Event_Category.Event_Category_Name, Event_Order.Event_Category_ID, Customer.First_Name, Customer.Last_Name, Customer.Phone, Customer.Email, Event_Status.Event_Status, Event_Order.Event_Time, 
         Event_Order.Event_Theme, Event_Order.Event_Order_Desc, Event_Order.Event_Delivery, Event_Order.Event_Setup, Event_Order.Event_Restriction_Desc, Event_Order.Event_Location_Name, Event_Order.Event_Address, Event_Order.Event_City,
         State.State_Abbreviation, Event_Order.Event_Zip_Code)
-
-
-
 
     if request.method == 'POST':
         # Fields to be updated (Left side is table field right side is form field)
@@ -177,19 +194,28 @@ def updateEvent(eventID):
            
 
     return render_template('update/updateEvent.html', eventCategory = Event_Category.query.all(), statuses = Event_Status.query.all(), selected = eventOrder)
-
-
-
-
-
-
   
-@my_view.route('/EventOrderLine')
-def viewEventOrderLine():
-    event_order_line = Event_Order_Line.query.join(Event_Status, Event_Order_Line.Event_Order_Status_ID == Event_Status.Event_Status_ID).join(Vendor,Event_Order_Line.Vendor_ID==Vendor.Vendor_ID).join(Event_Order, Event_Order_Line.Event_Order_ID==Event_Order.Event_Order_ID).join(Product_Service,Event_Order_Line.Product_Service_ID==Product_Service.Product_Service_ID)\
-        .add_columns(Event_Order_Line.Event_Order_Line_ID, Event_Order_Line.Event_Order_Status_ID, Event_Status.Event_Status, Event_Order_Line.Event_Order_Line_Date, Vendor.Vendor_ID, Vendor.First_Name, Vendor.Last_Name, Event_Order.Event_Order_ID,Event_Order.Customer_ID,Event_Order_Line.Product_Service_ID,Product_Service.Product_Service)\
+@my_view.route('/EventOrderLine/<eventID>',  methods=['GET', 'POST'])
+def viewEventOrderLine(eventID):
 
-    return render_template('tables/event_order_line.html',EOL = event_order_line)
+    
+    event_order_line = Event_Order_Line.query.filter_by(Event_Order_ID = eventID)\
+        .join(Event_Status, Event_Order_Line.Event_Order_Status_ID == Event_Status.Event_Status_ID)\
+        .join(Vendor, Event_Order_Line.Vendor_ID == Vendor.Vendor_ID)\
+        .join(Event_Order, Event_Order_Line.Event_Order_ID == Event_Order.Event_Order_ID)\
+        .join(Product_Service, Event_Order_Line.Product_Service_ID == Product_Service.Product_Service_ID)\
+        .add_columns(Event_Order_Line.Event_Order_Line_ID, Event_Order_Line.Event_Order_Status_ID, Event_Status.Event_Status, Event_Order_Line.Event_Order_Line_Date, Vendor.Vendor_ID, 
+                            Vendor.Vendor_Name, Event_Order.Event_Order_ID, Event_Order.Event_Time, Event_Order.Customer_ID,Event_Order_Line.Product_Service_ID,Product_Service.Product_Service)\
+        
+    
+    if request.method == 'POST':
+        orderLine = Event_Order_Line(request.form['vendor'], request.form['status'], request.form['date'], eventID, request.form['service'])                       
+        db.session.add(orderLine)
+        db.session.commit()
+        
+        
+
+    return render_template('tables/eventOrderLine.html', EOL = event_order_line, vendors = Vendor.query.all(), statuses = Event_Status.query.all(), services = Product_Service.query.all())
 
 @my_view.route('/EventStatus')
 def viewEventStatus():
@@ -197,11 +223,21 @@ def viewEventStatus():
         .add_columns(Event_Status.Event_Status_ID, Event_Status.Event_Status)
     return render_template('tables/event_status.html')
 
-@my_view.route('/Payment')
+@my_view.route('/Payment', methods = ['GET', 'POST'])
 def viewPayment():
-    Payment = Payment.query.join(Payment_Type, Payment.Payment_Type_ID == Payment_Type.Payment_Type_ID), (Event_Order, Payment.Event_Order_ID == Event_Order.Event_Order_ID)\
-        .add_columns(Payment.Payment_ID, Payment_Type.Payment_Type_ID, Event_Order.Event_Order_ID, Payment.Payment_Date_Init, Payment.Payment_Date_Full)
-    return render_template('tables/payment.html')
+    payment = Payment.query.join(Payment_Type, Payment.Payment_Type_ID == Payment_Type.Payment_Type_ID)\
+        .join(Event_Order, Payment.Event_Order_ID == Event_Order.Event_Order_ID)\
+        .join(Customer, Event_Order.Customer_ID == Customer.Customer_ID)\
+        .add_columns(Payment.Payment_ID, Payment_Type.Payment_Type_ID, Payment_Type.Payment_Type_Name, Customer.First_Name, Customer.Last_Name, Event_Order.Event_Order_ID, Payment.Payment_Date_Init, Payment.Payment_Date_Full)
+    
+    if request.method == 'POST':
+        payment = Payment(request.form['payType'], request.form['eventOrder'], request.form['initDate'], request.form['fullDate'])
+        db.session.add(payment)
+        db.session.commit()
+        return redirect(url_for('my_view.viewPayment'))
+    
+    
+    return render_template('tables/payment.html', payments = payment, types = Payment_Type.query.all(), events = Event_Order.query.all())
 
 @my_view.route('/PaymentType')
 def viewPaymentType():
