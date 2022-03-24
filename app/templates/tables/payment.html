@@ -24,18 +24,18 @@
 {% endblock %}
 
      {% block content %}
-     <div class="container">
-            <div class="p-5 mb-4 bg-light rounded-3">
-                <div class="container-fluid py-5 text-center">
-                    <h1 class="display-5 fw-bold">Payments</h1>
-                    <!-- Modal button for new appointment-->
-                    <div class="py-2">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#AppointmentModal">
+     <div class="container-fluid text-center">          
+        <div class="p-5 mb-4 rounded-3">
+            <h1 class="display-5 fw-bold">Payments</h1>
+            <div class="container py-5 text-center">
+                    <!-- Modal button for new Payment-->
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#paymentModal">
                         Add Payment
                     </button>
                     </div>
                         
-                            <table class='table'>
+                            <table class='table table-striped'>
+                                <thead class="thead-dark">
                                 <th>
                                     Payment ID
                                 </th>
@@ -49,8 +49,10 @@
                                 </th>
                                 <th>
                                     Payment Date Full
-                                </th>                                                              
-                            </tr>
+                                </th>  
+                                <th></th>
+                                <th></th>                                                            
+                           
                             </thead>
                             <tbody>
                                 {% for payment in payments %}
@@ -59,8 +61,12 @@
                                 <td>{{ payment.Payment_Type_Name}}</td>
                                 <td>{{ payment.Event_Order_ID }}</td>
                                 <td>{{ payment.First_Name}} {{payment.Last_Name}}</td>
-                                <td>{{ payment.Payment_Date_Init }}</td>
-                                <td>{{ payment.Payment_Date_Full }}</td>
+                                <td>{{ payment.Payment_Date_Init.strftime('%m-%d-%Y') }}</td>
+                                <td>{{ payment.Payment_Date_Full.strftime('%m-%d-%Y') }}</td>
+                                <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updatePaymentModal{{payment.Payment_ID}}">
+                                    Update
+                                </button></td>
+                                <td><a href="/deletePayment/{{payment.Payment_ID}}"><button type='button' class='btn btn-danger'>Delete</button></a></td>
                                 
                             </tr>
                             {% endfor %}
@@ -75,7 +81,7 @@
             </div>        
         </div>
 
-        <!-- Modal body for new appointment -->
+        <!-- Modal CREATE payment -->
         <div class="modal fade" id="AppointmentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
             <div class="modal-content">
@@ -116,4 +122,48 @@
             </div>
             </div>
         </div>
+
+        <!-- Modal UPDATE payment -->
+        {% for payment in payments %}
+        <div class="modal fade" id="updatePaymentModal{{payment.Payment_ID}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">New Appointment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    <form action = "{{ request.path }}" method = "post">
+                        <label>Payment Type</label>
+                        <select class="form-control" name="payType">
+                        <option disabled selected value> -- Select an option -- </option>
+                            {% for type in types %}
+                            <option value="{{type.Payment_Type_ID}}">{{type.Payment_Type_Name}}</option> 
+                            {% endfor %}
+                        </select>
+                        <label>Event Order</label>
+                        <select class="form-control" name="eventOrder">
+                        <option disabled selected value> -- Select an option -- </option>
+                            {% for event in events %}
+                            <option value="{{event.Event_Order_ID}}">Event ID: {{event.Event_Order_ID}} Date: {{event.Event_Time.strftime('%m-%d-%Y')}}</option>
+                            {% endfor %}
+                        </select>
+                        <label>Initial Payment Date</label>
+                        <input type="date" class="form-control" name="initDate">
+                        <label>Full Payment Date</label>
+                        <input type="date" class="form-control" name="fullDate">
+                   
+                    
+                </div>
+                <div class="modal-footer">
+                    <input type='submit' class="btn btn-secondary" value="Save">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </form>
+                </div>
+            </div>
+            </div>
+        </div>
+        {% endfor %}
         {% endblock %}

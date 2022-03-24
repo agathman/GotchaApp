@@ -9,7 +9,8 @@ my_view = Blueprint('my_view', __name__)
 
 
 
-# Routes to html views with GET requests
+# INDEX PAGE - Quick view for events and appointments - CREATES: Customer, Event, Appointment
+
 @my_view.route("/", methods=['GET', 'POST'])
 def index():
     
@@ -47,7 +48,8 @@ def index():
     
     return render_template('index.html', customers = CustomerList, stateList = State.query.all(), newAppointment = Customer.query.all(), appointments = AppointmentList, eventCategory = Event_Category.query.all(), statuses = Event_Status.query.all())
 
-#View Appointments
+# APPOINTMENTS Create/View/Update
+
 @my_view.route('/Appointments', methods=['GET', 'POST'])
 def viewAppointment():
     
@@ -77,6 +79,7 @@ def viewAppointment():
 
     return render_template('tables/appointment.html', appointments = appointmentList, customers = Customer.query.all(), events = Event_Order.query.all())
 
+# CUSTOMER Create/View/Update
 
 @my_view.route('/Customer', methods = ['GET', 'POST'])
 def viewCustomer():
@@ -112,22 +115,42 @@ def viewCustomer():
 
     return render_template('tables/customer.html', customers = Customers, stateList = State.query.all() )
 
+# EMPLOYEES - Create/View/Update
 
 @my_view.route('/Employee', methods = ['GET', 'POST'])
 def viewEmployee():
     Employees = Employee.query.join(State, Employee.State_ID == State.State_ID)\
         .add_columns(Employee.Emp_ID, Employee.Emp_First_Name, Employee.Emp_Last_Name, Employee.Emp_Mailing_Address, Employee.Emp_Mailing_City, 
-                     State.State_Abbreviation, Employee.Emp_Zip_Code, Employee.Emp_Phone, Employee.Emp_Email, Employee.Emp_Position)
+                     State.State_Abbreviation, Employee.State_ID, State.State_Name, Employee.Emp_Zip_Code, Employee.Emp_Phone, Employee.Emp_Email, Employee.Emp_Position)
 
     if request.method == 'POST':
-        employee = Employee(request.form['firstName'], request.form['lastName'], request.form['address'], request.form['city'], request.form['state'], request.form['zip'],
-                                request.form['phone'], request.form['email'], request.form['position'])
-        db.session.add(employee)
-        db.session.commit()
+        if request.form['check'] == 'addEmployee':
+            employee = Employee(request.form['firstName'], request.form['lastName'], request.form['address'], request.form['city'], request.form['state'], request.form['zip'],
+                                    request.form['phone'], request.form['email'], request.form['position'])
+            db.session.add(employee)
+            db.session.commit()
+
+        if request.form['check'] == 'updateEmployee':
+            empID = request.form['employeeID']
+            employeeFound = Employee.query.get(empID)
+            employeeFound.Emp_First_Name = request.form['firstName']
+            employeeFound.Emp_Last_Name = request.form['lastName']
+            employeeFound.Emp_Mailing_Address = request.form['address']
+            employeeFound.Emp_Mailing_City = request.form['city']
+            employeeFound.Emp_State_ID = request.form['state']
+            employeeFound.Emp_Zip_Code = request.form['zip']
+            employeeFound.Emp_Phone = request.form['phone']
+            employeeFound.Emp_Email = request.form['email']
+            employeeFound.Emp_Position = request.form['position']
+            db.session.commit()
+
+
         return redirect(url_for('my_view.viewEmployee'))
     
  
     return render_template('tables/employee.html', employees = Employees, stateList = State.query.all() )
+
+# Employee assignment - Will be removed later 
 
 @my_view.route('/EmployeeAssignment')
 def viewEmployeeAssignment():
@@ -137,17 +160,11 @@ def viewEmployeeAssignment():
 
     return render_template('tables/employee_assignment.html')
 
-@my_view.route('/EventCategory')
-def viewEventCategory():
-    Event_Category = Event_Category()\
-        .add_columns(Event_Category.Event_Category_ID, Event_Category.Event_Category_Name)
-    return render_template('tables/event_category.html')
 
+# EVENT ORDER - Create/View/Update
 
 @my_view.route('/EventOrders', methods = ['GET', 'POST'])
 def viewEventOrder():
-
-
 
     eventOrder = Event_Order.query\
         .join(Event_Category, Event_Category.Event_Category_ID == Event_Order.Event_Category_ID)\
@@ -182,6 +199,8 @@ def viewEventOrder():
     
 
     return render_template('tables/events.html', events = eventOrder, eventCategory = Event_Category.query.all(), statuses = Event_Status.query.all(), customers = Customer.query.all(), employees = Employee.query.all())
+
+# SINGLE EVENT DETAIL W/ ORDER LINES - View - NEEDS UPDATE FUNCTIONALITY
 
 @my_view.route('/viewEvent/<eventID>', methods=['GET', 'POST'])
 def viewEvent(eventID):
@@ -218,7 +237,8 @@ def viewEvent(eventID):
 
 
 
-# Update an Event record
+# EVENT UPDATE FUNCTIONS - Move to event detail route
+
 @my_view.route('/updateevent/<eventID>', methods=['GET', 'POST'])
 def updateEvent(eventID):
 
@@ -255,6 +275,8 @@ def updateEvent(eventID):
 
     return render_template('update/updateEvent.html', eventCategory = Event_Category.query.all(), statuses = Event_Status.query.all(), selected = eventOrder)
   
+ # Temporary - ORDER LINE now viewable in EVENT DETAIL route
+ #  
 @my_view.route('/EventOrderLine/<eventID>',  methods=['GET', 'POST'])
 def viewEventOrderLine(eventID):
 
@@ -277,11 +299,15 @@ def viewEventOrderLine(eventID):
 
     return render_template('tables/eventOrderLine.html', EOL = event_order_line, vendors = Vendor.query.all(), statuses = Event_Status.query.all(), services = Product_Service.query.all())
 
+# Will be removed and viewed within events page
+
 @my_view.route('/EventStatus')
 def viewEventStatus():
     Event_Status = Event_Status()\
         .add_columns(Event_Status.Event_Status_ID, Event_Status.Event_Status)
     return render_template('tables/event_status.html')
+
+# PAYMENT - View/Create/ - NEEDS UPDATE
 
 @my_view.route('/Payment', methods = ['GET', 'POST'])
 def viewPayment():
@@ -291,13 +317,22 @@ def viewPayment():
         .add_columns(Payment.Payment_ID, Payment_Type.Payment_Type_ID, Payment_Type.Payment_Type_Name, Customer.First_Name, Customer.Last_Name, Event_Order.Event_Order_ID, Payment.Payment_Date_Init, Payment.Payment_Date_Full)
     
     if request.method == 'POST':
-        payment = Payment(request.form['payType'], request.form['eventOrder'], request.form['initDate'], request.form['fullDate'])
-        db.session.add(payment)
-        db.session.commit()
-        return redirect(url_for('my_view.viewPayment'))
+
+        if request.form['check'] == 'addPayment':
+            payment = Payment(request.form['payType'], request.form['eventOrder'], request.form['initDate'], request.form['fullDate'])
+            db.session.add(payment)
+            db.session.commit()
+        
+        if request.form['check'] == 'updatePayment':
+            
+
+ 
+            return redirect(url_for('my_view.viewPayment'))
     
     
     return render_template('tables/payment.html', payments = payment, types = Payment_Type.query.all(), events = Event_Order.query.all())
+
+# Payment type functions will be included in PAYMENT 
 
 @my_view.route('/PaymentType')
 def viewPaymentType():
@@ -305,6 +340,7 @@ def viewPaymentType():
         .add_columns(Payment_Type.Payment_ID, Payment_Type.Payment_Type_ID)
     return render_template('tables/payment_type.html', payment = Payment.query.all())
 
+# CREATE product services in EVENT page
 
 @my_view.route('/ProductService')
 def viewProductService():
@@ -312,13 +348,7 @@ def viewProductService():
         .add_columns(Product_Service.Product_Service_ID, Product_Service.Product_Service)
     return render_template('tables/product_service.html')
 
-
-@my_view.route('/State')
-def viewState():
-    State = State()\
-        .add_columns(State.State_ID, State.State_Name, State.State_Abbreviation)
-    return render_template('tables/state.html')
-
+# VENDOR Create/View - NEEDS UPDATE FUNCTIONALITY
 @my_view.route('/Vendor', methods = ["GET" ,"POST"])
 def viewVendor():
    
@@ -340,20 +370,9 @@ def viewVendor():
     return render_template('tables/vendor.html', vendors = vendorlist, vendorServices = Vendor_Service.query.all())
 
 
-
-
-
-
-
-
 @my_view.route('/VendorService')
 def viewVendorService():
     Vendor_Service = Vendor_Service()\
         .add_columns(Vendor_Service.Vendor_Service_ID, Vendor_Service.Vendor_Services)
     return render_template('tables/vendor_service.html')
 
-
-
-@my_view.route('/createDB')
-def createdb():
-    return render_template('/', db.create_all())
