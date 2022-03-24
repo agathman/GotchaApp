@@ -5,7 +5,57 @@
             <div class="p-5 mb-4 bg-light rounded-3">
                 <div class="container-fluid py-5 text-center">
                     <h1 class="display-5 fw-bold">Payment</h1>
-                   
+
+                <!-- Modal Button for Payment -->
+
+                    <div class="row container-fluid py-5 text-center">
+                        <div class="col">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                Payment
+                                </button>
+                
+                    <!-- Modal Body for Vendor -->             
+                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                        <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Payment</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            </div>
+                            <div class="modal-body">
+                                <form action = "{{ request.path }}" method = "post">   
+
+                                    <label>Payment Type ID</label>
+                                    <input type="text" class="form-control" name="paymentTypeid" required>
+                                    <!-- <label>Vendor Service</label> 
+                                    <select class="form-control" name="vendorService" required>                                           
+                                        {% for vendorService in vendorServices %}
+                                            <option value="{{vendorService.Vendor_Service_ID}}">{{vendorService.Vendor_Services}}</option>
+                                            {% endfor %}
+                                            <option disabled selected value> -- Select an option -- </option>
+                                        </select> -->
+                                    <label>Payment Type ID</label>
+                                    <input type="number" class="form-control" name="paymentTypeid" required>
+                                    <label>Event Order ID</label> 
+                                    <input type="number" class="form-control" name="eventOrderid" required>
+                                    <label>Payment Date Init</label>
+                                    <input type="date" class="form-control" name="paymentDateinit" required>
+                                    <label>Payment Date Full</label>
+                                    <input type="date" class="form-control" name="paymentDatefull" required>
+                                    
+                            </div>
+                            <div class="modal-footer">
+                                
+                                <input type='submit' class="btn btn-secondary" value="Save">
+                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            </form>
+                            </div>
+                        </div>
+                        </div>
+                    </div>
+                    </div>
                       
                         
                             <table class='table'>
