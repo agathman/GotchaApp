@@ -29,7 +29,7 @@
             <h1 class="display-5 fw-bold">Payments</h1>
             <div class="container py-5 text-center">
                     <!-- Modal button for new Payment-->
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#paymentModal">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPaymentModal">
                         Add Payment
                     </button>
                     </div>
@@ -64,7 +64,7 @@
                                 <td>{{ payment.Payment_Date_Init.strftime('%m-%d-%Y') }}</td>
                                 <td>{{ payment.Payment_Date_Full.strftime('%m-%d-%Y') }}</td>
                                 <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updatePaymentModal{{payment.Payment_ID}}">
-                                    Update
+                                    Edit
                                 </button></td>
                                 <td><a href="/deletePayment/{{payment.Payment_ID}}"><button type='button' class='btn btn-danger'>Delete</button></a></td>
                                 
@@ -82,7 +82,7 @@
         </div>
 
         <!-- Modal CREATE payment -->
-        <div class="modal fade" id="AppointmentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal fade" id="addPaymentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
@@ -136,24 +136,26 @@
                 </div>
                 <div class="modal-body">
                     <form action = "{{ request.path }}" method = "post">
+                        <input type="hidden" name="check" value="updatePayment">
+                        <input type="hidden" name="paymentID" value="{{payment.Payment_ID}}">
                         <label>Payment Type</label>
                         <select class="form-control" name="payType">
-                        <option disabled selected value> -- Select an option -- </option>
+                        <option selected value="{{payment.Payment_Type_ID}}"> {{payment.Payment_Type_Name}} </option>
                             {% for type in types %}
                             <option value="{{type.Payment_Type_ID}}">{{type.Payment_Type_Name}}</option> 
                             {% endfor %}
                         </select>
                         <label>Event Order</label>
                         <select class="form-control" name="eventOrder">
-                        <option disabled selected value> -- Select an option -- </option>
+                        <option selected value="{{payment.Event_Order_ID}}"> <b>Event ID:</b> {{payment.Event_Order_ID}} <b>Date:</b> {{payment.Event_Time.strftime('%m-%d-%Y')}} </option>
                             {% for event in events %}
                             <option value="{{event.Event_Order_ID}}">Event ID: {{event.Event_Order_ID}} Date: {{event.Event_Time.strftime('%m-%d-%Y')}}</option>
                             {% endfor %}
                         </select>
                         <label>Initial Payment Date</label>
-                        <input type="date" class="form-control" name="initDate">
+                        <input type="date" class="form-control" value="{{payment.Payment_Date_Init}}" name="initDate">
                         <label>Full Payment Date</label>
-                        <input type="date" class="form-control" name="fullDate">
+                        <input type="date" class="form-control" value="{{payment.Payment_Date_Full}}" name="fullDate">
                    
                     
                 </div>

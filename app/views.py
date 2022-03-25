@@ -38,7 +38,7 @@ def index():
     #Query to find customer names with associated events    
     CustomerList = Customer.query.join(Event_Order, Customer.Customer_ID == Event_Order.Customer_ID)\
         .join(Event_Status, Event_Order.Event_Order_Status_ID == Event_Status.Event_Status_ID)\
-        .add_columns(Customer.First_Name, Customer.Last_Name, Event_Status.Event_Status, Event_Order.Event_Time, Customer.Customer_ID)\
+        .add_columns(Customer.First_Name, Customer.Last_Name, Event_Order.Event_Order_ID, Event_Status.Event_Status, Event_Order.Event_Time, Customer.Customer_ID)\
         .order_by(Event_Order.Event_Time)
     
     #Query to find customer names with associated appointments
@@ -314,7 +314,7 @@ def viewPayment():
     payment = Payment.query.join(Payment_Type, Payment.Payment_Type_ID == Payment_Type.Payment_Type_ID)\
         .join(Event_Order, Payment.Event_Order_ID == Event_Order.Event_Order_ID)\
         .join(Customer, Event_Order.Customer_ID == Customer.Customer_ID)\
-        .add_columns(Payment.Payment_ID, Payment_Type.Payment_Type_ID, Payment_Type.Payment_Type_Name, Customer.First_Name, Customer.Last_Name, Event_Order.Event_Order_ID, Payment.Payment_Date_Init, Payment.Payment_Date_Full)
+        .add_columns(Payment.Payment_ID, Payment_Type.Payment_Type_ID, Payment_Type.Payment_Type_Name, Customer.First_Name, Customer.Last_Name, Event_Order.Event_Order_ID, Event_Order.Event_Time, Payment.Payment_Date_Init, Payment.Payment_Date_Full)
     
     if request.method == 'POST':
 
@@ -324,7 +324,16 @@ def viewPayment():
             db.session.commit()
         
         if request.form['check'] == 'updatePayment':
-            
+            paymentID = request.form['paymentID']
+            paymentFound = Payment.query.get(paymentID)
+            paymentFound.Payment_Type_ID = request.form['payType']
+            paymentFound.Event_Order_ID = request.form['eventOrder']
+            paymentFound.Payment_Date_Init = request.form['initDate']
+            paymentFound.Payment_Date_Full = request.form['fullDate']
+            db.session.commit()
+
+
+
 
  
             return redirect(url_for('my_view.viewPayment'))
