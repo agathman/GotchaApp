@@ -191,6 +191,13 @@
                     <option value="No">No</option>
                    
                 </select>
+                <label>Employee Assignment</label>
+                <select class="form-control" name="employee">
+                    <option disabled selected value> -- Select an option -- </option>
+                    {% for employee in employees %}
+                        <option value="{{employee.Emp_ID}}">{{employee.Emp_Last_Name}}</option>
+                    {% endfor %}
+            </select>
                 </div>
                 <div class="col">
                 <label>Setup</label>
@@ -208,20 +215,18 @@
                 <input type="text" class="form-control" name="address" required>
                 <label>City</label>
                 <input type="text" class="form-control" name="city" required>
-                <label>Employee Assignment</label>
-                <select class="form-control" name="employee">
-                    <option disabled selected value> -- Select an option -- </option>
-                    {% for employee in employees %}
-                    <option value="{{employee.Emp_ID}}">{{employee.Emp_Last_Name}}</option>
-                    {% endfor %}
-                </select>
                 <label>Zip Code</label>
                 <input type="number" min="0" step="1" class="form-control" name="zip" required>
+                <label>State</label>
+                <select class="form-control" name="state" value="1">
+                    {% for state in stateList %}
+                            <option value="{{state.State_ID}}">{{state.State_Name}}</option> 
+                    {% endfor %}
+                </select>
 
                </div>
         </div>
         <div class="modal-footer">
-            
             <input type='submit' class="btn btn-secondary" value="Save">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </form>

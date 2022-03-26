@@ -192,13 +192,13 @@ def viewEventOrder():
         elif request.form['check'] == 'event':
             event = Event_Order(request.form['category'], request.form['customer'], request.form['status'], request.form['eventTime'], request.form['theme'], request.form['eventDesc'],
                         request.form['delivery'], request.form['setup'], request.form['location'], request.form['restrictions'], request.form['address'], request.form['city'],
-                        request.form['zip'],2, 1, 'Due after event')
+                        request.form['zip'],2, request.form['state'], 'Due after event')
             db.session.add(event)
             db.session.commit()
             return redirect(url_for('my_view.viewEventOrder'))
     
 
-    return render_template('tables/events.html', events = eventOrder, eventCategory = Event_Category.query.all(), statuses = Event_Status.query.all(), customers = Customer.query.all(), employees = Employee.query.all())
+    return render_template('tables/events.html', events = eventOrder, eventCategory = Event_Category.query.all(), statuses = Event_Status.query.all(), customers = Customer.query.all(), employees = Employee.query.all(), stateList = State.query.all() )
 
 # SINGLE EVENT DETAIL W/ ORDER LINES - View - NEEDS UPDATE FUNCTIONALITY
 
