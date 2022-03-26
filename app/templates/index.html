@@ -177,6 +177,12 @@
                                         <input type="text" class="form-control" name="city" required>                                            
                                         <label>Zip Code</label>
                                         <input type="number" min="0" step="1" class="form-control" name="zip" required>
+                                        <label>State</label>
+                                        <select class="form-control" name="state" value="1">
+                                            {% for state in stateList %}
+                                                <option value="{{state.State_ID}}">{{state.State_Name}}</option> 
+                                            {% endfor %}
+                                        </select>
 
                                        </div>
                                 </div>
