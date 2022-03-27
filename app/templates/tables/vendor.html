@@ -23,20 +23,17 @@
 {% endblock %}
 
      {% block content %}
-     <div class="container">
-            <div class="p-5 mb-4 bg-light rounded-3">
-                <div class="container-fluid py-5 text-center">
-                    <h1 class="display-5 fw-bold">Vendor</h1>
+     <div class="container-fluid py-5 text-center">
+        <div class="p-5 mb-4 bg-light rounded-3">
+            <h1 class="display-5 fw-bold">Vendors</h1>
 
                 <!-- Modal Button for Vendor -->
-
-                    <div class="row container-fluid py-5 text-center">
-                        <div class="col">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                                New Vendor
-                              </button>
-
-
+                <div class="container-fluid py-5 text-center">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                        Add Vendor
+                      </button>
+                </div>
+                
                     <!-- Modal Body for Vendor -->
                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
@@ -84,8 +81,8 @@
 
 
                             
-                        <table class='table'>
-                            
+                        <table class="table table-striped">
+                            <thead class="thead-dark">
                               
                                 <th>
                                     Vendor Name
