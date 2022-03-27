@@ -47,7 +47,9 @@
                                     <label>Last Name</label> 
                                     <input type="text" class="form-control" name="lastName" maxlength="250" required>
                                     <label>Phone</label>
-                                    <input type="text" class="form-control" name="phone" maxlength="12" required>
+                                    <input type="tel" class="form-control" name="phone" pattern="[(0-9)]{3}-[0-9]{3}-[0-9]{4}" required>
+                                    <small>Format: 555-456-7890</small>
+                                    <br>
                                     <label>Email</label>
                                     <input type="email" class="form-control" name="email" maxlength="250" required>
                                     <label>Address</label>
@@ -61,7 +63,7 @@
                                         {% endfor %}
                                     </select>
                                     <label>Zip Code</label>
-                                    <input type="number" min="0" max="9999999999" step="1"  class="form-control" name="zip" input required >
+                                    <input type="number" min="0" step="1"  class="form-control" name="zip" input required >
                                     <label>Date Contacted</label>
                                     <input type="date" class="form-control" name="date" required>
                                     
@@ -206,17 +208,17 @@
 
                                 
                                     <!-- Modal Button for Customer -->
-                                    <button type="button" class="btn btn-link" data-toggle="modal" data-target="#exampleModal">
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                                         Add Customer
-                                      </button>
-                                
+                                    </button>
+                                    &nbsp;
                                     <!-- Modal button for new appointment-->
-                                    <button type="button" class="btn btn-link" data-toggle="modal" data-target="#AppointmentModal">
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#AppointmentModal">
                                         Add Appointment
                                     </button>
-                                
+                                    &nbsp;
                                     <!-- Modal button for add event-->
-                                    <button type="button" class="btn btn-link" data-toggle="modal" data-target="#EventModal">
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#EventModal">
                                         Add Event
                                     </button>                              
                                 </div>
