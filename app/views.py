@@ -362,19 +362,36 @@ def viewProductService():
 def viewVendor():
    
 
-    if request.method == 'POST':
+    
+         
+    vendorlist = Vendor.query.join(Vendor_Service,Vendor_Service.Vendor_Service_ID == Vendor.Vendor_Service_ID)\
+    .add_columns(Vendor.Vendor_ID, Vendor.Vendor_Name, Vendor.Vendor_Desc, Vendor.First_Name, Vendor.Last_Name, Vendor.Phone, Vendor.Email,
+    Vendor_Service.Vendor_Services, Vendor_Service.Vendor_Service_ID)
 
         #Form request to add customer
+    if request.method == 'POST':
         #Checks which form to add from
+        if request.form['check'] == 'addVendor':
             vendor = Vendor(request.form['vendorName'], request.form['vendorService'], request.form['vendorDesc'],request.form['firstName'],
                 request.form['lastName'],request.form['phone'],request.form['email'])
                        
             db.session.add(vendor)
             db.session.commit()
 
-    vendorlist = Vendor.query.join(Vendor_Service,Vendor_Service.Vendor_Service_ID == Vendor.Vendor_Service_ID)\
-        .add_columns(Vendor.Vendor_Name, Vendor.Vendor_Desc, Vendor.First_Name, Vendor.Last_Name, Vendor.Phone, Vendor.Email,
-         Vendor_Service.Vendor_Services, Vendor_Service.Vendor_Service_ID)
+        if request.form['check'] == 'updateVendor':
+            vendorID = request.form['vendorID']
+            vendorFound = Vendor.query.get(vendorID)
+            vendorFound.Vendor_Name = request.form['vendorName']
+            vendorFound.Vendor_Services = request.form['vendorService']
+            vendorFound.Vendor_Desc = request.form['vendorDesc']
+            vendorFound.First_Name = request.form['firstName']
+            vendorFound.Last_Name = request.form['lastName']
+            vendorFound.Phone = request.form['phone']
+            vendorFound.Email = request.form['email']
+            db.session.commit()
+
+
+   
 
     return render_template('tables/vendor.html', vendors = vendorlist, vendorServices = Vendor_Service.query.all())
 

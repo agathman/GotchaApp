@@ -218,7 +218,7 @@ class Vendor(db.Model):
     Phone = db.Column(db.String, nullable=False)
     Email = db.Column(db.String(250), nullable=False)
 
-    def __init__(self,Vendor_Name, Vendor_Service_ID, Vendor_Desc, First_Name, Last_Name, Phone, Email):
+    def __init__(self, Vendor_Name, Vendor_Service_ID, Vendor_Desc, First_Name, Last_Name, Phone, Email):
         self.Vendor_Name = Vendor_Name
         self.Vendor_Service_ID = Vendor_Service_ID
         self.Vendor_Desc = Vendor_Desc

@@ -46,7 +46,7 @@
                             </div>
                             <div class="modal-body">
                                 <form action = "{{ request.path }}" method = "post">   
-
+                                    <input type="hidden" name="check" value="addVendor">
                                     <label>Vendor Name</label>
                                     <input type="text" class="form-control" name="vendorName" required>
                                     <label>Vendor Service</label> 
@@ -61,7 +61,9 @@
                                     <label>Last Name</label> 
                                     <input type="text" class="form-control" name="lastName" required>
                                     <label>Phone</label>
-                                    <input type="text" class="form-control" name="phone" required>
+                                    <input type="tel" class="form-control" name="phone" pattern="[(0-9)]{3}-[0-9]{3}-[0-9]{4}" required>
+                                    <small>Format: 555-456-7890</small>
+                                    <br>
                                     <label>Email</label>
                                     <input type="email" class="form-control" name="email" required>
                                     <label>Vendor Description</label> 
@@ -90,11 +92,8 @@
                                     Vendor Service
                                 </th>
                                 <th>
-                                    First Name
-                                </th>
-                                <th>
-                                    Last Name
-                                </th>
+                                    Contact
+                                    </th>
                                 <th>
                                     Phone
                                 </th>
@@ -114,8 +113,7 @@
                                 <tr>
                                 <td>{{ vendor.Vendor_Name}}</td>
                                 <td>{{ vendor.Vendor_Services }}</td>
-                                <td>{{ vendor.First_Name}}</td>
-                                <td>{{ vendor.Last_Name}}</td>
+                                <td>{{ vendor.First_Name}} {{ vendor.Last_Name}}</td>
                                 <td>{{ vendor.Phone}}</td>
                                 <td>{{ vendor.Email}}</td>
                                 <td>{{ vendor.Vendor_Desc }}</td>
@@ -134,6 +132,53 @@
                 </div>
             </div>        
         </div>
+    {% for vendor in vendors %}
+        <div class="modal fade" id="updateVendorModal{{vendor.Vendor_ID}}" tabindex="-1" role="dialog" aria-labelledby="updateVendorModal{{vendor.Vendor_ID}}" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Edit Vendor</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    <form action = "{{ request.path }}" method = "post">   
+                        <input type="hidden" name="check" value="updateVendor">
+                        <input type="hidden" name="vendorID" value="{{vendor.Vendor_ID}}">
+                        <label>Vendor Name</label>
+                        <input type="text" class="form-control" name="vendorName" value="{{vendor.Vendor_Name}}" required>
+                        <label>Vendor Service</label> 
+                        <select class="form-control" name="vendorService" required>  
+                            <option selected value="{{vendor.Vendor_Service_ID}}">{{vendor.Vendor_Services}}</option>                                         
+                            {% for vendorService in vendorServices %}
+                                <option value="{{vendorService.Vendor_Service_ID}}">{{vendorService.Vendor_Services}}</option>
+                                {% endfor %}
+                            </select>
+                        <label>First Name</label>
+                        <input type="text" class="form-control" value="{{vendor.First_Name}}" name="firstName" required>
+                        <label>Last Name</label> 
+                        <input type="text" class="form-control" value="{{vendor.Last_Name}}" name="lastName" required>
+                        <label>Phone</label>
+                        <input type="tel" class="form-control" name="phone" pattern="[(0-9)]{3}-[0-9]{3}-[0-9]{4}" value="{{vendor.Phone}}" required>
+                        <small>Format: 555-456-7890</small>
+                        <br>
+                        <label>Email</label>
+                        <input type="email" class="form-control" name="email" value="{{vendor.Email}}" required>
+                        <label>Vendor Description</label> 
+                        <input type="text" class="form-control" name="vendorDesc" value="{{vendor.Vendor_Desc}}" required>
+                        
+                </div>
+                <div class="modal-footer">
+                    
+                    <input type='submit' class="btn btn-secondary" value="Save">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </form>
+                </div>
+            </div>
+            </div>
+        </div>
+        {% endfor %}
         {% endblock %}
 
 
