@@ -192,7 +192,7 @@ def viewEventOrder():
         elif request.form['check'] == 'event':
             event = Event_Order(request.form['category'], request.form['customer'], request.form['status'], request.form['eventTime'], request.form['theme'], request.form['eventDesc'],
                         request.form['delivery'], request.form['setup'], request.form['location'], request.form['restrictions'], request.form['address'], request.form['city'],
-                        request.form['zip'],2, request.form['state'], 'Due after event')
+                        request.form['zip'], request.form['employeeAssignment'], request.form['state'], 'Due after event')
             db.session.add(event)
             db.session.commit()
             return redirect(url_for('my_view.viewEventOrder'))
@@ -332,11 +332,13 @@ def viewPayment():
         .join(Customer, Event_Order.Customer_ID == Customer.Customer_ID)\
         .add_columns(Payment.Payment_ID, Payment_Type.Payment_Type_ID, Payment_Type.Payment_Type_Name, Customer.First_Name, Customer.Last_Name, Event_Order.Event_Order_ID, Event_Order.Event_Time, Payment.Payment_Date_Init, Payment.Payment_Date_Full)
     
+    eventWithCustomer = Event_Order.query.join(Customer, Customer.Customer_ID == Event_Order.Customer_ID)\
+        .add_columns(Event_Order.Event_Order_ID, Customer.First_Name, Customer.Last_Name)
     if request.method == 'POST':
 
         if request.form['check'] == 'addPayment':
-            payment = Payment(request.form['payType'], request.form['eventOrder'], request.form['initDate'], request.form['fullDate'])
-            db.session.add(payment)
+            addPayment = Payment(request.form['payType'], request.form['eventOrder'], request.form['initDate'], request.form['fullDate'])
+            db.session.add(addPayment)
             db.session.commit()
         
         if request.form['check'] == 'updatePayment':
@@ -355,7 +357,7 @@ def viewPayment():
             return redirect(url_for('my_view.viewPayment'))
     
     
-    return render_template('tables/payment.html', payments = payment, types = Payment_Type.query.all(), events = Event_Order.query.all())
+    return render_template('tables/payment.html', payments = payment, types = Payment_Type.query.all(), events = eventWithCustomer)
 
 # Payment type functions will be included in PAYMENT 
 
