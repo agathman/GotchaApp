@@ -211,9 +211,10 @@ def viewEvent(eventID):
         .join(Event_Status, Event_Status.Event_Status_ID == Event_Order.Event_Order_Status_ID)\
         .join(State, State.State_ID == Event_Order.State_ID)\
         .join(Employee_Assignment, Employee_Assignment.Employee_Assignment_ID == Event_Order.Employee_Assignment_ID)\
-        .add_columns(Event_Order.Event_Order_ID, Event_Category.Event_Category_Name, Event_Order.Event_Category_ID, Customer.First_Name, Customer.Last_Name, Customer.Phone, Customer.Email, Event_Status.Event_Status, Event_Order.Event_Time, 
+        .join(Employee, Employee_Assignment.Employee_ID == Employee.Emp_ID)\
+        .add_columns(Event_Order.Event_Order_ID, Event_Category.Event_Category_Name, Event_Order.Event_Category_ID, Customer.First_Name, Customer.Last_Name, Customer.Phone, Customer.Email, Event_Order.Event_Order_Status_ID, Event_Status.Event_Status, Event_Order.Event_Time, 
         Event_Order.Event_Theme, Event_Order.Event_Order_Desc, Event_Order.Event_Delivery, Event_Order.Event_Setup, Event_Order.Event_Restriction_Desc, Event_Order.Event_Location_Name, Event_Order.Event_Address, Event_Order.Event_City,
-        State.State_Abbreviation, Event_Order.Event_Zip_Code)
+        State.State_Abbreviation, Event_Order.Event_Zip_Code, Employee.Emp_First_Name, Employee.Emp_Last_Name)
     
     orderLines = Event_Order_Line.query.filter_by(Event_Order_ID = eventID)\
         .join(Vendor, Vendor.Vendor_ID == Event_Order_Line.Vendor_ID)\
@@ -229,11 +230,26 @@ def viewEvent(eventID):
             db.session.add(orderLine)
             db.session.commit()
 
-    
+        if request.form['check'] == 'updateEvent':
+
+            eventFound = Event_Order.query.get(eventID)
+            eventFound.Event_Category_ID = request.form['category']
+            eventFound.Event_Order_Status_ID = request.form['status']
+            eventFound.Event_Time = request.form['eventTime']
+            eventFound.Event_Theme = request.form['theme']
+            eventFound.Event_Order_Desc = request.form['eventDesc']
+            eventFound.Event_Delivery = request.form['delivery']
+            eventFound.Event_Setup = request.form['setup']
+            eventFound.Event_Location_Name = request.form['location']
+            eventFound.Event_Restriction_Desc = request.form['restrictions']
+            eventFound.Event_Address = request.form['address']
+            eventFound.Event_City = request.form['city']
+            eventFound.Event_Zip_Code = request.form['zip']
+            db.session.commit()
             
 
 
-    return render_template('tables/viewEvent.html', events = eventOrder, orderLines = orderLines, vendors = Vendor.query.all(), statuses = Event_Status.query.all(), services = Product_Service.query.all())
+    return render_template('tables/viewEvent.html', categories = Event_Category.query.all(), events = eventOrder, orderLines = orderLines, vendors = Vendor.query.all(), statuses = Event_Status.query.all(), services = Product_Service.query.all(), employees = Employee.query.all())
 
 
 

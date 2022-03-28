@@ -160,6 +160,8 @@ class Event_Status(db.Model):
     Event_Status_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
     Event_Status = db.Column(db.String(50), nullable=False)
 
+    Event_Order = relationship('Event_Order', backref='Event_Status') 
+
     def __init__(self, Event_Status_ID, Event_Status):
         self.Event_Status_ID = Event_Status_ID
         self.Event_Status = Event_Status
