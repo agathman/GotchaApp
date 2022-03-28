@@ -32,9 +32,10 @@ def index():
         elif request.form['check'] == 'event':
             event = Event_Order(request.form['category'], request.form['customer'], request.form['status'], request.form['eventTime'], request.form['theme'], request.form['eventDesc'],
                         request.form['delivery'], request.form['setup'], request.form['location'], request.form['restrictions'], request.form['address'], request.form['city'],
-                        request.form['zip'],2, request.form['state'], 'Due after event')
+                        request.form['zip'], request.form['employeeAssignment'], request.form['state'], 'Due after event')
             db.session.add(event)
             db.session.commit()
+    
     
     #Query to find customer names with associated events    
     CustomerList = Customer.query.join(Event_Order, Customer.Customer_ID == Event_Order.Customer_ID)\
@@ -49,7 +50,7 @@ def index():
             .order_by(Appointment.Date)\
             .filter(Appointment.Date >= date.today())
     
-    return render_template('index.html', customers = CustomerList, stateList = State.query.all(), newAppointment = Customer.query.all(), appointments = AppointmentList, eventCategory = Event_Category.query.all(), statuses = Event_Status.query.all())
+    return render_template('index.html', employees = Employee.query.all(), customers = CustomerList, stateList = State.query.all(), newAppointment = Customer.query.all(), appointments = AppointmentList, eventCategory = Event_Category.query.all(), statuses = Event_Status.query.all())
 
 # APPOINTMENTS Create/View/Update
 
