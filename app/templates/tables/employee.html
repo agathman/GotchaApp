@@ -1,15 +1,42 @@
 {% extends "base.html" %}
 
+{% block active %}
+<a class="nav-link " href="/">Home</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/Appointments">Appointments</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/Customer">Customers</a>
+</li>
+<li class="nav-item">
+<a class="nav-link active" href="/Employee">Employees</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/EventOrders">Event Orders</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/Payment">Payments</a> 
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/Vendor">Vendors</a>  
+</li>
+{% endblock %}
+
      {% block content %}
-     <div class="container">
-            <div class="p-5 mb-4 bg-light rounded-3">
-                <div class="container-fluid py-5 text-center">
-                    <h1 class="display-5 fw-bold">Employees</h1>
-                   
+     <div class="container-fluid text-center">          
+        <div class="p-5 mb-4 rounded-3">
+            <h1 class="display-5 fw-bold">Employees</h1>
+            <div class="container py-5 text-center">
+                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                        Add Employee
+                     </button>
+                     </div>
+
                       
                         
-                            <table class='table'>
-                               
+                            <table class='table table-striped'>
+                               <thead class="thead-dark">
                                 <th>
                                     First Name
                                 </th>
@@ -37,7 +64,8 @@
                                 <th>
                                     Position
                                 </th>
-                            </tr>
+                                <th></th>
+                                <th></th>
                             </thead>
                             <tbody>
                                 {% for employee in employees %}
@@ -47,10 +75,15 @@
                                 <td>{{ employee.Emp_Mailing_Address }}</td>
                                 <td>{{ employee.Emp_Mailing_City }}</td>
                                 <td>{{ employee.State_Abbreviation }}</td>
-                                <td>{{ employee.Emp_Zip_code }}</td>
+                                <td>{{ employee.Emp_Zip_Code }}</td>
                                 <td>{{ employee.Emp_Phone }}</td>
                                 <td>{{ employee.Emp_Email }}</td>
                                 <td>{{ employee.Emp_Position }}</td>
+                                <td>  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateEmployeeModal{{employee.Emp_ID}}">
+                                    Edit
+                                 </button></td>
+                                <td><a href="/deleteEmployee/{{employee.Emp_ID}}"><button class="btn btn-danger">Delete</button></a></td>
+
                             </tr>
                             {% endfor %}
                             </tbody>
@@ -63,4 +96,104 @@
                 </div>
             </div>        
         </div>
+    
+        <!-- Modal to add employee -->
+        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">New Customer</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    <form action = "{{ request.path }}" method = "post">
+                        <input type="hidden" name="check" value="addEmployee">
+                        <label>First Name</label>
+                        <input type="text" class="form-control" name="firstName" maxlength="250" required>
+                        <label>Last Name</label> 
+                        <input type="text" class="form-control" name="lastName" maxlength="250" required>
+                        <label>Address</label>
+                        <input type="text" class="form-control" name="address" maxlength="250" required>
+                        <label>City</label>
+                        <input type="text" class="form-control" name="city" maxlength="250" required>
+                        <label>State</label>
+                        <select class="form-control" name="state">
+                            {% for state in stateList %}
+                                <option value="{{state.State_ID}}">{{state.State_Name}}</option> 
+                            {% endfor %}
+                        </select>
+                        <label>Zip Code</label>
+                        <input type="text" maxlength="10"  class="form-control" name="zip" input required >
+                        <label>Phone</label>
+                        <input type="tel" class="form-control" name="phone" pattern="[(0-9)]{3}-[0-9]{3}-[0-9]{4}" required>
+                        <small>Format: 555-456-7890</small>
+                        <br>
+                        <label>Email</label>
+                        <input type="email" class="form-control" name="email" maxlength="250" required>                    
+                        <label>Position</label>
+                        <input type="text" class="form-control" name="position" required>
+                        
+                </div>
+                <div class="modal-footer">
+                    
+                    <input type='submit' class="btn btn-secondary" value="Save">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </form>
+                </div>
+            </div>
+            </div>
+        </div>
+    <!-- modal to update employee-->
+    {% for employee in employees %}
+    <div class="modal fade" id="updateEmployeeModal{{employee.Emp_ID}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">New Customer</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <form action = "{{ request.path }}" method = "post">
+                    <input type="hidden" name="check" value="updateEmployee">
+                    <label>First Name</label>
+                    <input type="text" class="form-control" name="firstName" value="{{employee.Emp_First_Name}}" maxlength="250" required>
+                    <label>Last Name</label> 
+                    <input type="text" class="form-control" name="lastName" value="{{employee.Emp_Last_Name}}" maxlength="250" required>
+                    <label>Address</label>
+                    <input type="text" class="form-control" name="address" value="{{employee.Emp_Mailing_Address}}" maxlength="250" required>
+                    <label>City</label>
+                    <input type="text" class="form-control" name="city" value="{{employee.Emp_Mailing_City}}" maxlength="250" required>
+                    <label>State</label>
+                    <select class="form-control" name="state">
+                        <option selected value="{{employee.State_ID}}">{{employee.State_Name}}</option>
+                        {% for state in stateList %}
+                            <option value="{{state.State_ID}}">{{state.State_Name}}</option> 
+                        {% endfor %}
+                    </select>
+                    <label>Zip Code</label>
+                    <input type="text" maxlength="10"  class="form-control" name="zip" value="{{employee.Emp_Zip_Code}}" input required >
+                    <label>Phone</label>
+                    <input type="tel" class="form-control" name="phone" pattern="[(0-9)]{3}-[0-9]{3}-[0-9]{4}" value="{{employee.Emp_Phone}}" required>
+                        <small>Format: 555-456-7890</small>
+                        <br>
+                    <label>Email</label>
+                    <input type="email" class="form-control" name="email" value="{{employee.Emp_Email}}" maxlength="250" required>                    
+                    <label>Position</label>
+                    <input type="text" class="form-control" name="position" value="{{employee.Emp_Position}}" required>
+                    
+            </div>
+            <div class="modal-footer">
+                
+                <input type='submit' class="btn btn-secondary" value="Save">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </form>
+            </div>
+        </div>
+        </div>
+    </div>
+    {% endfor %}
         {% endblock %}

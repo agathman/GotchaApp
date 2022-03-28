@@ -1,16 +1,33 @@
 <!DOCTYPE html>
 {% extends "base.html" %}
-<html lang="en">
- <body>
+{% block active %}
+<a class="nav-link active" href="/">Home</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/Appointments">Appointments</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/Customer">Customers</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/Employee">Employees</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/EventOrders">Event Orders</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/Payment">Payments</a> 
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/Vendor">Vendors</a>  
+</li>
+{% endblock %}
+
      {% block content %}
      <div class="container">
         <div class="p-10 mb-10 bg-light rounded-3">
-<!-- Modal Button for Customer -->
-            <div class="row container-fluid py-5 text-center">
-                <div class="col">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                        New Customer
-                      </button>
+         
+              
 
 <!-- Modal body for Customer -->
                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -26,22 +43,30 @@
                                 <form action = "{{ request.path }}" method = "post">
                                     <input type="hidden" name="check" value="customer">
                                     <label>First Name</label>
-                                    <input type="text" class="form-control" name="firstName" required>
+                                    <input type="text" class="form-control" name="firstName" maxlength="250" required>
                                     <label>Last Name</label> 
-                                    <input type="text" class="form-control" name="lastName" required>
+                                    <input type="text" class="form-control" name="lastName" maxlength="250" required>
                                     <label>Phone</label>
-                                    <input type="text" class="form-control" name="phone" required>
+                                    <input type="tel" class="form-control" name="phone" pattern="[(0-9)]{3}-[0-9]{3}-[0-9]{4}" required>
+                                    <small>Format: 555-456-7890</small>
+                                    <br>
                                     <label>Email</label>
-                                    <input type="email" class="form-control" name="email" required>
+                                    <input type="email" class="form-control" name="email" maxlength="250" required>
                                     <label>Address</label>
-                                    <input type="text" class="form-control" name="address" required>
+                                    <input type="text" class="form-control" name="address" maxlength="250" required>
                                     <label>City</label>
-                                    <input type="text" class="form-control" name="city" required>
+                                    <input type="text" class="form-control" name="city" maxlength="250" required>
+                                    <label>State</label>
+                                    <select class="form-control" name="state" value="1">
+                                        {% for state in stateList %}
+                                            <option value="{{state.State_ID}}">{{state.State_Name}}</option> 
+                                        {% endfor %}
+                                    </select>
                                     <label>Zip Code</label>
                                     <input type="number" min="0" step="1"  class="form-control" name="zip" input required >
                                     <label>Date Contacted</label>
                                     <input type="date" class="form-control" name="date" required>
-                                    <input type="hidden" name="state" value="1">
+                                    
                             </div>
                             <div class="modal-footer">
                                 
@@ -52,12 +77,9 @@
                         </div>
                         </div>
                     </div>
-                    </div>
-                    <div class="col">
-<!-- Modal button for new appointment-->
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#AppointmentModal">
-                            Add Appointment
-                        </button>
+                    
+               
+
 <!-- Modal body for new appointment -->
                         <div class="modal fade" id="AppointmentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
@@ -89,12 +111,8 @@
                             </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col">
-<!-- Modal button for add event-->
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#EventModal">
-                            Add Event
-                        </button>
+                   
+
 <!-- Modal Body for event -->
                         <div class="modal fade" id="EventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                             <div class="modal-dialog" role="document">
@@ -112,10 +130,10 @@
                                         <input type="hidden" name="check" value="event">                                     
                                         <label>Category</label>
                                         <select class="form-control" name="category" required>
+                                            <option disabled selected value> -- Select an option -- </option>
                                             {% for category in eventCategory %}
                                             <option value="{{category.Event_Category_ID}}">{{category.Event_Category_Name}}</option>
                                             {% endfor %}
-                                            <option disabled selected value> -- Select an option -- </option>
                                         </select>                            
                                         <label>Customer</label>
                                         <select class="form-control" name="customer" required>
@@ -127,7 +145,7 @@
                                         <label>Order Status</label>
                                         <select class="form-control" name="status" required>                                           
                                             {% for status in statuses %}
-                                                <option value="{{status.Event_Status_ID}}">{{status.Event_Status}} {{status.Event_Status_ID}}</option>
+                                                <option value="{{status.Event_Status_ID}}">{{status.Event_Status}}</option>
                                                 {% endfor %}
                                                 <option disabled selected value> -- Select an option -- </option>
                                             </select>
@@ -158,9 +176,15 @@
                                         <label>Address</label>
                                         <input type="text" class="form-control" name="address" required>
                                         <label>City</label>
-                                        <input type="text" class="form-control" name="city" required>
+                                        <input type="text" class="form-control" name="city" required>                                            
                                         <label>Zip Code</label>
                                         <input type="number" min="0" step="1" class="form-control" name="zip" required>
+                                        <label>State</label>
+                                        <select class="form-control" name="state" value="1">
+                                            {% for state in stateList %}
+                                                <option value="{{state.State_ID}}">{{state.State_Name}}</option> 
+                                            {% endfor %}
+                                        </select>
 
                                        </div>
                                 </div>
@@ -175,17 +199,38 @@
                         </div>
                     
                         
-                    </div>
+                    
                     </div>
                     
-                        <div class="container-fluid py-5 text-center">
-                            <h1 class="display-5 fw-bold">Cha Cha App</h1>
+                        <div class="container-fluid text-center">
+                            <img src="../assets/TransparantLogo.png" width="200" height="198">
+                            
+                            <div class="d-flex justify-content-center">
+
+                                
+                                    <!-- Modal Button for Customer -->
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                        Add Customer
+                                    </button>
+                                    &nbsp;
+                                    <!-- Modal button for new appointment-->
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#AppointmentModal">
+                                        Add Appointment
+                                    </button>
+                                    &nbsp;
+                                    <!-- Modal button for add event-->
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#EventModal">
+                                        Add Event
+                                    </button>                              
+                                </div>
+                         
 
                         <div class="row">
                             <div class="col">
                     <h2>Events</h2>
-                        <table class="table">
-                            <thead>
+
+                        <table class="table table-striped table-bordered">
+                            <thead class="thead-dark">
                             <tr>
                                 <th>
                                     Customer Name
@@ -193,7 +238,9 @@
                                 <th>
                                     Event Date
                                 </th>
+                                <th>Status</th>
                                 <th>View</th>
+                                
                             </tr>
                             </thead>
                             <tbody>
@@ -202,7 +249,8 @@
                                 <td>{{ customer.First_Name }} {{ customer.Last_Name }}</td>
                                  
                                 <td>{{ customer.Event_Time.strftime('%m-%d-%Y') }}</td>
-                                <td><a href="/event/{{customer.Customer_ID}}">View</a></td>
+                                <td>{{ customer.Event_Status}}</td>
+                                <td><a href="/viewEvent/{{customer.Event_Order_ID}}">View</a></td>
                                 </tr>
                                     {% endfor %}
                             </tbody>
@@ -211,8 +259,8 @@
                             </div>
                             <div class="col">
                                 <h2>Appointments</h2>
-                                    <table class="table">
-                                        <thead>
+                                    <table class="table table-striped table-bordered">
+                                        <thead class="thead-dark">
                                             <tr>
                                                 <th>
                                                     Customer Name
@@ -232,15 +280,16 @@
                                     </table>
                             </div>
                         </div>
+                        </div>
+                        </div>
+                        
 
 
                         <div class="col">
+                            </div>
+                        </div>
 
 
                     {% endblock %}
 
-                </div>
-            </div>        
-        </div>
-    </body>
 </html>

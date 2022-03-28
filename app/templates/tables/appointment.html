@@ -1,12 +1,35 @@
 {% extends "base.html" %}
+{% block active %}
+<a class="nav-link " href="/">Home</a>
+</li>
+<li class="nav-item">
+<a class="nav-link active" href="/Appointments">Appointments</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/Customer">Customers</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/Employee">Employees</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/EventOrders">Event Orders</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/Payment">Payments</a> 
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/Vendor">Vendors</a>  
+</li>
+{% endblock %}
 
     {% block content %}
-        <div class="container">          
-            <div class="p-5 mb-4 rounded-3">
-                <div class="container-fluid py-5 text-center">
+    <div class="container-fluid text-center">          
+        <div class="p-5 mb-4 rounded-3">
+            <h1 class="display-5 fw-bold">Appointments</h1>
+                <div class="container py-5 text-center">
                     
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                        New Appointment
+                        Add Appointment
                       </button>
                     
                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -20,9 +43,11 @@
                             </div>
                             <div class="modal-body">
                                 <form action = "{{ request.path }}" method = "post">
+                                    <input type="hidden" name="check" value="newAppointment">
                                     <label>Customer</label>
                                     <select class="form-control" name="customerID">
-                                        {% for customer in newAppointment %}
+                                        <option disabled selected value> -- Select an option -- </option>
+                                        {% for customer in customers %}
                                             <option value="{{customer.Customer_ID}}">{{customer.First_Name}} {{customer.Last_Name}} </option> 
                                             {% endfor %}
                                         </select>
@@ -39,12 +64,9 @@
                         </div>
                     </div>
                     <p>
-                       <table class="table">
-                        <thead>
+                       <table class="table table-striped">
+                        <thead class="thead-dark">
                             <tr>
-                                <th>
-                                    Appointment ID
-                                   </th>
                                 <th>
                                     Customer
                                    </th>
@@ -56,27 +78,70 @@
                                    </th>
                             
                                <th>
-                                    Edit</th>
+
+                                    </th>
                                 <th>
-                                    Delete</th>
+                                    </th>
                                    </tr>
                                    </thead>
                                    <tbody>
-                                   {% for data in appointments %}
+                                   {% for appointment in appointments %}
                                    <tr>
-                                        <td>{{data.Appointment_ID}}</td>
-                                        <td>{{data.First_Name}} {{data.Last_Name}}</td>
-                                        <td>{{data.Date.strftime('%m-%d-%Y')}}</td>
-                                        <td><a href=/event/{{data.Customer_ID}}>View Event</a></td>
-                                        <td><a href="#">Edit</a></td>
-                                        <td><a href="#">Delete</a></td>
+                                    
+                                        <input type="hidden" name="check" value="update">
+                                        <td>{{appointment.First_Name}} {{appointment.Last_Name}}</td>
+                                        <td><button type="button" class="btn btn-link" data-toggle="modal" data-target="#dateModal{{appointment.Appointment_ID}}">{{appointment.Date.strftime('%m-%d-%Y')}}</button></td>
+                                        <td> {% if appointment.Event_Order_ID != None %}
+                                            <a href=/viewEvent/{{appointment.Event_Order_ID}}>View Event</a>
+                                            <td></td>
+                                            {% else %}
+                                            <form action = "{{ request.path }}" method = "post">
+                                                <input type="hidden" name="check" value="addEvent">
+                                                <input type="hidden" name="apptID" value="{{appointment.Appointment_ID}}">
+                                                <select class="form-control" name="event">
+                                                <option disabled selected value> -- Select an Event -- </option>
+                                                {% for event in events %}
+                                                <option value="{{event.Event_Order_ID}}">ID: {{event.Event_Order_ID}} Date: {{event.Event_Time}} </option> 
+                                                {% endfor %}
+                                            </select>
+                                            <td><input type='submit' class="btn btn-secondary" value="Save Event"></td>
+                                            </form>
+                                            {% endif %}
+                                    
+                                        <td><a href="/deleteAppointment/{{appointment.Appointment_ID}}"><button class="btn btn-danger">Delete</button></a></td>
+                                
                                    </tr>                   
-                                        {% endfor%}
+                                        {% endfor %}
                                     </tbody>
                                         </table>
-                     
-                    </p>
+                            </p>             
                 </div>
             </div>     
         </div>
+{% for appointment in appointments %}
+        <div class="modal fade" id="dateModal{{appointment.Appointment_ID}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Appointment for: {{appointment.First_Name}} {{appointment.Last_Name}}</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    <form action = "{{ request.path }}" method = "post">
+                        <input type="hidden" name="check" value="dateUpdate">
+                        <input type="hidden" name="appointmentID" value="{{appointment.Appointment_ID}}">
+                            <label>Appointment Date</label>
+                            <input type="date" name="date"  value={{appointment.Date}} class="form-control">
+                        </div>
+                        <div class="modal-footer">
+                            <input type='submit' class="btn btn-secondary" value="Save">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </form>
+                        </div>
+                    </div>
+                    </div>
+                </div>
+                            {% endfor %}
         {% endblock %}

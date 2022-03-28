@@ -160,6 +160,8 @@ class Event_Status(db.Model):
     Event_Status_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
     Event_Status = db.Column(db.String(50), nullable=False)
 
+    Event_Order = relationship('Event_Order', backref='Event_Status') 
+
     def __init__(self, Event_Status_ID, Event_Status):
         self.Event_Status_ID = Event_Status_ID
         self.Event_Status = Event_Status
@@ -172,8 +174,7 @@ class Payment(db.Model):
     Payment_Date_Init = db.Column(db.Date, nullable=False)
     Payment_Date_Full = db.Column(db.Date, nullable=False)
 
-    def __init__(self, Payment_ID, Payment_Type_ID, Event_Order_ID, Payment_Date_Init, Payment_Date_Full):
-        self.Payment_ID = Payment_ID
+    def __init__(self, Payment_Type_ID, Event_Order_ID, Payment_Date_Init, Payment_Date_Full):
         self.Payment_Type_ID = Payment_Type_ID
         self.Event_Order_ID = Event_Order_ID
         self.Payment_Date_Init = Payment_Date_Init
@@ -219,7 +220,7 @@ class Vendor(db.Model):
     Phone = db.Column(db.String, nullable=False)
     Email = db.Column(db.String(250), nullable=False)
 
-    def __init__(self,Vendor_Name, Vendor_Service_ID, Vendor_Desc, First_Name, Last_Name, Phone, Email):
+    def __init__(self, Vendor_Name, Vendor_Service_ID, Vendor_Desc, First_Name, Last_Name, Phone, Email):
         self.Vendor_Name = Vendor_Name
         self.Vendor_Service_ID = Vendor_Service_ID
         self.Vendor_Desc = Vendor_Desc

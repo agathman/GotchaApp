@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-=======
 app/__pycache__/__init__.cpython-39.pyc
 app/__pycache__/models.cpython-39.pyc
 app/__pycache__/views.cpython-39.pyc
@@ -7,4 +5,4 @@ __pycache__/__init__.cpython-39.pyc
 __pycache__/models.cpython-39.pyc
 __pycache__/views.cpython-39.pyc
 venv/
->>>>>>> 8e3d2959df8b04ca733cb02ef9a32bc9035efe52
+app/__pycache__/views.cpython-39.pyc
