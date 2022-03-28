@@ -2,6 +2,7 @@ from flask import Blueprint, redirect, render_template, request, flash, url_for,
 from .models import Appointment, Customer, Employee, Employee_Assignment, Event_Status, Event_Category, Event_Order,\
                     Event_Order_Line, Payment, Payment_Type, Product_Service, State, Vendor, Vendor_Service
 from . import db
+from datetime import date
 
 
 
@@ -39,12 +40,14 @@ def index():
     CustomerList = Customer.query.join(Event_Order, Customer.Customer_ID == Event_Order.Customer_ID)\
         .join(Event_Status, Event_Order.Event_Order_Status_ID == Event_Status.Event_Status_ID)\
         .add_columns(Customer.First_Name, Customer.Last_Name, Event_Order.Event_Order_ID, Event_Status.Event_Status, Event_Order.Event_Time, Customer.Customer_ID)\
-        .order_by(Event_Order.Event_Time)
+        .order_by(Event_Order.Event_Time)\
+        .filter(Event_Order.Event_Time >= date.today())
     
     #Query to find customer names with associated appointments
     AppointmentList = Appointment.query.join(Customer, Appointment.Customer_ID == Customer.Customer_ID)\
         .add_columns(Customer.First_Name, Customer.Last_Name, Appointment.Date)\
-            .order_by(Appointment.Date)
+            .order_by(Appointment.Date)\
+            .filter(Appointment.Date >= date.today())
     
     return render_template('index.html', customers = CustomerList, stateList = State.query.all(), newAppointment = Customer.query.all(), appointments = AppointmentList, eventCategory = Event_Category.query.all(), statuses = Event_Status.query.all())
 
