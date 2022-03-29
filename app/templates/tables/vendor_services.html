@@ -6,18 +6,18 @@
                 <div class="container-fluid py-5 text-center">
                     <h1 class="display-5 fw-bold">Vendor Service</h1>
                    
-                      <!-- Will be added to vendor -->
+                <!-- Will be added to vendor -->
                     
-                <!-- Modal Button for Vendor -->
+                <!-- Modal Button for Vendor Service -->
 
                 <div class="row container-fluid py-5 text-center">
                     <div class="col">
                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                            New Vendor
+                            Add Vendor Service
                           </button>
 
 
-                <!-- Modal Body for Vendor -->
+                <!-- Modal Body for Vendor Service -->
                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                     <div class="modal-dialog" role="document">
                     <div class="modal-content">
@@ -30,8 +30,6 @@
                         <div class="modal-body">
                             <form action = "{{ request.path }}" method = "post">   
 
-                                <label>Vendor Name</label>
-                                <input type="text" class="form-control" name="vendorName" required>
                                 <label>Vendor Service</label> 
                                 <select class="form-control" name="vendorService" required>                                           
                                     {% for vendorService in vendorServices %}
@@ -39,7 +37,7 @@
                                         {% endfor %}
                                         <option disabled selected value> -- Select an option -- </option>
                                     </select>
-                                
+
                         </div>
                         <div class="modal-footer">
                             

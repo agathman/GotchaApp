@@ -179,6 +179,13 @@
                                         <input type="text" class="form-control" name="city" required>                                            
                                         <label>Zip Code</label>
                                         <input type="number" min="0" step="1" class="form-control" name="zip" required>
+                                        <label>Employee Assignment</label>
+                                        <select class="form-control" name="employee">
+                                            <option disabled selected value> -- Select an option -- </option>
+                                            {% for employee in employees %}
+                                                <option value="{{employee.Emp_ID}}">{{employee.Emp_Last_Name}}</option>
+                                            {% endfor %}
+                                            </select>
                                         <label>State</label>
                                         <select class="form-control" name="state" value="1">
                                             {% for state in stateList %}
@@ -245,13 +252,15 @@
                             </thead>
                             <tbody>
                                 {% for customer in customers %}
+                                {% if customer.Event_Status != 'Completed' %}
                                 <tr>
                                 <td>{{ customer.First_Name }} {{ customer.Last_Name }}</td>
                                  
                                 <td>{{ customer.Event_Time.strftime('%m-%d-%Y') }}</td>
-                                <td>{{ customer.Event_Status}}</td>
+                                <td>{{ customer.Event_Status}} </td>
                                 <td><a href="/viewEvent/{{customer.Event_Order_ID}}">View</a></td>
                                 </tr>
+                                {% endif %}
                                     {% endfor %}
                             </tbody>
                                     

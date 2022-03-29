@@ -2,6 +2,7 @@ from flask import Blueprint, redirect, render_template, request, flash, url_for,
 from .models import Appointment, Customer, Employee, Employee_Assignment, Event_Status, Event_Category, Event_Order,\
                     Event_Order_Line, Payment, Payment_Type, Product_Service, State, Vendor, Vendor_Service
 from . import db
+from datetime import date
 
 
 
@@ -31,22 +32,25 @@ def index():
         elif request.form['check'] == 'event':
             event = Event_Order(request.form['category'], request.form['customer'], request.form['status'], request.form['eventTime'], request.form['theme'], request.form['eventDesc'],
                         request.form['delivery'], request.form['setup'], request.form['location'], request.form['restrictions'], request.form['address'], request.form['city'],
-                        request.form['zip'],2, request.form['state'], 'Due after event')
+                        request.form['zip'], request.form['employeeAssignment'], request.form['state'], 'Due after event')
             db.session.add(event)
             db.session.commit()
+    
     
     #Query to find customer names with associated events    
     CustomerList = Customer.query.join(Event_Order, Customer.Customer_ID == Event_Order.Customer_ID)\
         .join(Event_Status, Event_Order.Event_Order_Status_ID == Event_Status.Event_Status_ID)\
         .add_columns(Customer.First_Name, Customer.Last_Name, Event_Order.Event_Order_ID, Event_Status.Event_Status, Event_Order.Event_Time, Customer.Customer_ID)\
-        .order_by(Event_Order.Event_Time)
+        .order_by(Event_Order.Event_Time)\
+        .filter(Event_Order.Event_Time >= date.today())
     
     #Query to find customer names with associated appointments
     AppointmentList = Appointment.query.join(Customer, Appointment.Customer_ID == Customer.Customer_ID)\
         .add_columns(Customer.First_Name, Customer.Last_Name, Appointment.Date)\
-            .order_by(Appointment.Date)
+            .order_by(Appointment.Date)\
+            .filter(Appointment.Date >= date.today())
     
-    return render_template('index.html', customers = CustomerList, stateList = State.query.all(), newAppointment = Customer.query.all(), appointments = AppointmentList, eventCategory = Event_Category.query.all(), statuses = Event_Status.query.all())
+    return render_template('index.html', employees = Employee.query.all(), customers = CustomerList, stateList = State.query.all(), newAppointment = Customer.query.all(), appointments = AppointmentList, eventCategory = Event_Category.query.all(), statuses = Event_Status.query.all())
 
 # APPOINTMENTS Create/View/Update
 
@@ -192,7 +196,7 @@ def viewEventOrder():
         elif request.form['check'] == 'event':
             event = Event_Order(request.form['category'], request.form['customer'], request.form['status'], request.form['eventTime'], request.form['theme'], request.form['eventDesc'],
                         request.form['delivery'], request.form['setup'], request.form['location'], request.form['restrictions'], request.form['address'], request.form['city'],
-                        request.form['zip'],2, request.form['state'], 'Due after event')
+                        request.form['zip'], request.form['employeeAssignment'], request.form['state'], 'Due after event')
             db.session.add(event)
             db.session.commit()
             return redirect(url_for('my_view.viewEventOrder'))
@@ -332,11 +336,13 @@ def viewPayment():
         .join(Customer, Event_Order.Customer_ID == Customer.Customer_ID)\
         .add_columns(Payment.Payment_ID, Payment_Type.Payment_Type_ID, Payment_Type.Payment_Type_Name, Customer.First_Name, Customer.Last_Name, Event_Order.Event_Order_ID, Event_Order.Event_Time, Payment.Payment_Date_Init, Payment.Payment_Date_Full)
     
+    eventWithCustomer = Event_Order.query.join(Customer, Customer.Customer_ID == Event_Order.Customer_ID)\
+        .add_columns(Event_Order.Event_Order_ID, Customer.First_Name, Customer.Last_Name)
     if request.method == 'POST':
 
         if request.form['check'] == 'addPayment':
-            payment = Payment(request.form['payType'], request.form['eventOrder'], request.form['initDate'], request.form['fullDate'])
-            db.session.add(payment)
+            addPayment = Payment(request.form['payType'], request.form['eventOrder'], request.form['initDate'], request.form['fullDate'])
+            db.session.add(addPayment)
             db.session.commit()
         
         if request.form['check'] == 'updatePayment':
@@ -355,7 +361,7 @@ def viewPayment():
             return redirect(url_for('my_view.viewPayment'))
     
     
-    return render_template('tables/payment.html', payments = payment, types = Payment_Type.query.all(), events = Event_Order.query.all())
+    return render_template('tables/payment.html', payments = payment, types = Payment_Type.query.all(), events = eventWithCustomer)
 
 # Payment type functions will be included in PAYMENT 
 

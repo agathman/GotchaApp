@@ -94,6 +94,7 @@
                 <div class="modal-body">
                     <form action = "{{ request.path }}" method = "post">
                         <label>Payment Type</label>
+                        <input type="hidden" name='check' value="addPayment">
                         <select class="form-control" name="payType">
                         <option disabled selected value> -- Select an option -- </option>
                             {% for type in types %}
@@ -104,7 +105,7 @@
                         <select class="form-control" name="eventOrder">
                         <option disabled selected value> -- Select an option -- </option>
                             {% for event in events %}
-                            <option value="{{event.Event_Order_ID}}">Event ID: {{event.Event_Order_ID}} Date: {{event.Event_Time.strftime('%m-%d-%Y')}}</option>
+                            <option value="{{event.Event_Order_ID}}">Event ID: {{event.Event_Order_ID}} Customer: {{ event.First_Name}} {{event.Last_Name}}</option>
                             {% endfor %}
                         </select>
                         <label>Initial Payment Date</label>
@@ -147,9 +148,9 @@
                         </select>
                         <label>Event Order</label>
                         <select class="form-control" name="eventOrder">
-                        <option selected value="{{payment.Event_Order_ID}}"> <b>Event ID:</b> {{payment.Event_Order_ID}} <b>Date:</b> {{payment.Event_Time.strftime('%m-%d-%Y')}} </option>
+                        <option selected value="{{payment.Event_Order_ID}}"> <b>Event ID:</b> {{payment.Event_Order_ID}} <b>Date:</b> {{ payment.First_Name}} {{payment.Last_Name}} </option>
                             {% for event in events %}
-                            <option value="{{event.Event_Order_ID}}">Event ID: {{event.Event_Order_ID}} Date: {{event.Event_Time.strftime('%m-%d-%Y')}}</option>
+                            <option value="{{event.Event_Order_ID}}">Event ID: {{event.Event_Order_ID}} Customer: {{ event.First_Name}} {{event.Last_Name}}</option>
                             {% endfor %}
                         </select>
                         <label>Initial Payment Date</label>
