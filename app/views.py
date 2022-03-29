@@ -321,13 +321,48 @@ def viewEventOrderLine(eventID):
 
 # Will be removed and viewed within events page
 
-@my_view.route('/EventStatus')
-def viewEventStatus():
-    Event_Status = Event_Status()\
-        .add_columns(Event_Status.Event_Status_ID, Event_Status.Event_Status)
-    return render_template('tables/event_status.html')
+@my_view.route('/Misc', methods=['GET', 'POST'])
+def viewMisc():
 
-# PAYMENT - View/Create/ - NEEDS UPDATE
+    if request.method == 'POST':
+        
+        if request.form['check'] == 'catCheck':
+            categoryID = request.form['catID']
+            category = Event_Category.query.get(categoryID)
+            category.Event_Category_Name = request.form['category']
+            db.session.commit()
+        
+        if request.form['check'] == 'statCheck':
+            statusID = request.form['statID']
+            status = Event_Status.query.get(statusID)
+            status.Event_Status = request.form['status']
+            db.session.commit()
+        
+        if request.form['check'] == 'productCheck':
+            productServiceID = request.form['productID']
+            productService = Product_Service.query.get(productServiceID)
+            productService.Product_Service = request.form['productService']
+            db.session.commit()
+        
+        if request.form['check'] == 'vendorCheck':
+            vendorServiceID = request.form['vendorID']
+            vendorService = Vendor_Service.query.get(vendorServiceID)
+            vendorService.Vendor_Services = request.form['vendorService']
+            db.session.commit()
+
+        if request.form['check'] == 'paymentCheck':
+            paymentTypeID = request.form['paymentID']
+            paymentType = Payment_Type.query.get(paymentTypeID)
+            paymentType.Payment_Type_Name = request.form['paymentType']
+            db.session.commit()
+    
+    return render_template( 'tables/misc.html', categories = Event_Category.query.all(), statuses = Event_Status.query.all(), productServices = Product_Service.query.all(), 
+                            vendorServices = Vendor_Service.query.all(), payments = Payment_Type.query.all())
+
+
+
+
+# PAYMENT - View/Create/Update needs delete
 
 @my_view.route('/Payment', methods = ['GET', 'POST'])
 def viewPayment():

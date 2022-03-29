@@ -1,0 +1,157 @@
+{% extends "base.html" %}
+{% block active %}
+<a class="nav-link " href="/">Home</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/Appointments">Appointments</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/Customer">Customers</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/Employee">Employees</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/EventOrders">Event Orders</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/Payment">Payments</a> 
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/Vendor">Vendors</a>  
+</li>
+<li class="nav-item">
+<a class="nav-link active" href="/Misc">Misc</a>
+</li>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid text-center">          
+    <div class="p-5 mb-4 rounded-3">
+        <h1 class="display-5 fw-bold">Miscellaneous</h1>
+            <div class="container py-5 text-center">
+
+<div class="row">
+    <div clas="col">
+    
+        <table class="table">
+        <thead class="thead-dark">
+            <th>
+                Category
+            </th>
+            <th>
+
+            </th>
+        </thead>
+        <tbody>
+        {% for category in categories %}
+            <tr>
+                <form action = "{{ request.path }}" method = "POST">
+                    <input type="hidden" name="check" value="catCheck">
+                    <input type="hidden" name="catID" value="{{category.Event_Category_ID}}">
+                <td><input type="text" class="form-control" name="category" value="{{category.Event_Category_Name}}"> </td>
+                <td><button type='submit'><img src="{{url_for('static', filename='save-fill.svg')}}"></button></td>
+                </form>
+            </tr>
+            {% endfor %}        
+        </tbody>
+    </table>
+
+    </div>
+    <div class="col">
+        <table class="table">
+            <thead class="thead-dark">
+                <th>
+                    Status
+                </th>
+                <th></th>
+            </thead>
+            <tbody>
+                {% for status in statuses %}
+                <tr>
+                    <form action="{{ request.path }}" method="POST">
+                        <input type="hidden" name="check" value="statCheck">
+                        <input type="hidden" name="statID" value="{{status.Event_Status_ID}}">
+                        <td><input type="text" class="form-control" name="status" value="{{status.Event_Status}}"></td>
+                        <td><button type='submit'><img src="{{url_for('static', filename='save-fill.svg')}}"></button></td>
+                    </form>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="col">
+        <table class="table">
+            <thead class="thead-dark">
+                <th>
+                    Product Service
+                </th>
+                <th></th>
+            </thead>
+            <tbody>
+                {% for productService in productServices %}
+                <tr>
+                    <form action="{{ request.path }}" method="POST">
+                        <input type="hidden" name="check" value="productCheck">
+                        <input type="hidden" name="productID" value="{{productService.Product_Service_ID}}">
+                        <td><input type="text" class="form-control" name="productService" value="{{productService.Product_Service}}"></td>
+                        <td><button type='submit'><img src="{{url_for('static', filename='save-fill.svg')}}"></button></td>
+                    </form>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    </div>
+    <div class="row">
+    <div class="col">
+        <table class="table">
+            <thead class="thead-dark">
+                <th>
+                    Vendor Services
+                </th>
+                <th></th>
+            </thead>
+            <tbody>
+                {% for vendorService in vendorServices %}
+                <tr>
+                    <form action="{{ request.path }}" method="POST">
+                        <input type="hidden" name="check" value="vendorCheck">
+                        <input type="hidden" name="vendorID" value="{{vendorService.Vendor_Service_ID}}">
+                        <td><input type="text" class="form-control" name="vendorService" value="{{vendorService.Vendor_Services}}"></td>
+                        <td><button type='submit'><img src="{{url_for('static', filename='save-fill.svg')}}"></button></td>
+                    </form>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+    <div class="col">
+            <table class="table">
+                <thead class="thead-dark">
+                    <th>
+                        Payment Type
+                    </th>
+                    <th></th>
+                </thead>
+                <tbody>
+                    {% for payment in payments %}
+                    <tr>
+                        <form action="{{ request.path }}" method="POST">
+                            <input type="hidden" name="check" value="paymentCheck">
+                            <input type="hidden" name="paymentID" value="{{payment.Payment_Type_ID}}">
+                            <td><input type="text" class="form-control" name="paymentType" value="{{payment.Payment_Type_Name}}"></td>
+                            <td><button type='submit'><img src="{{url_for('static', filename='save-fill.svg')}}"></button></td>
+                        </form>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+        </div>
+    </div>
+    </div>
+</div>
+
+{% endblock %}
+
