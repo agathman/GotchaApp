@@ -65,6 +65,9 @@
                                 <th>
                                     Event Date
                                 </th>
+                                <th>
+                                    Status
+                               </th>
                                 <th></th>
                                 </th>
                             </thead>
@@ -76,6 +79,7 @@
                                 <td>{{ event.Phone }}</td>
                                 <td>{{ event.Email }}</td>
                                 <td>{{ event.Event_Time.strftime('%m-%d-%Y') }}</td>
+                                <td>{{ event.Event_Status }}</td>
                                 <td><a href=/viewEvent/{{event.Event_Order_ID}}>View Details</a></td>
                             </tr>
                             {% endfor %}
