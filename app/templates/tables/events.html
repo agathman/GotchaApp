@@ -28,29 +28,23 @@
 
      {% block content %}
      <div class="container-fluid text-center">          
-        <div class="p-5 mb-4 rounded-3">
-            <h1 class="display-5 fw-bold">Events</h1>
-            <div class="container py-5 text-center">
-                  <div class="row">
-                      <div class="col">
-                      </div>
-                      <div class="col">                    
-                        <!-- Modal button for Event-->
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#EventModal">
-                            Add Event
-                        </button>
+        <div class="p-5 mb-4 rounded-3"> 
+            <div class="container py-2 text-center">
+                <div class="d-flex justify-content-start"> 
+                    <h1 class="font-weight-bold px-2 py-4">Events</h1>
+                    </div>  
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                       {% for message in messages %}
+                       <div class="d-flex justify-content-center">
+                       <div class="alert alert-danger" role="alert">
+                          {{ message }}
                         </div>
-                        <div class="col">
-                        <div class="d-flex justify-content-end px-1 py-1">
-                            <button type="button" class="btn btn-link" data-toggle="modal" data-target="#CatModal">
-                                Add Category
-                                </button>                        
-                            <button type="button" class="btn btn-link" data-toggle="modal" data-target="#ServiceModal">
-                                Add Product Service
-                                </button>
-                            </div>
-                            </div>
-
+                        </div>
+                       {% endfor %}
+                    {% endif %}
+                 {% endwith %}         
+                 
                             <table class="table table-striped">
                                 <thead class="thead-dark">
                                 <th>
@@ -71,8 +65,10 @@
                                 <th>
                                     Status
                                </th>
-                                <th></th>
-                                </th>
+                                <th><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#EventModal">
+                                    Add Event
+                                </button></th>
+                              
                             </thead>
                             <tbody>
                                 {% for event in events %}

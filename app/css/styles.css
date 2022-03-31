@@ -1,6 +1,8 @@
-body{
-    background-color: red;
-}
-.button {
+
+.btn {
     color:aquamarine;
+}
+
+.navbar-custom {
+    background-color:#ef9273;
 }

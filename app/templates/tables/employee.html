@@ -28,13 +28,22 @@
 
      {% block content %}
      <div class="container-fluid text-center">          
-        <div class="p-5 mb-4 rounded-3">
-            <h1 class="display-5 fw-bold">Employees</h1>
-            <div class="container py-5 text-center">
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                        Add Employee
-                     </button>
-                     </div>
+        <div class="p-5 mb-4 rounded-3"> 
+            <div class="container py-2 text-center">
+                <div class="d-flex justify-content-start"> 
+                    <h1 class="font-weight-bold px-2 py-4">Employees</h1>
+                    </div>  
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                       {% for message in messages %}
+                       <div class="d-flex justify-content-center">
+                       <div class="alert alert-danger" role="alert">
+                          {{ message }}
+                        </div>
+                        </div>
+                       {% endfor %}
+                    {% endif %}
+                 {% endwith %}
 
                       
                         
@@ -67,8 +76,9 @@
                                 <th>
                                     Position
                                 </th>
-                                <th></th>
-                                <th></th>
+                                <th><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                    Add Employee
+                                 </button></th>
                             </thead>
                             <tbody>
                                 {% for employee in employees %}
@@ -82,15 +92,22 @@
                                 <td>{{ employee.Emp_Phone }}</td>
                                 <td>{{ employee.Emp_Email }}</td>
                                 <td>{{ employee.Emp_Position }}</td>
-                                <td>  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateEmployeeModal{{employee.Emp_ID}}">
-                                    Edit
-                                 </button></td>
+                                <td>
+                                    <div class="d-flex flex-row">
+                                    <div class="p-2">
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateEmployeeModal{{employee.Emp_ID}}">
+                                            Edit
+                                        </button>
+                                        </div>
                                  <form action ="{{ request.path }}" method = 'post'>
                                     <!-- Hidden Field to validate which request to use in the route in views.py (name='check' value='Name to the request portion')-->
                                 <input type="hidden" name="check" value="deleteEmployee">
                                 <!-- Employee ID to delete name='Name Field to the request in back end' value='the ID to the object you want to delete'-->
                                 <input type="hidden" name="employeeID" value="{{employee.Emp_ID}}">
-                                <td><button type="submit" class="btn"><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button></a></td>
+                                <div class="p-2">
+                                    <button type="submit" class="btn"><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button>
+                                </div>
+                            </div></td>
                                 </form> 
                             </tr>
                             {% endfor %}
