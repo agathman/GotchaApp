@@ -31,7 +31,16 @@
      <div class="container-fluid text-center">          
         <div class="p-5 mb-4 rounded-3">
             <h1 class="display-5 fw-bold">Payments</h1>
-            <div class="container py-5 text-center">
+            <div class="container py-5 text-center">\
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                       {% for message in messages %}
+                       <div class="alert alert-danger" role="alert">
+                          {{ message }}
+                        </div>
+                       {% endfor %}
+                    {% endif %}
+                 {% endwith %}
                     <!-- Modal button for new Payment-->
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPaymentModal">
                         Add Payment
@@ -69,6 +78,7 @@
                                 <td>{{ payment.Payment_Date_Full.strftime('%m-%d-%Y') }}</td>
                                 <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updatePaymentModal{{payment.Payment_ID}}">
                                     Edit
+<<<<<<< HEAD
                                 
                                  </button></td>
                                  <form action ="{{ request.path }}" method = 'post'>
@@ -78,6 +88,18 @@
                                 <input type="hidden" name="Payment_ID" value="{{payment.Payment_ID}}">
                                 <td><button type="submit" class="btn"><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button></a></td>
                                 </form> 
+=======
+                                </button></td>
+                                <td><!-- Delete Form Start-->
+                                    <form action ="{{ request.path }}" method = 'post'>
+                                        <!-- Hidden Field to validate which request to use in the route in views.py (name='check' value='Name to the request portion')-->
+                                    <input type="hidden" name="check" value="deletePayment">
+                                    <!-- Appointment ID to delete name='Name Field to the request in back end' value='the ID to the object you want to delete'-->
+                                    <input type="hidden" name="deletePaymentID" value="{{payment.Payment_ID}}">
+                                <td><button type="submit" class="btn"><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button></a></td>
+                                </form>
+                            <!-- Delete END --></td>
+>>>>>>> 71f46c8f7350d2423621efddd14365cbb191cbff
                                 
                             </tr>
                             {% endfor %}
