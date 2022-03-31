@@ -85,8 +85,13 @@
                                 <td>  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateEmployeeModal{{employee.Emp_ID}}">
                                     Edit
                                  </button></td>
-                                <td><a href="/deleteEmployee/{{employee.Emp_ID}}"><button class="btn btn-danger">Delete</button></a></td>
-
+                                 <form action ="{{ request.path }}" method = 'post'>
+                                    <!-- Hidden Field to validate which request to use in the route in views.py (name='check' value='Name to the request portion')-->
+                                <input type="hidden" name="check" value="deleteEmployee">
+                                <!-- Employee ID to delete name='Name Field to the request in back end' value='the ID to the object you want to delete'-->
+                                <input type="hidden" name="employeeID" value="{{employee.Emp_ID}}">
+                                <td><button type="submit" class="btn"><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button></a></td>
+                                </form> 
                             </tr>
                             {% endfor %}
                             </tbody>

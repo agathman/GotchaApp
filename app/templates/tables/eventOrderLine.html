@@ -93,6 +93,17 @@
                                 <td>{{ order_line.Event_Order_Line_Date.strftime('%m-%d-%Y') }}</td>
                                 <td>{{ order_line.Event_Order_ID }}</td>                  
                                 <td>{{ order_line.Product_Service }}</td>
+                                //New
+                                <td>  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateEventOrderLineModal{{order_line.Event_Order_Line}}">
+                                    Edit
+                                 </button></td>
+                                 <form action ="{{ request.path }}" method = 'post'>
+                                    <!-- Hidden Field to validate which request to use in the route in views.py (name='check' value='Name to the request portion')-->
+                                <input type="hidden" name="check" value="deleteEvent_Order_Line">
+                                <!-- Employee ID to delete name='Name Field to the request in back end' value='the ID to the object you want to delete'-->
+                                <input type="hidden" name="employeeID" value="{{eventOderLine.Event_Order_Line_ID}}">
+                                <td><button type="submit" class="btn"><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button></a></td>
+                                </form>
                             </tr>
                             {% endfor %}
                             </tbody>
