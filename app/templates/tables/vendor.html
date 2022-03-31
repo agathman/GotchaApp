@@ -123,9 +123,15 @@
                                 <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateVendorModal{{vendor.Vendor_ID}}">
                                     Edit
                                 </button></td>
-                                <td><a href="/deleteVendor/{{vendor.Vendor_ID}}"><button type='button' class='btn btn-danger'>
-                                    Delete
-                                </button></a></td>
+                                <td><!-- Delete Form Start-->
+                                    <form action ="{{ request.path }}" method = 'post'>
+                                        <!-- Hidden Field to validate which request to use in the route in views.py (name='check' value='Name to the request portion')-->
+                                    <input type="hidden" name="check" value="deleteVendor">
+                                    <!-- Appointment ID to delete name='Name Field to the request in back end' value='the ID to the object you want to delete'-->
+                                    <input type="hidden" name="deleteVendorID" value="{{vendor.Vendor_ID}}">
+                                <td><button type="submit" class="btn"><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button></a></td>
+                                </form>
+                            <!-- Delete END --></td>
                             </tr>
                             {% endfor %}
                             </tbody>

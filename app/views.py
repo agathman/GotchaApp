@@ -151,6 +151,8 @@ def viewCustomer():
                     return redirect(url_for('my_view.viewCustomer'))
             else:
                 db.session.commit()
+
+        
            
             
             
@@ -173,7 +175,7 @@ def viewEmployee():
             db.session.add(employee)
             db.session.commit()
 
-        if request.form['check'] == 'updateEmployee':
+        elif request.form['check'] == 'updateEmployee':
             empID = request.form['employeeID']
             employeeFound = Employee.query.get(empID)
             employeeFound.Emp_First_Name = request.form['firstName']
@@ -186,6 +188,21 @@ def viewEmployee():
             employeeFound.Emp_Email = request.form['email']
             employeeFound.Emp_Position = request.form['position']
             db.session.commit()
+        
+        # Delete employee
+        elif request.form['check'] == 'deleteEmployee':
+            delEmployeeID = request.form['deleteEmployeeID']
+            employeeFound = Employee.query.get(delEmployeeID)
+            try:
+                db.session.delete(employeeFound)
+                db.session.flush()
+            except exc.IntegrityError:
+                    db.session.rollback()  
+                    flash('Delete is not possible for this record')
+                    return redirect(url_for('my_view.viewEmployee'))
+            else:
+                db.session.commit()
+
 
 
         return redirect(url_for('my_view.viewEmployee'))
@@ -239,6 +256,19 @@ def viewEventOrder():
             db.session.add(event)
             db.session.commit()
             return redirect(url_for('my_view.viewEventOrder'))
+        # Delete event
+        elif request.form['check'] == 'deleteEventOrder':
+            delEventID = request.form['deleteEventOrderID']
+            eventFound = Event_Order.query.get(delEventID)
+            try:
+                db.session.delete(eventFound)
+                db.session.flush()
+            except exc.IntegrityError:
+                    db.session.rollback()  
+                    flash('Delete is not possible for this record')
+                    return redirect(url_for('my_view.viewEventOrder'))
+            else:
+                db.session.commit()
     
 
     return render_template('tables/events.html', events = eventOrder, eventCategory = Event_Category.query.all(), statuses = Event_Status.query.all(), customers = Customer.query.all(), employees = Employee.query.all(), stateList = State.query.all() )
@@ -273,7 +303,7 @@ def viewEvent(eventID):
             db.session.add(orderLine)
             db.session.commit()
 
-        if request.form['check'] == 'updateEvent':
+        elif request.form['check'] == 'updateEvent':
 
             eventFound = Event_Order.query.get(eventID)
             eventFound.Event_Category_ID = request.form['category']
@@ -419,7 +449,7 @@ def viewPayment():
             db.session.add(addPayment)
             db.session.commit()
         
-        if request.form['check'] == 'updatePayment':
+        elif request.form['check'] == 'updatePayment':
             paymentID = request.form['paymentID']
             paymentFound = Payment.query.get(paymentID)
             paymentFound.Payment_Type_ID = request.form['payType']
@@ -427,6 +457,21 @@ def viewPayment():
             paymentFound.Payment_Date_Init = request.form['initDate']
             paymentFound.Payment_Date_Full = request.form['fullDate']
             db.session.commit()
+        
+        # Delete payment
+        elif request.form['check'] == 'deletePayment':
+            delPaymentID = request.form['deletePaymentID']
+            paymentFound = Payment.query.get(delPaymentID)
+            try:
+                db.session.delete(paymentFound)
+                db.session.flush()
+            except exc.IntegrityError:
+                    db.session.rollback()  
+                    flash('Delete is not possible for this record')
+                    return redirect(url_for('my_view.viewPayment'))
+            else:
+                db.session.commit()
+        
 
 
 
@@ -474,7 +519,7 @@ def viewVendor():
             db.session.add(vendor)
             db.session.commit()
 
-        if request.form['check'] == 'updateVendor':
+        elif request.form['check'] == 'updateVendor':
             vendorID = request.form['vendorID']
             vendorFound = Vendor.query.get(vendorID)
             vendorFound.Vendor_Name = request.form['vendorName']
@@ -485,6 +530,24 @@ def viewVendor():
             vendorFound.Phone = request.form['phone']
             vendorFound.Email = request.form['email']
             db.session.commit()
+        
+        # Delete vendor
+        elif request.form['check'] == 'deleteVendor':
+            delVendorID = request.form['deleteVendorID']
+            vendorFound = Vendor.query.get(delVendorID)
+            try:
+                db.session.delete(vendorFound)
+                db.session.flush()
+            except exc.IntegrityError:
+                    db.session.rollback()  
+                    flash('Delete is not possible for this record')
+                    return redirect(url_for('my_view.viewVendor'))
+            else:
+                db.session.commit()
+        
+
+
+        
 
 
    
