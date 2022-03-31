@@ -28,16 +28,25 @@
 {% endblock %}
 
      {% block content %}
+
      <div class="container-fluid text-center">          
-        <div class="p-5 mb-4 rounded-3">
-            <h1 class="display-5 fw-bold">Payments</h1>
-            <div class="container py-5 text-center">
-                    <!-- Modal button for new Payment-->
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPaymentModal">
-                        Add Payment
-                    </button>
-                    </div>
-                        
+        <div class="p-5 mb-4 rounded-3"> 
+            <div class="container py-2 text-center">
+                <div class="d-flex justify-content-start"> 
+                    <h1 class="font-weight-bold px-2 py-4">Events</h1>
+                    </div>  
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                       {% for message in messages %}
+                       <div class="d-flex justify-content-center">
+                       <div class="alert alert-danger" role="alert">
+                          {{ message }}
+                        </div>
+                        </div>
+                       {% endfor %}
+                    {% endif %}
+                 {% endwith %}  
+     
                             <table class='table table-striped'>
                                 <thead class="thead-dark">
                                 <th>
@@ -54,8 +63,9 @@
                                 <th>
                                     Payment Date Full
                                 </th>  
-                                <th></th>
-                                <th></th>                                                            
+                                <th>  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPaymentModal">
+                                    Add Payment
+                                </button></th>                                                            
                            
                             </thead>
                             <tbody>
@@ -67,9 +77,11 @@
                                 <td>{{ payment.First_Name}} {{payment.Last_Name}}</td>
                                 <td>{{ payment.Payment_Date_Init.strftime('%m-%d-%Y') }}</td>
                                 <td>{{ payment.Payment_Date_Full.strftime('%m-%d-%Y') }}</td>
-                                <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updatePaymentModal{{payment.Payment_ID}}">
+                                <td><div class="d-flex flex-row">
+                                    <div class="p-2">
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updatePaymentModal{{payment.Payment_ID}}">
                                     Edit
-                                </button></td>
+                                </button></div>>
                                 <td><a href="/deletePayment/{{payment.Payment_ID}}"><button type='button' class='btn btn-danger'>Delete</button></a></td>
                                 
                             </tr>
