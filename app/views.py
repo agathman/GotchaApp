@@ -451,7 +451,7 @@ def viewPayment():
             db.session.commit()
         
         # Delete payment
-        elif request.form['check'] == 'deletePaymentOrder':
+        elif request.form['check'] == 'deletePayment':
             delPaymentID = request.form['deletePaymentID']
             paymentFound = Payment.query.get(delPaymentID)
             try:
@@ -524,7 +524,7 @@ def viewVendor():
             db.session.commit()
         
         # Delete vendor
-        elif request.form['check'] == 'deleteVendorOrder':
+        elif request.form['check'] == 'deleteVendor':
             delVendorID = request.form['deleteVendorID']
             vendorFound = Vendor.query.get(delVendorID)
             try:
