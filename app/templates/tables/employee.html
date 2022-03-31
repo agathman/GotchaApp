@@ -31,6 +31,15 @@
         <div class="p-5 mb-4 rounded-3">
             <h1 class="display-5 fw-bold">Employees</h1>
             <div class="container py-5 text-center">
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                       {% for message in messages %}
+                       <div class="alert alert-danger" role="alert">
+                          {{ message }}
+                        </div>
+                       {% endfor %}
+                    {% endif %}
+                 {% endwith %}
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                         Add Employee
                      </button>
@@ -85,13 +94,16 @@
                                 <td>  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateEmployeeModal{{employee.Emp_ID}}">
                                     Edit
                                  </button></td>
-                                 <form action ="{{ request.path }}" method = 'post'>
-                                    <!-- Hidden Field to validate which request to use in the route in views.py (name='check' value='Name to the request portion')-->
-                                <input type="hidden" name="check" value="deleteEmployee">
-                                <!-- Employee ID to delete name='Name Field to the request in back end' value='the ID to the object you want to delete'-->
-                                <input type="hidden" name="employeeID" value="{{employee.Emp_ID}}">
+                                <td><!-- Delete Form Start-->
+                                    <form action ="{{ request.path }}" method = 'post'>
+                                        <!-- Hidden Field to validate which request to use in the route in views.py (name='check' value='Name to the request portion')-->
+                                    <input type="hidden" name="check" value="deleteEmployee">
+                                    <!-- Appointment ID to delete name='Name Field to the request in back end' value='the ID to the object you want to delete'-->
+                                    <input type="hidden" name="deleteEmployeeID" value="{{employee.Emp_ID}}">
                                 <td><button type="submit" class="btn"><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button></a></td>
-                                </form> 
+                                </form>
+                            <!-- Delete END --></td>
+
                             </tr>
                             {% endfor %}
                             </tbody>
