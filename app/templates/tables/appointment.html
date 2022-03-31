@@ -21,8 +21,9 @@
 <a class="nav-link" href="/Vendor">Vendors</a>  
 </li>
 <li class="nav-item">
-<a class="nav-link" href="/Misc">Misc</a>
-</li>
+    <a class="nav-link" href="/Misc">Misc</a>
+    </li>
+
 {% endblock %}
 
     {% block content %}
@@ -110,8 +111,15 @@
                                             <td><input type='submit' class="btn btn-secondary" value="Save Event"></td>
                                             </form>
                                             {% endif %}
-                                    
-                                        <td><a href="/deleteAppointment/{{appointment.Appointment_ID}}"><button class="btn btn-danger">Delete</button></a></td>
+                                 <!-- Delete Form Start-->
+                                            <form action ="{{ request.path }}" method = 'post'>
+                                                <!-- Hidden Field to validate which request to use in the route in views.py (name='check' value='Name to the request portion')-->
+                                            <input type="hidden" name="check" value="deleteAppointment">
+                                            <!-- Appointment ID to delete name='Name Field to the request in back end' value='the ID to the object you want to delete'-->
+                                            <input type="hidden" name="appointmentID" value="{{appointment.Appointment_ID}}">
+                                        <td><button type="submit" class="btn"><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button></a></td>
+                                        </form>
+                                    <!-- Delete END -->
                                 
                                    </tr>                   
                                         {% endfor %}
