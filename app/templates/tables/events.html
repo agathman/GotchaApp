@@ -28,7 +28,6 @@
 
      {% block content %}
      <div class="container-fluid text-center">          
-<<<<<<< HEAD
         <div class="p-5 mb-4 rounded-3"> 
             <div class="container py-2 text-center">
                 <div class="d-flex justify-content-start"> 
@@ -40,28 +39,6 @@
                        <div class="d-flex justify-content-center">
                        <div class="alert alert-danger" role="alert">
                           {{ message }}
-=======
-        <div class="p-5 mb-4 rounded-3">
-            <h1 class="display-5 fw-bold">Events</h1>
-            <div class="container py-5 text-center">
-                {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                   {% for message in messages %}
-                   <div class="alert alert-danger" role="alert">
-                      {{ message }}
-                    </div>
-                   {% endfor %}
-                {% endif %}
-             {% endwith %}
-                  <div class="row">
-                      <div class="col">
-                      </div>
-                      <div class="col">                    
-                        <!-- Modal button for Event-->
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#EventModal">
-                            Add Event
-                        </button>
->>>>>>> 05d7e4a00e18bc5351bd265567097d4643d11895
                         </div>
                         </div>
                        {% endfor %}
@@ -102,16 +79,7 @@
                                 <td>{{ event.Email }}</td>
                                 <td>{{ event.Event_Time.strftime('%m-%d-%Y') }}</td>
                                 <td>{{ event.Event_Status }}</td>
-                                <td>  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateEventModal{{event.Event_Order_ID}}">
-                                    Edit
-                                 </button></td>
-                                 <form action ="{{ request.path }}" method = 'post'>
-                                    <!-- Hidden Field to validate which request to use in the route in views.py (name='check' value='Name to the request portion')-->
-                                <input type="hidden" name="check" value="deleteEvent_Order">
-                                <!-- Employee ID to delete name='Name Field to the request in back end' value='the ID to the object you want to delete'-->
-                                <input type="hidden" name="Event_Order_ID" value="{{event.Event_Order_ID}}">
-                                <td><button type="submit" class="btn"><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button></a></td>
-                                </form>  
+                                <td><a href=/viewEvent/{{event.Event_Order_ID}}>View Details</a></td>
                             </tr>
                             {% endfor %}
                             </tbody>
