@@ -90,8 +90,17 @@ def viewAppointment():
         elif request.form['check'] == 'deleteAppointment':
             appointmentID = request.form['appointmentID']
             appointmentFound = Appointment.query.get(appointmentID)
-            db.session.delete(appointmentFound)
-            db.session.commit()
+            try:
+                db.session.delete(appointmentFound)
+                db.session.flush()
+            except exc.IntegrityError:
+                db.session.rollback()
+                flash('Delete is not possible for this record')
+                return redirect(url_for('my_view.viewAppointment'))
+            else:
+                db.session.commit()
+
+        
         
 
 
@@ -107,13 +116,13 @@ def viewCustomer():
 #State abb
     Customers = Customer.query.join(State, Customer.State_ID == State.State_ID)\
         .add_columns(Customer.Customer_ID, Customer.First_Name, Customer.Last_Name, Customer.Phone, Customer.Email, Customer.Mailing_Address, Customer.Mailing_City, 
-                     Customer.Mailing_Zip_Code, Customer.Contact_Date, Customer.State_ID, State.State_Abbreviation)\
+                     Customer.Mailing_Zip_Code, Customer.State_ID, State.State_Abbreviation)\
                          .order_by(Customer.Last_Name)
     if request.method == 'POST':
     #Form request to add customer
         if request.form['check'] == 'addCustomer':
             customer = Customer(request.form['firstName'], request.form['lastName'], request.form['phone'],
-                        request.form['email'], request.form['address'], request.form['city'], request.form['zip'], request.form['date'], request.form['state'])
+                        request.form['email'], request.form['address'], request.form['city'], request.form['zip'], request.form['state'])
             db.session.add(customer)
             db.session.commit()
         
@@ -127,11 +136,10 @@ def viewCustomer():
             customerFound.Mailing_Address = request.form['address']
             customerFound.Mailing_City = request.form['city']
             customerFound.Mailing_Zip = request.form['zip']
-            customerFound.Contact_Date = request.form['date']
             customerFound.State_ID = request.form['state']
             db.session.commit()
         
-        if request.form['check'] == 'deleteCustomer':
+        if request.form['check'] == 'deleteCustomer': 
             delCustomerID = request.form['deleteCustomerID']
             customerFound = Customer.query.get(delCustomerID)
             try:

@@ -27,9 +27,9 @@
 {% endblock %}
 
      {% block content %}
-     <div class="container-fluid text-center">        
-     <div class="p-5 mb-4 rounded-3">  
-            <div class="container">
+     <div class="container-fluid text-center">          
+        <div class="p-5 mb-4 rounded-3">
+                <div class="container py-5 text-center">
                 <div class="row justify-content-start">
                     <h1 class="font-weight-bold px-5 py-4">Customers</h1>
                     </div>
@@ -147,8 +147,6 @@
                         </select>
                         <label>Zip Code</label>
                         <input type="text"  patter="[(0-9)]{5}" min="0" step="1"  class="form-control" name="zip" input required >
-                        <label>Date Contacted</label>
-                        <input type="date" class="form-control" name="date" required>
                         
                 </div>
                 <div class="modal-footer">
@@ -199,8 +197,8 @@
                         </select>
                         <label>Zip Code</label>
                         <input type="number" min="0" step="1"  class="form-control" name="zip" value="{{customer.Mailing_Zip_Code}}" required >
-                        <label>Date Contacted</label>
-                        <input type="date" class="form-control" name="date" value="{{customer.Contact_Date}}" required>
+             
+                     
                         
                 </div>
                 <div class="modal-footer">
