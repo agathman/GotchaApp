@@ -1,12 +1,17 @@
+from sqlite3 import IntegrityError
+from urllib.error import HTTPError
 from flask import Blueprint, redirect, render_template, request, flash, url_for, redirect
 from .models import Appointment, Customer, Employee, Employee_Assignment, Event_Status, Event_Category, Event_Order,\
                     Event_Order_Line, Payment, Payment_Type, Product_Service, State, Vendor, Vendor_Service
 from . import db
 from datetime import date, timedelta
+from sqlalchemy import exc
 
 
 
 my_view = Blueprint('my_view', __name__)
+
+
 
 
 
@@ -69,15 +74,26 @@ def viewAppointment():
             appointment = Appointment.query.get(appointmentFound)
             appointment.date = request.form['date']
             db.session.commit()
+        
         # new appointment
         elif request.form['check'] == 'newAppointment':
             appointment = Appointment(request.form['customerID'], request.form['date'])
+        
         # Add Event to appointment
         elif request.form['check'] == 'addEvent':
             appointmentFound = request.form['apptID'] 
             appointment = Appointment.query.get(appointmentFound)
             appointment.Event_Order_ID = request.form['event']
             db.session.commit()
+
+        # Delete Appoinment
+        elif request.form['check'] == 'deleteAppointment':
+            appointmentID = request.form['appointmentID']
+            appointmentFound = Appointment.query.get(appointmentID)
+            db.session.delete(appointmentFound)
+            db.session.commit()
+        
+
 
 
 
@@ -87,6 +103,7 @@ def viewAppointment():
 
 @my_view.route('/Customer', methods = ['GET', 'POST'])
 def viewCustomer():
+
 #State abb
     Customers = Customer.query.join(State, Customer.State_ID == State.State_ID)\
         .add_columns(Customer.Customer_ID, Customer.First_Name, Customer.Last_Name, Customer.Phone, Customer.Email, Customer.Mailing_Address, Customer.Mailing_City, 
@@ -114,9 +131,23 @@ def viewCustomer():
             customerFound.State_ID = request.form['state']
             db.session.commit()
         
-
-
-
+        if request.form['check'] == 'deleteCustomer':
+            delCustomerID = request.form['deleteCustomerID']
+            customerFound = Customer.query.get(delCustomerID)
+            try:
+                db.session.delete(customerFound)
+                db.session.flush()
+            except exc.IntegrityError:
+                    db.session.rollback()  
+                    flash('Delete is not possible for this record')
+                    return redirect(url_for('my_view.viewCustomer'))
+            else:
+                db.session.commit()
+           
+            
+            
+           
+            
     return render_template('tables/customer.html', customers = Customers, stateList = State.query.all() )
 
 # EMPLOYEES - Create/View/Update

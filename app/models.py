@@ -16,7 +16,6 @@ class Appointment(db.Model):
 class Customer(db.Model):
     __tablename__ = 'Customer'
     Customer_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    Contact_Date = db.Column(db.Date, nullable=False)
     First_Name = db.Column(db.String(250))
     Last_Name = db.Column(db.String (250))
     Phone = db.Column(db.String(12))
