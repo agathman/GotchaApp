@@ -103,7 +103,7 @@
                                     <!-- Hidden Field to validate which request to use in the route in views.py (name='check' value='Name to the request portion')-->
                                 <input type="hidden" name="check" value="deleteEmployee">
                                 <!-- Employee ID to delete name='Name Field to the request in back end' value='the ID to the object you want to delete'-->
-                                <input type="hidden" name="employeeID" value="{{employee.Emp_ID}}">
+                                <input type="hidden" name="deleteEmployeeID" value="{{employee.Emp_ID}}">
                                 <div class="p-2">
                                     <button type="submit" class="btn"><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button>
                                 </div>
