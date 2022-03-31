@@ -5,22 +5,29 @@
     href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" 
     integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" 
     crossorigin="anonymous">
-
-    
-    
-    <title>ChaCha Management App</title>
-
-  </head>
-  <body>
    
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+    <style>
+     body, html{
+      margin: 0;
+      background-color: antiquewhite;
+      background-position: center;
+      background-size: cover;
+      background-repeat: repeat-x;
+    
+
+    }
+   
+    </style>
+ </head>
+  <body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light" >
          
-        <a class="navbar-brand" href="#"><img src="../assets/TransparantLogo.png" width="80" height="80"></a>
+        <a class="navbar-brand" href="#"><img src="../assets/colorLogo.png" alt="Creations By ChaCha" width="200" height="200"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
       
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <div class="collapse navbar-collapse" id="navbarSupportedContent" >
           <ul class="nav nav-tabs justify-content-center">
             <li class="nav-item">
               {% block active %}
