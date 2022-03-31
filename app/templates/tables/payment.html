@@ -69,8 +69,15 @@
                                 <td>{{ payment.Payment_Date_Full.strftime('%m-%d-%Y') }}</td>
                                 <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updatePaymentModal{{payment.Payment_ID}}">
                                     Edit
-                                </button></td>
-                                <td><a href="/deletePayment/{{payment.Payment_ID}}"><button type='button' class='btn btn-danger'>Delete</button></a></td>
+                                
+                                 </button></td>
+                                 <form action ="{{ request.path }}" method = 'post'>
+                                    <!-- Hidden Field to validate which request to use in the route in views.py (name='check' value='Name to the request portion')-->
+                                <input type="hidden" name="check" value="deletePayment">
+                                <!-- Employee ID to delete name='Name Field to the request in back end' value='the ID to the object you want to delete'-->
+                                <input type="hidden" name="Payment_ID" value="{{payment.Payment_ID}}">
+                                <td><button type="submit" class="btn"><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button></a></td>
+                                </form> 
                                 
                             </tr>
                             {% endfor %}
