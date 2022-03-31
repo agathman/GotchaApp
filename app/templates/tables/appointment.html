@@ -65,7 +65,29 @@
                                         </select>
                                         <label>Appointment Date</label>
                                         <input type="date" name="date" class="form-control">
-                                  
+                                        <label>Time</label>
+                                        <select class="form-control" name="time" required>
+                                            <option value="8:00">8:00 A.M</option>
+                                            <option value="8:30">8:30 A.M</option>
+                                            <option value="9:00">9:00 A.M</option>
+                                            <option value="9:00">9:30 A.M</option>
+                                            <option value="10:00">10:00 A.M</option>
+                                            <option value="10:30">10:30 A.M</option>
+                                            <option value="11:00">11:00 A.M</option>
+                                            <option value="11:30">11:30 A.M</option>
+                                            <option value="12:00">12:00 P.M</option>
+                                            <option value="12:30">12:30 P.M.</option>
+                                            <option value="13:00">1:00 P.M.</option>
+                                            <option value="13:30">1:30 P.M.</option>
+                                            <option value="14:00">2:00 P.M.</option>
+                                            <option value="14:30">2:30 P.M.</option>
+                                            <option value="15:00">3:00 P.M.</option>
+                                            <option value="15:30">3:30 P.M.</option>
+                                            <option value="16:00">4:00 P.M.</option>
+                                            <option value="16:30">4:30 P.M.</option>
+                                            <option value="17:00">5:00 P.M.</option>
+                                            <option value="17:30">5:30 P.M.</option>
+                                        </select>                                     
                                 </div>
                             <div class="modal-footer">
                                 <input type='submit' class="btn btn-secondary" value="Save">
@@ -86,6 +108,9 @@
                                     Appointment Date
                                 </th>
                                 <th>
+                                    Time
+                                </th>
+                                <th>
                                     Event Order
                                    </th>
                             
@@ -104,7 +129,8 @@
                                     
                                         <input type="hidden" name="check" value="update">
                                         <td>{{appointment.First_Name}} {{appointment.Last_Name}}</td>
-                                        <td><button type="button" class="btn btn-link" data-toggle="modal" data-target="#dateModal{{appointment.Appointment_ID}}">{{appointment.Date.strftime('%m-%d-%Y')}}</button></td>
+                                        <td><button type="button" class="btn btn-link" data-toggle="modal" data-target="#dateModal{{appointment.Appointment_ID}}">{{appointment.Datetime.strftime('%m-%d-%Y')}}</button></td>
+                                        <td>{{appointment.Datetime.strftime('%I:%M %p')}} </td>
                                         <td> {% if appointment.Event_Order_ID != None %}
                                             <a href=/viewEvent/{{appointment.Event_Order_ID}}>View Event</a>
                                             <td></td>
@@ -115,7 +141,7 @@
                                                 <select class="form-control" name="event">
                                                 <option disabled selected value> -- Select an Event -- </option>
                                                 {% for event in events %}
-                                                <option value="{{event.Event_Order_ID}}">ID: {{event.Event_Order_ID}} Date: {{event.Event_Time}} </option> 
+                                                <option value="{{event.Event_Order_ID}}">ID: {{event.Event_Order_ID}} Customer: {{event.First_Name}} {{event.Last_Name}} </option> 
                                                 {% endfor %}
                                             </select>
                                             <td><input type='submit' class="btn btn-secondary" value="Save Event"></td>

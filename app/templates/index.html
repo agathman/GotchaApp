@@ -27,282 +27,306 @@
 {% endblock %}
 
      {% block content %}
-     <div class="container">
-        <div class="p-10 mb-10 bg-light rounded-3">
+     <div class="container-fluid text-center">          
+        <div class="p-5 mb-4 rounded-3"> 
+            <div class="container py-2 text-center">
          
               
 
 <!-- Modal body for Customer -->
-                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                        <div class="modal-dialog" role="document">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">New Customer</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            </div>
-                            <div class="modal-body">
-                                <form action = "{{ request.path }}" method = "post">
-                                    <input type="hidden" name="check" value="customer">
-                                    <label>First Name</label>
-                                    <input type="text" class="form-control" name="firstName" maxlength="250" required>
-                                    <label>Last Name</label> 
-                                    <input type="text" class="form-control" name="lastName" maxlength="250" required>
-                                    <label>Phone</label>
-                                    <input type="tel" class="form-control" name="phone" pattern="[(0-9)]{3}-[0-9]{3}-[0-9]{4}" required>
-                                    <small>Format: 555-456-7890</small>
-                                    <br>
-                                    <label>Email</label>
-                                    <input type="email" class="form-control" name="email" maxlength="250" required>
-                                    <label>Address</label>
-                                    <input type="text" class="form-control" name="address" maxlength="250" required>
-                                    <label>City</label>
-                                    <input type="text" class="form-control" name="city" maxlength="250" required>
-                                    <label>State</label>
-                                    <select class="form-control" name="state" value="1">
-                                        {% for state in stateList %}
-                                            <option value="{{state.State_ID}}">{{state.State_Name}}</option> 
-                                        {% endfor %}
-                                    </select>
-                                    <label>Zip Code</label>
-                                    <input type="number" min="0" step="1"  class="form-control" name="zip" input required >
-                                    <label>Date Contacted</label>
-                                    <input type="date" class="form-control" name="date" required>
-                                    
-                            </div>
-                            <div class="modal-footer">
-                                
-                                <input type='submit' class="btn btn-secondary" value="Save">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            </form>
-                            </div>
-                        </div>
-                        </div>
-                    </div>
-                    
-               
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New Customer</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+            <form action = "{{ request.path }}" method = "post">
+                <input type="hidden" name="check" value="customer">
+                <label>First Name</label>
+                <input type="text" class="form-control" name="firstName" maxlength="250" required>
+                <label>Last Name</label> 
+                <input type="text" class="form-control" name="lastName" maxlength="250" required>
+                <label>Phone</label>
+                <input type="tel" class="form-control" name="phone" pattern="[(0-9)]{3}-[0-9]{3}-[0-9]{4}" required>
+                <small>Format: 555-456-7890</small>
+                <br>
+                <label>Email</label>
+                <input type="email" class="form-control" name="email" maxlength="250" required>
+                <label>Address</label>
+                <input type="text" class="form-control" name="address" maxlength="250" required>
+                <label>City</label>
+                <input type="text" class="form-control" name="city" maxlength="250" required>
+                <label>State</label>
+                <select class="form-control" name="state" value="1">
+                    {% for state in stateList %}
+                        <option value="{{state.State_ID}}">{{state.State_Name}}</option> 
+                    {% endfor %}
+                </select>
+                <label>Zip Code</label>
+                <input type="number" min="0" step="1"  class="form-control" name="zip" input required >
+                <label>Date Contacted</label>
+                <input type="date" class="form-control" name="date" required>
+                
+        </div>
+        <div class="modal-footer">
+            
+            <input type='submit' class="btn btn-secondary" value="Save">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </form>
+        </div>
+    </div>
+    </div>
+</div>
+
+
 
 <!-- Modal body for new appointment -->
-                        <div class="modal fade" id="AppointmentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">New Appointment</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                                </div>
-                                <div class="modal-body">
-                                    <form action = "{{ request.path }}" method = "post">
-                                        <input type="hidden" name="check" value="appointment">
-                                        <label>Appointment</label>
-                                        <select class="form-control" name="customerID">
-                                        {% for customer in newAppointment %}
-                                            <option value="{{customer.Customer_ID}}">{{customer.First_Name}} {{customer.Last_Name}} </option> 
-                                            {% endfor %}
-                                        </select>
-                                        <label>Appointment Date</label>
-                                        <input type="date" name="date" class="form-control">
-                                    
-                                </div>
-                                <div class="modal-footer">
-                                    <input type='submit' class="btn btn-secondary" value="Save">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                </form>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-                   
+    <div class="modal fade" id="AppointmentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">New Appointment</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <form action = "{{ request.path }}" method = "post">
+                    <input type="hidden" name="check" value="appointment">
+                    <label>Appointment</label>
+                    <select class="form-control" name="customerID">
+                    {% for customer in newAppointment %}
+                        <option value="{{customer.Customer_ID}}">{{customer.First_Name}} {{customer.Last_Name}} </option> 
+                        {% endfor %}
+                    </select>
+                    <label>Appointment Date</label>
+                    <input type="date" name="date" class="form-control">
+                    <label>Time</label>
+                    <select class="form-control" name="time" required>
+                        <option value="8:00">8:00 A.M</option>
+                        <option value="8:30">8:30 A.M</option>
+                        <option value="9:00">9:00 A.M</option>
+                        <option value="9:00">9:30 A.M</option>
+                        <option value="10:00">10:00 A.M</option>
+                        <option value="10:30">10:30 A.M</option>
+                        <option value="11:00">11:00 A.M</option>
+                        <option value="11:30">11:30 A.M</option>
+                        <option value="12:00">12:00 P.M</option>
+                        <option value="12:30">12:30 P.M.</option>
+                        <option value="13:00">1:00 P.M.</option>
+                        <option value="13:30">1:30 P.M.</option>
+                        <option value="14:00">2:00 P.M.</option>
+                        <option value="14:30">2:30 P.M.</option>
+                        <option value="15:00">3:00 P.M.</option>
+                        <option value="15:30">3:30 P.M.</option>
+                        <option value="16:00">4:00 P.M.</option>
+                        <option value="16:30">4:30 P.M.</option>
+                        <option value="17:00">5:00 P.M.</option>
+                        <option value="17:30">5:30 P.M.</option>
+                    </select>  
+                
+            </div>
+            <div class="modal-footer">
+                <input type='submit' class="btn btn-secondary" value="Save">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </form>
+            </div>
+        </div>
+        </div>
+    </div>
+
 
 <!-- Modal Body for event -->
-                        <div class="modal fade" id="EventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                            <div class="modal-dialog" role="document">
-                            <div class="modal-content">
-                                <div class="modal-header">
-                                <h5 class="modal-title" id="exampleModalLabel">New Event</h5>
-                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">&times;</span>
-                                </button>
-                                </div>
-                                <div class="modal-body">
-                                    <form action = "{{ request.path }}" method = "post">
-                                        <div class="row">
-                                            <div class="col">
-                                        <input type="hidden" name="check" value="event">                                     
-                                        <label>Category</label>
-                                        <select class="form-control" name="category" required>
-                                            <option disabled selected value> -- Select an option -- </option>
-                                            {% for category in eventCategory %}
-                                            <option value="{{category.Event_Category_ID}}">{{category.Event_Category_Name}}</option>
-                                            {% endfor %}
-                                        </select>                            
-                                        <label>Customer</label>
-                                        <select class="form-control" name="customer" required>
-                                            {% for customer in newAppointment %}
-                                                <option value="{{customer.Customer_ID}}">{{customer.First_Name}} {{customer.Last_Name}} </option>
-                                                {% endfor %}
-                                                <option disabled selected value> -- Select an option -- </option>
-                                            </select>
-                                        <label>Order Status</label>
-                                        <select class="form-control" name="status" required>                                           
-                                            {% for status in statuses %}
-                                                <option value="{{status.Event_Status_ID}}">{{status.Event_Status}}</option>
-                                                {% endfor %}
-                                                <option disabled selected value> -- Select an option -- </option>
-                                            </select>
-                                        <label>Date</label>
-                                        <input type="date" class="form-control" name="eventTime" required>
-                                        <label>Theme</label>
-                                        <input type="text" class="form-control" name="theme">
-                                        <label>Event Description</label>
-                                        <input type="text" class="form-control" name="eventDesc" required>
-                                        <label>Delivery</label>
-                                        <select class="form-control" name="delivery" required>                                            
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
-                                            <option disabled selected value> -- Select an option -- </option>
-                                        </select>
-                                        </div>
-                                        <div class="col">
-                                        <label>Setup</label>
-                                        <select class="form-control" name="setup" required>                                           
-                                            <option value="Yes">Yes</option>
-                                            <option value="No">No</option>
-                                            <option disabled selected value> -- Select an option -- </option>
-                                        </select>
-                                        <label>Location</label>
-                                        <input type="text" class="form-control" name="location" required>
-                                        <label>Restrictions</label>
-                                        <input type="text" class="form-control" name="restrictions" required>
-                                        <label>Address</label>
-                                        <input type="text" class="form-control" name="address" required>
-                                        <label>City</label>
-                                        <input type="text" class="form-control" name="city" required>                                            
-                                        <label>Zip Code</label>
-                                        <input type="number" min="0" step="1" class="form-control" name="zip" required>
-                                        <label>Employee Assignment</label>
-                                        <select class="form-control" name="employee">
-                                            <option disabled selected value> -- Select an option -- </option>
-                                            {% for employee in employees %}
-                                                <option value="{{employee.Emp_ID}}">{{employee.Emp_Last_Name}}</option>
-                                            {% endfor %}
-                                            </select>
-                                        <label>State</label>
-                                        <select class="form-control" name="state" value="1">
-                                            {% for state in stateList %}
-                                                <option value="{{state.State_ID}}">{{state.State_Name}}</option> 
-                                            {% endfor %}
-                                        </select>
-
-                                       </div>
-                                </div>
-                                <div class="modal-footer">
-                                    
-                                    <input type='submit' class="btn btn-secondary" value="Save">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                </form>
-                                </div>
-                            </div>
-                            </div>
-                        </div>
-                    
-                        
-                    
-                    </div>
-                    
-                        
-                            
-                            <div class="d-flex justify-content-center">
-
-                                
-                                    <!-- Modal Button for Customer -->
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                                        Add Customer
-                                    </button>
-                                    &nbsp;
-                                    <!-- Modal button for new appointment-->
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#AppointmentModal">
-                                        Add Appointment
-                                    </button>
-                                    &nbsp;
-                                    <!-- Modal button for add event-->
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#EventModal">
-                                        Add Event
-                                    </button>                              
-                                </div>
-                                <br>
-                                <br>
-                         
-
-                        <div class="row">
-                            <div class="col">
-                    <h2>Events Within 30 Days</h2>
-
-                        <table class="table table-striped table-bordered">
-                            <thead class="thead-dark">
-                            <tr>
-                                <th>
-                                    Customer Name
-                                </th>
-                                <th>
-                                    Event Date
-                                </th>
-                                <th>Status</th>
-                                <th>View</th>
-                                
-                            </tr>
-                            </thead>
-                            <tbody>
-                                {% for customer in customers %}
-                                {% if customer.Event_Status != 'Completed' %}
-                                <tr>
-                                <td>{{ customer.First_Name }} {{ customer.Last_Name }}</td>
-                                 
-                                <td>{{ customer.Event_Time.strftime('%m-%d-%Y') }}</td>
-                                <td>{{ customer.Event_Status}} </td>
-                                <td><a href="/viewEvent/{{customer.Event_Order_ID}}">View</a></td>
-                                </tr>
-                                {% endif %}
-                                    {% endfor %}
-                            </tbody>
-                                    
-                        </table>
-                            </div>
-                            <div class="col">
-                                <h2>Appointments Within 30 Days</h2>
-                                    <table class="table table-striped table-bordered">
-                                        <thead class="thead-dark">
-                                            <tr>
-                                                <th>
-                                                    Customer Name
-                                                </th>
-                                                <th>
-                                                    Appointment Date
-                                                </th>
-                                            </tr>
-                                            </thead>
-                                            {% for appointment in appointments %}
-                                            <tr>
-                                                <td>{{appointment.First_Name}} {{appointment.Last_Name}}</td>
-                                                <td>{{appointment.Date.strftime('%m-%d-%Y') }}</td>
-                                            </tr>
-                                            {% endfor %}
-                                        </thead>
-                                    </table>
-                            </div>
-                        </div>
-                        </div>
-                        </div>
-                        
-
-
+    <div class="modal fade" id="EventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">New Event</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            </div>
+            <div class="modal-body">
+                <form action = "{{ request.path }}" method = "post">
+                    <div class="row">
                         <div class="col">
-                            </div>
-                        </div>
+                    <input type="hidden" name="check" value="event">                                     
+                    <label>Category</label>
+                    <select class="form-control" name="category" required>
+                        <option disabled selected value> -- Select an option -- </option>
+                        {% for category in eventCategory %}
+                        <option value="{{category.Event_Category_ID}}">{{category.Event_Category_Name}}</option>
+                        {% endfor %}
+                    </select>                            
+                    <label>Customer</label>
+                    <select class="form-control" name="customer" required>
+                        {% for customer in newAppointment %}
+                            <option value="{{customer.Customer_ID}}">{{customer.First_Name}} {{customer.Last_Name}} </option>
+                            {% endfor %}
+                            <option disabled selected value> -- Select an option -- </option>
+                        </select>
+                    <label>Order Status</label>
+                    <select class="form-control" name="status" required>                                           
+                        {% for status in statuses %}
+                            <option value="{{status.Event_Status_ID}}">{{status.Event_Status}}</option>
+                            {% endfor %}
+                            <option disabled selected value> -- Select an option -- </option>
+                        </select>
+                    <label>Date</label>
+                    <input type="date" class="form-control" name="eventTime" required>
+                    <label>Theme</label>
+                    <input type="text" class="form-control" name="theme">
+                    <label>Event Description</label>
+                    <input type="text" class="form-control" name="eventDesc" required>
+                    <label>Delivery</label>
+                    <select class="form-control" name="delivery" required>                                            
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                        <option disabled selected value> -- Select an option -- </option>
+                    </select>
+                    </div>
+                    <div class="col">
+                    <label>Setup</label>
+                    <select class="form-control" name="setup" required>                                           
+                        <option value="Yes">Yes</option>
+                        <option value="No">No</option>
+                        <option disabled selected value> -- Select an option -- </option>
+                    </select>
+                    <label>Location</label>
+                    <input type="text" class="form-control" name="location" required>
+                    <label>Restrictions</label>
+                    <input type="text" class="form-control" name="restrictions" required>
+                    <label>Address</label>
+                    <input type="text" class="form-control" name="address" required>
+                    <label>City</label>
+                    <input type="text" class="form-control" name="city" required>                                            
+                    <label>Zip Code</label>
+                    <input type="number" min="0" step="1" class="form-control" name="zip" required>
+                    <label>Employee Assignment</label>
+                    <select class="form-control" name="employee">
+                        <option disabled selected value> -- Select an option -- </option>
+                        {% for employee in employees %}
+                            <option value="{{employee.Emp_ID}}">{{employee.Emp_Last_Name}}</option>
+                        {% endfor %}
+                        </select>
+                    <label>State</label>
+                    <select class="form-control" name="state" value="1">
+                        {% for state in stateList %}
+                            <option value="{{state.State_ID}}">{{state.State_Name}}</option> 
+                        {% endfor %}
+                    </select>
+
+                    </div>
+            </div>
+            <div class="modal-footer">
+                
+                <input type='submit' class="btn btn-secondary" value="Save">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            </form>
+            </div>
+        </div>
+        </div>
+    </div>
+
+    
+
+</div>
+
+    
+        
+        <div class="d-flex justify-content-center">
+
+            
+                <!-- Modal Button for Customer -->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                    Add Customer
+                </button>
+                &nbsp;
+                <!-- Modal button for new appointment-->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#AppointmentModal">
+                    Add Appointment
+                </button>
+                &nbsp;
+                <!-- Modal button for add event-->
+                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#EventModal">
+                    Add Event
+                </button>                              
+            </div>
+            <br>
+            <br>
+        
+
+    <div class="row">
+        <div class="col">
+<h2 class="font-weight-bold px-2 py-4">Events Within 30 Days</h2>
+
+    <table class="table table-striped table-bordered">
+        <thead class="thead-dark">
+        <tr>
+            <th>
+                Customer Name
+            </th>
+            <th>
+                Event Date
+            </th>
+            <th>Status</th>
+            <th>View</th>
+            
+        </tr>
+        </thead>
+        <tbody>
+            {% for customer in customers %}
+            {% if customer.Event_Status != 'Completed' %}
+            <tr>
+            <td>{{ customer.First_Name }} {{ customer.Last_Name }}</td>
+                
+            <td>{{ customer.Event_Time.strftime('%m-%d-%Y') }}</td>
+            <td>{{ customer.Event_Status}} </td>
+            <td><a href="/viewEvent/{{customer.Event_Order_ID}}">View</a></td>
+            </tr>
+            {% endif %}
+                {% endfor %}
+        </tbody>
+                
+    </table>
+        </div>
+        <div class="col">
+            <h2 class="font-weight-bold px-2 py-4">Appointments Within 30 Days</h2>
+                <table class="table table-striped table-bordered">
+                    <thead class="thead-dark">
+                        <tr>
+                            <th>
+                                Customer Name
+                            </th>
+                            <th>
+                                Appointment Date
+                            </th>
+                        </tr>
+                        </thead>
+                        {% for appointment in appointments %}
+                        <tr>
+                            <td>{{appointment.First_Name}} {{appointment.Last_Name}}</td>
+                            <td>{{appointment.Datetime.strftime('%m-%d-%Y') }}</td>
+                        </tr>
+                        {% endfor %}
+                    </thead>
+                </table>
+        </div>
+    </div>
+    </div>
+    </div>
+    
 
 
-                    {% endblock %}
+    <div class="col">
+        </div>
+    </div>
+
+
+{% endblock %}
 
 </html>

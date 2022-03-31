@@ -4,7 +4,7 @@ from flask import Blueprint, redirect, render_template, request, flash, url_for,
 from .models import Appointment, Customer, Employee, Employee_Assignment, Event_Status, Event_Category, Event_Order,\
                     Event_Order_Line, Payment, Payment_Type, Product_Service, State, Vendor, Vendor_Service
 from . import db
-from datetime import date, timedelta
+from datetime import date, timedelta, datetime
 from sqlalchemy import exc
 
 
@@ -30,7 +30,12 @@ def index():
             db.session.commit()
         #Form request to add appointment
         elif request.form['check'] == 'appointment':
-            appointment = Appointment(request.form['customerID'], request.form['date'])
+            timeStr = request.form['time']
+            dateFound = request.form['date']
+            dateandtime = dateFound + ' ' + timeStr
+            dateObject = datetime.strptime(dateandtime, '%Y-%m-%d %H:%M')
+            print(f'PRINTING TIME OBJECT STR************{dateandtime} {dateObject}')
+            appointment = Appointment(request.form['customerID'], dateandtime)
             db.session.add(appointment)
             db.session.commit()
         #Form request to add event
@@ -51,9 +56,9 @@ def index():
     
     #Query to find customer names with associated appointments
     AppointmentList = Appointment.query.join(Customer, Appointment.Customer_ID == Customer.Customer_ID)\
-        .add_columns(Customer.First_Name, Customer.Last_Name, Appointment.Date)\
-            .order_by(Appointment.Date)\
-            .filter(Appointment.Date >= date.today(), Appointment.Date <= (date.today() + timedelta(days=30)))
+        .add_columns(Customer.First_Name, Customer.Last_Name, Appointment.Datetime)\
+            .order_by(Appointment.Datetime)\
+            .filter(Appointment.Datetime >= date.today(), Appointment.Datetime <= (date.today() + timedelta(days=30)))
     
     return render_template('index.html', employees = Employee.query.all(), customers = CustomerList, stateList = State.query.all(), newAppointment = Customer.query.all(), appointments = AppointmentList, eventCategory = Event_Category.query.all(), statuses = Event_Status.query.all())
 
@@ -64,8 +69,8 @@ def viewAppointment():
     
     appointmentList = Appointment.query.join(Customer, Appointment.Customer_ID == Customer.Customer_ID)\
         .add_columns(Appointment.Appointment_ID, Customer.Customer_ID, Customer.First_Name, Customer.Last_Name, Customer.Phone, 
-                        Customer.Email, Appointment.Date, Appointment.Event_Order_ID)\
-        .order_by(Appointment.Date)
+                        Customer.Email, Appointment.Datetime, Appointment.Event_Order_ID)\
+        .order_by(Appointment.Datetime)
 
     if request.method == 'POST':
         #date update
@@ -77,7 +82,14 @@ def viewAppointment():
         
         # new appointment
         elif request.form['check'] == 'newAppointment':
-            appointment = Appointment(request.form['customerID'], request.form['date'])
+           # dateObject = datetime.strptime(request.form['date'], '%Y-%m-%d')
+            timeStr = request.form['time']
+            date = request.form['date']
+            dateandtime = date + ' ' + timeStr
+            dateObject = datetime.strptime(dateandtime, '%Y-%m-%d %H:%M')
+            print(f'PRINTING TIME OBJECT STR************{dateandtime} {dateObject}')
+            appointment = Appointment(request.form['customerID'], dateandtime)
+            db.session.add(appointment)
             db.session.commit()
         
         # Add Event to appointment
@@ -483,7 +495,7 @@ def viewPaymentType():
         .add_columns(Payment_Type.Payment_ID, Payment_Type.Payment_Type_ID)
     return render_template('tables/payment_type.html', payment = Payment.query.all())
 
-# CREATE product services in EVENT page
+# CREATE product services in misc page
 
 @my_view.route('/ProductService')
 def viewProductService():
@@ -538,13 +550,6 @@ def viewVendor():
             else:
                 db.session.commit()
         
-
-
-        
-
-
-   
-
     return render_template('tables/vendor.html', vendors = vendorlist, vendorServices = Vendor_Service.query.all())
 
 

@@ -7,11 +7,11 @@ class Appointment(db.Model):
     Appointment_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
     Customer_ID = db.Column(db.Integer, db.ForeignKey('Customer.Customer_ID'), nullable=False)
     Event_Order_ID = db.Column(db.Integer, db.ForeignKey('Event_Order.Event_Order_ID'), nullable=True)
-    Date = db.Column(db.DateTime, nullable=False)
+    Datetime = db.Column(db.DateTime, nullable=False)
 
-    def __init__(self, Customer_ID, Date):
+    def __init__(self, Customer_ID, Datetime):
         self.Customer_ID = Customer_ID
-        self.Date = Date
+        self.Datetime = Datetime
 
 class Customer(db.Model):
     __tablename__ = 'Customer'
