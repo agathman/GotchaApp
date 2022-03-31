@@ -28,29 +28,26 @@
 
      {% block content %}
      <div class="container-fluid text-center">          
-        <div class="p-5 mb-4 rounded-3">
-                <div class="container py-5 text-center">
-                <div class="row justify-content-start">
+        <div class="p-5 mb-4 rounded-3"> 
+            <div class="container py-5 text-center">
+                <div class="d-flex justify-content-start"> 
                     <h1 class="font-weight-bold px-5 py-4">Customers</h1>
                     </div>
+           
+    
                     {% with messages = get_flashed_messages() %}
                     {% if messages %}
                        {% for message in messages %}
+                       <div class="d-flex justify-content-center">
                        <div class="alert alert-danger" role="alert">
                           {{ message }}
+                        </div>
                         </div>
                        {% endfor %}
                     {% endif %}
                  {% endwith %}
-                </div>
-                <div class="row justify-content-end">                   <!-- Modal Button for Customer -->
-                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                    Add Customer
-                    </button>
-                    <br>
-                    </div>
-                    </div>
-                    </div>                  
+                                <!-- Modal Button for Customer -->
+                                  
                     <table class='table table-striped'>
                         <thead class="thead-dark">
                         <th>
@@ -75,8 +72,10 @@
                         <th>
                             State
                         </th>
-                        <th></th>
-                        <th></th>
+                        <th><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                            Add Customer
+                            </button></th>
+                
                 
                             </thead>
                             <tbody>
@@ -90,11 +89,16 @@
                                 <td>{{ customer.Mailing_City }}</td>
                                 <td>{{ customer.Mailing_Zip_Code }}</td>
                                 <td>{{ customer.State_Abbreviation }}</td>
-                                <td><button class="btn btn-primary" data-toggle="modal" data-target="#updateCustomerModal{{customer.Customer_ID}}">Edit</button> </td>
+                                
+                                <td>
+                                    <div class="d-flex flex-row">
+                                    <div class="p-2"><button class="btn btn-primary" data-toggle="modal" data-target="#updateCustomerModal{{customer.Customer_ID}}">Edit</button></div>
                                 <form action = "{{ request.path }}" method = "post">
                                     <input type="hidden" name="check" value="deleteCustomer">
                                     <input type="hidden" name="deleteCustomerID" value="{{customer.Customer_ID}}">
-                                    <td><button type="submit" class="btn"><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button></a></td>
+                                    <div class="p-2"><button type="submit" class="btn"><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button></div>
+                                </div>
+                                </td>
                                     </form>
                             </tr>
                             {% endfor %}
@@ -103,14 +107,10 @@
                         </table>
     </p>
     </div>
-    <div class="col"></div>
-
-                   
+    
 
                 </div>
             </div>        
-        </div>
-        </div>
 
         <!-- Modal body to add Customer -->
         <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

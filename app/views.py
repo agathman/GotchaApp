@@ -88,8 +88,8 @@ def viewAppointment():
 
         # Delete Appoinment
         elif request.form['check'] == 'deleteAppointment':
-            appointmentID = request.form['appointmentID']
-            appointmentFound = Appointment.query.get(appointmentID)
+            delAppointmentID = request.form['delAppointmentID']
+            appointmentFound = Appointment.query.get(delAppointmentID)
             try:
                 db.session.delete(appointmentFound)
                 db.session.flush()
@@ -147,7 +147,7 @@ def viewCustomer():
                 db.session.flush()
             except exc.IntegrityError:
                     db.session.rollback()  
-                    flash('Delete is not possible for this record')
+                    flash('Error: Cannot delete customer with an associated event')
                     return redirect(url_for('my_view.viewCustomer'))
             else:
                 db.session.commit()
