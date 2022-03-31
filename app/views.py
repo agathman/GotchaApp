@@ -282,6 +282,8 @@ def viewEventOrder():
 
 @my_view.route('/viewEvent/<eventID>', methods=['GET', 'POST'])
 def viewEvent(eventID):
+
+    foundEventID = eventID
     
     eventOrder = Event_Order.query.filter_by(Event_Order_ID = eventID)\
         .join(Event_Category, Event_Category.Event_Category_ID == Event_Order.Event_Category_ID)\
@@ -299,7 +301,7 @@ def viewEvent(eventID):
         .join(Event_Order, Event_Order.Event_Order_ID == Event_Order_Line.Event_Order_ID)\
         .join(Product_Service, Product_Service.Product_Service_ID == Event_Order_Line.Product_Service_ID)\
         .join(Event_Status, Event_Status.Event_Status_ID == Event_Order_Line.Event_Order_Status_ID)\
-        .add_columns(Event_Order_Line.Vendor_ID, Vendor.Vendor_Name, Event_Order_Line.Event_Order_Line_Date, Event_Status.Event_Status, Product_Service.Product_Service)\
+        .add_columns(Event_Order_Line.Vendor_ID,Event_Order_Line.Event_Order_Line_ID, Vendor.Vendor_Name, Event_Order_Line.Event_Order_Status_ID, Event_Order_Line.Event_Order_Line_Date, Event_Status.Event_Status, Product_Service.Product_Service)\
         .order_by(Event_Order_Line.Event_Order_Line_Date)
 
     if request.method == 'POST':
@@ -308,7 +310,7 @@ def viewEvent(eventID):
             db.session.add(orderLine)
             db.session.commit()
 
-        elif request.form['check'] == 'updateEvent':
+        if request.form['check'] == 'updateEvent':
 
             eventFound = Event_Order.query.get(eventID)
             eventFound.Event_Category_ID = request.form['category']
@@ -324,6 +326,41 @@ def viewEvent(eventID):
             eventFound.Event_City = request.form['city']
             eventFound.Event_Zip_Code = request.form['zip']
             db.session.commit()
+        
+        if request.form['check'] == 'updateOrderLine':
+            orderLineID = request.form['orderLineID']
+            orderLineFoundforUpdate = Event_Order_Line.query.get(orderLineID)
+            currStatus = request.form['currStatus']
+            updateStatus = request.form['statusUpdate']
+            dateFound = request.form['date']
+            print(f'********** {dateFound} ***********{currStatus} ****{updateStatus}')
+            if updateStatus == '0':
+                orderLineFoundforUpdate.Event_Order_Status_ID = currStatus
+                orderLineFoundforUpdate.Event_Order_Line_Date = dateFound
+                db.session.commit()
+            else:
+                orderLineFoundforUpdate.Event_Order_Status_ID = updateStatus
+                orderLineFoundforUpdate.Event_Order_Line_Date = dateFound
+                db.session.commit()
+            return redirect(url_for('my_view.viewEvent', eventID = foundEventID))
+           
+
+        
+        if request.form['check'] == 'delEventCheck':
+            delEventID = request.form['delEventID']
+            eventToBeDeleted = Event_Order.query.get(delEventID)
+            try:
+                db.session.delete(eventToBeDeleted)
+                db.session.flush()
+            except exc.IntegrityError:
+                    db.session.rollback()  
+                    flash('Delete is not possible for this record')
+                    return redirect(url_for('my_view.viewEventOrder'))
+            else:
+                db.session.commit()
+                flash('Delete Succesful')
+                return redirect(url_for('my_view.viewEventOrder'))
+
             
 
 
@@ -429,6 +466,49 @@ def viewMisc():
             paymentType = Payment_Type.query.get(paymentTypeID)
             paymentType.Payment_Type_Name = request.form['paymentType']
             db.session.commit()
+        
+        if request.form['check'] == 'catCheck':
+            category = Event_Category(request.form['category'])
+            db.session.add(category)
+            db.session.commit()
+        # Service Form Handling
+        
+        if request.form['check'] == 'serviceCheck':
+            service = Product_Service(request.form['service'])
+            db.session.add(service)
+            db.session.commit() 
+        
+        if request.form['check'] == 'statusCheck':
+            status = Event_Status(request.form['status'])
+            db.session.add(status)
+            db.session.commit()
+        
+        if request.form['check'] == 'vServiceCheck':
+            vService = Vendor_Service(request.form['service'])
+            db.session.add(vService)
+            db.session.commit()
+            
+        if request.form['check'] == 'payTypeCheck':
+            payType = Payment_Type(request.form['payType'])
+            db.session.add(payType)
+            db.session.commit()
+        
+        if request.form['check'] == 'delVenService':
+            delVenID = request.form['delVenServiceID']
+            venFound = Vendor_Service.query.get(delVenID)
+            try: 
+                db.session.delete(venFound)
+                db.session.flush()
+            except exc.IntegrityError:
+                    db.session.rollback()  
+                    flash('Delete is not possible for this record')
+                    return redirect(url_for('my_view.viewMisc'))
+            else:
+                db.session.commit()
+                flash('Delete Succesful')
+                return redirect(url_for('my_view.viewMisc'))
+
+
     
     return render_template( 'tables/misc.html', categories = Event_Category.query.all(), statuses = Event_Status.query.all(), productServices = Product_Service.query.all(), 
                             vendorServices = Vendor_Service.query.all(), payments = Payment_Type.query.all())

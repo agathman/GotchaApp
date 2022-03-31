@@ -183,8 +183,7 @@ class Payment_Type(db.Model):
     Payment_Type_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
     Payment_Type_Name = db.Column(db.String(50), nullable=False)
 
-    def __init__(self, Payment_Type_ID, Payment_Type_Name):
-        self.Payment_Type_ID = Payment_Type_ID
+    def __init__(self, Payment_Type_Name):
         self.Payment_Type_Name = Payment_Type_Name
 #form created
 class Product_Service(db.Model):

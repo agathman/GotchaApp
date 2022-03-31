@@ -37,7 +37,7 @@
                     {% if messages %}
                        {% for message in messages %}
                        <div class="d-flex justify-content-center">
-                       <div class="alert alert-danger" role="alert">
+                       <div class="alert alert-success" role="alert">
                           {{ message }}
                         </div>
                         </div>
@@ -88,55 +88,7 @@
                 </div>  
         </div>
         </div>
-<!-- Modal for Category Form -->
-        <div class="modal fade" id="CatModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
-            <div class="modal-content">
-                <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">New Category</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-                </div>
-                <div class="modal-body">
-                    <form action = "{{ request.path }}" method = "POST">
-                        <input type="hidden" name="check" value="catCheck">
-                        <label>Category</label>
-                        <input type="text" class="form-control" name="category" required>                  
-                </div>
-                <div class="modal-footer">
-                    <input type='submit' class="btn btn-secondary" value="Save">
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </form>
-                </div>
-            </div>
-            </div>
-        </div>
 
-<!-- Modal for Product Service Form -->
-<div class="modal fade" id="ServiceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-    <div class="modal-content">
-        <div class="modal-header">
-        <h5 class="modal-title" id="exampleModalLabel">New Product Service</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-            <span aria-hidden="true">&times;</span>
-        </button>
-        </div>
-        <div class="modal-body">
-            <form action = "{{ request.path }}" method = "POST">
-                <input type="hidden" name="check" value="serviceCheck">
-                <label>Product Service</label>
-                <input type="text" class="form-control" name="service" required>                  
-        </div>
-        <div class="modal-footer">
-            <input type='submit' class="btn btn-secondary" value="Save">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        </form>
-        </div>
-    </div>
-    </div>
-</div>
 
 <!-- Modal for Event form-->
 <div class="modal fade" id="EventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

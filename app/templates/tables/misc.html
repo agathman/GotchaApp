@@ -41,7 +41,9 @@
                  {% endwith %}
 <div class="row">
     <div clas="col">
-    
+        <button type="button" class="btn btn-link" data-toggle="modal" data-target="#CatModal">
+            Add Category
+            </button> 
         <table class="table">
         <thead class="thead-dark">
             <th>
@@ -58,7 +60,7 @@
                     <input type="hidden" name="check" value="catCheck">
                     <input type="hidden" name="catID" value="{{category.Event_Category_ID}}">
                 <td><input type="text" class="form-control" name="category" value="{{category.Event_Category_Name}}"> </td>
-                <td><button type='submit'><img src="{{url_for('static', filename='save-fill.svg')}}"></button></td>
+                <td><button type='submit' class="btn"><img src="{{url_for('static', filename='save-fill.svg')}}"></button></td>
                 </form>
             </tr>
             {% endfor %}        
@@ -67,6 +69,12 @@
 
     </div>
     <div class="col">
+
+        <button type="submit" class="btn btn-link" data-toggle="modal" data-target="#statusModal">
+            Add Status
+        </button>
+                   
+    
         <table class="table">
             <thead class="thead-dark">
                 <th>
@@ -81,7 +89,7 @@
                         <input type="hidden" name="check" value="statCheck">
                         <input type="hidden" name="statID" value="{{status.Event_Status_ID}}">
                         <td><input type="text" class="form-control" name="status" value="{{status.Event_Status}}"></td>
-                        <td><button type='submit'><img src="{{url_for('static', filename='save-fill.svg')}}"></button></td>
+                        <td><button type='submit' class="btn"><img src="{{url_for('static', filename='save-fill.svg')}}"></button></td>
                     </form>
                 </tr>
                 {% endfor %}
@@ -89,6 +97,9 @@
         </table>
     </div>
     <div class="col">
+        <button type="button" class="btn btn-link" data-toggle="modal" data-target="#ServiceModal">
+            Add Product Service
+            </button>
         <table class="table">
             <thead class="thead-dark">
                 <th>
@@ -103,7 +114,7 @@
                         <input type="hidden" name="check" value="productCheck">
                         <input type="hidden" name="productID" value="{{productService.Product_Service_ID}}">
                         <td><input type="text" class="form-control" name="productService" value="{{productService.Product_Service}}"></td>
-                        <td><button type='submit'><img src="{{url_for('static', filename='save-fill.svg')}}"></button></td>
+                        <td><button type='submit' class="btn"><img src="{{url_for('static', filename='save-fill.svg')}}"></button></td>
                     </form>
                 </tr>
                 {% endfor %}
@@ -113,6 +124,10 @@
     </div>
     <div class="row">
     <div class="col">
+        <button type="submit" class="btn btn-link" data-toggle="modal" data-target="#vServiceModal">
+            Add Vendor Service
+        </button>
+
         <table class="table">
             <thead class="thead-dark">
                 <th>
@@ -127,7 +142,12 @@
                         <input type="hidden" name="check" value="vendorCheck">
                         <input type="hidden" name="vendorID" value="{{vendorService.Vendor_Service_ID}}">
                         <td><input type="text" class="form-control" name="vendorService" value="{{vendorService.Vendor_Services}}"></td>
-                        <td><button type='submit'><img src="{{url_for('static', filename='save-fill.svg')}}"></button></td>
+                        <td><button type='submit' class="btn"><img src="{{url_for('static', filename='save-fill.svg')}}"></button>
+                            <form action="{{ request.path }}" method="POST">
+                                <input type="hidden" name="check" value="deleteVenService">
+                                <input type="hidden" name="delVenServiceID" value="{{vendorService.Vendor_Service_ID}}">
+                            <button type='submit' class='btn'><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button></td>
+                            </form>
                     </form>
                 </tr>
                 {% endfor %}
@@ -135,6 +155,9 @@
         </table>
     </div>
     <div class="col">
+        <button type="submit" class="btn btn-link" data-toggle="modal" data-target="#payTypeModal">
+            Add Payment Type
+        </button>
             <table class="table">
                 <thead class="thead-dark">
                     <th>
@@ -149,7 +172,7 @@
                             <input type="hidden" name="check" value="paymentCheck">
                             <input type="hidden" name="paymentID" value="{{payment.Payment_Type_ID}}">
                             <td><input type="text" class="form-control" name="paymentType" value="{{payment.Payment_Type_Name}}"></td>
-                            <td><button type='submit'><img src="{{url_for('static', filename='save-fill.svg')}}"></button></td>
+                            <td><button type='submit' class="btn"><img src="{{url_for('static', filename='save-fill.svg')}}"></button></td>
                         </form>
                     </tr>
                     {% endfor %}
@@ -171,6 +194,133 @@
                                 Add Product Service
                                 </button>
                             </div> -->
+
+
+
+<!-- Modal for Product Service Form -->
+<div class="modal fade" id="ServiceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New Product Service</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+            <form action = "{{ request.path }}" method = "POST">
+                <input type="hidden" name="check" value="serviceCheck">
+                <label>Product Service</label>
+                <input type="text" class="form-control" name="service" required>                  
+        </div>
+        <div class="modal-footer">
+            <input type='submit' class="btn btn-secondary" value="Save">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </form>
+        </div>
+    </div>
+    </div>
+</div>
+
+<!-- Modal for Category Form -->
+<div class="modal fade" id="CatModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New Category</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+            <form action = "{{ request.path }}" method = "POST">
+                <input type="hidden" name="check" value="catCheck">
+                <label>Category</label>
+                <input type="text" class="form-control" name="category" required>                  
+        </div>
+        <div class="modal-footer">
+            <input type='submit' class="btn btn-secondary" value="Save">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </form>
+        </div>
+    </div>
+    </div>
+</div>
+<!-- Status Modal-->
+<div class="modal fade" id="statusModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New Status</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+            <form action = "{{ request.path }}" method = "POST">
+                <input type="hidden" name="check" value="statusCheck">
+                <label>Status</label>
+                <input type="text" class="form-control" name="status" pattern="[A-Za-z]" required>                  
+        </div>
+        <div class="modal-footer">
+            <input type='submit' class="btn btn-secondary" value="Save">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </form>
+        </div>
+    </div>
+    </div>
+</div>
+
+<!-- Vendor Service Modal -->
+<div class="modal fade" id="vServiceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New Vendor Service</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+            <form action = "{{ request.path }}" method = "POST">
+                <input type="hidden" name="check" value="vServiceCheck">
+                <label>Vendor Service</label>
+                <input type="text" class="form-control" name="service" pattern="[A-Z a-z]{1,50}" required>                  
+        </div>
+        <div class="modal-footer">
+            <input type='submit' class="btn btn-secondary" value="Save">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </form>
+        </div>
+    </div>
+    </div>
+</div>
+
+<!-- Vendor Service Modal -->
+<div class="modal fade" id="payTypeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New Payment Type</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+            <form action = "{{ request.path }}" method = "POST">
+                <input type="hidden" name="check" value="payTypeCheck">
+                <label>Payment Type</label>
+                <input type="text" class="form-control" name="payType" pattern="[A-Z a-z]{1,50}" required>                  
+        </div>
+        <div class="modal-footer">
+            <input type='submit' class="btn btn-secondary" value="Save">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </form>
+        </div>
+    </div>
+    </div>
+</div>
+
 
 {% endblock %}
 
