@@ -29,7 +29,15 @@
      <div class="container-fluid text-center">          
         <div class="p-5 mb-4 rounded-3">
             <h1 class="display-5 fw-bold">Vendors</h1>
-
+            {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                       {% for message in messages %}
+                       <div class="alert alert-danger" role="alert">
+                          {{ message }}
+                        </div>
+                       {% endfor %}
+                    {% endif %}
+                 {% endwith %}
                 <!-- Modal Button for Vendor -->
                 <div class="container-fluid py-5 text-center">
                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">

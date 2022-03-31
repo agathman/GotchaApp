@@ -30,7 +30,15 @@
     <div class="p-5 mb-4 rounded-3">
         <h1 class="display-5 fw-bold">Miscellaneous</h1>
             <div class="container py-5 text-center">
-
+                {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                       {% for message in messages %}
+                       <div class="alert alert-danger" role="alert">
+                          {{ message }}
+                        </div>
+                       {% endfor %}
+                    {% endif %}
+                 {% endwith %}
 <div class="row">
     <div clas="col">
     
