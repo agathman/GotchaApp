@@ -27,13 +27,18 @@
 
      {% block content %}
      <div class="container-fluid text-center">          
-        <div class="p-5 mb-4 rounded-3">
-            <h1 class="display-5 fw-bold">Vendors</h1>
-            {% with messages = get_flashed_messages() %}
+        <div class="p-5 mb-4 rounded-3"> 
+            <div class="container py-2 text-center">
+                <div class="d-flex justify-content-start"> 
+                    <h1 class="font-weight-bold px-2 py-4">Vendors</h1>
+                    </div>  
+                    {% with messages = get_flashed_messages() %}
                     {% if messages %}
                        {% for message in messages %}
+                       <div class="d-flex justify-content-center">
                        <div class="alert alert-danger" role="alert">
                           {{ message }}
+                        </div>
                         </div>
                        {% endfor %}
                     {% endif %}
@@ -110,9 +115,10 @@
                                 <th>
                                     Description
                                 </th>
-                                <th>     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                                    Add Vendor
-                                  </button></th>
+                                <th> 
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                        Add Vendor
+                                        </button></th>
                                   
  
                             </tr>
@@ -126,16 +132,19 @@
                                 <td>{{ vendor.Phone}}</td>
                                 <td>{{ vendor.Email}}</td>
                                 <td>{{ vendor.Vendor_Desc }}</td>
-                                <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateVendorModal{{vendor.Vendor_ID}}">
+                                <td><div class="d-flex flex-row">
+                                    <div class="p-2">
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateVendorModal{{vendor.Vendor_ID}}">
                                     Edit
-                                </button></td>
-                                <td><!-- Delete Form Start-->
+                                </button></div>
+                                <!-- Delete Form Start-->
                                     <form action ="{{ request.path }}" method = 'post'>
                                         <!-- Hidden Field to validate which request to use in the route in views.py (name='check' value='Name to the request portion')-->
                                     <input type="hidden" name="check" value="deleteVendor">
                                     <!-- Appointment ID to delete name='Name Field to the request in back end' value='the ID to the object you want to delete'-->
                                     <input type="hidden" name="deleteVendorID" value="{{vendor.Vendor_ID}}">
-                                <td><button type="submit" class="btn"><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button></a></td>
+                                <div class='p-2'><button type="submit" class="btn"><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button></div>
+                                    </div></td>
                                 </form>
                             <!-- Delete END --></td>
                             </tr>

@@ -78,6 +78,7 @@ def viewAppointment():
         # new appointment
         elif request.form['check'] == 'newAppointment':
             appointment = Appointment(request.form['customerID'], request.form['date'])
+            db.session.commit()
         
         # Add Event to appointment
         elif request.form['check'] == 'addEvent':
@@ -150,14 +151,7 @@ def viewCustomer():
                     flash('Error: Cannot delete customer with an associated event')
                     return redirect(url_for('my_view.viewCustomer'))
             else:
-                db.session.commit()
-
-        
-           
-            
-            
-           
-            
+                db.session.commit()          
     return render_template('tables/customer.html', customers = Customers, stateList = State.query.all() )
 
 # EMPLOYEES - Create/View/Update
@@ -231,7 +225,6 @@ def viewEventOrder():
         .join(Customer, Customer.Customer_ID == Event_Order.Customer_ID)\
         .join(Event_Status, Event_Status.Event_Status_ID == Event_Order.Event_Order_Status_ID)\
         .join(State, State.State_ID == Event_Order.State_ID)\
-        .join(Employee_Assignment, Employee_Assignment.Employee_Assignment_ID == Event_Order.Employee_Assignment_ID)\
         .add_columns(Event_Order.Event_Order_ID, Event_Category.Event_Category_Name, Customer.First_Name, Customer.Last_Name, Customer.Phone, Customer.Email, Event_Status.Event_Status, Event_Order.Event_Time, Event_Order.Event_Theme,
         Event_Order.Event_Order_Desc, Event_Order.Event_Delivery, Event_Order.Event_Setup, Event_Order.Event_Location_Name, Event_Order.Event_Restriction_Desc, Event_Order.Event_Address, Event_Order.Event_City,
         State.State_Abbreviation, Event_Order.Event_Zip_Code).order_by(Event_Order.Event_Time)
@@ -252,7 +245,7 @@ def viewEventOrder():
         elif request.form['check'] == 'event':
             event = Event_Order(request.form['category'], request.form['customer'], request.form['status'], request.form['eventTime'], request.form['theme'], request.form['eventDesc'],
                         request.form['delivery'], request.form['setup'], request.form['location'], request.form['restrictions'], request.form['address'], request.form['city'],
-                        request.form['zip'], request.form['employeeAssignment'], request.form['state'], 'Due after event')
+                        request.form['zip'], None , request.form['state'], 'Due after event')
             db.session.add(event)
             db.session.commit()
             return redirect(url_for('my_view.viewEventOrder'))

@@ -85,12 +85,8 @@
                             </tbody>
                                     
                         </table>
-    
-
-                   
-
-                </div>
-                   
+                </div>  
+        </div>
         </div>
 <!-- Modal for Category Form -->
         <div class="modal fade" id="CatModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -194,13 +190,14 @@
                     <option value="No">No</option>
                    
                 </select>
-                <label>Employee Assignment</label>
-                <select class="form-control" name="employee">
+               <!-- <label>Employee Assignment</label>
+                <select class="form-control" name="employeeAssignment">
                     <option disabled selected value> -- Select an option -- </option>
                     {% for employee in employees %}
                         <option value="{{employee.Emp_ID}}">{{employee.Emp_Last_Name}}</option>
                     {% endfor %}
             </select>
+        -->
                 </div>
                 <div class="col">
                 <label>Setup</label>
@@ -221,7 +218,7 @@
                 <label>Zip Code</label>
                 <input type="number" min="0" step="1" class="form-control" name="zip" required>
                 <label>State</label>
-                <select class="form-control" name="state" value="1">
+                <select class="form-control" name="state">
                     {% for state in stateList %}
                             <option value="{{state.State_ID}}">{{state.State_Name}}</option> 
                     {% endfor %}

@@ -140,7 +140,7 @@
                         <label>City</label>
                         <input type="text" class="form-control" name="city" required>
                         <label>State</label>
-                        <select class="form-control" name="state" value="1">
+                        <select class="form-control" name="state">
                             {% for state in stateList %}
                                 <option value="{{state.State_ID}}">{{state.State_Name}}</option> 
                             {% endfor %}

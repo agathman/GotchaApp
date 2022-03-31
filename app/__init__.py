@@ -9,7 +9,7 @@ app.config['SECRET_KEY'] = 'secretkey'
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 
 db = SQLAlchemy()
-db = SQLAlchemy(session_options={"autoflush": False})
+
 db.init_app(app)
     #app.config.from_object('config.config')
 

@@ -27,7 +27,7 @@ class Customer(db.Model):
 
     Event_Order = relationship("Event_Order", backref="Customer")
 
-    def __init__(self, First_Name, Last_Name, Phone, Email, Mailing_Address, Mailing_City, Mailing_Zip_Code, Contact_Date, State_ID):
+    def __init__(self, First_Name, Last_Name, Phone, Email, Mailing_Address, Mailing_City, Mailing_Zip_Code, State_ID):
        
         self.First_Name = First_Name
         self.Last_Name = Last_Name
@@ -36,7 +36,6 @@ class Customer(db.Model):
         self.Mailing_Address = Mailing_Address
         self.Mailing_City = Mailing_City
         self.Mailing_Zip_Code = Mailing_Zip_Code
-        self.Contact_Date = Contact_Date
         self.State_ID = State_ID
 
 
