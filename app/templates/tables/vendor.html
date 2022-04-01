@@ -125,6 +125,7 @@
                             </thead>
                             <tbody>
                                 {% for vendor in vendors %}
+                                {% if vendor.Vendor_ID != 13 %}
                                 <tr>
                                 <td>{{ vendor.Vendor_Name}}</td>
                                 <td>{{ vendor.Vendor_Services }}</td>
@@ -137,6 +138,7 @@
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateVendorModal{{vendor.Vendor_ID}}">
                                     Edit
                                 </button></div>
+                                
                                 <!-- Delete Form Start-->
                                     <form action ="{{ request.path }}" method = 'post'>
                                         <!-- Hidden Field to validate which request to use in the route in views.py (name='check' value='Name to the request portion')-->
@@ -148,6 +150,7 @@
                                 </form>
                             <!-- Delete END --></td>
                             </tr>
+                            {% endif %}
                             {% endfor %}
                             </tbody>
                                 

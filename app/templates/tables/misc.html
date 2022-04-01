@@ -67,7 +67,7 @@
         {% for category in categories %}
             <tr>
                 <form action = "{{ request.path }}" method = "POST">
-                    <input type="hidden" name="check" value="catCheck">
+                    <input type="hidden" name="check" value="updateCatCheck">
                     <input type="hidden" name="catID" value="{{category.Event_Category_ID}}">
                 <td><input type="text" class="form-control" name="category" value="{{category.Event_Category_Name}}"> </td>
                 <td><div class="d-flex flex-row">
@@ -307,7 +307,7 @@
             <form action = "{{ request.path }}" method = "POST">
                 <input type="hidden" name="check" value="statusCheck">
                 <label>Status</label>
-                <input type="text" class="form-control" name="status" pattern="[A-Za-z]" required>                  
+                <input type="text" class="form-control" name="status" pattern="[A-Za-z]{1,50}" required>                  
         </div>
         <div class="modal-footer">
             <input type='submit' class="btn btn-secondary" value="Save">
