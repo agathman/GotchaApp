@@ -132,9 +132,9 @@
                 <label>Date</label>
                 <input type="date" class="form-control" name="eventTime" required>
                 <label>Theme</label>
-                <input type="text" class="form-control" name="theme">
+                <input type="text" pattern="[A-Za-z ]{1,250}" class="form-control" name="theme">
                 <label>Event Description</label>
-                <input type="text" class="form-control" name="eventDesc" required>
+                <input type="text" pattern="[A-Za-z ]{1,250}" class="form-control" name="eventDesc" required>
                 <label>Delivery</label>
                 <select class="form-control" name="delivery" required>  
                     <option disabled selected value> -- Select an option -- </option>                                          
@@ -160,15 +160,15 @@
                     
                 </select>
                 <label>Location</label>
-                <input type="text" class="form-control" name="location" required>
+                <input type="text" pattern="[A-Za-z0-9 ]{1,250}" class="form-control" name="location" required>
                 <label>Restrictions</label>
-                <input type="text" class="form-control" name="restrictions" required>
+                <input type="text" pattern="[A-Za-z ]{1,250}" class="form-control" name="restrictions" required>
                 <label>Address</label>
-                <input type="text" class="form-control" name="address" required>
+                <input type="text" pattern="[A-Za-z0-9 ]{1,250}"  class="form-control" name="address" required>
                 <label>City</label>
-                <input type="text" class="form-control" name="city" required>
+                <input type="text" pattern="[A-Za-z]{1,250}" class="form-control" name="city" required>
                 <label>Zip Code</label>
-                <input type="number" min="0" step="1" class="form-control" name="zip" required>
+                <input type="number"  pattern="[(0-9)]{1,5}" min="0" step="1" class="form-control" name="zip" required>
                 <label>State</label>
                 <select class="form-control" name="state">
                     {% for state in stateList %}
