@@ -277,7 +277,7 @@
                     
                 </select>                            
                 <label>Customer</label>
-                <input type="text" class='form-control' value="{{event.First_Name}} {{event.Last_Name}}">
+                <input type="text" pattern="[A-Za-z ]{1,250}" class='form-control' value="{{event.First_Name}} {{event.Last_Name}}">
                 <label>Order Status</label>
                 <select class="form-control" name="status" required>     
                     <option selected value="{{event.Event_Order_Status_ID}}">{{event.Event_Status}}</option>                                     
@@ -290,9 +290,9 @@
                 <label>Date</label>
                 <input type="date" class="form-control" name="eventTime" value="{{event.Event_Time}}" required>
                 <label>Theme</label>
-                <input type="text" class="form-control" name="theme" value="{{event.Event_Theme}}">
+                <input type="text" pattern="[A-Za-z ]{1,250}" class="form-control" name="theme" value="{{event.Event_Theme}}">
                 <label>Event Description</label>
-                <input type="text" class="form-control" name="eventDesc" value="{{event.Event_Order_Desc}}" required>
+                <input type="text" pattern="[A-Za-z ]{1,250}" class="form-control" name="eventDesc" value="{{event.Event_Order_Desc}}" required>
                 <label>Delivery</label>
                 <select class="form-control" name="delivery" required>  
                     <option selected value="{{event.Event_Delivery}}">{{event.Event_Delivery}}</option>                                          
@@ -317,15 +317,15 @@
                     
                 </select>
                 <label>Location</label>
-                <input type="text" class="form-control" name="location" value="{{event.Event_Location_Name}}" required>
+                <input type="text" pattern="[A-Za-z0-9 ]{1,250}" class="form-control" name="location" value="{{event.Event_Location_Name}}" required>
                 <label>Restrictions</label>
-                <input type="text" class="form-control" name="restrictions" value="{{event.Event_Restriction_Desc}}" required>
+                <input type="text" pattern="[A-Za-z ]{1,250}" class="form-control" name="restrictions" value="{{event.Event_Restriction_Desc}}" required>
                 <label>Address</label>
-                <input type="text" class="form-control" name="address" value="{{event.Event_Address}}" required>
+                <input type="text" pattern="[A-Za-z0-9 ]{1,250}" class="form-control" name="address" value="{{event.Event_Address}}" required>
                 <label>City</label>
-                <input type="text" class="form-control" name="city" value="{{event.Event_City}}" required>
+                <input type="text" pattern="[A-Za-z]{1,250}" class="form-control" name="city" value="{{event.Event_City}}" required>
                 <label>Zip Code</label>
-                <input type="number" min="0" step="1" class="form-control" name="zip" value="{{event.Event_Zip_Code}}" required>
+                <input type="number" pattern="[(0-9)]{1,5}" min="0" step="1" class="form-control" name="zip" value="{{event.Event_Zip_Code}}" required>
                 {% endfor %}
                </div>
         </div>

@@ -174,7 +174,7 @@
                         <input type="hidden" name="check" value="updateVendor">
                         <input type="hidden" name="vendorID" value="{{vendor.Vendor_ID}}">
                         <label>Vendor Name</label>
-                        <input type="text" class="form-control" name="vendorName" value="{{vendor.Vendor_Name}}" required>
+                        <input type="text" pattern="[A-Za-z ]{1,250}" class="form-control" name="vendorName" value="{{vendor.Vendor_Name}}" required>
                         <label>Vendor Service</label> 
                         <select class="form-control" name="vendorService" required>  
                             <option selected value="{{vendor.Vendor_Service_ID}}">{{vendor.Vendor_Services}}</option>                                         
@@ -183,17 +183,17 @@
                                 {% endfor %}
                             </select>
                         <label>First Name</label>
-                        <input type="text" class="form-control" value="{{vendor.First_Name}}" name="firstName" required>
+                        <input type="text" pattern="[A-Za-z]{1,250}" class="form-control" value="{{vendor.First_Name}}" name="firstName" required>
                         <label>Last Name</label> 
-                        <input type="text" class="form-control" value="{{vendor.Last_Name}}" name="lastName" required>
+                        <input type="text" pattern="[A-Za-z]{1,250}" class="form-control" value="{{vendor.Last_Name}}" name="lastName" required>
                         <label>Phone</label>
                         <input type="tel" class="form-control" name="phone" pattern="[(0-9)]{3}-[0-9]{3}-[0-9]{4}" value="{{vendor.Phone}}" required>
                         <small>Format: 555-456-7890</small>
                         <br>
                         <label>Email</label>
-                        <input type="email" class="form-control" name="email" value="{{vendor.Email}}" required>
+                        <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" class="form-control" name="email" value="{{vendor.Email}}" required>
                         <label>Vendor Description</label> 
-                        <input type="text" class="form-control" name="vendorDesc" value="{{vendor.Vendor_Desc}}" required>
+                        <input type="text" pattern="[A-Za-z0-9 ]{1,250}" class="form-control" name="vendorDesc" value="{{vendor.Vendor_Desc}}" required>
                         
                 </div>
                 <div class="modal-footer">
@@ -249,9 +249,9 @@
                 <label>Date</label>
                 <input type="date" class="form-control" name="eventTime" required>
                 <label>Theme</label>
-                <input type="text" class="form-control" name="theme">
+                <input type="text" pattern="[A-Za-z ]{1,250}" class="form-control" name="theme">
                 <label>Event Description</label>
-                <input type="text" class="form-control" name="eventDesc" required>
+                <input type="text" pattern="[A-Za-z ]{1,250}" class="form-control" name="eventDesc" required>
                 <label>Delivery</label>
                 <select class="form-control" name="delivery" required>  
                     <option disabled selected value> -- Select an option -- </option>                                          
@@ -276,15 +276,15 @@
                     
                 </select>
                 <label>Location</label>
-                <input type="text" class="form-control" name="location" required>
+                <input type="text" pattern="[A-Za-z0-9 ]{1,250}" class="form-control" name="location" required>
                 <label>Restrictions</label>
-                <input type="text" class="form-control" name="restrictions" required>
+                <input type="text" pattern="[A-Za-z ]{1,250}" class="form-control" name="restrictions" required>
                 <label>Address</label>
-                <input type="text" class="form-control" name="address" required>
+                <input type="text" pattern="[A-Za-z0-9 ]{1,250}" class="form-control" name="address" required>
                 <label>City</label>
-                <input type="text" class="form-control" name="city" required>
+                <input type="text" pattern="[A-Za-z]{1,250}" class="form-control" name="city" required>
                 <label>Zip Code</label>
-                <input type="number" min="0" step="1" class="form-control" name="zip" required>
+                <input type="number" pattern="[(0-9)]{1,5}" min="0" step="1" class="form-control" name="zip" required>
                 <label>State</label>
                 <select class="form-control" name="state" value="1">
                     {% for state in stateList %}
