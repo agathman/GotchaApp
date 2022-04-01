@@ -297,30 +297,31 @@ def viewEvent(eventID):
         .join(Customer, Customer.Customer_ID == Event_Order.Customer_ID)\
         .join(Event_Status, Event_Status.Event_Status_ID == Event_Order.Event_Order_Status_ID)\
         .join(State, State.State_ID == Event_Order.State_ID)\
-        .join(Employee_Assignment, Employee_Assignment.Employee_Assignment_ID == Event_Order.Employee_Assignment_ID)\
-        .join(Employee, Employee_Assignment.Employee_ID == Employee.Emp_ID)\
+        .outerjoin(Employee_Assignment, Event_Order.Employee_Assignment_ID == Employee_Assignment.Employee_Assignment_ID)\
+        .outerjoin(Employee, Employee_Assignment.Employee_ID == Employee.Emp_ID)\
         .add_columns(Event_Order.Event_Order_ID, Event_Category.Event_Category_Name, Event_Order.Event_Category_ID, Customer.First_Name, Customer.Last_Name, Customer.Phone, Customer.Email, Event_Order.Event_Order_Status_ID, Event_Status.Event_Status, Event_Order.Event_Time, 
         Event_Order.Event_Theme, Event_Order.Event_Order_Desc, Event_Order.Event_Delivery, Event_Order.Event_Setup, Event_Order.Event_Restriction_Desc, Event_Order.Event_Location_Name, Event_Order.Event_Address, Event_Order.Event_City,
         State.State_Abbreviation, Event_Order.Event_Zip_Code, Employee.Emp_First_Name, Employee.Emp_Last_Name)
     
     orderLines = Event_Order_Line.query.filter_by(Event_Order_ID = eventID)\
-        .join(Vendor, Vendor.Vendor_ID == Event_Order_Line.Vendor_ID)\
         .join(Event_Order, Event_Order.Event_Order_ID == Event_Order_Line.Event_Order_ID)\
         .join(Product_Service, Product_Service.Product_Service_ID == Event_Order_Line.Product_Service_ID)\
         .join(Event_Status, Event_Status.Event_Status_ID == Event_Order_Line.Event_Order_Status_ID)\
-        .add_columns(Event_Order_Line.Vendor_ID,Event_Order_Line.Event_Order_Line_ID, Vendor.Vendor_Name, Event_Order_Line.Event_Order_Status_ID, Event_Order_Line.Event_Order_Line_Date, Event_Status.Event_Status, Product_Service.Product_Service)\
+        .add_columns(Event_Order_Line.Event_Order_Line_ID, Event_Order_Line.Event_Order_Status_ID, Event_Order_Line.Event_Order_Line_Date, Event_Status.Event_Status, Product_Service.Product_Service)\
         .order_by(Event_Order_Line.Event_Order_Line_Date)
+    
+    vendorServiceList = Vendor_Service.query.filter_by(Event_Order_ID = eventID)\
+        .join(Vendor, Vendor_Service.Vendor_ID == Vendor.Vendor_ID)\
+        .join(Event_Status, Vendor_Service.Vendor_Service_Status_ID == Event_Status.Event_Status_ID)\
+        .join(Event_Order, Vendor_Service.Event_Order_ID == Event_Order.Event_Order_ID)\
+        .add_columns(Vendor_Service.Vendor_Service_ID, Vendor_Service.Vendor_Services, Vendor.Vendor_ID, Vendor.Vendor_Name,
+        Vendor_Service.Date, Event_Order.Event_Order_ID, Vendor_Service.Vendor_Service_Status_ID, Event_Status.Event_Status_ID, Event_Status.Event_Status)
 
     if request.method == 'POST':
         if request.form['check'] == 'orderLine':
-            vendorSelected = request.form['vendor']
-            if vendorSelected == 'None':
-                vendorAdded = None
-            else:
-                vendorAdded = vendorSelected
-            orderLine = Event_Order_Line(vendorAdded, request.form['status'], request.form['date'], eventID, request.form['service'])                       
-            db.session.add(orderLine)
-            db.session.commit()
+                orderLine = Event_Order_Line(request.form['status'], request.form['date'], eventID, request.form['service'])                       
+                db.session.add(orderLine)
+                db.session.commit()
 
         if request.form['check'] == 'updateEvent':
 
@@ -390,7 +391,7 @@ def viewEvent(eventID):
             
 
 
-    return render_template('tables/viewEvent.html', categories = Event_Category.query.all(), events = eventOrder, orderLines = orderLines, vendors = Vendor.query.all(), statuses = Event_Status.query.all(), services = Product_Service.query.all(), employees = Employee.query.all())
+    return render_template('tables/viewEvent.html', vendorServices = vendorServiceList, categories = Event_Category.query.all(), events = eventOrder, orderLines = orderLines, vendors = Vendor.query.all(), statuses = Event_Status.query.all(), services = Product_Service.query.all(), employees = Employee.query.all())
 
 
 
@@ -679,15 +680,13 @@ def viewVendor():
 
     
          
-    vendorlist = Vendor.query.join(Vendor_Service,Vendor_Service.Vendor_Service_ID == Vendor.Vendor_Service_ID)\
-    .add_columns(Vendor.Vendor_ID, Vendor.Vendor_Name, Vendor.Vendor_Desc, Vendor.First_Name, Vendor.Last_Name, Vendor.Phone, Vendor.Email,
-    Vendor_Service.Vendor_Services, Vendor_Service.Vendor_Service_ID)
+    vendorlist = Vendor.query.all()
 
         #Form request to add customer
     if request.method == 'POST':
         #Checks which form to add from
         if request.form['check'] == 'addVendor':
-            vendor = Vendor(request.form['vendorName'], request.form['vendorService'], request.form['vendorDesc'],request.form['firstName'],
+            vendor = Vendor(request.form['vendorName'], request.form['vendorDesc'],request.form['firstName'],
                 request.form['lastName'],request.form['phone'],request.form['email'])
                        
             db.session.add(vendor)
@@ -697,7 +696,6 @@ def viewVendor():
             vendorID = request.form['vendorID']
             vendorFound = Vendor.query.get(vendorID)
             vendorFound.Vendor_Name = request.form['vendorName']
-            vendorFound.Vendor_Services = request.form['vendorService']
             vendorFound.Vendor_Desc = request.form['vendorDesc']
             vendorFound.First_Name = request.form['firstName']
             vendorFound.Last_Name = request.form['lastName']
@@ -719,12 +717,65 @@ def viewVendor():
             else:
                 db.session.commit()
         
-    return render_template('tables/vendor.html', vendors = vendorlist, vendorServices = Vendor_Service.query.all())
+    return render_template('tables/vendor.html', vendors = vendorlist)
 
 
-@my_view.route('/VendorService')
-def viewVendorService():
-    Vendor_Service = Vendor_Service()\
-        .add_columns(Vendor_Service.Vendor_Service_ID, Vendor_Service.Vendor_Services)
-    return render_template('tables/vendor_service.html')
+@my_view.route('/vendorService/<vendorID>', methods=['GET', 'POST'])
+def viewVendorService(vendorID):
+
+    foundVendorID = vendorID
+
+    vendorServiceList = Vendor_Service.query.filter_by(Vendor_ID = vendorID)\
+        .join(Vendor, Vendor_Service.Vendor_ID == Vendor.Vendor_ID)\
+        .join(Event_Status, Vendor_Service.Vendor_Service_Status_ID == Event_Status.Event_Status_ID)\
+        .join(Event_Order, Vendor_Service.Event_Order_ID == Event_Order.Event_Order_ID)\
+        .add_columns(Vendor_Service.Vendor_Service_ID, Vendor_Service.Vendor_Services, Vendor.Vendor_ID, Vendor.Vendor_Name,
+        Vendor_Service.Date, Event_Order.Event_Order_ID, Vendor_Service.Vendor_Service_Status_ID, Event_Status.Event_Status_ID, Event_Status.Event_Status)
+
+    vendorName = Vendor.query.filter_by(Vendor_ID = vendorID)\
+        .add_columns(Vendor.Vendor_ID, Vendor.Vendor_Name)
+
+    eventJoin = Event_Order.query\
+        .join(Customer, Event_Order.Customer_ID == Customer.Customer_ID)\
+        .add_columns(Event_Order.Event_Order_ID, Customer.Customer_ID, Customer.First_Name, Customer.Last_Name)
+
+    if request.method == 'POST':
+        # Add
+        if request.form['check'] == 'addVendorService':
+            vendorService = Vendor_Service(request.form['service'], request.form['vendor'], request.form['event'], request.form['status'], request.form['date'])
+            db.session.add(vendorService)
+            db.session.commit()
+        # Update
+        if request.form['check'] == 'updateVendorService':
+            vendorServiceID = request.form['venServiceID']
+            vendorServiceforUpdate = Vendor_Service.query.get(vendorServiceID)
+            currStatus = request.form['currStatus']
+            updateStatus = request.form['statusUpdate']
+            dateFound = request.form['date']
+            if updateStatus == '0':
+                vendorServiceforUpdate.Vendor_Service_Status_ID = currStatus
+                vendorServiceforUpdate.Vendor_Service_Line_Date = dateFound
+                db.session.commit()
+            else:
+                vendorServiceforUpdate.Vendor_Service_Status_ID = updateStatus
+                vendorServiceforUpdate.Vendor_Service_Line_Date = dateFound
+                db.session.commit()
+            return redirect(url_for('my_view.viewVendorService', vendorID = foundVendorID)) 
+            #Delete
+        if request.form['check'] == 'delVendorService':
+            delVendorService = request.form['delVenServiceID']
+            vendorServiceFound = Vendor_Service.query.get(delVendorService)
+            try:
+                db.session.delete(vendorServiceFound)
+                db.session.flush()
+            except exc.IntegrityError:
+                    db.session.rollback()  
+                    flash('Delete is not possible for this record')
+                    return redirect(url_for('my_view.viewVendorService', vendorID = foundVendorID))
+            else:
+                db.session.commit()   
+    
+
+        
+    return render_template('tables/vendorService.html', vendorName = vendorName, vendors = Vendor.query.all(), vendorServices = vendorServiceList, statuses = Event_Status.query.all(), events = eventJoin)
 

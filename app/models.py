@@ -134,7 +134,6 @@ class Event_Order(db.Model):
 class Event_Order_Line(db.Model):
     __tablename__ = 'Event_Order_Line'
     Event_Order_Line_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    Vendor_ID = db.Column(db.Integer, db.ForeignKey('Vendor.Vendor_ID'), nullable=True)
     Event_Order_Status_ID = db.Column(db.Integer,db.ForeignKey('Event_Category.Event_Category_ID'), nullable=False)
     Event_Order_Line_Date = db.Column(db.Date, nullable=False)
     Event_Order_ID = db.Column(db.Integer, db.ForeignKey('Event_Order.Event_Order_ID'), nullable=True)
@@ -142,11 +141,10 @@ class Event_Order_Line(db.Model):
 
 # Class method to GET from DB
 
-    def __init__(self, Vendor_ID, Event_Order_Status_ID,
+    def __init__(self,Event_Order_Status_ID,
                 Event_Order_Line_Date, Event_Order_ID, Product_Service_ID):
 # Defines representation for object
 
-            self.Vendor_ID = Vendor_ID
             self.Event_Order_Status_ID = Event_Order_Status_ID
             self.Event_Order_Line_Date = Event_Order_Line_Date
             self.Event_Order_ID = Event_Order_ID
@@ -208,16 +206,14 @@ class Vendor(db.Model):
     __tablename__ = 'Vendor'
     Vendor_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
     Vendor_Name = db.Column(db.String(50), nullable=False)
-    Vendor_Service_ID = db.Column(db.Integer, db.ForeignKey('Vendor_Service.Vendor_Service_ID'), nullable=False)
     Vendor_Desc = db.Column(db.String(250), nullable=False)
     First_Name = db.Column(db.String(250), nullable=False)
     Last_Name = db.Column(db.String(250), nullable=False)
     Phone = db.Column(db.String, nullable=False)
     Email = db.Column(db.String(250), nullable=False)
 
-    def __init__(self, Vendor_Name, Vendor_Service_ID, Vendor_Desc, First_Name, Last_Name, Phone, Email):
+    def __init__(self, Vendor_Name, Vendor_Desc, First_Name, Last_Name, Phone, Email):
         self.Vendor_Name = Vendor_Name
-        self.Vendor_Service_ID = Vendor_Service_ID
         self.Vendor_Desc = Vendor_Desc
         self.First_Name = First_Name
         self.Last_Name = Last_Name
@@ -229,9 +225,17 @@ class Vendor_Service(db.Model):
     __tablename__ = 'Vendor_Service'
     Vendor_Service_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
     Vendor_Services = db.Column(db.String(50), nullable=False)
+    Vendor_ID = db.Column(db.Integer, db.ForeignKey('Vendor.Vendor_ID'), nullable=False)
+    Event_Order_ID = db.Column(db.Integer, db.ForeignKey('Event_Order.Event_Order_ID'), nullable=False)
+    Vendor_Service_Status_ID = db.Column(db.Integer, db.ForeignKey('Event_Status.Event_Status_ID'), nullable=False)
+    Date = db.Column(db.Date, nullable=False)
 
-    def __init__(self, Vendor_Services):
+    def __init__(self, Vendor_Services, Vendor_ID, Event_Order_ID, Vendor_Service_Status_ID, Date):
             self.Vendor_Services = Vendor_Services
+            self.Vendor_ID = Vendor_ID
+            self.Event_Order_ID = Event_Order_ID
+            self.Vendor_Service_Status_ID = Vendor_Service_Status_ID
+            self.Date = Date
 
 
 

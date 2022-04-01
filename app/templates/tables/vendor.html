@@ -61,13 +61,6 @@
                                     <input type="hidden" name="check" value="addVendor">
                                     <label>Vendor Name</label>
                                     <input type="text" class="form-control" name="vendorName" required>
-                                    <label>Vendor Service</label> 
-                                    <select class="form-control" name="vendorService" required>                                           
-                                        {% for vendorService in vendorServices %}
-                                            <option value="{{vendorService.Vendor_Service_ID}}">{{vendorService.Vendor_Services}}</option>
-                                            {% endfor %}
-                                            <option disabled selected value> -- Select an option -- </option>
-                                        </select>
                                     <label>First Name</label>
                                     <input type="text" class="form-control" name="firstName" required>
                                     <label>Last Name</label> 
@@ -92,16 +85,13 @@
                         </div>
                     </div>
 
-
+                  
                             
                         <table class="table table-striped">
                             <thead class="thead-dark">
                               
                                 <th>
                                     Vendor Name
-                                </th>
-                                <th>
-                                    Vendor Service
                                 </th>
                                 <th>
                                     Contact
@@ -114,6 +104,9 @@
                                 </th>
                                 <th>
                                     Description
+                                </th>
+                                <th>
+                                    Services
                                 </th>
                                 <th> 
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
@@ -128,11 +121,11 @@
                                 {% if vendor.Vendor_ID != 13 %}
                                 <tr>
                                 <td>{{ vendor.Vendor_Name}}</td>
-                                <td>{{ vendor.Vendor_Services }}</td>
                                 <td>{{ vendor.First_Name}} {{ vendor.Last_Name}}</td>
                                 <td>{{ vendor.Phone}}</td>
                                 <td>{{ vendor.Email}}</td>
                                 <td>{{ vendor.Vendor_Desc }}</td>
+                                <td><a href="/vendorService/{{vendor.Vendor_ID}}">Orders</a></td>
                                 <td><div class="d-flex flex-row">
                                     <div class="p-2">
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateVendorModal{{vendor.Vendor_ID}}">
@@ -175,13 +168,6 @@
                         <input type="hidden" name="vendorID" value="{{vendor.Vendor_ID}}">
                         <label>Vendor Name</label>
                         <input type="text" pattern="[A-Za-z ]{1,250}" class="form-control" name="vendorName" value="{{vendor.Vendor_Name}}" required>
-                        <label>Vendor Service</label> 
-                        <select class="form-control" name="vendorService" required>  
-                            <option selected value="{{vendor.Vendor_Service_ID}}">{{vendor.Vendor_Services}}</option>                                         
-                            {% for vendorService in vendorServices %}
-                                <option value="{{vendorService.Vendor_Service_ID}}">{{vendorService.Vendor_Services}}</option>
-                                {% endfor %}
-                            </select>
                         <label>First Name</label>
                         <input type="text" pattern="[A-Za-z]{1,250}" class="form-control" value="{{vendor.First_Name}}" name="firstName" required>
                         <label>Last Name</label> 
@@ -191,7 +177,7 @@
                         <small>Format: 555-456-7890</small>
                         <br>
                         <label>Email</label>
-                        <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" class="form-control" name="email" value="{{vendor.Email}}" required>
+                        <input type="email" maxlength="250" class="form-control" name="email" value="{{vendor.Email}}" required>
                         <label>Vendor Description</label> 
                         <input type="text" pattern="[A-Za-z0-9 ]{1,250}" class="form-control" name="vendorDesc" value="{{vendor.Vendor_Desc}}" required>
                         
