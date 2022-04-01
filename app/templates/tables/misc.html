@@ -258,7 +258,7 @@
             <form action = "{{ request.path }}" method = "POST">
                 <input type="hidden" name="check" value="serviceCheck">
                 <label>Product Service</label>
-                <input type="text" class="form-control" name="service" required>                  
+                <input type="text" pattern="[A-Za-z ]{1,250}" class="form-control" name="service" required>                  
         </div>
         <div class="modal-footer">
             <input type='submit' class="btn btn-secondary" value="Save">
@@ -283,7 +283,7 @@
             <form action = "{{ request.path }}" method = "POST">
                 <input type="hidden" name="check" value="catCheck">
                 <label>Category</label>
-                <input type="text" class="form-control" name="category" required>                  
+                <input type="text" pattern="[A-Za-z ]{1,250}" class="form-control" name="category" required>                  
         </div>
         <div class="modal-footer">
             <input type='submit' class="btn btn-secondary" value="Save">
@@ -307,7 +307,7 @@
             <form action = "{{ request.path }}" method = "POST">
                 <input type="hidden" name="check" value="statusCheck">
                 <label>Status</label>
-                <input type="text" class="form-control" name="status" pattern="[A-Za-z]{1,50}" required>                  
+                <input type="text" pattern="[A-Za-z ]{1,250}" class="form-control" name="status" pattern="[A-Za-z]{1,50}" required>                  
         </div>
         <div class="modal-footer">
             <input type='submit' class="btn btn-secondary" value="Save">
@@ -332,7 +332,7 @@
             <form action = "{{ request.path }}" method = "POST">
                 <input type="hidden" name="check" value="vServiceCheck">
                 <label>Vendor Service</label>
-                <input type="text" class="form-control" name="service" pattern="[A-Z a-z]{1,50}" required>                  
+                <input type="text" pattern="[A-Za-z ]{1,250}" class="form-control" name="service" pattern="[A-Z a-z]{1,50}" required>                  
         </div>
         <div class="modal-footer">
             <input type='submit' class="btn btn-secondary" value="Save">
@@ -357,7 +357,7 @@
             <form action = "{{ request.path }}" method = "POST">
                 <input type="hidden" name="check" value="payTypeCheck">
                 <label>Payment Type</label>
-                <input type="text" class="form-control" name="payType" pattern="[A-Z a-z]{1,50}" required>                  
+                <input type="text" pattern="[A-Za-z ]{1,250}" class="form-control" name="payType" pattern="[A-Z a-z]{1,50}" required>                  
         </div>
         <div class="modal-footer">
             <input type='submit' class="btn btn-secondary" value="Save">
