@@ -436,7 +436,8 @@ def viewEventOrderLine(eventID):
 def viewMisc():
 
     if request.method == 'POST':
-        
+#UPDATE HANDLERS
+
         if request.form['check'] == 'catCheck':
             categoryID = request.form['catID']
             category = Event_Category.query.get(categoryID)
@@ -466,7 +467,9 @@ def viewMisc():
             paymentType = Payment_Type.query.get(paymentTypeID)
             paymentType.Payment_Type_Name = request.form['paymentType']
             db.session.commit()
-        
+
+# ADDING/CREATION HANDLERS
+
         if request.form['check'] == 'catCheck':
             category = Event_Category(request.form['category'])
             db.session.add(category)
@@ -492,7 +495,9 @@ def viewMisc():
             payType = Payment_Type(request.form['payType'])
             db.session.add(payType)
             db.session.commit()
-        
+
+#DELETE HANDLERS
+
         if request.form['check'] == 'delVenService':
             delVenID = request.form['delVenServiceID']
             venFound = Vendor_Service.query.get(delVenID)
@@ -507,6 +512,64 @@ def viewMisc():
                 db.session.commit()
                 flash('Delete Succesful')
                 return redirect(url_for('my_view.viewMisc'))
+            
+        if request.form['check'] == 'delCategory':
+            delCatID = request.form['delCategoryID']
+            catFound = Event_Category.query.get(delCatID)
+            try:
+                db.session.delete(catFound)
+                db.session.flush()
+            except exc.IntegrityError:
+                db.session.rollback()  
+                flash('Delete is not possible for this record')
+                return redirect(url_for('my_view.viewMisc'))
+            else:
+                db.session.commit()
+        
+        if request.form['check'] == 'delStatus':
+            delStatusID = request.form['delStatusID']
+            statusFound = Event_Status.query.get(delStatusID)
+            try:
+                db.session.delete(statusFound)
+                db.session.flush()
+            except exc.IntegrityError:
+                db.session.rollback()  
+                flash('Delete is not possible for this record')
+                return redirect(url_for('my_view.viewMisc'))
+            else:
+                db.session.commit()
+        
+        if request.form['check'] == 'delProService':
+            delProServiceID = request.form['delProServiceID']
+            ProServiceFound = Product_Service.query.get(delProServiceID)
+            try:
+                db.session.delete(ProServiceFound)
+                db.session.flush()
+            except exc.IntegrityError:
+                db.session.rollback()  
+                flash('Delete is not possible for this record')
+                return redirect(url_for('my_view.viewMisc'))
+            else:
+                db.session.commit()
+        
+        if request.form['check'] == 'delPayType':
+            delPayTypeID = request.form['delPayTypeID']
+            payTypeFound = Payment_Type.query.get(delPayTypeID)
+            try:
+                db.session.delete(payTypeFound)
+                db.session.flush()
+            except exc.IntegrityError:
+                db.session.rollback()  
+                flash('Delete is not possible for this record')
+                return redirect(url_for('my_view.viewMisc'))
+            else:
+                db.session.commit()
+
+        
+
+        
+
+
 
 
     

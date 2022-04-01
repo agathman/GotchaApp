@@ -28,7 +28,17 @@
 {% block content %}
 <div class="container-fluid text-center">          
     <div class="p-5 mb-4 rounded-3">
-        <h1 class="display-5 fw-bold">Miscellaneous</h1>
+        <div class="row">
+            <div class="col-2">
+    
+        </div>
+        <div class="col"> 
+            <div class="d-flex justify-content-start"> 
+            <h1 class="font-weight-bold px-2 py-4">Miscellaneous</h1>
+            </div>
+        </div> 
+        <div class="col"></div>
+        </div>
             <div class="container py-5 text-center">
                 {% with messages = get_flashed_messages() %}
                     {% if messages %}
@@ -41,15 +51,15 @@
                  {% endwith %}
 <div class="row">
     <div clas="col">
-        <button type="button" class="btn btn-link" data-toggle="modal" data-target="#CatModal">
-            Add Category
-            </button> 
+       
         <table class="table">
         <thead class="thead-dark">
             <th>
                 Category
             </th>
-            <th>
+            <th> <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#CatModal">
+                Add Category
+                </button> 
 
             </th>
         </thead>
@@ -60,7 +70,14 @@
                     <input type="hidden" name="check" value="catCheck">
                     <input type="hidden" name="catID" value="{{category.Event_Category_ID}}">
                 <td><input type="text" class="form-control" name="category" value="{{category.Event_Category_Name}}"> </td>
-                <td><button type='submit' class="btn"><img src="{{url_for('static', filename='save-fill.svg')}}"></button></td>
+                <td><div class="d-flex flex-row">
+                    <div class="p-2"><button type='submit' class="btn"><img src="{{url_for('static', filename='save-fill.svg')}}"></button></div>
+                </form>
+                    
+                    <form action="{{ request.path }}" method="POST">
+                        <input type="hidden" name="check" value="delCategory">
+                        <input type="hidden" name="delCategoryID" value="{{category.Event_Category_ID}}">
+                        <div class="p-2"><button type='submit' class='btn'><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button></div></td>
                 </form>
             </tr>
             {% endfor %}        
@@ -69,18 +86,16 @@
 
     </div>
     <div class="col">
-
-        <button type="submit" class="btn btn-link" data-toggle="modal" data-target="#statusModal">
-            Add Status
-        </button>
-                   
+           
     
         <table class="table">
             <thead class="thead-dark">
                 <th>
                     Status
                 </th>
-                <th></th>
+                <th>  <button type="submit" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#statusModal">
+                    Add Status
+                </button></th>
             </thead>
             <tbody>
                 {% for status in statuses %}
@@ -89,7 +104,17 @@
                         <input type="hidden" name="check" value="statCheck">
                         <input type="hidden" name="statID" value="{{status.Event_Status_ID}}">
                         <td><input type="text" class="form-control" name="status" value="{{status.Event_Status}}"></td>
-                        <td><button type='submit' class="btn"><img src="{{url_for('static', filename='save-fill.svg')}}"></button></td>
+                        <td><div class="d-flex flex-row">
+                            <div class="p-2"><button type='submit' class="btn"><img src="{{url_for('static', filename='save-fill.svg')}}"></button></div>
+                        </form>
+                            
+                            <form action="{{ request.path }}" method="POST">
+                                <input type="hidden" name="check" value="delStatus">
+                                <input type="hidden" name="delStatusID" value="{{status.Event_Status_ID}}">
+                            <div class="p-2">
+                                <button type='submit' class='btn'><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button>
+                            </div></td>
+                        
                     </form>
                 </tr>
                 {% endfor %}
@@ -97,15 +122,15 @@
         </table>
     </div>
     <div class="col">
-        <button type="button" class="btn btn-link" data-toggle="modal" data-target="#ServiceModal">
-            Add Product Service
-            </button>
+       
         <table class="table">
             <thead class="thead-dark">
                 <th>
                     Product Service
                 </th>
-                <th></th>
+                <th> <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#ServiceModal">
+                    Add Product Service
+                    </button></th>
             </thead>
             <tbody>
                 {% for productService in productServices %}
@@ -114,8 +139,18 @@
                         <input type="hidden" name="check" value="productCheck">
                         <input type="hidden" name="productID" value="{{productService.Product_Service_ID}}">
                         <td><input type="text" class="form-control" name="productService" value="{{productService.Product_Service}}"></td>
-                        <td><button type='submit' class="btn"><img src="{{url_for('static', filename='save-fill.svg')}}"></button></td>
-                    </form>
+                        <td>
+                            <div class="d-flex flex-row">
+                                <div class="p-2"><button type='submit' class="btn"><img src="{{url_for('static', filename='save-fill.svg')}}"></button></form></div>
+                            
+                            <form action="{{ request.path }}" method="POST">
+                                <input type="hidden" name="check" value="delProService">
+                                <input type="hidden" name="delProServiceID" value="{{productService.Product_Service_ID}}">
+                                <div class="p-2">  <button type='submit' class='btn'><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button>
+                                </div></td>
+                      </form>
+                    </td>
+                
                 </tr>
                 {% endfor %}
             </tbody>
@@ -124,16 +159,15 @@
     </div>
     <div class="row">
     <div class="col">
-        <button type="submit" class="btn btn-link" data-toggle="modal" data-target="#vServiceModal">
-            Add Vendor Service
-        </button>
-
-        <table class="table">
+       
+        <table class="table table-responsive">
             <thead class="thead-dark">
                 <th>
                     Vendor Services
                 </th>
-                <th></th>
+                <th> <button type="submit" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#vServiceModal">
+                    Add Vendor Service
+                </button></th>
             </thead>
             <tbody>
                 {% for vendorService in vendorServices %}
@@ -142,28 +176,31 @@
                         <input type="hidden" name="check" value="vendorCheck">
                         <input type="hidden" name="vendorID" value="{{vendorService.Vendor_Service_ID}}">
                         <td><input type="text" class="form-control" name="vendorService" value="{{vendorService.Vendor_Services}}"></td>
-                        <td><button type='submit' class="btn"><img src="{{url_for('static', filename='save-fill.svg')}}"></button>
+                        <td>
+                            <div class="d-flex flex-row">
+                                <div class="p-2"><button type='submit' class="btn"><img src="{{url_for('static', filename='save-fill.svg')}}"></button></div></form>
+                            
                             <form action="{{ request.path }}" method="POST">
-                                <input type="hidden" name="check" value="deleteVenService">
+                                <input type="hidden" name="check" value="delVenService">
                                 <input type="hidden" name="delVenServiceID" value="{{vendorService.Vendor_Service_ID}}">
-                            <button type='submit' class='btn'><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button></td>
-                            </form>
-                    </form>
-                </tr>
+                                <div class="p-2">
+                                     <button type='submit' class='btn'><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button> </form>
+                                    </div>
+                                    </td>
+                                </tr>
                 {% endfor %}
             </tbody>
         </table>
     </div>
     <div class="col">
-        <button type="submit" class="btn btn-link" data-toggle="modal" data-target="#payTypeModal">
-            Add Payment Type
-        </button>
-            <table class="table">
+            <table class="table table-responsive">
                 <thead class="thead-dark">
                     <th>
                         Payment Type
                     </th>
-                    <th></th>
+                    <th>  <button type="submit" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#payTypeModal">
+                        Add Payment Type
+                    </button></th>
                 </thead>
                 <tbody>
                     {% for payment in payments %}
@@ -172,8 +209,18 @@
                             <input type="hidden" name="check" value="paymentCheck">
                             <input type="hidden" name="paymentID" value="{{payment.Payment_Type_ID}}">
                             <td><input type="text" class="form-control" name="paymentType" value="{{payment.Payment_Type_Name}}"></td>
-                            <td><button type='submit' class="btn"><img src="{{url_for('static', filename='save-fill.svg')}}"></button></td>
-                        </form>
+                            <td><div class="d-flex flex-row">
+                                <div class="p-2">
+                                <button type='submit' class="btn"><img src="{{url_for('static', filename='save-fill.svg')}}"></button></form></div>
+                                <form action="{{ request.path }}" method="POST">
+                                    <input type="hidden" name="check" value="delPayType">
+                                    <input type="hidden" name="delPayTypeID" value="{{payment.Payment_Type_ID}}">
+                                    <div class="p-2">
+                                         <button type='submit' class='btn'><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button> </div></form>
+                                        </div>
+                            
+                            </td>
+                      
                     </tr>
                     {% endfor %}
                 </tbody>

@@ -191,8 +191,7 @@ class Product_Service(db.Model):
     Product_Service_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
     Product_Service = db.Column(db.String(50), nullable=False)
 
-    def __init__(self, Product_Service_ID, Product_Service):
-        self.Product_Service_ID = Product_Service_ID
+    def __init__(self, Product_Service):
         self.Product_Service = Product_Service
 #form created
 class State(db.Model):
