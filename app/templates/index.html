@@ -204,15 +204,9 @@
                     <input type="text" class="form-control" name="city" required>                                            
                     <label>Zip Code</label>
                     <input type="number" min="0" step="1" class="form-control" name="zip" required>
-                    <label>Employee Assignment</label>
-                    <select class="form-control" name="employee">
-                        <option disabled selected value> -- Select an option -- </option>
-                        {% for employee in employees %}
-                            <option value="{{employee.Emp_ID}}">{{employee.Emp_Last_Name}}</option>
-                        {% endfor %}
-                        </select>
+               
                     <label>State</label>
-                    <select class="form-control" name="state" value="1">
+                    <select class="form-control" name="state">
                         {% for state in stateList %}
                             <option value="{{state.State_ID}}">{{state.State_Name}}</option> 
                         {% endfor %}

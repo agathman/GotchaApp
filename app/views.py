@@ -42,7 +42,7 @@ def index():
         elif request.form['check'] == 'event':
             event = Event_Order(request.form['category'], request.form['customer'], request.form['status'], request.form['eventTime'], request.form['theme'], request.form['eventDesc'],
                         request.form['delivery'], request.form['setup'], request.form['location'], request.form['restrictions'], request.form['address'], request.form['city'],
-                        request.form['zip'], request.form['employeeAssignment'], request.form['state'], 'Due after event')
+                        request.form['zip'], None , request.form['state'], 'Due after event')
             db.session.add(event)
             db.session.commit()
     
