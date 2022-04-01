@@ -160,8 +160,7 @@ class Event_Status(db.Model):
 
     Event_Order = relationship('Event_Order', backref='Event_Status') 
 
-    def __init__(self, Event_Status_ID, Event_Status):
-        self.Event_Status_ID = Event_Status_ID
+    def __init__(self, Event_Status):
         self.Event_Status = Event_Status
 #form created
 class Payment(db.Model):

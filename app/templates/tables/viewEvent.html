@@ -41,7 +41,8 @@
                     <input type="hidden" name="check" value="orderLine">
                     <label>Vendor</label>
                     <select class="form-control" name="vendor">
-                    {% for vendor in vendors %}
+                <option disabled selected value> -- Select an option -- </option>
+                        {% for vendor in vendors %}
                         <option value="{{vendor.Vendor_ID}}">{{vendor.Vendor_Name}}</option> 
                         {% endfor %}
                     </select>
@@ -164,6 +165,9 @@
     <th>
         City
     </th>
+    <th>
+        Zip
+    </th>
     
 
 </thead>
@@ -179,6 +183,7 @@
     <td>{{ event.Event_Restriction_Desc }}</td>
     <td>{{ event.Event_Address }}</td>
     <td>{{ event.Event_City }}</td>
+    <td>{{ event.Event_Zip_Code}}</td>
     </tr>
 {% endfor %}
 </tbody>        
@@ -226,9 +231,14 @@
                 <td>
                     {{orderLine.Product_Service}}
                 </td>
-                <td><button type="submit" class="btn"><img src="{{url_for('static', filename='save-fill.svg')}}"></button></form>
-                    
-                    <button type="submit" class="btn"><img src="{{url_for('static', filename='trash3-fill.svg')}}"></td>
+                <td><div class="d-flex flex-row">
+                    <div class="p-2">
+                    <button type="submit" class="btn"><img src="{{url_for('static', filename='save-fill.svg')}}"></button></div></form>
+                    <form action = "{{ request.path }}" method = "POST">
+                        <input type="hidden" name="check" value="delOrderLineCheck">
+                        <input type="hidden" name="delOrderLineID" value="{{orderLine.Event_Order_Line_ID}}">
+                    <div class="p-2">
+                    <button type="submit" class="btn"><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button></div></form></td>
 
             </tr>
             {% endfor %}

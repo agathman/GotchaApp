@@ -25,7 +25,7 @@ def index():
         #Checks which form to add from
         if request.form['check'] == 'customer':
             customer = Customer(request.form['firstName'], request.form['lastName'], request.form['phone'],
-                        request.form['email'], request.form['address'], request.form['city'], request.form['zip'], request.form['date'], request.form['state'])
+                        request.form['email'], request.form['address'], request.form['city'], request.form['zip'], request.form['state'])
             db.session.add(customer)
             db.session.commit()
         #Form request to add appointment
@@ -42,7 +42,7 @@ def index():
         elif request.form['check'] == 'event':
             event = Event_Order(request.form['category'], request.form['customer'], request.form['status'], request.form['eventTime'], request.form['theme'], request.form['eventDesc'],
                         request.form['delivery'], request.form['setup'], request.form['location'], request.form['restrictions'], request.form['address'], request.form['city'],
-                        request.form['zip'], request.form['employeeAssignment'], request.form['state'], 'Due after event')
+                        request.form['zip'], None , request.form['state'], 'Due after event')
             db.session.add(event)
             db.session.commit()
     
@@ -71,6 +71,8 @@ def viewAppointment():
         .add_columns(Appointment.Appointment_ID, Customer.Customer_ID, Customer.First_Name, Customer.Last_Name, Customer.Phone, 
                         Customer.Email, Appointment.Datetime, Appointment.Event_Order_ID)\
         .order_by(Appointment.Datetime)
+    eventList = Event_Order.query.join(Customer, Event_Order.Customer_ID == Customer.Customer_ID)\
+        .add_columns(Event_Order.Event_Order_ID, Customer.First_Name, Customer.Last_Name)
 
     if request.method == 'POST':
         #date update
@@ -124,7 +126,7 @@ def viewAppointment():
 
 
 
-    return render_template('tables/appointment.html', appointments = appointmentList, customers = Customer.query.all(), events = Event_Order.query.all())
+    return render_template('tables/appointment.html', appointments = appointmentList, customers = Customer.query.all(), events = eventList)
 
 # CUSTOMER Create/View/Update
 
@@ -311,7 +313,12 @@ def viewEvent(eventID):
 
     if request.method == 'POST':
         if request.form['check'] == 'orderLine':
-            orderLine = Event_Order_Line(request.form['vendor'], request.form['status'], request.form['date'], eventID, request.form['service'])                       
+            vendorSelected = request.form['vendor']
+            if vendorSelected == 'None':
+                vendorAdded = None
+            else:
+                vendorAdded = vendorSelected
+            orderLine = Event_Order_Line(vendorAdded, request.form['status'], request.form['date'], eventID, request.form['service'])                       
             db.session.add(orderLine)
             db.session.commit()
 
@@ -366,6 +373,20 @@ def viewEvent(eventID):
                 flash('Delete Succesful')
                 return redirect(url_for('my_view.viewEventOrder'))
 
+        
+        if request.form['check'] == 'delOrderLineCheck':
+            delOrderLineID = request.form['delOrderLineID']
+            orderLineTobeDeleted = Event_Order_Line.query.get(delOrderLineID)
+            try:
+                db.session.delete(orderLineTobeDeleted)
+                db.session.flush()
+            except exc.IntegrityError:
+                    db.session.rollback()  
+                    flash('Delete is not possible for this record')
+                    return redirect(url_for('my_view.viewEventOrder'))
+            else:
+                db.session.commit()
+                return redirect(url_for('my_view.viewEvent', eventID = foundEventID))
             
 
 
@@ -443,7 +464,7 @@ def viewMisc():
     if request.method == 'POST':
 #UPDATE HANDLERS
 
-        if request.form['check'] == 'catCheck':
+        if request.form['check'] == 'updateCatCheck':
             categoryID = request.form['catID']
             category = Event_Category.query.get(categoryID)
             category.Event_Category_Name = request.form['category']
