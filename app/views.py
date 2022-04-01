@@ -93,9 +93,14 @@ def viewAppointment():
             db.session.commit()
         
         # Add Event to appointment
-        elif request.form['check'] == 'addEvent':
+        elif request.form['check'] == 'updateAppointment':
             appointmentFound = request.form['apptID'] 
             appointment = Appointment.query.get(appointmentFound)
+            updateDate = request.form['updateDate']
+            updateTime = request.form['updateTime']
+            updatedDateTime = updateDate + ' ' + updateTime
+            updateDateObj = datetime.strptime(updatedDateTime, '%Y-%m-%d %H:%M')
+            appointment.Datetime = updateDateObj
             appointment.Event_Order_ID = request.form['event']
             db.session.commit()
 

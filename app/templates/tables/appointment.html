@@ -113,9 +113,6 @@
                                 <th>
                                     Event Order
                                    </th>
-                            
-                               <th>  
-                                    </th>
                                     <th>
                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                                             Add Appointment
@@ -127,37 +124,68 @@
                                    {% for appointment in appointments %}
                                    <tr>
                                     
-                                        <input type="hidden" name="check" value="update">
+                                
+                                    
                                         <td>{{appointment.First_Name}} {{appointment.Last_Name}}</td>
-                                        <td><button type="button" class="btn btn-link" data-toggle="modal" data-target="#dateModal{{appointment.Appointment_ID}}">{{appointment.Datetime.strftime('%m-%d-%Y')}}</button></td>
-                                        <td>{{appointment.Datetime.strftime('%I:%M %p')}} </td>
+                                        <form action = "{{ request.path }}" method = "post">
+                                            
+                                        <input type="hidden" name="check" value="updateAppointment">
+                                        <input type="hidden" name="apptID" value="{{appointment.Appointment_ID}}">
+                                        <td><input type='date' class="form-control" value="{{appointment.Datetime.strftime('%Y-%m-%d')}}" name='updateDate'></td>
+                                        <td> <select class="form-control" name="updateTime" required>
+                                            <option value="{{appointment.Datetime.strftime('%H:%M')}}">{{appointment.Datetime.strftime('%I:%M %p')}}</option>
+                                            <option value="8:00">8:00 A.M</option>
+                                            <option value="8:30">8:30 A.M</option>
+                                            <option value="9:00">9:00 A.M</option>
+                                            <option value="9:00">9:30 A.M</option>
+                                            <option value="10:00">10:00 A.M</option>
+                                            <option value="10:30">10:30 A.M</option>
+                                            <option value="11:00">11:00 A.M</option>
+                                            <option value="11:30">11:30 A.M</option>
+                                            <option value="12:00">12:00 P.M</option>
+                                            <option value="12:30">12:30 P.M.</option>
+                                            <option value="13:00">1:00 P.M.</option>
+                                            <option value="13:30">1:30 P.M.</option>
+                                            <option value="14:00">2:00 P.M.</option>
+                                            <option value="14:30">2:30 P.M.</option>
+                                            <option value="15:00">3:00 P.M.</option>
+                                            <option value="15:30">3:30 P.M.</option>
+                                            <option value="16:00">4:00 P.M.</option>
+                                            <option value="16:30">4:30 P.M.</option>
+                                            <option value="17:00">5:00 P.M.</option>
+                                            <option value="17:30">5:30 P.M.</option>
+                                        </select>    
+                                             </td>
                                         <td> {% if appointment.Event_Order_ID != None %}
                                             <a href=/viewEvent/{{appointment.Event_Order_ID}}>View Event</a>
-                                            <td></td>
+                                            <input type="hidden" value="{{appointment.Event_Order_ID}}" name="event">
                                             {% else %}
-                                            <form action = "{{ request.path }}" method = "post">
-                                                <input type="hidden" name="check" value="addEvent">
-                                                <input type="hidden" name="apptID" value="{{appointment.Appointment_ID}}">
                                                 <select class="form-control" name="event">
                                                 <option disabled selected value> -- Select an Event -- </option>
                                                 {% for event in events %}
                                                 <option value="{{event.Event_Order_ID}}">ID: {{event.Event_Order_ID}} Customer: {{event.First_Name}} {{event.Last_Name}} </option> 
                                                 {% endfor %}
+                                                {% endif %}
                                             </select>
-                                            <td><input type='submit' class="btn btn-secondary" value="Save Event"></td>
+                                            <td>
+                                                <div class="d-flex flex-row">
+                                                <div class="p-2">
+                                                    <button type='submit' class='btn'><img src="{{url_for('static', filename='save-fill.svg')}}"></button>
+                                                </div>
                                             </form>
-                                            {% endif %}
+                                            
                                  <!-- Delete Form Start-->
                                             <form action ="{{ request.path }}" method = 'post'>
                                                 <!-- Hidden Field to validate which request to use in the route in views.py (name='check' value='Name to the request portion')-->
                                             <input type="hidden" name="check" value="deleteAppointment">
                                             <!-- Appointment ID to delete name='Name Field to the request in back end' value='the ID to the object you want to delete'-->
                                             <input type="hidden" name="delAppointmentID" value="{{appointment.Appointment_ID}}">
-                                        <td><button type="submit" class="btn"><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button></a></td>
+                                        <div class="p-2"><button type="submit" class="btn"><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button>
+                                        </div>
+                                    </div></td>
                                         </form>
                                     <!-- Delete END -->
-                                
-                                   </tr>                   
+                                 </tr>                   
                                         {% endfor %}
                                     </tbody>
                                         </table>
