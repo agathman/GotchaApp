@@ -36,9 +36,14 @@
             <div class="container py-2 text-center">
                 <div class="d-flex justify-content-start"> 
                     <h1 class="font-weight-bold px-2 py-4">Customers</h1>
+                    
                     </div>
-           
-    
+                    <div class="container text-left">
+                    <!-- Form Section. Delete if Unwanted -->
+                        Form Link: &nbsp; <textarea rows = "1" cols="37" name="formlink" value="https://forms.gle/ysBUEHA1uGV5rDE39" readonly>https://forms.gle/ysBUEHA1uGV5rDE39</textarea>
+                        &nbsp;&nbsp; <a href="https://docs.google.com/spreadsheets/d/11FHvhwfJ2aJPiQV-iCFEYHiK-9URhqE63f135jyFPB8/edit?usp=sharing">Form Submissions Sheet</a>
+                    <!-- End of Form Section -->
+                </div>
                     {% with messages = get_flashed_messages() %}
                     {% if messages %}
                        {% for message in messages %}
