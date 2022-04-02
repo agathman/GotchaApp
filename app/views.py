@@ -322,6 +322,12 @@ def viewEvent(eventID):
                 orderLine = Event_Order_Line(request.form['status'], request.form['date'], eventID, request.form['service'])                       
                 db.session.add(orderLine)
                 db.session.commit()
+        
+        if request.form['check'] == 'addVendorService':
+            vendorService = Vendor_Service(request.form['service'], request.form['vendor'], request.form['event'], request.form['status'], request.form['date'])
+            db.session.add(vendorService)
+            db.session.commit()
+
 
         if request.form['check'] == 'updateEvent':
 
@@ -355,6 +361,24 @@ def viewEvent(eventID):
                 orderLineFoundforUpdate.Event_Order_Status_ID = updateStatus
                 orderLineFoundforUpdate.Event_Order_Line_Date = dateFound
                 db.session.commit()
+            
+            return redirect(url_for('my_view.viewEvent', eventID = foundEventID))
+        
+        if request.form['check'] == 'updateVendorService':
+            vendorServiceID = request.form['venServiceID']
+            vendorServiceforUpdate = Vendor_Service.query.get(vendorServiceID)
+            currStatus = request.form['currStatus']
+            updateStatus = request.form['statusUpdate']
+            dateFound = request.form['date']
+            if updateStatus == '0':
+                vendorServiceforUpdate.Vendor_Service_Status_ID = currStatus
+                vendorServiceforUpdate.Vendor_Service_Line_Date = dateFound
+                db.session.commit()
+            else:
+                vendorServiceforUpdate.Vendor_Service_Status_ID = updateStatus
+                vendorServiceforUpdate.Vendor_Service_Line_Date = dateFound
+                db.session.commit()
+            
             return redirect(url_for('my_view.viewEvent', eventID = foundEventID))
            
 
@@ -388,51 +412,25 @@ def viewEvent(eventID):
             else:
                 db.session.commit()
                 return redirect(url_for('my_view.viewEvent', eventID = foundEventID))
+        
+        if request.form['check'] == 'delVendorService':
+            delVendorService = request.form['delVenServiceID']
+            vendorServiceFound = Vendor_Service.query.get(delVendorService)
+            try:
+                db.session.delete(vendorServiceFound)
+                db.session.flush()
+            except exc.IntegrityError:
+                    db.session.rollback()  
+                    flash('Delete is not possible for this record')
+                    return redirect(url_for('my_view.viewEvent', eventID = foundEventID))
+            else:
+                db.session.commit()
             
 
 
     return render_template('tables/viewEvent.html', vendorServices = vendorServiceList, categories = Event_Category.query.all(), events = eventOrder, orderLines = orderLines, vendors = Vendor.query.all(), statuses = Event_Status.query.all(), services = Product_Service.query.all(), employees = Employee.query.all())
 
 
-
-# EVENT UPDATE FUNCTIONS - Move to event detail route
-
-@my_view.route('/updateevent/<eventID>', methods=['GET', 'POST'])
-def updateEvent(eventID):
-
-# Multiple joins statement to provide IDs and descriptions for associated tables
-    eventOrder = Event_Order.query.filter_by(Event_Order_ID = eventID)\
-        .join(Event_Category, Event_Category.Event_Category_ID == Event_Order.Event_Category_ID)\
-        .join(Customer, Customer.Customer_ID == Event_Order.Customer_ID)\
-        .join(Event_Status, Event_Status.Event_Status_ID == Event_Order.Event_Order_Status_ID)\
-        .join(State, State.State_ID == Event_Order.State_ID)\
-        .join(Employee_Assignment, Employee_Assignment.Employee_Assignment_ID == Event_Order.Employee_Assignment_ID)\
-        .add_columns(Event_Order.Event_Order_ID, Event_Category.Event_Category_Name, Event_Order.Event_Category_ID, Customer.First_Name, Customer.Last_Name, Customer.Phone, Customer.Email, Event_Status.Event_Status, Event_Order.Event_Time, 
-        Event_Order.Event_Theme, Event_Order.Event_Order_Desc, Event_Order.Event_Delivery, Event_Order.Event_Setup, Event_Order.Event_Restriction_Desc, Event_Order.Event_Location_Name, Event_Order.Event_Address, Event_Order.Event_City,
-        State.State_Abbreviation, Event_Order.Event_Zip_Code)
-
-    if request.method == 'POST':
-        # Fields to be updated (Left side is table field right side is form field)
-            event = Event_Order.query.get(eventID)
-            event.Event_Category_ID = request.form['category']
-            event.Event_Status = request.form['status']
-            event.Event_Time = request.form['eventTime']
-            event.Event_Theme = request.form['theme']
-            event.Event_Order_Desc = request.form['eventDesc']
-            event.Event_Delivery = request.form['delivery']
-            event.Event_Setup = request.form['setup']
-            event.Event_Location_Name = request.form['location']
-            event.Event_Restriction_Desc = request.form['restrictions']
-            event.Event_Address = request.form['address']
-            event.Event_City = request.form['city']
-            event.Event_Zip_Code = request.form['zip']
-    
-            db.session.commit()
-            return redirect(url_for('my_view.viewEventOrder'))
-           
-
-    return render_template('update/updateEvent.html', eventCategory = Event_Category.query.all(), statuses = Event_Status.query.all(), selected = eventOrder)
-  
  # Temporary - ORDER LINE now viewable in EVENT DETAIL route
  #  
 @my_view.route('/EventOrderLine/<eventID>',  methods=['GET', 'POST'])
