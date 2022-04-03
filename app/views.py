@@ -777,3 +777,60 @@ def viewVendorService(vendorID):
         
     return render_template('tables/vendorService.html', vendorName = vendorName, vendors = Vendor.query.all(), vendorServices = vendorServiceList, statuses = Event_Status.query.all(), events = eventJoin)
 
+@my_view.route('/Reports', methods = ['GET', 'POST'])
+def viewReports():
+
+    events = Event_Order.query\
+        .join(Customer, Event_Order.Customer_ID == Customer.Customer_ID)\
+        .add_columns(Event_Order.Event_Order_ID, Customer.First_Name, Customer.Last_Name)
+    
+    if request.method == 'POST':
+        eventSelected = request.form['event']
+        return redirect(url_for('my_view.eventReport', eventID = eventSelected))
+
+
+
+    return render_template('tables/reports.html', events = events)
+
+@my_view.route('/eventReport/<eventID>')
+def eventReport(eventID):
+    event = Event_Order.query.filter_by(Event_Order_ID = eventID)\
+        .join(Customer, Event_Order.Customer_ID == Customer.Customer_ID)\
+        .join(Event_Status, Event_Order.Event_Order_Status_ID == Event_Status.Event_Status_ID)\
+        .join(Event_Category, Event_Order.Event_Category_ID == Event_Category.Event_Category_ID)\
+        .join(State, Event_Order.State_ID == State.State_ID)\
+        .add_columns(Event_Order.Event_Order_ID, Event_Order.Event_Address, Event_Order.Event_City,
+        Event_Order.Event_Delivery, Event_Order.Event_Location_Name, Event_Order.Event_Order_Desc,
+        Event_Order.Event_Restriction_Desc, Event_Order.Event_Setup, Event_Order.Event_Theme, Event_Order.Event_Time,
+        Customer.First_Name, Customer.Last_Name, Customer.Phone, Event_Status.Event_Status, Event_Category.Event_Category_Name, State.State_Abbreviation)
+
+    orderLines = Event_Order_Line.query.filter_by(Event_Order_ID = eventID)\
+        .join(Product_Service, Event_Order_Line.Product_Service_ID == Product_Service.Product_Service_ID)\
+        .join(Event_Status, Event_Order_Line.Event_Order_Status_ID == Event_Status.Event_Status_ID)\
+        .add_columns(Product_Service.Product_Service, Event_Status.Event_Status, Event_Order_Line.Event_Order_Line_Date)
+    
+    vendorServices = Vendor_Service.query.filter_by(Event_Order_ID = eventID)\
+        .join(Event_Status, Vendor_Service.Vendor_Service_Status_ID == Event_Status.Event_Status_ID)\
+        .add_columns(Vendor_Service.Vendor_Services, Vendor_Service.Date, Event_Status.Event_Status)
+
+    return render_template('reports/eventReport.html', events = event, orderLines = orderLines, vendorServices = vendorServices)
+
+@my_view.route('/appointmentReport')
+def appointmentReport():
+
+    AppointmentList = Appointment.query.join(Customer, Appointment.Customer_ID == Customer.Customer_ID)\
+        .add_columns(Customer.First_Name, Customer.Last_Name, Appointment.Datetime)\
+            .order_by(Appointment.Datetime)\
+            .filter(Appointment.Datetime >= date.today(), Appointment.Datetime <= (date.today() + timedelta(days=30)))
+    
+    return render_template('reports/appointmentReport.html', appointments = AppointmentList)
+
+@my_view.route('/eventListReport')
+def eventListReport():
+    CustomerList = Customer.query.join(Event_Order, Customer.Customer_ID == Event_Order.Customer_ID)\
+    .join(Event_Status, Event_Order.Event_Order_Status_ID == Event_Status.Event_Status_ID)\
+    .add_columns(Customer.First_Name, Customer.Last_Name, Event_Order.Event_Order_ID, Event_Status.Event_Status, Event_Order.Event_Time, Customer.Customer_ID)\
+    .order_by(Event_Order.Event_Time)\
+    .filter(Event_Order.Event_Time >= date.today(),Event_Order.Event_Time <= (date.today() + timedelta(days=30)))
+   
+    return render_template('reports/eventListReport.html', customers = CustomerList)

@@ -1,0 +1,150 @@
+{% extends "base.html" %}
+
+{% block active %}
+<a class="nav-link " href="/">Home</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/Appointments">Appointments</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/Customer">Customers</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/Employee">Employees</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/EventOrders">Event Orders</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/Payment">Payments</a> 
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/Vendor">Vendors</a>  
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="/Misc">Misc</a>
+    </li>
+<li class="nav-item">
+    <a class="nav-link active" href="/Reports">Reports</a>
+    </li>
+
+{% endblock %}
+
+{% block content %} 
+<div class="container-fluid text-center">          
+    <div class="p-5 mb-4 rounded-3">
+        <div class="container py-2">
+       
+        <div class="row">
+            <div class="col-10">
+                <h2 class='font-weight-bold text-left'>Event Report</h2>  
+
+                <table class="table">
+                    <thead>
+                        <th style="width: 20%">Customer</th>
+                        <th style="width: 20%">Phone</th>
+                        <th style="width: 20%">Event Date</th>
+                        <th>Location</th>
+                        <th style="width: 25%">Address</th>
+                        <th style="width: 20%">Status</th>
+                    </thead>
+                    <tbody>
+                        {% for event in events %}
+                        <tr>
+                        <td>{{event.First_Name}} {{event.Last_Name}}</td>
+                        <td>{{event.Phone}}</td>
+                        <td>{{event.Event_Time.strftime('%m-%d-%Y')}}</td>
+                        <td>{{event.Event_Location_Name}}</td>
+                        <td>{{event.Event_Address}} {{event.Event_City}}, {{event.State_Abbreviation}}</td>
+                        <td>{{event.Event_Status}}</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                    
+                </table>
+                </div>
+                <div class="col">
+
+                </div>
+                <div class="col">
+
+                </div>
+            </div>
+            <!-- Row 2 Details -->
+            <div class="row">
+                <div class="col-7">
+                    <table class="table">
+                        <thead>
+                            <th>Theme</th>
+                            <th>Description</th>
+                            <th>Delivery</th>
+                            <th>Setup</th>
+                            <th>Restrictions</th>
+                        </thead>
+                        {% for event in events %}
+                        <tr>
+                        <td>{{event.Event_Theme}}</td>
+                        <td>{{event.Event_Order_Desc}}</td>
+                        <td>{{event.Event_Delivery}}</td>
+                        <td>{{event.Event_Setup}}</td>
+                        <td>{{event.Event_Restriction_Desc}}</td>
+                        </tr>
+                        {% endfor %}
+
+                    </table>
+                </div>
+            </div>
+            <!-- Row 3 Order Lines-->
+            <div class="row py-2">
+                <div class="col">
+                    <span class="text-left font-weight-bold">Order Lines</span>
+                    <table class="table">
+                        <thead>
+                            <th>Service</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                        </thead>
+                        {% for orderLine in orderLines %}
+                            <tr>
+                                <td>{{orderLine.Product_Service}}</td>
+                                <td>{{orderLine.Event_Order_Line_Date}}</td>
+                                <td>{{orderLine.Event_Status}}</td>
+                            </tr>
+
+                        {% endfor %}
+                    </table>
+                </div>
+                <div class="col">
+                    {% if vendorServices %}
+                    <span class="font-weight-bold">Vendor Services</span>
+                    <table class="table">
+                        <thead>
+                            <th>Service</th>
+                            <th>Date</th>
+                            <th>Status</th>
+                        </thead>
+                        {% for vendorService in vendorServices %}
+                        <tr>
+                            <td>{{vendorService.Vendor_Services}}</td>
+                            <td>{{vendorService.Date}}</td>
+                            <td>{{vendorService.Event_Status}}</td>
+                        </tr>
+                        {% endfor %}
+                    </table>
+                {% endif %}
+                </div>
+                <div class="col">
+
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+            
+
+
+
+
+
+{% endblock %}

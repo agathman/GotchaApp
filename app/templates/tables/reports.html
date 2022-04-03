@@ -29,3 +29,66 @@
     </li>
 
 {% endblock %}
+
+{% block content %}
+<div class="container-fluid text-center">          
+    <div class="p-5 mb-4 rounded-3"> 
+        <div class="container py-2 text-center">
+            <div class="d-flex justify-content-start"> 
+                <h1 class="font-weight-bold px-2 py-4">Reports</h1>
+                </div>    
+
+
+                <!-- Row 1-->
+                <div class="row py-3">
+                        <div class="col-8">
+                            <table class="table">
+                                <thead>
+                                <th>
+                                Event Report
+                                </th>
+                                <form action ="{{ request.path }}" method = 'post'>
+                                <th><select class="form-control" name="event" required>
+                                <option disabled selected value>-- Please select an event --</option>
+                                {% for event in events %}
+                                    <option value="{{event.Event_Order_ID}}">{{event.Event_Order_ID}} {{event.First_Name}} {{event.Last_Name}}</option>
+                                    {% endfor %}
+    
+                                </select>
+                                </th>
+                             <th>
+                                <input type="submit" class="btn btn-secondary" value="View Report">
+                                </form></th>
+                                </thead>
+                                <thead>
+                            <th>Appointments in next 30 days</th>
+                            <th></th>
+                            <th><a href="/appointmentReport"><button class="btn btn-secondary">View Report</button></a>
+                                            </th>
+                                </thead>
+                                <thead>
+                                    <th>Events in the next 30 days</th>
+                                    <th></th>
+                                    <th><a href="/eventListReport"><button class="btn btn-secondary">View Report</button></a></th>
+                                </thead>
+                            </table>
+                            </div>
+                        <div class="col">
+
+                        </div>
+                        <div class="col">
+
+                        </div>
+                    
+
+                    </div>
+                            </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+{% endblock %}
