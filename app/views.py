@@ -784,13 +784,20 @@ def viewReports():
         .join(Customer, Event_Order.Customer_ID == Customer.Customer_ID)\
         .add_columns(Event_Order.Event_Order_ID, Customer.First_Name, Customer.Last_Name)
     
+    
+    
     if request.method == 'POST':
-        eventSelected = request.form['event']
-        return redirect(url_for('my_view.eventReport', eventID = eventSelected))
+        if request.form['check'] == 'event':
+            eventSelected = request.form['event']
+            return redirect(url_for('my_view.eventReport', eventID = eventSelected))
+        
+        if request.form['check'] == 'vendor':
+            vendorSelected = request.form['vendorSelected']
+            return redirect(url_for('my_view.viewVendorService', vendorID = vendorSelected))
 
 
 
-    return render_template('tables/reports.html', events = events)
+    return render_template('tables/reports.html', events = events, vendors = Vendor.query.all())
 
 @my_view.route('/eventReport/<eventID>')
 def eventReport(eventID):
@@ -813,7 +820,7 @@ def eventReport(eventID):
         .join(Event_Status, Vendor_Service.Vendor_Service_Status_ID == Event_Status.Event_Status_ID)\
         .add_columns(Vendor_Service.Vendor_Services, Vendor_Service.Date, Event_Status.Event_Status)
 
-    return render_template('reports/eventReport.html', events = event, orderLines = orderLines, vendorServices = vendorServices)
+    return render_template('reports/eventReport.html', events = event, orderLines = orderLines, vendorServices = vendorServices,)
 
 @my_view.route('/appointmentReport')
 def appointmentReport():
