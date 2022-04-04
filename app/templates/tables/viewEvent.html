@@ -100,11 +100,6 @@
         
             </div>
                 <div class="col-4">
-
-                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateEventModal">
-                        Update Event
-                    </button>
-                    <button type="button" class="btn px-2" data-toggle="modal" data-target="#deleteEvent"><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button>
                 </div>
                 
             </div>
@@ -130,6 +125,9 @@
                         <th style='width: 25%'>
                             Event Date
                         </th>
+                        <th>
+                    
+                    </th>
                         </thead>
                         <tbody>
                             {% for event in events %}
@@ -139,6 +137,14 @@
                             <td>{{ event.Phone }}</td>
                             <td>{{ event.Email }}</td>
                             <td>{{ event.Event_Time.strftime('%m-%d-%Y') }}</td>
+                            <td> <div class="d-flex flex-row">
+                                <div class="p-2">
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateEventModal">
+                                Update Event
+                            </button></div>
+                            <div class="p-2">
+                            <button type="button" class="btn px-2" data-toggle="modal" data-target="#deleteEvent"><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button>
+                            </div></td>
                             </tr>
                             {% endfor %}
                             </tbody>
