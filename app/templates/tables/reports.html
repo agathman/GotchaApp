@@ -84,7 +84,22 @@
             
                                         </select></th>
                                     <th>
-                                        <input type="submit" class="btn btn-secondary" value="View Report"></form></th>
+                                        <input type="submit" class="btn btn-secondary" value="View Report"></form>
+                                    </th>
+                                    </thead>
+                                    <thead>
+                                    <th>Employee Assignments</th>
+                                    <th><form action = "{{ request.path }}" method='post'>
+                                        <input type="hidden" name="check" value="employeeCheck">
+                                        <select class="form-control" name="employee">
+                                            <option selected disabled>-- Please select an employee --</option>
+                                            {% for employee in employees %}
+                                            <option value="{{employee.Emp_ID}}">{{employee.Emp_First_Name}} {{employee.Emp_Last_Name}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </th>
+                                    <th> <input type='submit' class='btn btn-secondary' value='View Report'></th>
+                                    </form></th>
                         
             
                                 </thead>

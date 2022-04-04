@@ -223,17 +223,6 @@ def viewEmployee():
  
     return render_template('tables/employee.html', employees = Employees, stateList = State.query.all() )
 
-# Employee assignment - Will be removed later 
-
-@my_view.route('/EmployeeAssignment')
-def viewEmployeeAssignment():
-    Employee_Assignment = Employee_Assignment.query.join(Employee, Employee_Assignment.Emp_ID == Employee.Emp_ID)\
-        .add_columns(Employee_Assignment.Employee_Assignment_ID, Employee_Assignment.Assignment_Start_Date,
-         Employee.Emp_ID)
-
-    return render_template('tables/employee_assignment.html')
-
-
 # EVENT ORDER - Create/View/Update
 
 @my_view.route('/EventOrders', methods = ['GET', 'POST'])
@@ -666,27 +655,15 @@ def viewPayment():
 
 # Payment type functions will be included in PAYMENT 
 
-@my_view.route('/PaymentType')
-def viewPaymentType():
-    Payment_Type = Payment_Type()\
-        .add_columns(Payment_Type.Payment_ID, Payment_Type.Payment_Type_ID)
-    return render_template('tables/payment_type.html', payment = Payment.query.all())
 
 # CREATE product services in misc page
 
-@my_view.route('/ProductService')
-def viewProductService():
-    Product_Service = Product_Service()\
-        .add_columns(Product_Service.Product_Service_ID, Product_Service.Product_Service)
-    return render_template('tables/product_service.html')
 
-# VENDOR Create/View - NEEDS UPDATE FUNCTIONALITY
+# VENDOR Create/View 
 @my_view.route('/Vendor', methods = ["GET" ,"POST"])
 def viewVendor():
    
-
-    
-         
+  
     vendorlist = Vendor.query.all()
 
         #Form request to add customer
@@ -797,10 +774,14 @@ def viewReports():
         if request.form['check'] == 'vendor':
             vendorSelected = request.form['vendorSelected']
             return redirect(url_for('my_view.viewVendorService', vendorID = vendorSelected))
+        
+        if request.form['check'] == 'employeeCheck':
+            employeeSelected = request.form['employee']
+            return redirect(url_for('my_view.viewEmployeeAssignment', employeeID = employeeSelected))
 
 
 
-    return render_template('tables/reports.html', events = events, vendors = Vendor.query.all())
+    return render_template('tables/reports.html', events = events, vendors = Vendor.query.all(), employees = Employee.query.all())
 
 @my_view.route('/eventReport/<eventID>')
 def eventReport(eventID):
@@ -829,7 +810,7 @@ def eventReport(eventID):
 def appointmentReport():
 
     AppointmentList = Appointment.query.join(Customer, Appointment.Customer_ID == Customer.Customer_ID)\
-        .add_columns(Customer.First_Name, Customer.Last_Name, Appointment.Datetime)\
+        .add_columns(Customer.First_Name, Customer.Last_Name, Customer.Email, Customer.Phone, Appointment.Datetime)\
             .order_by(Appointment.Datetime)\
             .filter(Appointment.Datetime >= date.today(), Appointment.Datetime <= (date.today() + timedelta(days=30)))
     
@@ -839,8 +820,23 @@ def appointmentReport():
 def eventListReport():
     CustomerList = Customer.query.join(Event_Order, Customer.Customer_ID == Event_Order.Customer_ID)\
     .join(Event_Status, Event_Order.Event_Order_Status_ID == Event_Status.Event_Status_ID)\
-    .add_columns(Customer.First_Name, Customer.Last_Name, Event_Order.Event_Order_ID, Event_Status.Event_Status, Event_Order.Event_Time, Customer.Customer_ID)\
+    .add_columns(Customer.First_Name, Customer.Last_Name, Customer.Email, Customer.Phone, Event_Order.Event_Order_ID, Event_Status.Event_Status, Event_Order.Event_Time, Customer.Customer_ID)\
     .order_by(Event_Order.Event_Time)\
     .filter(Event_Order.Event_Time >= date.today(),Event_Order.Event_Time <= (date.today() + timedelta(days=30)))
    
     return render_template('reports/eventListReport.html', customers = CustomerList)
+
+@my_view.route('/employeeAssignments/<employeeID>', methods = ['GET', 'POST'])
+def viewEmployeeAssignment(employeeID):
+
+    assignments = Employee_Assignment.query.filter_by(Employee_ID = employeeID)\
+        .join(Employee, Employee_Assignment.Employee_ID == Employee.Emp_ID)\
+        .join(Event_Order, Employee_Assignment.Event_Order_ID == Event_Order.Event_Order_ID)\
+        .join(Event_Status, Event_Order.Event_Order_Status_ID == Event_Status.Event_Status_ID)\
+        .add_columns(Employee.Emp_First_Name, Employee.Emp_Last_Name, Employee_Assignment.Event_Order_ID, Event_Order.Event_Time, 
+        Event_Order.Event_Order_Status_ID, Event_Status.Event_Status)\
+    
+    employeeName = Employee.query.get(employeeID)
+    
+
+    return render_template('reports/employeeAssignmentReport.html', employees = assignments, names = employeeName)

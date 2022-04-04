@@ -44,6 +44,12 @@
                         Customer Name
                     </th>
                     <th>
+                        Phone
+                    </th>
+                    <th>
+                        Email
+                    </th>
+                    <th>
                         Event Date
                     </th>
                     <th>Status</th>
@@ -56,6 +62,8 @@
                     {% if customer.Event_Status != 'Completed' %}
                     <tr>
                     <td>{{ customer.First_Name }} {{ customer.Last_Name }}</td>
+                    <td>{{ customer.Phone}}</td>
+                    <td>{{ customer.Email}} </td>
                         
                     <td>{{ customer.Event_Time.strftime('%m-%d-%Y') }}</td>
                     <td>{{ customer.Event_Status}} </td>
