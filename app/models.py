@@ -72,10 +72,12 @@ class Employee_Assignment(db.Model):
     Employee_Assignment_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
     Assignment_Start_Date = db.Column(db.Date)
     Employee_ID = db.Column(db.Integer, db.ForeignKey('Employee.Emp_ID'))
+    Event_Order_ID = db.Column(db.Integer, db.ForeignKey('Event_Order_ID'), nullable=False)
 
-    def __init__(self, Assignment_Start_Date, Employee_ID):
+    def __init__(self, Assignment_Start_Date, Employee_ID, Event_Order_ID):
         self.Assignment_Start_Date = Assignment_Start_Date
         self.Employee_ID = Employee_ID
+        self.Event_Order_ID = Event_Order_ID
 
 
 #form created
@@ -104,13 +106,12 @@ class Event_Order(db.Model):
     Event_City = db.Column(db.String(100), nullable=False)
     State_ID = db.Column(db.Integer, db.ForeignKey('State.State_ID'), nullable=False)
     Event_Zip_Code = db.Column(db.Integer, nullable=False)
-    Employee_Assignment_ID = db.Column(db.Integer, db.ForeignKey('Employee_Assignment.Employee_Assignment_ID'))
     Feedback = db.Column(db.Integer)
 
     
 
     def __init__(self, Event_Category_ID, Customer_ID, Event_Order_Status_ID, Event_Time, Event_Theme, Event_Order_Desc, Event_Delivery, Event_Setup, 
-                                Event_Location_Name, Event_Restriction_Desc, Event_Address, Event_City, Event_Zip_Code, Employee_Assignment_ID, State, Feedback):
+                                Event_Location_Name, Event_Restriction_Desc, Event_Address, Event_City, Event_Zip_Code, State, Feedback):
         # Defines representation for object
             
             self.Event_Category_ID = Event_Category_ID
@@ -127,7 +128,6 @@ class Event_Order(db.Model):
             self.Event_City = Event_City
             self.State_ID = State
             self.Event_Zip_Code = Event_Zip_Code
-            self.Employee_Assignment_ID = Employee_Assignment_ID
             self.Feedback = Feedback
             
 #form created
