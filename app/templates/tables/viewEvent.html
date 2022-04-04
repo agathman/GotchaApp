@@ -334,15 +334,15 @@
             <td>
                 {{orderLine.Product_Service}}
             </td>
-            <td><div class="d-flex flex-row">
+            <td><div class="d-flex justify-content-center">
                 <div class="p-2">
-                <button type="submit" class="btn"><img src="{{url_for('static', filename='save-fill.svg')}}"></button></div></form>
+                <button type="submit" class="btn"><img src="{{url_for('static', filename='save-fill.svg')}}"></button></div>
+            </form>
                 <form action = "{{ request.path }}" method = "POST">
                     <input type="hidden" name="check" value="delOrderLineCheck">
                     <input type="hidden" name="delOrderLineID" value="{{orderLine.Event_Order_Line_ID}}">
                 <div class="p-2">
-                <button type="submit" class="btn"><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button></div></form>
-           
+                <button type="submit" class="btn"><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button></div></div></form>
             </td>
         </tr>
         {% endfor %}
