@@ -110,7 +110,7 @@
                 <div class='col-10'> 
                     <table class='table'>
                         <thead class="thead-dark">
-                        <th>
+                        <th style='width: 15%'>
                             Event ID
                         </th>
                         <th>
@@ -126,7 +126,9 @@
                             Event Date
                         </th>
                         <th>
-                    
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateEventModal">
+                                Update Event
+                            </button>
                     </th>
                         </thead>
                         <tbody>
@@ -137,14 +139,9 @@
                             <td>{{ event.Phone }}</td>
                             <td>{{ event.Email }}</td>
                             <td>{{ event.Event_Time.strftime('%m-%d-%Y') }}</td>
-                            <td> <div class="d-flex flex-row">
-                                <div class="p-2">
-                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateEventModal">
-                                Update Event
-                            </button></div>
-                            <div class="p-2">
+                            <td> 
                             <button type="button" class="btn px-2" data-toggle="modal" data-target="#deleteEvent"><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button>
-                            </div></td>
+                            </td>
                             </tr>
                             {% endfor %}
                             </tbody>
