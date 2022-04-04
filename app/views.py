@@ -264,7 +264,7 @@ def viewEventOrder():
         elif request.form['check'] == 'event':
             event = Event_Order(request.form['category'], request.form['customer'], request.form['status'], request.form['eventTime'], request.form['theme'], request.form['eventDesc'],
                         request.form['delivery'], request.form['setup'], request.form['location'], request.form['restrictions'], request.form['address'], request.form['city'],
-                        request.form['zip'], None , request.form['state'], 'Due after event')
+                        request.form['zip'], request.form['state'], 'Due after event')
             db.session.add(event)
             db.session.commit()
             return redirect(url_for('my_view.viewEventOrder'))
@@ -297,11 +297,9 @@ def viewEvent(eventID):
         .join(Customer, Customer.Customer_ID == Event_Order.Customer_ID)\
         .join(Event_Status, Event_Status.Event_Status_ID == Event_Order.Event_Order_Status_ID)\
         .join(State, State.State_ID == Event_Order.State_ID)\
-        .outerjoin(Employee_Assignment, Event_Order.Employee_Assignment_ID == Employee_Assignment.Employee_Assignment_ID)\
-        .outerjoin(Employee, Employee_Assignment.Employee_ID == Employee.Emp_ID)\
         .add_columns(Event_Order.Event_Order_ID, Event_Category.Event_Category_Name, Event_Order.Event_Category_ID, Customer.First_Name, Customer.Last_Name, Customer.Phone, Customer.Email, Event_Order.Event_Order_Status_ID, Event_Status.Event_Status, Event_Order.Event_Time, 
         Event_Order.Event_Theme, Event_Order.Event_Order_Desc, Event_Order.Event_Delivery, Event_Order.Event_Setup, Event_Order.Event_Restriction_Desc, Event_Order.Event_Location_Name, Event_Order.Event_Address, Event_Order.Event_City,
-        State.State_Abbreviation, Event_Order.Event_Zip_Code, Employee.Emp_First_Name, Employee.Emp_Last_Name)
+        State.State_Abbreviation, Event_Order.Event_Zip_Code)
     
     orderLines = Event_Order_Line.query.filter_by(Event_Order_ID = eventID)\
         .join(Event_Order, Event_Order.Event_Order_ID == Event_Order_Line.Event_Order_ID)\
@@ -316,6 +314,13 @@ def viewEvent(eventID):
         .join(Event_Order, Vendor_Service.Event_Order_ID == Event_Order.Event_Order_ID)\
         .add_columns(Vendor_Service.Vendor_Service_ID, Vendor_Service.Vendor_Services, Vendor.Vendor_ID, Vendor.Vendor_Name,
         Vendor_Service.Date, Event_Order.Event_Order_ID, Vendor_Service.Vendor_Service_Status_ID, Event_Status.Event_Status_ID, Event_Status.Event_Status)
+    
+    empAssignmentList = Employee_Assignment.query.filter_by(Event_Order_ID = eventID)\
+        .join(Employee, Employee_Assignment.Employee_ID == Employee.Emp_ID)\
+        .add_columns(Employee.Emp_First_Name, Employee.Emp_Last_Name, Employee_Assignment.Assignment_Start_Date)
+        
+
+
 
     if request.method == 'POST':
         if request.form['check'] == 'orderLine':
@@ -428,7 +433,7 @@ def viewEvent(eventID):
             
 
 
-    return render_template('tables/viewEvent.html', vendorServices = vendorServiceList, categories = Event_Category.query.all(), events = eventOrder, orderLines = orderLines, vendors = Vendor.query.all(), statuses = Event_Status.query.all(), services = Product_Service.query.all(), employees = Employee.query.all())
+    return render_template('tables/viewEvent.html', employeeAssignments = empAssignmentList, vendorServices = vendorServiceList, categories = Event_Category.query.all(), events = eventOrder, orderLines = orderLines, vendors = Vendor.query.all(), statuses = Event_Status.query.all(), services = Product_Service.query.all(), employees = Employee.query.all())
 
 
  # Temporary - ORDER LINE now viewable in EVENT DETAIL route

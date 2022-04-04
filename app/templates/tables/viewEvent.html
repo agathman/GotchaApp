@@ -196,16 +196,9 @@
                 <select class="form-control" name="delivery" required>  
                     <option selected value="{{event.Event_Delivery}}">{{event.Event_Delivery}}</option>                                          
                     <option value="Yes">Yes</option>
-                    <option value="No">No</option>
-                   
+                    <option value="No">No</option>                 
                 </select>
-                <label>Employee Assignment</label>
-                <select class="form-control" name="employee">
-                    <option selected value="{{event.Employee_Assignment}}">{{event.Emp_First_Name}} {{event.Emp_Last_Name}} </option>
-                    {% for employee in employees %}
-                        <option value="{{employee.Emp_ID}}">{{employee.Emp_First_Name}} {{employee.Emp_Last_Name}}</option>
-                    {% endfor %}
-            </select>
+               
                 </div>
                 <div class="col">
                 <label>Setup</label>
@@ -296,8 +289,7 @@
 
 
 <div class="row py-4">
-    <div class="col-2"></div>
-    <div class="col-8">
+    <div class="col"> 
         <h3 class="font-weight-bold">Order Lines</h3>
 <table class="table">
     <thead class="thead-dark">
@@ -313,6 +305,7 @@
         <th> <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#OrderLineModal">
             Add Order Line
         </button> </th>
+        
     </thead>
     <tbody>
         {% for orderLine in orderLines %}
@@ -352,65 +345,91 @@
 
 </table>
 </div>
-<div class="col"></div>
+<div class="col">
+    <h3 class="font-weight-bold">Vendor Services</h3>
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <th>
+                Vendor
+            </th>
+            <th>
+                Service
+            </th>
+            <th>
+                Date
+            </th>
+            <th style="width: 21%">
+                Status
+            </th>
+            <th> <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addVendorServiceModal">
+                Add Service
+            </button> </th>
+        </thead>
+        <tbody>
+            {% for vendorService in vendorServices %}
+            <tr>
+                <td>{{vendorService.Vendor_Name}}</td>
+                <form action = "{{ request.path }}" method = "POST">
+                    <input type="hidden" name='check' value="updateVendorService">
+                    <input type="hidden" name='venServiceID' value="{{vendorService.Vendor_ID}}">
+                <td> 
+                   {{vendorService.Vendor_Services}}
+                </td>
+                <td><input type='date' class='form-control' name='date' value="{{vendorService.Date.strftime('%Y-%m-%d')}}"></td>
+                <td>
+                    <input type="hidden" name="currStatus" value="{{vendorService.Vendor_Service_Status_ID}}">
+                    <select class='form-control' name="statusUpdate">
+                        <option selected value="{{vendorService.Vendor_Service_Status_ID}}">{{vendorService.Event_Status}}</option>
+                        {% for status in statuses %}
+                        {% if status.Event_Status_ID != vendorService.Vendor_Service_Status_ID %}
+                        <option value="{{status.Event_Status_ID}}">{{status.Event_Status}}</option>
+                        {% endif %}
+                        {% endfor %}</td>
+                <td><div class="d-flex flex-row">
+                    <div class="p-2">
+                    <button type="submit" class="btn"><img src="{{url_for('static', filename='save-fill.svg')}}"></button></div></form>
+                    <form action = "{{ request.path }}" method = "POST">
+                        <input type="hidden" name="check" value="delVendorService">
+                        <input type="hidden" name="delVenServiceID" value="{{vendorService.Vendor_Service_ID}}">
+                    <div class="p-2">
+                    <button type="submit" class="btn"><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button></div></form></td>
+    
+            </tr>
+            {% endfor %}
+        </tbody>
+    
+    </table></div>
 </div>
 <!-- Vendor Service Row-->
 <div class="row">
     <div class="col">
     </div>
     <div class="col-8">
-        <h3 class="font-weight-bold">Vendor Services</h3>
+        <h3 class="font-weight-bold">Employees Assigned</h3>
         <table class="table table-striped">
             <thead class="thead-dark">
                 <th>
-                    Vendor
+                    Name
                 </th>
                 <th>
-                    Service
-                </th>
-                <th>
-                    Date
-                </th>
-                <th style="width: 21%">
-                    Status
-                </th>
-                <th> <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addVendorServiceModal">
+                    Date Assigned
+                </th>       
+                <th> <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addEmployeeAssignmentModal">
                     Add Service
                 </button> </th>
             </thead>
             <tbody>
-                {% for vendorService in vendorServices %}
+                {% for employeeAssignment in employeeAssignments %}
                 <tr>
-                    <td>{{vendorService.Vendor_Name}}</td>
-                    <form action = "{{ request.path }}" method = "POST">
-                        <input type="hidden" name='check' value="updateVendorService">
-                        <input type="hidden" name='venServiceID' value="{{vendorService.Vendor_ID}}">
+                    <td>{{employeeAssignment.Emp_First_Name}} {{employeeAssignment.Emp_Last_Name}}</td>
+                  
                     <td> 
-                       {{vendorService.Vendor_Services}}
+                       {{employeeAssignment.Assignment_Start_Date}}
                     </td>
-                    <td><input type='date' class='form-control' name='date' value="{{vendorService.Date.strftime('%Y-%m-%d')}}"></td>
-                    <td>
-                        <input type="hidden" name="currStatus" value="{{vendorService.Vendor_Service_Status_ID}}">
-                        <select class='form-control' name="statusUpdate">
-                            <option selected value="{{vendorService.Vendor_Service_Status_ID}}">{{vendorService.Event_Status}}</option>
-                            {% for status in statuses %}
-                            {% if status.Event_Status_ID != vendorService.Vendor_Service_Status_ID %}
-                            <option value="{{status.Event_Status_ID}}">{{status.Event_Status}}</option>
-                            {% endif %}
-                            {% endfor %}</td>
-                    <td><div class="d-flex flex-row">
-                        <div class="p-2">
-                        <button type="submit" class="btn"><img src="{{url_for('static', filename='save-fill.svg')}}"></button></div></form>
-                        <form action = "{{ request.path }}" method = "POST">
-                            <input type="hidden" name="check" value="delVendorService">
-                            <input type="hidden" name="delVenServiceID" value="{{vendorService.Vendor_Service_ID}}">
-                        <div class="p-2">
-                        <button type="submit" class="btn"><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button></div></form></td>
-        
+                    <td></td>
                 </tr>
                 {% endfor %}
-            </tbody>
-        
+            </tbody>       
         </table>
 
 
