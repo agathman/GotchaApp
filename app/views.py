@@ -754,19 +754,13 @@ def viewVendorService(vendorID):
             db.session.commit()
         # Update
         if request.form['check'] == 'updateVendorService':
+            
             vendorServiceID = request.form['venServiceID']
             vendorServiceforUpdate = Vendor_Service.query.get(vendorServiceID)
-            currStatus = request.form['currStatus']
-            updateStatus = request.form['statusUpdate']
-            dateFound = request.form['date']
-            if updateStatus == '0':
-                vendorServiceforUpdate.Vendor_Service_Status_ID = currStatus
-                vendorServiceforUpdate.Vendor_Service_Line_Date = dateFound
-                db.session.commit()
-            else:
-                vendorServiceforUpdate.Vendor_Service_Status_ID = updateStatus
-                vendorServiceforUpdate.Vendor_Service_Line_Date = dateFound
-                db.session.commit()
+            vendorServiceforUpdate.Vendor_Service_Status_ID = request.form['statusUpdate']
+            vendorServiceforUpdate.Date = request.form['date']
+            db.session.commit()
+            
             return redirect(url_for('my_view.viewVendorService', vendorID = foundVendorID)) 
             #Delete
         if request.form['check'] == 'delVendorService':
