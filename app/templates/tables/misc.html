@@ -32,26 +32,34 @@
 <div class="container-fluid text-center">          
     <div class="p-5 mb-4 rounded-3">
         <div class="row">
-            <div class="col-2">
+            <div class="col-4">
+                <div class="d-flex justify-content-start"> 
+                    <h1 class="font-weight-bold px-2 py-4">Miscellaneous</h1>
+                    </div>
     
         </div>
-        <div class="col"> 
-            <div class="d-flex justify-content-start"> 
-            <h1 class="font-weight-bold px-2 py-4">Miscellaneous</h1>
-            </div>
+        <div class="col-4"> 
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+               {% for message in messages %}
+               {% if message == 'Delete is not possible for this record' %}
+               <div class="alert alert-danger" role="alert">
+                {{ message }}
+                </div>
+                   {% else %}
+                   <div class="alert alert-success" role="alert">
+                    {{ message }}
+                    </div>
+                       {% endif %}
+                
+               {% endfor %}
+            {% endif %}
+         {% endwith %}
         </div> 
         <div class="col"></div>
         </div>
             <div class="container py-5 text-center">
-                {% with messages = get_flashed_messages() %}
-                    {% if messages %}
-                       {% for message in messages %}
-                       <div class="alert alert-danger" role="alert">
-                          {{ message }}
-                        </div>
-                       {% endfor %}
-                    {% endif %}
-                 {% endwith %}
+    
 <div class="row">
     <div clas="col">
        
@@ -162,7 +170,39 @@
     </div>
     <div class="row">
     <div class="col">
-       
+        <table class="table table-responsive">
+            <thead class="thead-dark">
+                <th>
+                    Payment Type
+                </th>
+                <th>  <button type="submit" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#payTypeModal">
+                    Add Payment Type
+                </button></th>
+            </thead>
+            <tbody>
+                {% for payment in payments %}
+                <tr>
+                    <form action="{{ request.path }}" method="POST">
+                        <input type="hidden" name="check" value="paymentCheck">
+                        <input type="hidden" name="paymentID" value="{{payment.Payment_Type_ID}}">
+                        <td><input type="text" class="form-control" name="paymentType" value="{{payment.Payment_Type_Name}}"></td>
+                        <td><div class="d-flex flex-row">
+                            <div class="p-2">
+                            <button type='submit' class="btn"><img src="{{url_for('static', filename='save-fill.svg')}}"></button></form></div>
+                            <form action="{{ request.path }}" method="POST">
+                                <input type="hidden" name="check" value="delPayType">
+                                <input type="hidden" name="delPayTypeID" value="{{payment.Payment_Type_ID}}">
+                                <div class="p-2">
+                                     <button type='submit' class='btn'><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button> </div></form>
+                                    </div>
+                        
+                        </td>
+                  
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+       <!--
         <table class="table table-responsive">
             <thead class="thead-dark">
                 <th>
@@ -194,40 +234,10 @@
                 {% endfor %}
             </tbody>
         </table>
+    -->
     </div>
     <div class="col">
-            <table class="table table-responsive">
-                <thead class="thead-dark">
-                    <th>
-                        Payment Type
-                    </th>
-                    <th>  <button type="submit" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#payTypeModal">
-                        Add Payment Type
-                    </button></th>
-                </thead>
-                <tbody>
-                    {% for payment in payments %}
-                    <tr>
-                        <form action="{{ request.path }}" method="POST">
-                            <input type="hidden" name="check" value="paymentCheck">
-                            <input type="hidden" name="paymentID" value="{{payment.Payment_Type_ID}}">
-                            <td><input type="text" class="form-control" name="paymentType" value="{{payment.Payment_Type_Name}}"></td>
-                            <td><div class="d-flex flex-row">
-                                <div class="p-2">
-                                <button type='submit' class="btn"><img src="{{url_for('static', filename='save-fill.svg')}}"></button></form></div>
-                                <form action="{{ request.path }}" method="POST">
-                                    <input type="hidden" name="check" value="delPayType">
-                                    <input type="hidden" name="delPayTypeID" value="{{payment.Payment_Type_ID}}">
-                                    <div class="p-2">
-                                         <button type='submit' class='btn'><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button> </div></form>
-                                        </div>
-                            
-                            </td>
-                      
-                    </tr>
-                    {% endfor %}
-                </tbody>
-            </table>
+            
         </div>
         </div>
     </div>

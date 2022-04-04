@@ -549,6 +549,7 @@ def viewMisc():
                 flash('Delete is not possible for this record')
                 return redirect(url_for('my_view.viewMisc'))
             else:
+                flash('Delete Succesful')
                 db.session.commit()
         
         if request.form['check'] == 'delStatus':
@@ -562,6 +563,7 @@ def viewMisc():
                 flash('Delete is not possible for this record')
                 return redirect(url_for('my_view.viewMisc'))
             else:
+                flash('Delete Succesful')
                 db.session.commit()
         
         if request.form['check'] == 'delProService':
@@ -575,6 +577,7 @@ def viewMisc():
                 flash('Delete is not possible for this record')
                 return redirect(url_for('my_view.viewMisc'))
             else:
+                flash('Delete Succesful')
                 db.session.commit()
         
         if request.form['check'] == 'delPayType':
@@ -588,6 +591,7 @@ def viewMisc():
                 flash('Delete is not possible for this record')
                 return redirect(url_for('my_view.viewMisc'))
             else:
+                flash('Delete Succesful')
                 db.session.commit()
 
         

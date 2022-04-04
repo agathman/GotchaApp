@@ -50,11 +50,11 @@
                  
                             <table class="table table-striped">
                                 <thead class="thead-dark">
-                                <th>
+                                    <th>
+                                        Event ID
+                                    </th>
+                                    <th>
                                     Customer Name
-                                </th>
-                                <th>
-                                    Event ID
                                 </th>
                                 <th>
                                     Phone Number  
@@ -76,8 +76,8 @@
                             <tbody>
                                 {% for event in events %}
                                 <tr>
+                                <td>{{ event.Event_Order_ID}}</td>    
                                 <td>{{ event.First_Name }} {{ event.Last_Name }}</td>
-                                <td>{{ event.Event_Order_ID}}</td>
                                 <td>{{ event.Phone }}</td>
                                 <td>{{ event.Email }}</td>
                                 <td>{{ event.Event_Time.strftime('%m-%d-%Y') }}</td>

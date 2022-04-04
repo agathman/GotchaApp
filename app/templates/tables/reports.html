@@ -52,7 +52,7 @@
                                 <th><select class="form-control" name="event" required>
                                 <option disabled selected value>-- Please select an event --</option>
                                 {% for event in events %}
-                                    <option value="{{event.Event_Order_ID}}">{{event.Event_Order_ID}} {{event.First_Name}} {{event.Last_Name}}</option>
+                                    <option value="{{event.Event_Order_ID}}">ID: {{event.Event_Order_ID}} || Customer: {{event.First_Name}} {{event.Last_Name}}</option>
                                     {% endfor %}
     
                                 </select>
