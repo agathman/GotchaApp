@@ -291,15 +291,16 @@
 <div class='col'></div>
 
 
-<div class="row py-4">
-    <div class="col"> 
+<div class="row">
+    <div class="col"></div>
+    <div class="col-6"> 
         <h3 class="font-weight-bold">Order Lines</h3>
-<table class="table">
+<table class="table table-striped">
     <thead class="thead-dark">
-        <th>
+        <th style="width: 15%">
             Date
         </th>
-        <th style="width: 21%">
+        <th style="width: 28%">
             Status
         </th>
         <th>
@@ -340,15 +341,19 @@
                     <input type="hidden" name="check" value="delOrderLineCheck">
                     <input type="hidden" name="delOrderLineID" value="{{orderLine.Event_Order_Line_ID}}">
                 <div class="p-2">
-                <button type="submit" class="btn"><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button></div></form></td>
-
+                <button type="submit" class="btn"><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button></div></form>
+           
+            </td>
         </tr>
         {% endfor %}
     </tbody>
-
 </table>
 </div>
-<div class="col">
+<div class="col"></div>
+</div>
+<div class="row">
+    <div class="col"></div>
+<div class="col-8">
     <h3 class="font-weight-bold">Vendor Services</h3>
     <table class="table table-striped">
         <thead class="thead-dark">
@@ -358,10 +363,10 @@
             <th>
                 Service
             </th>
-            <th>
+            <th style="width: 15">
                 Date
             </th>
-            <th style="width: 21%">
+            <th style="width: 24%">
                 Status
             </th>
             <th> <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addVendorServiceModal">
@@ -401,7 +406,9 @@
             {% endfor %}
         </tbody>
     
-    </table></div>
+    </table>
+</div>
+    <div class="col"></div>
 </div>
 <!-- Vendor Service Row-->
 <div class="row">
