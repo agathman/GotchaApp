@@ -462,30 +462,35 @@ def viewMisc():
             category = Event_Category.query.get(categoryID)
             category.Event_Category_Name = request.form['category']
             db.session.commit()
+            flash('Success: Record has been saved')
         
         if request.form['check'] == 'statCheck':
             statusID = request.form['statID']
             status = Event_Status.query.get(statusID)
             status.Event_Status = request.form['status']
             db.session.commit()
+            flash('Success: Record has been saved')
         
         if request.form['check'] == 'productCheck':
             productServiceID = request.form['productID']
             productService = Product_Service.query.get(productServiceID)
             productService.Product_Service = request.form['productService']
             db.session.commit()
+            flash('Success: Record has been saved')   
         
         if request.form['check'] == 'vendorCheck':
             vendorServiceID = request.form['vendorID']
             vendorService = Vendor_Service.query.get(vendorServiceID)
             vendorService.Vendor_Services = request.form['vendorService']
             db.session.commit()
+            flash('Success: Record has been saved')
 
         if request.form['check'] == 'paymentCheck':
             paymentTypeID = request.form['paymentID']
             paymentType = Payment_Type.query.get(paymentTypeID)
             paymentType.Payment_Type_Name = request.form['paymentType']
             db.session.commit()
+            flash('Success: Record has been saved')
 
 # ADDING/CREATION HANDLERS
 
@@ -493,27 +498,32 @@ def viewMisc():
             category = Event_Category(request.form['category'])
             db.session.add(category)
             db.session.commit()
+            flash('Success: Record has been added')
         # Service Form Handling
         
         if request.form['check'] == 'serviceCheck':
             service = Product_Service(request.form['service'])
             db.session.add(service)
-            db.session.commit() 
+            db.session.commit()
+            flash('Success: Record has been added')
         
         if request.form['check'] == 'statusCheck':
             status = Event_Status(request.form['status'])
             db.session.add(status)
             db.session.commit()
+            flash('Success: Record has been added')
         
         if request.form['check'] == 'vServiceCheck':
             vService = Vendor_Service(request.form['service'])
             db.session.add(vService)
             db.session.commit()
+            flash('Success: Record has been added')
             
         if request.form['check'] == 'payTypeCheck':
             payType = Payment_Type(request.form['payType'])
             db.session.add(payType)
             db.session.commit()
+            flash('Success: Record has been added')
 
 #DELETE HANDLERS
 
