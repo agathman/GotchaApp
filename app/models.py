@@ -101,12 +101,11 @@ class Event_Order(db.Model):
     Event_Delivery = db.Column(db.String (100), nullable=False)
     Event_Setup = db.Column(db.String (250), nullable=False)
     Event_Location_Name = db.Column(db.String(250), nullable=False)
-    Event_Restriction_Desc = db.Column(db.String(250), nullable=False)
+    Event_Restriction_Desc = db.Column(db.String(250), nullable=True)
     Event_Address = db.Column(db.String(250), nullable=False)
     Event_City = db.Column(db.String(100), nullable=False)
     State_ID = db.Column(db.Integer, db.ForeignKey('State.State_ID'), nullable=False)
     Event_Zip_Code = db.Column(db.Integer, nullable=False)
-    Feedback = db.Column(db.Integer)
 
     
 
