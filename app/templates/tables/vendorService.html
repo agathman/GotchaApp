@@ -29,9 +29,9 @@
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid text-center">          
+<div class="container-fluid">          
     <div class="p-5 mb-4 rounded-3"> 
-        <div class="container py-2 text-center">
+        <div class="container py-2">
             <div class="d-flex justify-content-start"> 
                 <h1 class="font-weight-bold px-2 py-4">{% for vendor in vendorName %}
                     <h2>Orders from {{vendor.Vendor_Name}}</h2>
@@ -93,7 +93,7 @@
                     {% endif %}
                     {% endfor %}
                 </select></td>
-            <td><div class="d-flex justify-content-center">
+            <td><div class="d-flex ">
                 <div class="p-2">
                 <button type="submit" class="btn"><img src="{{url_for('static', filename='save-fill.svg')}}"></button></div></form>
                 <form action = "{{ request.path }}" method = "POST">
