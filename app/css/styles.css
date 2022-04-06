@@ -6,3 +6,8 @@
 .navbar-custom {
     background-color:#ef9273;
 }
+
+.header {
+    position: sticky;
+    top:0;
+}
