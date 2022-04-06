@@ -68,12 +68,13 @@
                 <div class="col-5">
                 <label>Phone</label> <label style="color:red">*</label>
             
-                <input type="tel" class="form-control" name="phone" pattern="[(0-9)]{3}-[0-9]{3}-[0-9]{4}" required>
-                <small class="form-text">Format: 555-456-7890</small>
+                <input type="tel" class="form-control" name="phone" pattern="[(0-9)]{3}-[0-9]{3}-[0-9]{4}"  required>
+                <small class="form-text" text-muted>Format: 555-456-7890</small>
                 </div>
                 <div class="col">
                 <label>Email</label> <label style="color:red">*</label>
                 <input type="email" class="form-control" name="email" maxlength="250" required>
+                <small class="form-text" text-muted>Format: username@email.com</small>
                 </div>
                 </div>
                 <br>
@@ -196,7 +197,7 @@
                 <form action = "{{ request.path }}" method = "post">
                     <input type="hidden" name="check" value="event">   
                     <div class="row">
-                        <div class="col-4">
+                        <div class="col-3">
                             <label>Customer</label> <label style="color:red">*</label>
                     <select class="form-control" name="customer" required>
                         <option disabled selected>Select an option</option>
@@ -209,42 +210,36 @@
                         <label>Date</label> <label style="color:red">*</label>
                         <input type="date" class="form-control" name="eventTime" required>  
                         </div>
-                        </div>
-                    <div class="row">
-                        <div class="col-4">
+                        <div class="col-3">
                     <label>Theme</label> <label style="color:red">*</label>
                     <input type="text" class="form-control" name="theme">
                     </div>
-                    <div class="col-4">
+                    <div class="col-3">
                         <label>Venue</label> <label style="color:red">*</label>
                     <input type="text" class="form-control" name="location" required>
                     </div>
                     </div>
+                    <br>
                     <div class="row">
-                        <div class="col">
-                    </div>
-                </div>
-                <br>
-                    <div class="row">        
                         <div class="col-3">  
-                        <label>Category</label> <label style="color:red">*</label>
-                        <select class="form-control" name="category" required>
-                            <option disabled selected>Select a category</option>
-                            {% for category in eventCategory %}
-                            <option value="{{category.Event_Category_ID}}">{{category.Event_Category_Name}}</option>
-                            {% endfor %}
-                        </select>
+                            <label>Category</label> <label style="color:red">*</label>
+                            <select class="form-control" name="category" required>
+                                <option disabled selected>Select a category</option>
+                                {% for category in eventCategory %}
+                                <option value="{{category.Event_Category_ID}}">{{category.Event_Category_Name}}</option>
+                                {% endfor %}
+                            </select>
                         </div>
-                        <div class="col">                  
-                    <label>Order Status</label> <label style="color:red">*</label>
-                    <select class="form-control" name="status" required> 
-                        <option disabled selected>Select a status</option>                                          
-                        {% for status in statuses %}
-                            <option value="{{status.Event_Status_ID}}">{{status.Event_Status}}</option>
-                            {% endfor %}
-                         
-                        </select>
+                        <div class="col-3">                  
+                            <label>Order Status</label> <label style="color:red">*</label>
+                            <select class="form-control" name="status" required> 
+                                <option disabled selected>Select a status</option>                                          
+                                {% for status in statuses %}
+                                    <option value="{{status.Event_Status_ID}}">{{status.Event_Status}}</option>
+                                {% endfor %}    
+                            </select>
                         </div>
+      
                         <div class="col-3">
                     <label>Delivery</label> <label style="color:red">*</label>
                     <select class="form-control" name="delivery" required>                                            
@@ -262,7 +257,7 @@
                     </select>
                     </div>
                     </div>
-                    <br>
+                    
                     <br>
                     <div class="row">
                     
@@ -270,12 +265,10 @@
                     <label>Address</label> <label style="color: red">*</label>
                     <input type="text" class="form-control" name="address" required>
                     </div>
-                    <div class="col-4">
+                    <div class="col-3">
                     <label>City</label> <label style="color:red">*</label>
                     <input type="text" class="form-control" name="city" required>  
                     </div>
-                    </div>
-                    <div class="row">
                     <div class="col-2"> 
                         <label>State</label> <label style="color:red">*</label>
                     <select class="form-control" name="state">
@@ -290,18 +283,18 @@
                   
                     </div>
                     </div>
-                    <br>
+                    
                     <br>
                     <div class='row'>
                         <div class="col">   
                             <label>Event Description</label> <label style="color:red">*</label>
-                            <input type="text" class="form-control" name="eventDesc" required>  
+                            <textarea rows = "2" class="form-control" name="eventDesc" required></textarea>
                             </div>
                         </div>
                     <div class='row'>
                         <div class="col">  
                             <label>Restrictions</label>
-                            <input type="text" class="form-control" name="restrictions">
+                            <textarea rows = "2" class="form-control" name="restrictions"></textarea>
                             </div>
                             </div>
 
