@@ -44,17 +44,23 @@
                         &nbsp;&nbsp; <a href="https://docs.google.com/spreadsheets/d/11FHvhwfJ2aJPiQV-iCFEYHiK-9URhqE63f135jyFPB8/edit?usp=sharing">Form Submissions Sheet</a>
                     <!-- End of Form Section -->
                 </div>
-                    {% with messages = get_flashed_messages() %}
-                    {% if messages %}
-                       {% for message in messages %}
-                       <div class="d-flex justify-content-center">
-                       <div class="alert alert-danger" role="alert">
-                          {{ message }}
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                   {% for message in messages %}
+                   {% if message == 'Delete is not possible for this record' %}
+                   <div class="alert alert-danger" role="alert">
+                    {{ message }}
+                    </div>
+                       {% else %}
+                       <div class="alert alert-success" role="alert">
+                        {{ message }}
                         </div>
-                        </div>
-                       {% endfor %}
-                    {% endif %}
-                 {% endwith %}
+                           {% endif %}
+                    
+                   {% endfor %}
+                {% endif %}
+             {% endwith %}
+            
                                 <!-- Modal Button for Customer -->
                                   
                     <table class='table table-striped'>

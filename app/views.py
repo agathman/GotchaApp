@@ -28,6 +28,7 @@ def index():
                         request.form['email'], request.form['address'], request.form['city'], request.form['zip'], request.form['state'])
             db.session.add(customer)
             db.session.commit()
+            flash('Success! Customer Added')
         #Form request to add appointment
         elif request.form['check'] == 'appointment':
             timeStr = request.form['time']
@@ -38,6 +39,7 @@ def index():
             appointment = Appointment(request.form['customerID'], dateandtime)
             db.session.add(appointment)
             db.session.commit()
+            flash('Success! Appointment Added.')
         #Form request to add event
         elif request.form['check'] == 'event':
             event = Event_Order(request.form['category'], request.form['customer'], request.form['status'], request.form['eventTime'], request.form['theme'], request.form['eventDesc'],
@@ -45,6 +47,7 @@ def index():
                         request.form['zip'] , request.form['state'], 'Due after event')
             db.session.add(event)
             db.session.commit()
+            flash('Success! Event Added.')
     
     
     #Query to find customer names with associated events    
@@ -81,6 +84,7 @@ def viewAppointment():
             appointment = Appointment.query.get(appointmentFound)
             appointment.date = request.form['date']
             db.session.commit()
+            flash('Success! Appointment updated.')
         
         # new appointment
         elif request.form['check'] == 'newAppointment':
@@ -93,6 +97,7 @@ def viewAppointment():
             appointment = Appointment(request.form['customerID'], dateandtime)
             db.session.add(appointment)
             db.session.commit()
+            flash('Success! Appointment Added.')
         
         # Add Event to appointment
         elif request.form['check'] == 'updateAppointment':
@@ -105,6 +110,7 @@ def viewAppointment():
             appointment.Datetime = updateDateObj
             appointment.Event_Order_ID = request.form['event']
             db.session.commit()
+            flash('Success! Appointment updated.')
 
         # Delete Appoinment
         elif request.form['check'] == 'deleteAppointment':
@@ -119,6 +125,7 @@ def viewAppointment():
                 return redirect(url_for('my_view.viewAppointment'))
             else:
                 db.session.commit()
+                flash('Success! Appointment deleted.')
 
         
         
@@ -145,6 +152,7 @@ def viewCustomer():
                         request.form['email'], request.form['address'], request.form['city'], request.form['zip'], request.form['state'])
             db.session.add(customer)
             db.session.commit()
+            flash('Success! Customer added')
         
         if request.form['check'] == 'updateCustomer':
             customerID = request.form['customerID']
@@ -158,6 +166,7 @@ def viewCustomer():
             customerFound.Mailing_Zip = request.form['zip']
             customerFound.State_ID = request.form['state']
             db.session.commit()
+            flash('Success! Customer updated.')
         
         if request.form['check'] == 'deleteCustomer': 
             delCustomerID = request.form['deleteCustomerID']
@@ -187,6 +196,7 @@ def viewEmployee():
                                     request.form['phone'], request.form['email'], request.form['position'])
             db.session.add(employee)
             db.session.commit()
+            flash('Success! Employee added')
 
         elif request.form['check'] == 'updateEmployee':
             empID = request.form['employeeID']
@@ -201,6 +211,7 @@ def viewEmployee():
             employeeFound.Emp_Email = request.form['email']
             employeeFound.Emp_Position = request.form['position']
             db.session.commit()
+            flash('Success! Employee updated.')
         
         # Delete employee
         elif request.form['check'] == 'deleteEmployee':
@@ -240,22 +251,15 @@ def viewEventOrder():
     if request.method == 'POST':
         #Form request to add Category
         #Checks which form to add from
-        if request.form['check'] == 'catCheck':
-            category = Event_Category(request.form['category'])
-            db.session.add(category)
-            db.session.commit()
-        # Service Form Handling
-        elif request.form['check'] == 'serviceCheck':
-            service = Product_Service(request.form['service'])
-            db.session.add(service)
-            db.session.commit()           
+                
         # Event Form Handling
-        elif request.form['check'] == 'event':
+        if request.form['check'] == 'event':
             event = Event_Order(request.form['category'], request.form['customer'], request.form['status'], request.form['eventTime'], request.form['theme'], request.form['eventDesc'],
                         request.form['delivery'], request.form['setup'], request.form['location'], request.form['restrictions'], request.form['address'], request.form['city'],
                         request.form['zip'], request.form['state'], 'Due after event')
             db.session.add(event)
             db.session.commit()
+            flash('Success! Event added.')
             return redirect(url_for('my_view.viewEventOrder'))
         # Delete event
         elif request.form['check'] == 'deleteEventOrder':
@@ -316,11 +320,13 @@ def viewEvent(eventID):
                 orderLine = Event_Order_Line(request.form['status'], request.form['date'], eventID, request.form['service'])                       
                 db.session.add(orderLine)
                 db.session.commit()
+                flash('Success! Order Line added.')
         
         if request.form['check'] == 'addVendorService':
             vendorService = Vendor_Service(request.form['service'], request.form['vendor'], request.form['event'], request.form['status'], request.form['date'])
             db.session.add(vendorService)
             db.session.commit()
+            flash('Sucess! Vendor Service added.')
 
 
         if request.form['check'] == 'updateEvent':
@@ -339,6 +345,7 @@ def viewEvent(eventID):
             eventFound.Event_City = request.form['city']
             eventFound.Event_Zip_Code = request.form['zip']
             db.session.commit()
+            flash('Success! Event updated.')
         
         if request.form['check'] == 'updateOrderLine':
             orderLineID = request.form['orderLineID']
@@ -351,10 +358,12 @@ def viewEvent(eventID):
                 orderLineFoundforUpdate.Event_Order_Status_ID = currStatus
                 orderLineFoundforUpdate.Event_Order_Line_Date = dateFound
                 db.session.commit()
+                flash('Success! Order Line updated.')
             else:
                 orderLineFoundforUpdate.Event_Order_Status_ID = updateStatus
                 orderLineFoundforUpdate.Event_Order_Line_Date = dateFound
                 db.session.commit()
+                flash('Success! Order Line updated.')
             
             return redirect(url_for('my_view.viewEvent', eventID = foundEventID))
         
@@ -368,10 +377,12 @@ def viewEvent(eventID):
                 vendorServiceforUpdate.Vendor_Service_Status_ID = currStatus
                 vendorServiceforUpdate.Vendor_Service_Line_Date = dateFound
                 db.session.commit()
+                flash('Success! Vendor Service updated.')
             else:
                 vendorServiceforUpdate.Vendor_Service_Status_ID = updateStatus
                 vendorServiceforUpdate.Vendor_Service_Line_Date = dateFound
                 db.session.commit()
+                flash('Success! Vendor Service updated.')
             
             return redirect(url_for('my_view.viewEvent', eventID = foundEventID))
            
@@ -462,35 +473,36 @@ def viewMisc():
             category = Event_Category.query.get(categoryID)
             category.Event_Category_Name = request.form['category']
             db.session.commit()
-            flash('Success: Record has been saved')
+            flash('Success! Category updated.')
+            
         
         if request.form['check'] == 'statCheck':
             statusID = request.form['statID']
             status = Event_Status.query.get(statusID)
             status.Event_Status = request.form['status']
             db.session.commit()
-            flash('Success: Record has been saved')
+            flash('Success! Status updated')
         
         if request.form['check'] == 'productCheck':
             productServiceID = request.form['productID']
             productService = Product_Service.query.get(productServiceID)
             productService.Product_Service = request.form['productService']
             db.session.commit()
-            flash('Success: Record has been saved')   
+            flash('Success! Product Service updated.')
         
         if request.form['check'] == 'vendorCheck':
             vendorServiceID = request.form['vendorID']
             vendorService = Vendor_Service.query.get(vendorServiceID)
             vendorService.Vendor_Services = request.form['vendorService']
             db.session.commit()
-            flash('Success: Record has been saved')
+
 
         if request.form['check'] == 'paymentCheck':
             paymentTypeID = request.form['paymentID']
             paymentType = Payment_Type.query.get(paymentTypeID)
             paymentType.Payment_Type_Name = request.form['paymentType']
             db.session.commit()
-            flash('Success: Record has been saved')
+            flash('Success! Payment Type updated.')
 
 # ADDING/CREATION HANDLERS
 
@@ -498,32 +510,32 @@ def viewMisc():
             category = Event_Category(request.form['category'])
             db.session.add(category)
             db.session.commit()
-            flash('Success: Record has been added')
+            flash('Success! Category added.')
         # Service Form Handling
         
         if request.form['check'] == 'serviceCheck':
             service = Product_Service(request.form['service'])
             db.session.add(service)
-            db.session.commit()
-            flash('Success: Record has been added')
+            db.session.commit() 
+            flash('Success! Product Service added.')
         
         if request.form['check'] == 'statusCheck':
             status = Event_Status(request.form['status'])
             db.session.add(status)
             db.session.commit()
-            flash('Success: Record has been added')
+            flash('Success! Status added.')
         
         if request.form['check'] == 'vServiceCheck':
             vService = Vendor_Service(request.form['service'])
             db.session.add(vService)
             db.session.commit()
-            flash('Success: Record has been added')
+
             
         if request.form['check'] == 'payTypeCheck':
             payType = Payment_Type(request.form['payType'])
             db.session.add(payType)
             db.session.commit()
-            flash('Success: Record has been added')
+            flash('Success! Payment Type added.')
 
 #DELETE HANDLERS
 
@@ -597,14 +609,6 @@ def viewMisc():
             else:
                 flash('Delete Succesful')
                 db.session.commit()
-
-        
-
-        
-
-
-
-
     
     return render_template( 'tables/misc.html', categories = Event_Category.query.all(), statuses = Event_Status.query.all(), productServices = Product_Service.query.all(), 
                             vendorServices = Vendor_Service.query.all(), payments = Payment_Type.query.all())
@@ -612,7 +616,7 @@ def viewMisc():
 
 
 
-# PAYMENT - View/Create/Update needs delete
+# PAYMENT - View/Create/Update
 
 @my_view.route('/Payment', methods = ['GET', 'POST'])
 def viewPayment():
@@ -629,6 +633,7 @@ def viewPayment():
             addPayment = Payment(request.form['payType'], request.form['eventOrder'], request.form['initDate'], request.form['fullDate'])
             db.session.add(addPayment)
             db.session.commit()
+            flash('Success! Payment added.')
         
         elif request.form['check'] == 'updatePayment':
             paymentID = request.form['paymentID']
@@ -638,6 +643,7 @@ def viewPayment():
             paymentFound.Payment_Date_Init = request.form['initDate']
             paymentFound.Payment_Date_Full = request.form['fullDate']
             db.session.commit()
+            flash('Success! Payment updated.')
         
         # Delete payment
         elif request.form['check'] == 'deletePayment':
@@ -652,15 +658,10 @@ def viewPayment():
                     return redirect(url_for('my_view.viewPayment'))
             else:
                 db.session.commit()
+                flash('Success! Payment deleted.')
         
-
-
-
-
- 
             return redirect(url_for('my_view.viewPayment'))
-    
-    
+      
     return render_template('tables/payment.html', payments = payment, types = Payment_Type.query.all(), events = eventWithCustomer)
 
 # Payment type functions will be included in PAYMENT 
@@ -685,6 +686,7 @@ def viewVendor():
                        
             db.session.add(vendor)
             db.session.commit()
+            flash('Success! Vendor added.')
 
         elif request.form['check'] == 'updateVendor':
             vendorID = request.form['vendorID']
@@ -696,6 +698,7 @@ def viewVendor():
             vendorFound.Phone = request.form['phone']
             vendorFound.Email = request.form['email']
             db.session.commit()
+            flash('Success! Vendor updated')
         
         # Delete vendor
         elif request.form['check'] == 'deleteVendor':
@@ -710,6 +713,7 @@ def viewVendor():
                     return redirect(url_for('my_view.viewVendor'))
             else:
                 db.session.commit()
+                flash('Success! Vendor deleted.')
         
     return render_template('tables/vendor.html', vendors = vendorlist)
 
@@ -739,6 +743,7 @@ def viewVendorService(vendorID):
             vendorService = Vendor_Service(request.form['service'], request.form['vendor'], request.form['event'], request.form['status'], request.form['date'])
             db.session.add(vendorService)
             db.session.commit()
+            flash('Success! Vendor Service added.')
         # Update
         if request.form['check'] == 'updateVendorService':
             
@@ -747,6 +752,7 @@ def viewVendorService(vendorID):
             vendorServiceforUpdate.Vendor_Service_Status_ID = request.form['statusUpdate']
             vendorServiceforUpdate.Date = request.form['date']
             db.session.commit()
+            flash('Success! Vendor Service updated.')
             
             return redirect(url_for('my_view.viewVendorService', vendorID = foundVendorID)) 
             #Delete
@@ -761,7 +767,8 @@ def viewVendorService(vendorID):
                     flash('Delete is not possible for this record')
                     return redirect(url_for('my_view.viewVendorService', vendorID = foundVendorID))
             else:
-                db.session.commit()   
+                db.session.commit()  
+                flash('Success! Vendor Service deleted.') 
     
 
         

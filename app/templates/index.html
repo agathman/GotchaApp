@@ -343,6 +343,22 @@
             </div>
             <br>
             <br>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+               {% for message in messages %}
+               {% if message == 'Delete is not possible for this record' %}
+               <div class="alert alert-danger" role="alert">
+                {{ message }}
+                </div>
+                   {% else %}
+                   <div class="alert alert-success" role="alert">
+                    {{ message }}
+                    </div>
+                       {% endif %}
+                
+               {% endfor %}
+            {% endif %}
+         {% endwith %}
         
 
     <div class="row">
