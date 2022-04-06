@@ -179,14 +179,24 @@
                     <span aria-hidden="true">&times;</span>
                 </button>
                 </div>
-                <div class="modal-body">
+                <div class="modal-body"> 
+                    <label style="color:red">*</label> <label>Indicates required field</label> 
+                    <br>
                     <form action = "{{ request.path }}" method = "post">
-                        <input type="hidden" name="check" value="updateCustomer">
-                        <input type="hidden" name="customerID" value="{{customer.Customer_ID}}">
-                        <label>First Name</label>
-                        <input type="text" pattern="[A-Za-z]{1,250}" class="form-control" name="firstName" value="{{customer.First_Name}}" required>
-                        <label>Last Name</label> 
+                        <div class="row">
+                            <div class="col-5">
+                            <input type="hidden" name="check" value="updateCustomer">
+                            <input type="hidden" name="customerID" value="{{customer.Customer_ID}}">
+                            <label>First Name</label> <label style="color:red">*</label>
+                            <input type="text" pattern="[A-Za-z]{1,250}" class="form-control" name="firstName" value="{{customer.First_Name}}" required>
+                            </div>
+                            <div class="col">
+                            
+                        <label>Last Name</label> <label style="color:red">*</label>
                         <input type="text" pattern="[A-Za-z]{1,250}" class="form-control" name="lastName" value="{{customer.Last_Name}}" required>
+                            </div>
+                            </div>
+                
                         <label>Phone</label>
                         <input type="tel" class="form-control" name="phone" value="{{customer.Phone}}" pattern="[(0-9)]{3}-[0-9]{3}-[0-9]{4}" required>
                         <small>Format: 555-456-7890</small>
