@@ -226,6 +226,7 @@ def viewEmployee():
                     return redirect(url_for('my_view.viewEmployee'))
             else:
                 db.session.commit()
+                flash('Success! Employee deleted.')
 
 
 
@@ -310,7 +311,7 @@ def viewEvent(eventID):
     
     empAssignmentList = Employee_Assignment.query.filter_by(Event_Order_ID = eventID)\
         .join(Employee, Employee_Assignment.Employee_ID == Employee.Emp_ID)\
-        .add_columns(Employee.Emp_First_Name, Employee.Emp_Last_Name, Employee_Assignment.Assignment_Start_Date)
+        .add_columns(Employee_Assignment.Employee_Assignment_ID, Employee.Emp_First_Name, Employee.Emp_Last_Name, Employee_Assignment.Assignment_Start_Date)
         
 
 
@@ -346,6 +347,11 @@ def viewEvent(eventID):
             eventFound.Event_Zip_Code = request.form['zip']
             db.session.commit()
             flash('Success! Event updated.')
+        
+        if request.form['check'] == 'addEmployeeAssign':
+            employee = Employee_Assignment(date.today(), request.form['employeeID'], foundEventID)
+            db.session.add(employee)
+            db.session.commit()
         
         if request.form['check'] == 'updateOrderLine':
             orderLineID = request.form['orderLineID']
@@ -415,6 +421,7 @@ def viewEvent(eventID):
                     flash('Delete is not possible for this record')
                     return redirect(url_for('my_view.viewEventOrder'))
             else:
+                flash('Success! Order line deleted')
                 db.session.commit()
                 return redirect(url_for('my_view.viewEvent', eventID = foundEventID))
         
@@ -429,7 +436,26 @@ def viewEvent(eventID):
                     flash('Delete is not possible for this record')
                     return redirect(url_for('my_view.viewEvent', eventID = foundEventID))
             else:
+                flash('Success! Service deleted.')
                 db.session.commit()
+                return redirect(url_for('my_view.viewEvent', eventID = foundEventID))
+        
+        if request.form['check'] == 'delEmployeeAssign':
+            delEmployeeID = request.form['delEmployeeID']
+            employeeRemoved = Employee_Assignment.query.get(delEmployeeID)
+            try:
+                db.session.delete(employeeRemoved)
+                db.session.flush()
+            except exc.IntegrityError:
+                db.session.rollback()
+                flash('Delete is not possible for this record')
+                return redirect(url_for('my_view.viewEvent', eventID = foundEventID))
+            else:
+                flash('Success! Employee removed.')
+                db.session.commit()
+                return redirect(url_for('my_view.viewEvent', eventID = foundEventID))
+
+
             
 
 
@@ -683,10 +709,11 @@ def viewVendor():
         if request.form['check'] == 'addVendor':
             vendor = Vendor(request.form['vendorName'], request.form['vendorDesc'],request.form['firstName'],
                 request.form['lastName'],request.form['phone'],request.form['email'])
-                       
             db.session.add(vendor)
             db.session.commit()
             flash('Success! Vendor added.')
+            return redirect(url_for('my_view.viewVendor'))
+
 
         elif request.form['check'] == 'updateVendor':
             vendorID = request.form['vendorID']

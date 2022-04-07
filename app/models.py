@@ -72,7 +72,7 @@ class Employee_Assignment(db.Model):
     Employee_Assignment_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
     Assignment_Start_Date = db.Column(db.Date)
     Employee_ID = db.Column(db.Integer, db.ForeignKey('Employee.Emp_ID'))
-    Event_Order_ID = db.Column(db.Integer, db.ForeignKey('Event_Order_ID'), nullable=False)
+    Event_Order_ID = db.Column(db.Integer, db.ForeignKey('Event_Order.Event_Order_ID'), nullable=False)
 
     def __init__(self, Assignment_Start_Date, Employee_ID, Event_Order_ID):
         self.Assignment_Start_Date = Assignment_Start_Date

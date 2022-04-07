@@ -432,8 +432,8 @@
                 <th>
                     Date Assigned
                 </th>       
-                <th> <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addEmployeeAssignmentModal">
-                    Add Service
+                <th> <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addEmployeeAssignModal">
+                    Add Employee
                 </button> </th>
             </thead>
             <tbody>
@@ -444,7 +444,10 @@
                     <td> 
                        {{employeeAssignment.Assignment_Start_Date}}
                     </td>
-                    <td></td>
+                    <td><form action = "{{ request.path }}" method = "POST">
+                        <input type="hidden" name="check" value="delEmployeeAssign">
+                        <input type="hidden" name="delEmployeeID" value="{{employeeAssignment.Employee_Assignment_ID}}">
+                    <button type="submit" class="btn"><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button></form></td>
                 </tr>
                 {% endfor %}
             </tbody>       
@@ -458,7 +461,7 @@
 </div>
 </div>
 </div>
-<!-- Vendor Service Modal-->
+
 <div class="modal fade" id="deleteEvent" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -519,6 +522,51 @@
                             </select>
                         <label>Date</label>
                         <input type="date" name="date" class="form-control">           
+        
+                    
+                </div>
+                <div class="modal-footer">
+                    <input type='submit' class="btn btn-secondary" value="Save">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </form>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="addEmployeeAssignModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="addEmployeeAssignModal">New Employee Assignment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    <form action = "{{ request.path }}" method = "POST">
+                        <input type="hidden" name="check" value="addEmployeeAssign">
+                        <div class="row">
+                            <div class="col">
+                        <label style="color:red">*</label> <label>Indicates required field</label> 
+                                </div>
+                            </div>
+                            <br>
+                        <div class="row">
+                            <div class="col-8">
+                                <label>Employee</label> <label style="color:red">*</label>
+                        <select class="form-control" name="employeeID">
+                        {% for employee in employees %}
+                            <option value="{{employee.Emp_ID}}">{{employee.Emp_First_Name}} {{employee.Emp_Last_Name}}</option> 
+                            {% endfor %} 
+                        </select>
+                                </div>
+                            <div class="col">
+                        
+                        </div>                     
+                      
+                        <div class="col"></div>
+                        </div>       
         
                     
                 </div>

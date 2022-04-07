@@ -193,6 +193,7 @@
             <div class="modal-body">
                 <form action = "{{ request.path }}" method = "post">
                     <input type="hidden" name="check" value="updateEmployee">
+                    <input type="hidden" name="employeeID" value="{{employee.Emp_ID}}">
                     <label>First Name</label>
                     <input type="text" pattern="[A-Za-z]{1,250}" class="form-control" name="firstName" value="{{employee.Emp_First_Name}}" maxlength="250" required>
                     <label>Last Name</label> 
