@@ -54,7 +54,7 @@
                 
                 
                     
-                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -66,6 +66,10 @@
                             <div class="modal-body">
                                 <label style="color:red">*</label> <label>Indicates required field</label> 
                                 <div class="row">
+<<<<<<< HEAD
+=======
+                                    <div class="col-5">
+>>>>>>> 1eef109f303a737ece799f53e9449b0e885afe6e
                                 <form action = "{{ request.path }}" method = "post">
                                     
                                     <input type="hidden" name="check" value="newAppointment">
@@ -76,13 +80,22 @@
                                         {% for customer in customers %}
                                             <option value="{{customer.Customer_ID}}">{{customer.First_Name}} {{customer.Last_Name}} </option> 
                                             {% endfor %}
+                                        
                                         </select>
+<<<<<<< HEAD
                                         </div>
                                     </div>
                                     <br>
                                     <div class="row">
                                         <div class="col">
                                         <label>Appointment Date</label>  <label style="color:red">*</label>
+=======
+                                    </div>
+                                </div>
+                                        <div class="row">
+                                            <div class="col-5">
+                                        <label>Date</label>
+>>>>>>> 1eef109f303a737ece799f53e9449b0e885afe6e
                                         <input type="date" name="date" class="form-control" required>
                                         </div>
                                         <div class="col">
@@ -110,8 +123,13 @@
                                             <option value="17:30">5:30 P.M.</option>
                                         </select>                                     
                                 </div>
+<<<<<<< HEAD
                                 </div>
                                 </div>
+=======
+                            </div>
+                        </div>
+>>>>>>> 1eef109f303a737ece799f53e9449b0e885afe6e
                             <div class="modal-footer">
                                 <input type='submit' class="btn btn-secondary" value="Save">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
