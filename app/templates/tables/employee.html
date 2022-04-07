@@ -144,30 +144,60 @@
                 <div class="modal-body">
                     <form action = "{{ request.path }}" method = "post">
                         <input type="hidden" name="check" value="addEmployee">
-                        <label>First Name</label>
+                        <label style="color:red">*</label> <label>Indicates required field</label> 
+                        <div class="row">
+                            <div class="col">
+                        
+                        <input type="hidden" name="employeeID">
+                        <label>First Name</label> <label style="color:red">*</label>
                         <input type="text" pattern="[A-Za-z]{1,250}" class="form-control" name="firstName" maxlength="250" required>
-                        <label>Last Name</label> 
+                        </div>
+                        <div class="col">
+                        <label>Last Name</label> <label style="color:red">*</label>
                         <input type="text" pattern="[A-Za-z]{1,250}" class="form-control" name="lastName" maxlength="250" required>
-                        <label>Address</label>
-                        <input type="text" pattern="[A-Za-z0-9 ]{1,250}" class="form-control" name="address" maxlength="250" required>
-                        <label>City</label>
-                        <input type="text" pattern="[A-Za-z]{1,250}" class="form-control" name="city" maxlength="250" required>
-                        <label>State</label>
+                        </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
+                                <label>Phone</label> <label style="color:red">*</label>
+                                <input type="tel" class="form-control" name="phone" pattern="[(0-9)]{3}-[0-9]{3}-[0-9]{4}" required>
+                                    <small>Format: 555-456-7890</small>
+                                    </div>
+                            <div class="col">
+                                <label>Email</label> <label style="color:red">*</label>
+                                <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" class="form-control" name="email" maxlength="250" required> 
+                                <small class="form-text" text-muted>Format: username@email.com</small> 
+                            </div>
+                        </div>
+                        <br>
+                        <label>Position</label> <label style="color:red">*</label>
+                        <input type="text" pattern="[A-Za-z ]{1,250}" class="form-control" name="position" required>
+                        <br>
+                        <div class="row">
+                            <div class="col">
+                        <label>Address</label> <label style="color:red">*</label>
+                        <input type="text"  pattern="[A-Za-z0-9 ]{1,250}" class="form-control" name="address" maxlength="250" required>
+                        </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-5">
+                        <label>City</label> <label style="color:red">*</label>
+                        <input type="text"  pattern="[A-Za-z]{1,250}" class="form-control" name="city" maxlength="250" required>
+                        </div>
+                            <div class="col-3">
+                        <label>State</label> <label style="color:red">*</label>
                         <select class="form-control" name="state">
+                            <option selected disabled></option>
                             {% for state in stateList %}
                                 <option value="{{state.State_ID}}">{{state.State_Name}}</option> 
                             {% endfor %}
                         </select>
-                        <label>Zip Code</label>
+                        </div>
+                        <div class="col-3">
+                        <label>Zip Code</label> <label style="color:red">*</label>
                         <input type="text" pattern="[(0-9)]{1,5}" maxlength="10"  class="form-control" name="zip" input required >
-                        <label>Phone</label>
-                        <input type="tel" class="form-control" name="phone" pattern="[(0-9)]{3}-[0-9]{3}-[0-9]{4}" required>
-                        <small>Format: 555-456-7890</small>
-                        <br>
-                        <label>Email</label>
-                        <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" class="form-control" name="email" maxlength="250" required>                    
-                        <label>Position</label>
-                        <input type="text" pattern="[A-Za-z ]{1,250}" class="form-control" name="position" required>
+                        </div>
+                        </div>              
                         
                 </div>
                 <div class="modal-footer">
@@ -193,9 +223,10 @@
             <div class="modal-body">
                 <label style="color:red">*</label> <label>Indicates required field</label> 
                 <form action = "{{ request.path }}" method = "post">
+                    <input type="hidden" name="check" value="updateEmployee">
                     <div class="row">
                         <div class="col">
-                    <input type="hidden" name="check" value="updateEmployee">
+                    
                     <input type="hidden" name="employeeID" value="{{employee.Emp_ID}}">
                     <label>First Name</label> <label style="color:red">*</label>
                     <input type="text" pattern="[A-Za-z]{1,250}" class="form-control" name="firstName" value="{{employee.Emp_First_Name}}" maxlength="250" required>
