@@ -3,7 +3,7 @@
      {% block content %}
      <div class="container">
             <div class="p-5 mb-4 bg-light rounded-3">
-                <div class="container-fluid py-5 text-center">
+                <div class="container-fluid py-5">
                     <div class="row justify-content-center">
                                 <h1 class="display-5 fw-bold">Order Line</h1>
                         </div>
@@ -12,12 +12,20 @@
                         {% with messages = get_flashed_messages() %}
                         {% if messages %}
                            {% for message in messages %}
+                           {% if message == 'Delete is not possible for this record' %}
                            <div class="alert alert-danger" role="alert">
-                              {{ message }}
+                            {{ message }}
                             </div>
+                               {% else %}
+                               <div class="alert alert-success" role="alert">
+                                {{ message }}
+                                </div>
+                                   {% endif %}
+                            
                            {% endfor %}
                         {% endif %}
                      {% endwith %}
+                    
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#OrderLineModal">
                                 Add Order Line
                             </button>

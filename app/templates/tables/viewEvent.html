@@ -23,6 +23,9 @@
 <li class="nav-item">
     <a class="nav-link" href="/Misc">Misc</a>
     </li>
+<li class="nav-item">
+    <a class="nav-link" href="/Reports">Reports</a>
+    </li>
 {% endblock %}
 
 
@@ -39,12 +42,6 @@
             <div class="modal-body">
                 <form action = "{{ request.path }}" method = "POST">
                     <input type="hidden" name="check" value="orderLine">
-                    <label>Vendor</label>
-                    <select class="form-control" name="vendor">
-                    {% for vendor in vendors %}
-                        <option value="{{vendor.Vendor_ID}}">{{vendor.Vendor_Name}}</option> 
-                        {% endfor %}
-                    </select>
                     <label>Status</label>
                     <select class="form-control" name="status" required>                                           
                         {% for status in statuses %}
@@ -70,54 +67,77 @@
         </div>
         </div>
     </div>
-     <div class="container-fluid text-center">          
+    
+    <!-- Start of View -->
+    <div class="container-fluid">          
         <div class="p-5 mb-4 rounded-3">
+            <div class="container py-2">
+           
             <div class="row">
-                
                 <div class="col">
-                              
+                    <h2 class='font-weight-bold text-left'>Event Details</h2>   
               </div>
+              <div class="col"></div>
+              <div class="col"></div>
+              </div>
+              <div class="row">
+                <div class="col"></div>
+                
                
                
-                <div class="col-6"><h3 class='font-weight-bold text-left'>Event</h3>
+                <div class="col">
+                    
                     {% with messages = get_flashed_messages() %}
                     {% if messages %}
                        {% for message in messages %}
+                       {% if message == 'Delete is not possible for this record' %}
                        <div class="alert alert-danger" role="alert">
-                          {{ message }}
+                        {{ message }}
                         </div>
+                           {% else %}
+                           <div class="alert alert-success" role="alert">
+                            {{ message }}
+                            </div>
+                               {% endif %}
+                        
                        {% endfor %}
                     {% endif %}
                  {% endwith %}
-                </div> 
-
-                <div class="col-4"><h3 class="px-2 font-weight-bold">Order Lines</h3></div>
+                
+                
+        
+            </div>
+                <div class="col-4">
+                </div>
+                
             </div>
     <div class="row">
             <div class="col">
 
     </div>
-                <div class='col-6'> 
-                    <table class='table py-2'>
+                <div class='col-10'> 
+                    <table class='table'>
                         <thead class="thead-dark">
-                        <th>
+                        <th style='width: 15%'>
                             Event ID
                         </th>
                         <th>
                             Customer
                         </th>
-                        <th>
+                        <th style='width: 25%'>
                             Phone Number  
                         </th>       
                         <th>
                             Email
                         </th>
-                        <th>
+                        <th style='width: 25%'>
                             Event Date
                         </th>
                         <th>
-                            Employee Assigned
-                        </th>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateEventModal">
+                                Update Event
+                            </button>
+                    </th>
                         </thead>
                         <tbody>
                             {% for event in events %}
@@ -127,7 +147,9 @@
                             <td>{{ event.Phone }}</td>
                             <td>{{ event.Email }}</td>
                             <td>{{ event.Event_Time.strftime('%m-%d-%Y') }}</td>
-                            <td>{{ event.Emp_First_Name }} {{ event.Emp_Last_Name }}</td>
+                            <td> 
+                            <button type="button" class="btn px-2" data-toggle="modal" data-target="#deleteEvent"><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button>
+                            </td>
                             </tr>
                             {% endfor %}
                             </tbody>
@@ -135,113 +157,11 @@
                             
             
                 
-<table class="table table-bordered">
-<thead class="thead-light">
-    <th>
-        Status
-    </th>
-    <th>
-        Theme
-    </th>
-    <th>
-        Order Description
-    </th>
-    <th>
-        Delivery
-    </th>
-    <th>
-        Setup
-    </th>
-    <th>
-        Location
-    </th>
-    <th>
-        Restrictions
-    </th>
-    <th>
-        Address
-    </th>
-    <th>
-        City
-    </th>
-    
 
-</thead>
-<tbody>
-    {% for event in events %}
-    <tr>
-    <td>{{ event.Event_Status}}</td>
-    <td>{{ event.Event_Theme }}</td>
-    <td>{{ event.Event_Order_Desc }}</td>
-    <td>{{ event.Event_Setup }}</td>
-    <td>{{ event.Event_Delivery }}</td>
-    <td>{{ event.Event_Location_Name }}</td>
-    <td>{{ event.Event_Restriction_Desc }}</td>
-    <td>{{ event.Event_Address }}</td>
-    <td>{{ event.Event_City }}</td>
-    </tr>
-{% endfor %}
-</tbody>        
-</table>
 </div>
-<div class="col-4">
-    
-    <table class="table table-responsive">
-        <thead class="thead-light">
-            <th>Vendor</th>
-            <th>
-                Date
-            </th>
-            <th>
-                Status
-            </th>
-            <th>
-                Service
-            </th>
-            <th> <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#OrderLineModal">
-                Add Order Line
-            </button> </th>
-        </thead>
-        <tbody>
-            {% for orderLine in orderLines %}
-            <tr>
-                <td>{{orderLine.Vendor_Name}}</td>
-                <form action = "{{ request.path }}" method = "POST">
-                    <input type="hidden" name='check' value="updateOrderLine">
-                    <input type="hidden" name='orderLineID' value="{{orderLine.Event_Order_Line_ID}}">
-                <td>
-                    <input type="date" class="form-control" name="date" value="{{orderLine.Event_Order_Line_Date}}">
-                </td>
-                <td> 
-                    <input type="hidden" name="currStatus" value="{{orderLine.Event_Order_Status_ID}}">
-                    <select class='form-control' name="statusUpdate">
-                        <option selected value="{{orderLine.Event_Order_Status_ID}}">{{orderLine.Event_Status}}</option>
-                        {% for status in statuses %}
-                        {% if status.Event_Status_ID != orderLine.Event_Order_Status_ID %}
-                        <option value="{{status.Event_Status_ID}}">{{status.Event_Status}}</option>
-                        {% endif %}
-                        {% endfor %}
-                    </select>
-                </td>
-                <td>
-                    {{orderLine.Product_Service}}
-                </td>
-                <td><button type="submit" class="btn"><img src="{{url_for('static', filename='save-fill.svg')}}"></button></form>
-                    
-                    <button type="submit" class="btn"><img src="{{url_for('static', filename='trash3-fill.svg')}}"></td>
-
-            </tr>
-            {% endfor %}
-        </tbody>
-
-    </table>
+<div class="col">  
 </div>
 </div>
-<div class="row">
-    <div class="col">
-<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateEventModal">
-    Update Event
-</button>
 
 <div class="modal fade" id="updateEventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
@@ -267,7 +187,7 @@
                     
                 </select>                            
                 <label>Customer</label>
-                <input type="text" class='form-control' value="{{event.First_Name}} {{event.Last_Name}}">
+                <input type="text" pattern="[A-Za-z ]{1,250}" class='form-control' value="{{event.First_Name}} {{event.Last_Name}}">
                 <label>Order Status</label>
                 <select class="form-control" name="status" required>     
                     <option selected value="{{event.Event_Order_Status_ID}}">{{event.Event_Status}}</option>                                     
@@ -280,23 +200,16 @@
                 <label>Date</label>
                 <input type="date" class="form-control" name="eventTime" value="{{event.Event_Time}}" required>
                 <label>Theme</label>
-                <input type="text" class="form-control" name="theme" value="{{event.Event_Theme}}">
+                <input type="text" pattern="[A-Za-z ]{1,250}" class="form-control" name="theme" value="{{event.Event_Theme}}">
                 <label>Event Description</label>
-                <input type="text" class="form-control" name="eventDesc" value="{{event.Event_Order_Desc}}" required>
+                <input type="text" pattern="[A-Za-z ]{1,250}" class="form-control" name="eventDesc" value="{{event.Event_Order_Desc}}" required>
                 <label>Delivery</label>
                 <select class="form-control" name="delivery" required>  
                     <option selected value="{{event.Event_Delivery}}">{{event.Event_Delivery}}</option>                                          
                     <option value="Yes">Yes</option>
-                    <option value="No">No</option>
-                   
+                    <option value="No">No</option>                 
                 </select>
-                <label>Employee Assignment</label>
-                <select class="form-control" name="employee">
-                    <option selected value="{{event.Employee_Assignment}}">{{event.Emp_First_Name}} {{event.Emp_Last_Name}} </option>
-                    {% for employee in employees %}
-                        <option value="{{employee.Emp_ID}}">{{employee.Emp_First_Name}} {{employee.Emp_Last_Name}}</option>
-                    {% endfor %}
-            </select>
+               
                 </div>
                 <div class="col">
                 <label>Setup</label>
@@ -307,32 +220,248 @@
                     
                 </select>
                 <label>Location</label>
-                <input type="text" class="form-control" name="location" value="{{event.Event_Location_Name}}" required>
+                <input type="text" pattern="[A-Za-z0-9 ]{1,250}" class="form-control" name="location" value="{{event.Event_Location_Name}}" required>
                 <label>Restrictions</label>
-                <input type="text" class="form-control" name="restrictions" value="{{event.Event_Restriction_Desc}}" required>
+                <input type="text" pattern="[A-Za-z ]{1,250}" class="form-control" name="restrictions" value="{{event.Event_Restriction_Desc}}" required>
                 <label>Address</label>
-                <input type="text" class="form-control" name="address" value="{{event.Event_Address}}" required>
+                <input type="text" pattern="[A-Za-z0-9 ]{1,250}" class="form-control" name="address" value="{{event.Event_Address}}" required>
                 <label>City</label>
-                <input type="text" class="form-control" name="city" value="{{event.Event_City}}" required>
+                <input type="text" pattern="[A-Za-z]{1,250}" class="form-control" name="city" value="{{event.Event_City}}" required>
                 <label>Zip Code</label>
-                <input type="number" min="0" step="1" class="form-control" name="zip" value="{{event.Event_Zip_Code}}" required>
+                <input type="number" pattern="[(0-9)]{1,5}" min="0" step="1" class="form-control" name="zip" value="{{event.Event_Zip_Code}}" required>
                 {% endfor %}
                </div>
         </div>
         <div class="modal-footer">
             <input type='submit' class="btn btn-secondary" value="Save">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button></div>
         </form>
         </div>
     </div>
     </div>
-</div>
-</div>
-        <button type="button" class="btn px-2" data-toggle="modal" data-target="#deleteEvent"><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button>
+    </div>
 
 
+<div class="col">
+<table class="table table-bordered">
+    <thead class="thead-dark">
+        <th>
+            Status
+        </th>
+        <th>
+            Theme
+        </th>
+        <th style="width: 20%">
+            Description
+        </th>
+        <th>
+            Delivery
+        </th>
+        <th>
+            Setup
+        </th>
+        <th>
+            Location
+        </th>
+        <th>
+            Restrictions
+        </th>
+        <th>
+            Address
+        </th>
+        <th>
+            City
+        </th>
+        <th>
+            Zip
+        </th>
+        
+    
+    </thead>
+    <tbody>
+        {% for event in events %}
+        <tr>
+        <td>{{ event.Event_Status}}</td>
+        <td>{{ event.Event_Theme }}</td>
+        <td>{{ event.Event_Order_Desc }}</td>
+        <td>{{ event.Event_Setup }}</td>
+        <td>{{ event.Event_Delivery }}</td>
+        <td>{{ event.Event_Location_Name }}</td>
+        <td>{{ event.Event_Restriction_Desc }}</td>
+        <td>{{ event.Event_Address }}</td>
+        <td>{{ event.Event_City }}</td>
+        <td>{{ event.Event_Zip_Code}}</td>
+        </tr>
+    {% endfor %}
+    </tbody>        
+    </table>
+</div>
+<div class='col'></div>
+
+
+<div class="row">
+    <div class="col"></div>
+    <div class="col-8"> 
+        <h3 class="font-weight-bold">Order Lines</h3>
+<table class="table table-striped">
+    <thead class="thead-dark">
+        <th style="width: 15%">
+            Date
+        </th>
+        <th style="width: 28%">
+            Status
+        </th>
+        <th>
+            Service
+        </th>
+        <th> <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#OrderLineModal">
+            Add Order Line
+        </button> </th>
+        
+    </thead>
+    <tbody>
+        {% for orderLine in orderLines %}
+        <tr>
+            <form action = "{{ request.path }}" method = "POST">
+                <input type="hidden" name='check' value="updateOrderLine">
+                <input type="hidden" name='orderLineID' value="{{orderLine.Event_Order_Line_ID}}">
+            <td>
+                <input type="date" class="form-control" name="date" value="{{orderLine.Event_Order_Line_Date}}">
+            </td>
+            <td> 
+                <input type="hidden" name="currStatus" value="{{orderLine.Event_Order_Status_ID}}">
+                <select class='form-control' name="statusUpdate">
+                    <option selected value="{{orderLine.Event_Order_Status_ID}}">{{orderLine.Event_Status}}</option>
+                    {% for status in statuses %}
+                    {% if status.Event_Status_ID != orderLine.Event_Order_Status_ID %}
+                    <option value="{{status.Event_Status_ID}}">{{status.Event_Status}}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select>
+            </td>
+            <td>
+                {{orderLine.Product_Service}}
+            </td>
+            <td><div class="d-flex justify-content-center">
+                <div class="p-2">
+                <button type="submit" class="btn"><img src="{{url_for('static', filename='save-fill.svg')}}"></button></div>
+            </form>
+                <form action = "{{ request.path }}" method = "POST">
+                    <input type="hidden" name="check" value="delOrderLineCheck">
+                    <input type="hidden" name="delOrderLineID" value="{{orderLine.Event_Order_Line_ID}}">
+                <div class="p-2">
+                <button type="submit" class="btn"><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button></div></div></form>
+            </td>
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+</div>
+<div class="col"></div>
+</div>
+<div class="row">
+    <div class="col"></div>
+<div class="col-8">
+    <h3 class="font-weight-bold">Vendor Services</h3>
+    <table class="table table-striped">
+        <thead class="thead-dark">
+            <th>
+                Vendor
+            </th>
+            <th>
+                Service
+            </th>
+            <th style="width: 15">
+                Date
+            </th>
+            <th style="width: 24%">
+                Status
+            </th>
+            <th> <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addVendorServiceModal">
+                Add Service
+            </button> </th>
+        </thead>
+        <tbody>
+            {% for vendorService in vendorServices %}
+            <tr>
+                <td>{{vendorService.Vendor_Name}}</td>
+                <form action = "{{ request.path }}" method = "POST">
+                    <input type="hidden" name='check' value="updateVendorService">
+                    <input type="hidden" name='venServiceID' value="{{vendorService.Vendor_ID}}">
+                <td> 
+                   {{vendorService.Vendor_Services}}
+                </td>
+                <td><input type='date' class='form-control' name='date' value="{{vendorService.Date.strftime('%Y-%m-%d')}}"></td>
+                <td>
+                    <input type="hidden" name="currStatus" value="{{vendorService.Vendor_Service_Status_ID}}">
+                    <select class='form-control' name="statusUpdate">
+                        <option selected value="{{vendorService.Vendor_Service_Status_ID}}">{{vendorService.Event_Status}}</option>
+                        {% for status in statuses %}
+                        {% if status.Event_Status_ID != vendorService.Vendor_Service_Status_ID %}
+                        <option value="{{status.Event_Status_ID}}">{{status.Event_Status}}</option>
+                        {% endif %}
+                        {% endfor %}</td>
+                <td><div class="d-flex flex-row">
+                    <div class="p-2">
+                    <button type="submit" class="btn"><img src="{{url_for('static', filename='save-fill.svg')}}"></button></div></form>
+                    <form action = "{{ request.path }}" method = "POST">
+                        <input type="hidden" name="check" value="delVendorService">
+                        <input type="hidden" name="delVenServiceID" value="{{vendorService.Vendor_Service_ID}}">
+                    <div class="p-2">
+                    <button type="submit" class="btn"><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button></div></form></td>
+    
+            </tr>
+            {% endfor %}
+        </tbody>
+    
+    </table>
+</div>
+    <div class="col"></div>
+</div>
+<!-- Vendor Service Row-->
+<div class="row">
+    <div class="col">
+    </div>
+    <div class="col-8">
+        <h3 class="font-weight-bold">Employees Assigned</h3>
+        <table class="table table-striped">
+            <thead class="thead-dark">
+                <th>
+                    Name
+                </th>
+                <th>
+                    Date Assigned
+                </th>       
+                <th> <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addEmployeeAssignModal">
+                    Add Employee
+                </button> </th>
+            </thead>
+            <tbody>
+                {% for employeeAssignment in employeeAssignments %}
+                <tr>
+                    <td>{{employeeAssignment.Emp_First_Name}} {{employeeAssignment.Emp_Last_Name}}</td>
+                  
+                    <td> 
+                       {{employeeAssignment.Assignment_Start_Date}}
+                    </td>
+                    <td><form action = "{{ request.path }}" method = "POST">
+                        <input type="hidden" name="check" value="delEmployeeAssign">
+                        <input type="hidden" name="delEmployeeID" value="{{employeeAssignment.Employee_Assignment_ID}}">
+                    <button type="submit" class="btn"><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button></form></td>
+                </tr>
+                {% endfor %}
+            </tbody>       
+        </table>
+
+
+    </div>
+    <div class="col"></div>
+</div>
+
 </div>
 </div>
+</div>
+
 <div class="modal fade" id="deleteEvent" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
     <div class="modal-content">
@@ -360,12 +489,95 @@
             </div>
             </div>
         </div>
+    </div>
+        <div class="modal fade" id="addVendorServiceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">New Vendor Service</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    <form action = "{{ request.path }}" method = "POST">
+                        <input type="hidden" name="check" value="addVendorService">
+                        <label>Vendor</label>
+                        <select class="form-control" name="vendor">
+                        {% for vendor in vendors %}
+                            <option value="{{vendor.Vendor_ID}}">{{vendor.Vendor_Name}}</option> 
+                            {% endfor %} 
+                        </select>
+                        {% for event in events %}
+                        <input type="hidden" name="event" value="{{event.Event_Order_ID}}">
+                        {% endfor %}
+                        <label>Service</label>
+                        <input type='text' class="form-control" name="service" required>
+                        <label>Status</label>
+                        <select class="form-control" name="status" required>     
+                            <option disabled selected value> -- Select an option -- </option>                                     
+                            {% for status in statuses %}
+                                <option value="{{status.Event_Status_ID}}">{{status.Event_Status}}</option>
+                                {% endfor %}
+                            </select>
+                        <label>Date</label>
+                        <input type="date" name="date" class="form-control">           
+        
+                    
+                </div>
+                <div class="modal-footer">
+                    <input type='submit' class="btn btn-secondary" value="Save">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </form>
+                </div>
+            </div>
+            </div>
+        </div>
+
+        <div class="modal fade" id="addEmployeeAssignModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-content">
+                <div class="modal-header">
+                <h5 class="modal-title" id="addEmployeeAssignModal">New Employee Assignment</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                </div>
+                <div class="modal-body">
+                    <form action = "{{ request.path }}" method = "POST">
+                        <input type="hidden" name="check" value="addEmployeeAssign">
+                        <div class="row">
+                            <div class="col">
+                        <label style="color:red">*</label> <label>Indicates required field</label> 
+                                </div>
+                            </div>
+                            <br>
+                        <div class="row">
+                            <div class="col-8">
+                                <label>Employee</label> <label style="color:red">*</label>
+                        <select class="form-control" name="employeeID">
+                        {% for employee in employees %}
+                            <option value="{{employee.Emp_ID}}">{{employee.Emp_First_Name}} {{employee.Emp_Last_Name}}</option> 
+                            {% endfor %} 
+                        </select>
+                                </div>
+                            <div class="col">
+                        
+                        </div>                     
+                      
+                        <div class="col"></div>
+                        </div>       
+        
+                    
+                </div>
+                <div class="modal-footer">
+                    <input type='submit' class="btn btn-secondary" value="Save">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </form>
+                </div>
+            </div>
+            </div>
+        </div>
  
-
-
-
-
-</div>
-</div>
 
 {% endblock %}

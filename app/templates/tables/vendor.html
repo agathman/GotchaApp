@@ -23,26 +23,35 @@
 <li class="nav-item">
     <a class="nav-link" href="/Misc">Misc</a>
     </li>
+<li class="nav-item">
+    <a class="nav-link" href="/Reports">Reports</a>
+    </li>
 {% endblock %}
 
      {% block content %}
-     <div class="container-fluid text-center">          
+     <div class="container-fluid">          
         <div class="p-5 mb-4 rounded-3"> 
-            <div class="container py-2 text-center">
+            <div class="container py-2">
                 <div class="d-flex justify-content-start"> 
                     <h1 class="font-weight-bold px-2 py-4">Vendors</h1>
                     </div>  
                     {% with messages = get_flashed_messages() %}
                     {% if messages %}
                        {% for message in messages %}
-                       <div class="d-flex justify-content-center">
+                       {% if message == 'Delete is not possible for this record' %}
                        <div class="alert alert-danger" role="alert">
-                          {{ message }}
+                        {{ message }}
                         </div>
-                        </div>
+                           {% else %}
+                           <div class="alert alert-success" role="alert">
+                            {{ message }}
+                            </div>
+                               {% endif %}
+                        
                        {% endfor %}
                     {% endif %}
                  {% endwith %}
+                
                 <!-- Modal Button for Vendor -->
            
                 
@@ -61,13 +70,6 @@
                                     <input type="hidden" name="check" value="addVendor">
                                     <label>Vendor Name</label>
                                     <input type="text" class="form-control" name="vendorName" required>
-                                    <label>Vendor Service</label> 
-                                    <select class="form-control" name="vendorService" required>                                           
-                                        {% for vendorService in vendorServices %}
-                                            <option value="{{vendorService.Vendor_Service_ID}}">{{vendorService.Vendor_Services}}</option>
-                                            {% endfor %}
-                                            <option disabled selected value> -- Select an option -- </option>
-                                        </select>
                                     <label>First Name</label>
                                     <input type="text" class="form-control" name="firstName" required>
                                     <label>Last Name</label> 
@@ -92,30 +94,30 @@
                         </div>
                     </div>
 
-
+                  
                             
                         <table class="table table-striped">
                             <thead class="thead-dark">
                               
-                                <th>
+                                <th class="header" scope="col">
                                     Vendor Name
                                 </th>
-                                <th>
-                                    Vendor Service
-                                </th>
-                                <th>
+                                <th class="header" scope="col">
                                     Contact
                                     </th>
-                                <th>
+                                <th class="header" scope="col">
                                     Phone
                                 </th>
-                                <th>
+                                <th class="header" scope="col">
                                     Email
                                 </th>
-                                <th>
+                                <th class="header" scope="col">
                                     Description
                                 </th>
-                                <th> 
+                                <th class="header" scope="col">
+                                    Services
+                                </th>
+                                <th class="header" scope="col"> 
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                                         Add Vendor
                                         </button></th>
@@ -125,18 +127,20 @@
                             </thead>
                             <tbody>
                                 {% for vendor in vendors %}
+                                {% if vendor.Vendor_ID != 13 %}
                                 <tr>
                                 <td>{{ vendor.Vendor_Name}}</td>
-                                <td>{{ vendor.Vendor_Services }}</td>
                                 <td>{{ vendor.First_Name}} {{ vendor.Last_Name}}</td>
                                 <td>{{ vendor.Phone}}</td>
                                 <td>{{ vendor.Email}}</td>
                                 <td>{{ vendor.Vendor_Desc }}</td>
+                                <td><a href="/vendorService/{{vendor.Vendor_ID}}">Orders</a></td>
                                 <td><div class="d-flex flex-row">
                                     <div class="p-2">
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateVendorModal{{vendor.Vendor_ID}}">
                                     Edit
                                 </button></div>
+                                
                                 <!-- Delete Form Start-->
                                     <form action ="{{ request.path }}" method = 'post'>
                                         <!-- Hidden Field to validate which request to use in the route in views.py (name='check' value='Name to the request portion')-->
@@ -148,6 +152,7 @@
                                 </form>
                             <!-- Delete END --></td>
                             </tr>
+                            {% endif %}
                             {% endfor %}
                             </tbody>
                                 
@@ -171,26 +176,19 @@
                         <input type="hidden" name="check" value="updateVendor">
                         <input type="hidden" name="vendorID" value="{{vendor.Vendor_ID}}">
                         <label>Vendor Name</label>
-                        <input type="text" class="form-control" name="vendorName" value="{{vendor.Vendor_Name}}" required>
-                        <label>Vendor Service</label> 
-                        <select class="form-control" name="vendorService" required>  
-                            <option selected value="{{vendor.Vendor_Service_ID}}">{{vendor.Vendor_Services}}</option>                                         
-                            {% for vendorService in vendorServices %}
-                                <option value="{{vendorService.Vendor_Service_ID}}">{{vendorService.Vendor_Services}}</option>
-                                {% endfor %}
-                            </select>
+                        <input type="text" pattern="[A-Za-z ]{1,250}" class="form-control" name="vendorName" value="{{vendor.Vendor_Name}}" required>
                         <label>First Name</label>
-                        <input type="text" class="form-control" value="{{vendor.First_Name}}" name="firstName" required>
+                        <input type="text" pattern="[A-Za-z]{1,250}" class="form-control" value="{{vendor.First_Name}}" name="firstName" required>
                         <label>Last Name</label> 
-                        <input type="text" class="form-control" value="{{vendor.Last_Name}}" name="lastName" required>
+                        <input type="text" pattern="[A-Za-z]{1,250}" class="form-control" value="{{vendor.Last_Name}}" name="lastName" required>
                         <label>Phone</label>
                         <input type="tel" class="form-control" name="phone" pattern="[(0-9)]{3}-[0-9]{3}-[0-9]{4}" value="{{vendor.Phone}}" required>
                         <small>Format: 555-456-7890</small>
                         <br>
                         <label>Email</label>
-                        <input type="email" class="form-control" name="email" value="{{vendor.Email}}" required>
+                        <input type="email" maxlength="250" class="form-control" name="email" value="{{vendor.Email}}" required>
                         <label>Vendor Description</label> 
-                        <input type="text" class="form-control" name="vendorDesc" value="{{vendor.Vendor_Desc}}" required>
+                        <input type="text" pattern="[A-Za-z0-9 ]{1,250}" class="form-control" name="vendorDesc" value="{{vendor.Vendor_Desc}}" required>
                         
                 </div>
                 <div class="modal-footer">
@@ -246,9 +244,9 @@
                 <label>Date</label>
                 <input type="date" class="form-control" name="eventTime" required>
                 <label>Theme</label>
-                <input type="text" class="form-control" name="theme">
+                <input type="text" pattern="[A-Za-z ]{1,250}" class="form-control" name="theme">
                 <label>Event Description</label>
-                <input type="text" class="form-control" name="eventDesc" required>
+                <input type="text" pattern="[A-Za-z ]{1,250}" class="form-control" name="eventDesc" required>
                 <label>Delivery</label>
                 <select class="form-control" name="delivery" required>  
                     <option disabled selected value> -- Select an option -- </option>                                          
@@ -273,15 +271,15 @@
                     
                 </select>
                 <label>Location</label>
-                <input type="text" class="form-control" name="location" required>
+                <input type="text" pattern="[A-Za-z0-9 ]{1,250}" class="form-control" name="location" required>
                 <label>Restrictions</label>
-                <input type="text" class="form-control" name="restrictions" required>
+                <input type="text" pattern="[A-Za-z ]{1,250}" class="form-control" name="restrictions" required>
                 <label>Address</label>
-                <input type="text" class="form-control" name="address" required>
+                <input type="text" pattern="[A-Za-z0-9 ]{1,250}" class="form-control" name="address" required>
                 <label>City</label>
-                <input type="text" class="form-control" name="city" required>
+                <input type="text" pattern="[A-Za-z]{1,250}" class="form-control" name="city" required>
                 <label>Zip Code</label>
-                <input type="number" min="0" step="1" class="form-control" name="zip" required>
+                <input type="number" pattern="[(0-9)]{1,5}" min="0" step="1" class="form-control" name="zip" required>
                 <label>State</label>
                 <select class="form-control" name="state" value="1">
                     {% for state in stateList %}

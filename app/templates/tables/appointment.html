@@ -23,25 +23,35 @@
 <li class="nav-item">
     <a class="nav-link" href="/Misc">Misc</a>
     </li>
-
+<li class="nav-item">
+    <a class="nav-link" href="/Reports">Reports</a>
+    </li>
 {% endblock %}
 
     {% block content %}
-    <div class="container-fluid text-center">          
+    <div class="container-fluid">          
         <div class="p-5 mb-4 rounded-3"> 
-            <div class="container py-2 text-center">
+            <div class="container py-2">
                 <div class="d-flex justify-content-start"> 
                     <h1 class="font-weight-bold px-2 py-4">Appointments</h1>
                     </div>                  
                     {% with messages = get_flashed_messages() %}
                     {% if messages %}
                        {% for message in messages %}
+                       {% if message == 'Delete is not possible for this record' %}
                        <div class="alert alert-danger" role="alert">
-                          {{ message }}
+                        {{ message }}
                         </div>
+                           {% else %}
+                           <div class="alert alert-success" role="alert">
+                            {{ message }}
+                            </div>
+                               {% endif %}
+                        
                        {% endfor %}
                     {% endif %}
                  {% endwith %}
+                
                 
                     
                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -64,7 +74,7 @@
                                             {% endfor %}
                                         </select>
                                         <label>Appointment Date</label>
-                                        <input type="date" name="date" class="form-control">
+                                        <input type="date" name="date" class="form-control" required>
                                         <label>Time</label>
                                         <select class="form-control" name="time" required>
                                             <option value="8:00">8:00 A.M</option>
@@ -101,19 +111,19 @@
                        <table class="table table-striped">
                         <thead class="thead-dark">
                             <tr>
-                                <th>
+                                <th class="header" scope="col">
                                     Customer
                                    </th>
-                                <th>
+                                <th class="header" scope="col">
                                     Appointment Date
                                 </th>
-                                <th>
+                                <th class="header" scope="col">
                                     Time
                                 </th>
-                                <th>
+                                <th class="header" scope="col">
                                     Event Order
                                    </th>
-                                    <th>
+                                    <th class="header" scope="col">
                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                                             Add Appointment
                                           </button>
@@ -170,7 +180,7 @@
                                             <td>
                                                 <div class="d-flex flex-row">
                                                 <div class="p-2">
-                                                    <button type='submit' class='btn'><img src="{{url_for('static', filename='save-fill.svg')}}"></button>
+                                                    <button type='submit' class='btn btn-secondary'>Save</button>
                                                 </div>
                                             </form>
                                             

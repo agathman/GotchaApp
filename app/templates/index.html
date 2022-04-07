@@ -24,12 +24,16 @@
 <li class="nav-item">
     <a class="nav-link" href="/Misc">Misc</a>
     </li>
+<li class="nav-item">
+    <a class="nav-link" href="/Reports">Reports</a>
+    </li>
+
 {% endblock %}
 
      {% block content %}
-     <div class="container-fluid text-center">          
+     <div class="container-fluid">          
         <div class="p-5 mb-4 rounded-3"> 
-            <div class="container py-2 text-center">
+            <div class="container py-2">
          
               
 
@@ -44,33 +48,59 @@
         </button>
         </div>
         <div class="modal-body">
+            <label style="color:red">*</label> <label>Indicates required field</label> 
+            <br>
             <form action = "{{ request.path }}" method = "post">
-                <input type="hidden" name="check" value="customer">
-                <label>First Name</label>
+                
+                <div class="row">
+                <div class="col-5">
+            
+                 <input type="hidden" name="check" value="customer">
+                <label>First Name</label> <label style="color:red">*</label>
                 <input type="text" class="form-control" name="firstName" maxlength="250" required>
-                <label>Last Name</label> 
+                </div>
+                <div class="col">
+                <label>Last Name</label> <label style="color:red">*</label>
                 <input type="text" class="form-control" name="lastName" maxlength="250" required>
-                <label>Phone</label>
-                <input type="tel" class="form-control" name="phone" pattern="[(0-9)]{3}-[0-9]{3}-[0-9]{4}" required>
-                <small>Format: 555-456-7890</small>
-                <br>
-                <label>Email</label>
+                </div>
+                </div>
+                <div class="row">
+                <div class="col-5">
+                <label>Phone</label> <label style="color:red">*</label>
+            
+                <input type="tel" class="form-control" name="phone" pattern="[(0-9)]{3}-[0-9]{3}-[0-9]{4}"  required>
+                <small class="form-text" text-muted>Format: 555-456-7890</small>
+                </div>
+                <div class="col">
+                <label>Email</label> <label style="color:red">*</label>
                 <input type="email" class="form-control" name="email" maxlength="250" required>
-                <label>Address</label>
+                <small class="form-text" text-muted>Format: username@email.com</small>
+                </div>
+                </div>
+                <br>
+                <label>Address</label> <label style="color:red">*</label>
                 <input type="text" class="form-control" name="address" maxlength="250" required>
-                <label>City</label>
+                <div class="row">
+                    <div class="col-6">
+                <label>City</label> <label style="color:red">*</label>
                 <input type="text" class="form-control" name="city" maxlength="250" required>
-                <label>State</label>
+                </div>
+                    <div class="col-3">
+                <label>State</label> <label style="color:red">*</label>
                 <select class="form-control" name="state" value="1">
                     {% for state in stateList %}
                         <option value="{{state.State_ID}}">{{state.State_Name}}</option> 
                     {% endfor %}
                 </select>
-                <label>Zip Code</label>
-                <input type="number" min="0" step="1"  class="form-control" name="zip" input required >
-                <label>Date Contacted</label>
-                <input type="date" class="form-control" name="date" required>
+                </div>
+                <div class='col'>
+                <label>Zip Code</label> <label style="color:red">*</label>
+                <input type="text" class="form-control" name="zip" required>
+                </div>
+                </div>
+           
                 
+           
         </div>
         <div class="modal-footer">
             
@@ -95,17 +125,26 @@
             </button>
             </div>
             <div class="modal-body">
+                <label style="color:red">*</label> <label>Indicates required field</label> 
+                <div class="row">
+                    <div class="col-5">
                 <form action = "{{ request.path }}" method = "post">
                     <input type="hidden" name="check" value="appointment">
-                    <label>Appointment</label>
+                    <label>Customer</label> <label style="color:red">*</label>
                     <select class="form-control" name="customerID">
                     {% for customer in newAppointment %}
                         <option value="{{customer.Customer_ID}}">{{customer.First_Name}} {{customer.Last_Name}} </option> 
                         {% endfor %}
                     </select>
-                    <label>Appointment Date</label>
+                </div>
+                </div>
+                <div class="row">
+                    <div class="col-5">
+                    <label>Date</label> <label style="color:red">*</label>
                     <input type="date" name="date" class="form-control">
-                    <label>Time</label>
+                    </div>
+                    <div class="col-5">
+                    <label>Time</label> <label style="color:red">*</label>
                     <select class="form-control" name="time" required>
                         <option value="8:00">8:00 A.M</option>
                         <option value="8:30">8:30 A.M</option>
@@ -128,8 +167,11 @@
                         <option value="17:00">5:00 P.M.</option>
                         <option value="17:30">5:30 P.M.</option>
                     </select>  
+                    </div>
+                </div>
+                </div>
                 
-            </div>
+           
             <div class="modal-footer">
                 <input type='submit' class="btn btn-secondary" value="Save">
                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -142,7 +184,7 @@
 
 <!-- Modal Body for event -->
     <div class="modal fade" id="EventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog" role="document">
+        <div class="modal-dialog modal-lg" style="width:50%" role="document">
         <div class="modal-content">
             <div class="modal-header">
             <h5 class="modal-title" id="exampleModalLabel">New Event</h5>
@@ -151,77 +193,113 @@
             </button>
             </div>
             <div class="modal-body">
+                <label style="color:red">*</label> <label>Indicates required field</label> 
                 <form action = "{{ request.path }}" method = "post">
+                    <input type="hidden" name="check" value="event">   
                     <div class="row">
-                        <div class="col">
-                    <input type="hidden" name="check" value="event">                                     
-                    <label>Category</label>
-                    <select class="form-control" name="category" required>
-                        <option disabled selected value> -- Select an option -- </option>
-                        {% for category in eventCategory %}
-                        <option value="{{category.Event_Category_ID}}">{{category.Event_Category_Name}}</option>
-                        {% endfor %}
-                    </select>                            
-                    <label>Customer</label>
+                        <div class="col-3">
+                            <label>Customer</label> <label style="color:red">*</label>
                     <select class="form-control" name="customer" required>
+                        <option disabled selected>Select an option</option>
                         {% for customer in newAppointment %}
                             <option value="{{customer.Customer_ID}}">{{customer.First_Name}} {{customer.Last_Name}} </option>
-                            {% endfor %}
-                            <option disabled selected value> -- Select an option -- </option>
+                            {% endfor %} 
                         </select>
-                    <label>Order Status</label>
-                    <select class="form-control" name="status" required>                                           
-                        {% for status in statuses %}
-                            <option value="{{status.Event_Status_ID}}">{{status.Event_Status}}</option>
-                            {% endfor %}
-                            <option disabled selected value> -- Select an option -- </option>
-                        </select>
-                    <label>Date</label>
-                    <input type="date" class="form-control" name="eventTime" required>
-                    <label>Theme</label>
+                        </div>
+                        <div class="col-3"> 
+                        <label>Date</label> <label style="color:red">*</label>
+                        <input type="date" class="form-control" name="eventTime" required>  
+                        </div>
+                        <div class="col-3">
+                    <label>Theme</label> <label style="color:red">*</label>
                     <input type="text" class="form-control" name="theme">
-                    <label>Event Description</label>
-                    <input type="text" class="form-control" name="eventDesc" required>
-                    <label>Delivery</label>
+                    </div>
+                    <div class="col-3">
+                        <label>Venue</label> <label style="color:red">*</label>
+                    <input type="text" class="form-control" name="location" required>
+                    </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                        <div class="col-3">  
+                            <label>Category</label> <label style="color:red">*</label>
+                            <select class="form-control" name="category" required>
+                                <option disabled selected>Select a category</option>
+                                {% for category in eventCategory %}
+                                <option value="{{category.Event_Category_ID}}">{{category.Event_Category_Name}}</option>
+                                {% endfor %}
+                            </select>
+                        </div>
+                        <div class="col-3">                  
+                            <label>Order Status</label> <label style="color:red">*</label>
+                            <select class="form-control" name="status" required> 
+                                <option disabled selected>Select a status</option>                                          
+                                {% for status in statuses %}
+                                    <option value="{{status.Event_Status_ID}}">{{status.Event_Status}}</option>
+                                {% endfor %}    
+                            </select>
+                        </div>
+      
+                        <div class="col-3">
+                    <label>Delivery</label> <label style="color:red">*</label>
                     <select class="form-control" name="delivery" required>                                            
                         <option value="Yes">Yes</option>
                         <option value="No">No</option>
-                        <option disabled selected value> -- Select an option -- </option>
+                        <option disabled selected value>Select a delivery</option>
                     </select>
                     </div>
-                    <div class="col">
-                    <label>Setup</label>
-                    <select class="form-control" name="setup" required>                                           
+                    <div class="col-3">  
+                    <label>Setup</label> <label style="color:red">*</label>
+                    <select class="form-control" name="setup" required>   
+                        <option disabled selected value>Select a setup</option>                                      
                         <option value="Yes">Yes</option>
                         <option value="No">No</option>
-                        <option disabled selected value> -- Select an option -- </option>
                     </select>
-                    <label>Location</label>
-                    <input type="text" class="form-control" name="location" required>
-                    <label>Restrictions</label>
-                    <input type="text" class="form-control" name="restrictions" required>
-                    <label>Address</label>
+                    </div>
+                    </div>
+                    
+                    <br>
+                    <div class="row">
+                    
+                    <div class="col-5">
+                    <label>Address</label> <label style="color: red">*</label>
                     <input type="text" class="form-control" name="address" required>
-                    <label>City</label>
-                    <input type="text" class="form-control" name="city" required>                                            
-                    <label>Zip Code</label>
-                    <input type="number" min="0" step="1" class="form-control" name="zip" required>
-                    <label>Employee Assignment</label>
-                    <select class="form-control" name="employee">
-                        <option disabled selected value> -- Select an option -- </option>
-                        {% for employee in employees %}
-                            <option value="{{employee.Emp_ID}}">{{employee.Emp_Last_Name}}</option>
-                        {% endfor %}
-                        </select>
-                    <label>State</label>
-                    <select class="form-control" name="state" value="1">
+                    </div>
+                    <div class="col-3">
+                    <label>City</label> <label style="color:red">*</label>
+                    <input type="text" class="form-control" name="city" required>  
+                    </div>
+                    <div class="col-2"> 
+                        <label>State</label> <label style="color:red">*</label>
+                    <select class="form-control" name="state">
                         {% for state in stateList %}
                             <option value="{{state.State_ID}}">{{state.State_Name}}</option> 
                         {% endfor %}
-                    </select>
-
+                    </select>                                         
                     </div>
+                    <div class="col-2"> 
+                        <label>Zip Code</label> <label style="color:red">*</label>
+                        <input type="text" class="form-control" name="zip" required>
+                  
+                    </div>
+                    </div>
+                    
+                    <br>
+                    <div class='row'>
+                        <div class="col">   
+                            <label>Event Description</label> <label style="color:red">*</label>
+                            <textarea rows = "2" class="form-control" name="eventDesc" required></textarea>
+                            </div>
+                        </div>
+                    <div class='row'>
+                        <div class="col">  
+                            <label>Restrictions</label>
+                            <textarea rows = "2" class="form-control" name="restrictions"></textarea>
+                            </div>
+                            </div>
+
             </div>
+         
             <div class="modal-footer">
                 
                 <input type='submit' class="btn btn-secondary" value="Save">
@@ -234,7 +312,7 @@
 
     
 
-</div>
+
 
     
         
@@ -258,6 +336,22 @@
             </div>
             <br>
             <br>
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+               {% for message in messages %}
+               {% if message == 'Delete is not possible for this record' %}
+               <div class="alert alert-danger" role="alert">
+                {{ message }}
+                </div>
+                   {% else %}
+                   <div class="alert alert-success" role="alert">
+                    {{ message }}
+                    </div>
+                       {% endif %}
+                
+               {% endfor %}
+            {% endif %}
+         {% endwith %}
         
 
     <div class="row">

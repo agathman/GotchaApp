@@ -24,59 +24,68 @@
 <li class="nav-item">
     <a class="nav-link" href="/Misc">Misc</a>
     </li>
+<li class="nav-item">
+    <a class="nav-link" href="/Reports">Reports</a>
+    </li>
 {% endblock %}
 
      {% block content %}
-     <div class="container-fluid text-center">          
+     <div class="container-fluid">          
         <div class="p-5 mb-4 rounded-3"> 
-            <div class="container py-2 text-center">
+            <div class="container py-2">
                 <div class="d-flex justify-content-start"> 
                     <h1 class="font-weight-bold px-2 py-4">Employees</h1>
                     </div>  
                     {% with messages = get_flashed_messages() %}
                     {% if messages %}
                        {% for message in messages %}
-                       <div class="d-flex justify-content-center">
+                       {% if message == 'Delete is not possible for this record' %}
                        <div class="alert alert-danger" role="alert">
-                          {{ message }}
+                        {{ message }}
                         </div>
-                        </div>
+                           {% else %}
+                           <div class="alert alert-success" role="alert">
+                            {{ message }}
+                            </div>
+                               {% endif %}
+                        
                        {% endfor %}
                     {% endif %}
                  {% endwith %}
+                
 
                       
                         
                             <table class='table table-striped'>
                                <thead class="thead-dark">
-                                <th>
+                                <th class="header" scope="col">
                                     First Name
                                 </th>
-                                <th>
+                                <th class="header" scope="col">
                                     Last Name
                                 </th>
-                                <th>
+                                <th class="header" scope="col">
                                     Address
                                 </th>
-                                <th>
+                                <th class="header" scope="col">
                                     City
                                 </th>
-                                <th>
+                                <th class="header" scope="col">
                                     State
                                 </th>
-                                <th>
+                                <th class="header" scope="col">
                                     Zip Code
                                 </th>
-                                <th>
+                                <th class="header" scope="col">
                                     Phone
                                 </th>
-                                <th>
+                                <th class="header" scope="col">
                                     Email
                                 </th>
-                                <th>
+                                <th class="header" scope="col">
                                     Position
                                 </th>
-                                <th><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                <th class="header" scope="col"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                                     Add Employee
                                  </button></th>
                             </thead>
@@ -127,7 +136,7 @@
             <div class="modal-dialog" role="document">
             <div class="modal-content">
                 <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">New Customer</h5>
+                <h5 class="modal-title" id="exampleModalLabel">New Employee</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -136,13 +145,13 @@
                     <form action = "{{ request.path }}" method = "post">
                         <input type="hidden" name="check" value="addEmployee">
                         <label>First Name</label>
-                        <input type="text" class="form-control" name="firstName" maxlength="250" required>
+                        <input type="text" pattern="[A-Za-z]{1,250}" class="form-control" name="firstName" maxlength="250" required>
                         <label>Last Name</label> 
-                        <input type="text" class="form-control" name="lastName" maxlength="250" required>
+                        <input type="text" pattern="[A-Za-z]{1,250}" class="form-control" name="lastName" maxlength="250" required>
                         <label>Address</label>
-                        <input type="text" class="form-control" name="address" maxlength="250" required>
+                        <input type="text" pattern="[A-Za-z0-9 ]{1,250}" class="form-control" name="address" maxlength="250" required>
                         <label>City</label>
-                        <input type="text" class="form-control" name="city" maxlength="250" required>
+                        <input type="text" pattern="[A-Za-z]{1,250}" class="form-control" name="city" maxlength="250" required>
                         <label>State</label>
                         <select class="form-control" name="state">
                             {% for state in stateList %}
@@ -150,15 +159,15 @@
                             {% endfor %}
                         </select>
                         <label>Zip Code</label>
-                        <input type="text" maxlength="10"  class="form-control" name="zip" input required >
+                        <input type="text" pattern="[(0-9)]{1,5}" maxlength="10"  class="form-control" name="zip" input required >
                         <label>Phone</label>
                         <input type="tel" class="form-control" name="phone" pattern="[(0-9)]{3}-[0-9]{3}-[0-9]{4}" required>
                         <small>Format: 555-456-7890</small>
                         <br>
                         <label>Email</label>
-                        <input type="email" class="form-control" name="email" maxlength="250" required>                    
+                        <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" class="form-control" name="email" maxlength="250" required>                    
                         <label>Position</label>
-                        <input type="text" class="form-control" name="position" required>
+                        <input type="text" pattern="[A-Za-z ]{1,250}" class="form-control" name="position" required>
                         
                 </div>
                 <div class="modal-footer">
@@ -184,14 +193,15 @@
             <div class="modal-body">
                 <form action = "{{ request.path }}" method = "post">
                     <input type="hidden" name="check" value="updateEmployee">
+                    <input type="hidden" name="employeeID" value="{{employee.Emp_ID}}">
                     <label>First Name</label>
-                    <input type="text" class="form-control" name="firstName" value="{{employee.Emp_First_Name}}" maxlength="250" required>
+                    <input type="text" pattern="[A-Za-z]{1,250}" class="form-control" name="firstName" value="{{employee.Emp_First_Name}}" maxlength="250" required>
                     <label>Last Name</label> 
-                    <input type="text" class="form-control" name="lastName" value="{{employee.Emp_Last_Name}}" maxlength="250" required>
+                    <input type="text" pattern="[A-Za-z]{1,250}" class="form-control" name="lastName" value="{{employee.Emp_Last_Name}}" maxlength="250" required>
                     <label>Address</label>
-                    <input type="text" class="form-control" name="address" value="{{employee.Emp_Mailing_Address}}" maxlength="250" required>
+                    <input type="text"  pattern="[A-Za-z0-9 ]{1,250}" class="form-control" name="address" value="{{employee.Emp_Mailing_Address}}" maxlength="250" required>
                     <label>City</label>
-                    <input type="text" class="form-control" name="city" value="{{employee.Emp_Mailing_City}}" maxlength="250" required>
+                    <input type="text"  pattern="[A-Za-z]{1,250}" class="form-control" name="city" value="{{employee.Emp_Mailing_City}}" maxlength="250" required>
                     <label>State</label>
                     <select class="form-control" name="state">
                         <option selected value="{{employee.State_ID}}">{{employee.State_Name}}</option>
@@ -200,15 +210,15 @@
                         {% endfor %}
                     </select>
                     <label>Zip Code</label>
-                    <input type="text" maxlength="10"  class="form-control" name="zip" value="{{employee.Emp_Zip_Code}}" input required >
+                    <input type="text" pattern="[(0-9)]{1,5}" maxlength="10"  class="form-control" name="zip" value="{{employee.Emp_Zip_Code}}" input required >
                     <label>Phone</label>
                     <input type="tel" class="form-control" name="phone" pattern="[(0-9)]{3}-[0-9]{3}-[0-9]{4}" value="{{employee.Emp_Phone}}" required>
                         <small>Format: 555-456-7890</small>
                         <br>
                     <label>Email</label>
-                    <input type="email" class="form-control" name="email" value="{{employee.Emp_Email}}" maxlength="250" required>                    
+                    <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" class="form-control" name="email" value="{{employee.Emp_Email}}" maxlength="250" required>                    
                     <label>Position</label>
-                    <input type="text" class="form-control" name="position" value="{{employee.Emp_Position}}" required>
+                    <input type="text" pattern="[A-Za-z ]{1,250}" class="form-control" name="position" value="{{employee.Emp_Position}}" required>
                     
             </div>
             <div class="modal-footer">

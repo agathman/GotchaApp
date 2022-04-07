@@ -23,224 +23,240 @@
 <li class="nav-item">
 <a class="nav-link active" href="/Misc">Misc</a>
 </li>
+<li class="nav-item">
+    <a class="nav-link" href="/Reports">Reports</a>
+    </li>
 {% endblock %}
 
 {% block content %}
 <div class="container-fluid text-center">          
     <div class="p-5 mb-4 rounded-3">
         <div class="row">
-            <div class="col-2">
+            <div class="col-4">
+                <div class="d-flex justify-content-start"> 
+                    <h1 class="font-weight-bold px-2 py-4">Miscellaneous</h1>
+                    </div>
     
         </div>
-        <div class="col"> 
-            <div class="d-flex justify-content-start"> 
-            <h1 class="font-weight-bold px-2 py-4">Miscellaneous</h1>
-            </div>
+        <div class="col-4"> 
+            {% with messages = get_flashed_messages() %}
+            {% if messages %}
+               {% for message in messages %}
+               {% if message == 'Delete is not possible for this record' %}
+               <div class="alert alert-danger" role="alert">
+                {{ message }}
+                </div>
+                   {% else %}
+                   <div class="alert alert-success" role="alert">
+                    {{ message }}
+                    </div>
+                       {% endif %}
+                
+               {% endfor %}
+            {% endif %}
+         {% endwith %}
         </div> 
         <div class="col"></div>
         </div>
             <div class="container py-5 text-center">
-                {% with messages = get_flashed_messages() %}
-                    {% if messages %}
-                       {% for message in messages %}
-                       <div class="alert alert-danger" role="alert">
-                          {{ message }}
-                        </div>
-                       {% endfor %}
-                    {% endif %}
-                 {% endwith %}
-<div class="row">
-    <div clas="col">
-       
-        <table class="table">
-        <thead class="thead-dark">
-            <th>
-                Category
-            </th>
-            <th> <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#CatModal">
-                Add Category
-                </button> 
 
-            </th>
-        </thead>
-        <tbody>
-        {% for category in categories %}
-            <tr>
-                <form action = "{{ request.path }}" method = "POST">
-                    <input type="hidden" name="check" value="catCheck">
-                    <input type="hidden" name="catID" value="{{category.Event_Category_ID}}">
-                <td><input type="text" class="form-control" name="category" value="{{category.Event_Category_Name}}"> </td>
-                <td><div class="d-flex flex-row">
-                    <div class="p-2"><button type='submit' class="btn"><img src="{{url_for('static', filename='save-fill.svg')}}"></button></div>
-                </form>
-                    
-                    <form action="{{ request.path }}" method="POST">
-                        <input type="hidden" name="check" value="delCategory">
-                        <input type="hidden" name="delCategoryID" value="{{category.Event_Category_ID}}">
-                        <div class="p-2"><button type='submit' class='btn'><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button></div></td>
-                </form>
-            </tr>
-            {% endfor %}        
-        </tbody>
-    </table>
-
-    </div>
-    <div class="col">
-           
     
-        <table class="table">
-            <thead class="thead-dark">
-                <th>
-                    Status
-                </th>
-                <th>  <button type="submit" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#statusModal">
-                    Add Status
-                </button></th>
-            </thead>
-            <tbody>
-                {% for status in statuses %}
-                <tr>
-                    <form action="{{ request.path }}" method="POST">
-                        <input type="hidden" name="check" value="statCheck">
-                        <input type="hidden" name="statID" value="{{status.Event_Status_ID}}">
-                        <td><input type="text" class="form-control" name="status" value="{{status.Event_Status}}"></td>
-                        <td><div class="d-flex flex-row">
-                            <div class="p-2"><button type='submit' class="btn"><img src="{{url_for('static', filename='save-fill.svg')}}"></button></div>
-                        </form>
-                            
-                            <form action="{{ request.path }}" method="POST">
-                                <input type="hidden" name="check" value="delStatus">
-                                <input type="hidden" name="delStatusID" value="{{status.Event_Status_ID}}">
-                            <div class="p-2">
-                                <button type='submit' class='btn'><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button>
-                            </div></td>
-                        
-                    </form>
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+<div class="row">
+    <div clas="col-6">
+            <div class="d-flex d'flex-row">
+                <div class="card-header" id="headingOne">
+                <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseCat" aria-expanded="false" aria-controls="collapseCat">
+                 View Categories
+                </button>
+                </div>
+                <div class="card-header" id="headingTwo">
+                    <button class="btn btn-secondary collapsed" data-toggle="collapse" data-target="#collapseStatus" aria-expanded="false" aria-controls="collapseStatus">
+                        View Statuses
+                      </button>
+                    </div>
+                <div class="card-header" id="headingThree">
+                    <button class="btn btn-secondary collapsed" data-toggle="collapse" data-target="#collapseService" aria-expanded="false" aria-controls="collapseService">
+                            View Product Services
+                        </button>
+                    </div>
+                <div class="card-header" id="headingFour">
+                    <button class="btn btn-secondary collapsed" data-toggle="collapse" data-target="#collapsePayType" aria-expanded="false" aria-controls="collapsPayType">
+                       View Payment Types
+                        </button>
+                        </div>
+                </div>
     </div>
-    <div class="col">
-       
-        <table class="table">
-            <thead class="thead-dark">
-                <th>
-                    Product Service
-                </th>
-                <th> <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#ServiceModal">
-                    Add Product Service
-                    </button></th>
-            </thead>
-            <tbody>
-                {% for productService in productServices %}
-                <tr>
-                    <form action="{{ request.path }}" method="POST">
-                        <input type="hidden" name="check" value="productCheck">
-                        <input type="hidden" name="productID" value="{{productService.Product_Service_ID}}">
-                        <td><input type="text" class="form-control" name="productService" value="{{productService.Product_Service}}"></td>
-                        <td>
-                            <div class="d-flex flex-row">
-                                <div class="p-2"><button type='submit' class="btn"><img src="{{url_for('static', filename='save-fill.svg')}}"></button></form></div>
-                            
-                            <form action="{{ request.path }}" method="POST">
-                                <input type="hidden" name="check" value="delProService">
-                                <input type="hidden" name="delProServiceID" value="{{productService.Product_Service_ID}}">
-                                <div class="p-2">  <button type='submit' class='btn'><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button>
-                                </div></td>
-                      </form>
-                    </td>
+    <div class="col"></div>
+</div>
+<div class="row">
+    <div class="col-6">
+        
+        
+        <div id="collapseCat" class="collapse" aria-labelledby="headingOne">
+        <div class="card card-body">
+   
+    <table class="table">
+    <thead class="thead-dark">
+        <th>
+             Categories              
+        </th>
+        <th> <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#CatModal">
+            Add Category
+            </button> 
+        </th>
+    </thead>      
+    {% for category in categories %}
+
+        <tr>
+            <form action = "{{ request.path }}" method = "POST">
+                <input type="hidden" name="check" value="updateCatCheck">
+                <input type="hidden" name="catID" value="{{category.Event_Category_ID}}">
+            <td><input type="text" class="form-control" name="category" value="{{category.Event_Category_Name}}"> </td>
+            <td><div class="d-flex justify-content-center">
+                <div class="p-2"><button type='submit' class="btn"><img src="{{url_for('static', filename='save-fill.svg')}}"></button></div>
+            </form>
                 
-                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
+                <form action="{{ request.path }}" method="POST">
+                    <input type="hidden" name="check" value="delCategory">
+                    <input type="hidden" name="delCategoryID" value="{{category.Event_Category_ID}}">
+                    <div class="p-2"><button type='submit' class='btn'><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button></div></td>
+            </form>
+        </tr>
+        {% endfor %}        
+  
+    
+</table>
+
     </div>
     </div>
-    <div class="row">
-    <div class="col">
-       
-        <table class="table table-responsive">
-            <thead class="thead-dark">
-                <th>
-                    Vendor Services
-                </th>
-                <th> <button type="submit" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#vServiceModal">
-                    Add Vendor Service
-                </button></th>
-            </thead>
-            <tbody>
-                {% for vendorService in vendorServices %}
-                <tr>
-                    <form action="{{ request.path }}" method="POST">
-                        <input type="hidden" name="check" value="vendorCheck">
-                        <input type="hidden" name="vendorID" value="{{vendorService.Vendor_Service_ID}}">
-                        <td><input type="text" class="form-control" name="vendorService" value="{{vendorService.Vendor_Services}}"></td>
-                        <td>
-                            <div class="d-flex flex-row">
-                                <div class="p-2"><button type='submit' class="btn"><img src="{{url_for('static', filename='save-fill.svg')}}"></button></div></form>
-                            
-                            <form action="{{ request.path }}" method="POST">
-                                <input type="hidden" name="check" value="delVenService">
-                                <input type="hidden" name="delVenServiceID" value="{{vendorService.Vendor_Service_ID}}">
-                                <div class="p-2">
-                                     <button type='submit' class='btn'><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button> </form>
-                                    </div>
-                                    </td>
-                                </tr>
-                {% endfor %}
-            </tbody>
-        </table>
-    </div>
-    <div class="col">
-            <table class="table table-responsive">
+
+    <div id="collapseStatus" class="collapse" aria-labelledby="headingTwo">
+        <div class="card card-body">
+            <table class="table">
                 <thead class="thead-dark">
                     <th>
-                        Payment Type
+                        Status
                     </th>
-                    <th>  <button type="submit" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#payTypeModal">
-                        Add Payment Type
-                    </button></th>
+                    <th><button type="submit" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#statusModal">
+                        Add Status
+                    </button>
+                </th>
                 </thead>
                 <tbody>
-                    {% for payment in payments %}
+                    {% for status in statuses %}
                     <tr>
                         <form action="{{ request.path }}" method="POST">
-                            <input type="hidden" name="check" value="paymentCheck">
-                            <input type="hidden" name="paymentID" value="{{payment.Payment_Type_ID}}">
-                            <td><input type="text" class="form-control" name="paymentType" value="{{payment.Payment_Type_Name}}"></td>
-                            <td><div class="d-flex flex-row">
-                                <div class="p-2">
-                                <button type='submit' class="btn"><img src="{{url_for('static', filename='save-fill.svg')}}"></button></form></div>
+                            <input type="hidden" name="check" value="statCheck">
+                            <input type="hidden" name="statID" value="{{status.Event_Status_ID}}">
+                            <td><input type="text" class="form-control" name="status" value="{{status.Event_Status}}"></td>
+                            <td><div class="d-flex justify-content-center">
+                                <div class="p-2"><button type='submit' class="btn"><img src="{{url_for('static', filename='save-fill.svg')}}"></button></div>
+                            </form>
+                                
                                 <form action="{{ request.path }}" method="POST">
-                                    <input type="hidden" name="check" value="delPayType">
-                                    <input type="hidden" name="delPayTypeID" value="{{payment.Payment_Type_ID}}">
-                                    <div class="p-2">
-                                         <button type='submit' class='btn'><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button> </div></form>
-                                        </div>
-                            
-                            </td>
-                      
+                                    <input type="hidden" name="check" value="delStatus">
+                                    <input type="hidden" name="delStatusID" value="{{status.Event_Status_ID}}">
+                                <div class="p-2">
+                                    <button type='submit' class='btn'><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button></div></td>        
+                        </form>
                     </tr>
                     {% endfor %}
                 </tbody>
             </table>
-        </div>
-        </div>
+            </div>
+            </div>
+
+            <div id="collapseService" class="collapse" aria-labelledby="headingThree">
+                <div class="card card-body">
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <th>
+                                Product Service
+                            </th>
+                            <th> <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#ServiceModal">
+                                Add Product Service
+                                </button></th>
+                        </thead>
+                        <tbody>
+                            {% for productService in productServices %}
+                            <tr>
+                                <form action="{{ request.path }}" method="POST">
+                                    <input type="hidden" name="check" value="productCheck">
+                                    <input type="hidden" name="productID" value="{{productService.Product_Service_ID}}">
+                                    <td><input type="text" class="form-control" name="productService" value="{{productService.Product_Service}}"></td>
+                                    <td>
+                                        <div class="d-flex justify-content-center">
+                                            <div class="p-2"><button type='submit' class="btn"><img src="{{url_for('static', filename='save-fill.svg')}}"></button></div></form>
+                                        
+                                        <form action="{{ request.path }}" method="POST">
+                                            <input type="hidden" name="check" value="delProService">
+                                            <input type="hidden" name="delProServiceID" value="{{productService.Product_Service_ID}}">
+                                            <div class="p-2">  <button type='submit' class='btn'><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button>
+                                            </div>
+                                  </form>
+                                </td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    </div>
+                    </div>
+            <div id="collapsePayType" class="collapse" aria-labelledby="headingFour">
+                <div class="card card-body">
+                    <table class="table">
+                        <thead class="thead-dark">
+                            <th>
+                                Payment Type
+                            </th>
+                            <th>  <button type="submit" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#payTypeModal">
+                                Add Payment Type
+                            </button></th>
+                        </thead>
+                        <tbody>
+                            {% for payment in payments %}
+                            <tr>
+                                <form action="{{ request.path }}" method="POST">
+                                    <input type="hidden" name="check" value="paymentCheck">
+                                    <input type="hidden" name="paymentID" value="{{payment.Payment_Type_ID}}">
+                                    <td><input type="text" class="form-control" name="paymentType" value="{{payment.Payment_Type_Name}}"></td>
+                                    <td>
+                                        <div class="d-flex justify-content-center">
+                                        <div class="p-2">
+                                        <button type='submit' class="btn"><img src="{{url_for('static', filename='save-fill.svg')}}"></button></form></div>
+                                        <form action="{{ request.path }}" method="POST">
+                                            <input type="hidden" name="check" value="delPayType">
+                                            <input type="hidden" name="delPayTypeID" value="{{payment.Payment_Type_ID}}">
+                                            <div class="p-2">
+                                                 <button type='submit' class='btn'><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button> </div></form>
+                                             
+                                    
+                                    </td>
+                              
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                    </div>
+                    </div>
+                    </div>
+
+
+    <div class="col"></div>
+
+
+
+
+<!-- Col end for cards -->
     </div>
-    </div>
+                        
+<!-- Row end for card display-->
 </div>
 
-<!--   Add category and product service
+
     
-    <div class="d-flex justify-content-end px-1 py-1">
-                            <button type="button" class="btn btn-link" data-toggle="modal" data-target="#CatModal">
-                                Add Category
-                                </button>                        
-                            <button type="button" class="btn btn-link" data-toggle="modal" data-target="#ServiceModal">
-                                Add Product Service
-                                </button>
-                            </div> -->
+
+</div>
+</div>
 
 
 
@@ -258,7 +274,7 @@
             <form action = "{{ request.path }}" method = "POST">
                 <input type="hidden" name="check" value="serviceCheck">
                 <label>Product Service</label>
-                <input type="text" class="form-control" name="service" required>                  
+                <input type="text" pattern="[A-Za-z ]{1,250}" class="form-control" name="service" required>                  
         </div>
         <div class="modal-footer">
             <input type='submit' class="btn btn-secondary" value="Save">
@@ -283,7 +299,7 @@
             <form action = "{{ request.path }}" method = "POST">
                 <input type="hidden" name="check" value="catCheck">
                 <label>Category</label>
-                <input type="text" class="form-control" name="category" required>                  
+                <input type="text" pattern="[A-Za-z ]{1,250}" class="form-control" name="category" required>                  
         </div>
         <div class="modal-footer">
             <input type='submit' class="btn btn-secondary" value="Save">
@@ -307,7 +323,7 @@
             <form action = "{{ request.path }}" method = "POST">
                 <input type="hidden" name="check" value="statusCheck">
                 <label>Status</label>
-                <input type="text" class="form-control" name="status" pattern="[A-Za-z]" required>                  
+                <input type="text" pattern="[A-Za-z ]{1,250}" class="form-control" name="status" pattern="[A-Za-z]{1,50}" required>                  
         </div>
         <div class="modal-footer">
             <input type='submit' class="btn btn-secondary" value="Save">
@@ -332,7 +348,7 @@
             <form action = "{{ request.path }}" method = "POST">
                 <input type="hidden" name="check" value="vServiceCheck">
                 <label>Vendor Service</label>
-                <input type="text" class="form-control" name="service" pattern="[A-Z a-z]{1,50}" required>                  
+                <input type="text" pattern="[A-Za-z ]{1,250}" class="form-control" name="service" pattern="[A-Z a-z]{1,50}" required>                  
         </div>
         <div class="modal-footer">
             <input type='submit' class="btn btn-secondary" value="Save">
@@ -357,7 +373,7 @@
             <form action = "{{ request.path }}" method = "POST">
                 <input type="hidden" name="check" value="payTypeCheck">
                 <label>Payment Type</label>
-                <input type="text" class="form-control" name="payType" pattern="[A-Z a-z]{1,50}" required>                  
+                <input type="text" pattern="[A-Za-z ]{1,250}" class="form-control" name="payType" pattern="[A-Z a-z]{1,50}" required>                  
         </div>
         <div class="modal-footer">
             <input type='submit' class="btn btn-secondary" value="Save">

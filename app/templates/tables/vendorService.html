@@ -1,0 +1,167 @@
+{% extends "base.html" %}
+{% block active %}
+<a class="nav-link " href="/">Home</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/Appointments">Appointments</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/Customer">Customers</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/Employee">Employees</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/EventOrders">Event Orders</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/Payment">Payments</a> 
+</li>
+<li class="nav-item">
+<a class="nav-link active" href="/Vendor">Vendors</a>  
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="/Misc">Misc</a>
+    </li>
+<li class="nav-item">
+    <a class="nav-link" href="/Reports">Reports</a>
+</li>
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">          
+    <div class="p-5 mb-4 rounded-3"> 
+        <div class="container py-2">
+            <div class="d-flex justify-content-start"> 
+                <h1 class="font-weight-bold px-2 py-4">{% for vendor in vendorName %}
+                    <h2>Orders from {{vendor.Vendor_Name}}</h2>
+                        {% endfor %}</h1>
+                </div> 
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                   {% for message in messages %}
+                   {% if message == 'Delete is not possible for this record' %}
+                   <div class="alert alert-danger" role="alert">
+                    {{ message }}
+                    </div>
+                       {% else %}
+                       <div class="alert alert-success" role="alert">
+                        {{ message }}
+                        </div>
+                           {% endif %}
+                    
+                   {% endfor %}
+                {% endif %}
+             {% endwith %}
+            
+                
+<table class="table table-striped">
+    <thead class="thead-dark">
+        <th>
+            Event
+        </th>
+        <th>
+            Service
+        </th>
+        <th>
+            Date
+        </th>
+        <th>
+            Status
+        </th>
+        <th> <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addVendorServiceModal">
+            Add Service
+        </button> </th>
+    </thead>
+    <tbody>
+        {% for vendorService in vendorServices %}
+        <tr>
+            <td>{{vendorService.Event_Order_ID}}</td>
+            <form action = "{{ request.path }}" method = "POST">
+                <input type="hidden" name='check' value="updateVendorService">
+                <input type="hidden" name='venServiceID' value="{{vendorService.Vendor_Service_ID}}">
+            <td> 
+               {{vendorService.Vendor_Services}}
+            </td>
+            <td><input type='date' class='form-control' name='date' value="{{vendorService.Date.strftime('%Y-%m-%d')}}"></td>
+            <td>
+                <select class='form-control' name="statusUpdate">
+                    <option selected value="{{vendorService.Vendor_Service_Status_ID}}">{{vendorService.Event_Status}}</option>
+                    {% for status in statuses %}
+                    {% if status.Event_Status_ID != vendorService.Vendor_Service_Status_ID %}
+                    <option value="{{status.Event_Status_ID}}">{{status.Event_Status}}</option>
+                    {% endif %}
+                    {% endfor %}
+                </select></td>
+            <td><div class="d-flex ">
+                <div class="p-2">
+                <button type="submit" class="btn"><img src="{{url_for('static', filename='save-fill.svg')}}"></button></div></form>
+                <form action = "{{ request.path }}" method = "POST">
+                    <input type="hidden" name="check" value="delVendorService">
+                    <input type="hidden" name="delVenServiceID" value="{{vendorService.Vendor_Service_ID}}">
+                <div class="p-2">
+                <button type="submit" class="btn"><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button></div></form></td>
+
+        </tr>
+        {% endfor %}
+    </tbody>
+
+</table>
+
+</div>
+</div>
+</div>
+<!-- MODAL -->
+
+<div class="modal fade" id="addVendorServiceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+    <div class="modal-content">
+        <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">New Vendor Service</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+        </div>
+        <div class="modal-body">
+            <form action = "{{ request.path }}" method = "POST">
+                <input type="hidden" name="check" value="addVendorService">
+                <label>Vendor</label>
+                {% for vendor in vendorName %}
+                <input type="hidden" name='vendor' value="{{vendor.Vendor_ID}}"> 
+                <input type="text" class="form-control" value="{{vendor.Vendor_Name}}" disabled>
+                {% endfor %}
+               <!-- <select class="form-control" name="vendor">
+                {% for vendor in vendors %}
+                    <option value="{{vendor.Vendor_ID}}">{{vendor.Vendor_Name}}</option> 
+                    {% endfor %} 
+                </select> -->
+                <label>Event</label>
+                <select class="form-control" name="event">
+                    <option disabled selected value> -- Select an option -- </option>
+                    {% for event in events %} 
+                    <option value="{{event.Event_Order_ID}}">{{event.Event_Order_ID}} : {{event.First_Name}} {{event.Last_Name}}</option>
+                    {% endfor %}
+                </select>
+                <label>Service</label>
+                <input type='text' class="form-control" name="service" required>
+                <label>Status</label>
+                <select class="form-control" name="status" required>     
+                    <option disabled selected value> -- Select an option -- </option>                                     
+                    {% for status in statuses %}
+                        <option value="{{status.Event_Status_ID}}">{{status.Event_Status}}</option>
+                        {% endfor %}
+                    </select>
+                <label>Date</label>
+                <input type="date" name="date" class="form-control">           
+
+            
+        </div>
+        <div class="modal-footer">
+            <input type='submit' class="btn btn-secondary" value="Save">
+            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        </form>
+        </div>
+    </div>
+    </div>
+</div>
+{% endblock %}

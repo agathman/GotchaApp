@@ -24,46 +24,55 @@
 <li class="nav-item">
     <a class="nav-link" href="/Misc">Misc</a>
     </li>
+<li class="nav-item">
+    <a class="nav-link" href="/Reports">Reports</a>
+    </li>
 
 {% endblock %}
 
      {% block content %}
 
-     <div class="container-fluid text-center">          
+     <div class="container-fluid">          
         <div class="p-5 mb-4 rounded-3"> 
-            <div class="container py-2 text-center">
+            <div class="container py-2">
                 <div class="d-flex justify-content-start"> 
-                    <h1 class="font-weight-bold px-2 py-4">Events</h1>
+                    <h1 class="font-weight-bold px-2 py-4">Payments</h1>
                     </div>  
                     {% with messages = get_flashed_messages() %}
                     {% if messages %}
                        {% for message in messages %}
-                       <div class="d-flex justify-content-center">
+                       {% if message == 'Delete is not possible for this record' %}
                        <div class="alert alert-danger" role="alert">
-                          {{ message }}
+                        {{ message }}
                         </div>
-                        </div>
+                           {% else %}
+                           <div class="alert alert-success" role="alert">
+                            {{ message }}
+                            </div>
+                               {% endif %}
+                        
                        {% endfor %}
                     {% endif %}
-                 {% endwith %}  
+                 {% endwith %}
+                
      
                             <table class='table table-striped'>
                                 <thead class="thead-dark">
-                                <th>
+                                <th class="header" scope="col">
                                     Payment ID
                                 </th>
-                                <th>Payment Type</th>
-                                <th>
+                                <th class="header" scope="col">Payment Type</th>
+                                <th class="header" scope="col">
                                     Event Order ID
                                 </th>
-                                <th>Customer</th>
-                                <th>
+                                <th class="header" scope="col">Customer</th>
+                                <th class="header" scope="col">
                                     Payment Date Init
                                 </th>
-                                <th>
+                                <th class="header" scope="col">
                                     Payment Date Full
                                 </th>  
-                                <th>  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPaymentModal">
+                                <th class="header" scope="col">  <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#addPaymentModal">
                                     Add Payment
                                 </button></th>                                                            
                            

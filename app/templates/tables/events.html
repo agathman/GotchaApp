@@ -23,49 +23,58 @@
 <li class="nav-item">
     <a class="nav-link" href="/Misc">Misc</a>
     </li>
+<li class="nav-item">
+    <a class="nav-link" href="/Reports">Reports</a>
+    </li>
 {% endblock %}
 
 
      {% block content %}
-     <div class="container-fluid text-center">          
+     <div class="container-fluid">          
         <div class="p-5 mb-4 rounded-3"> 
-            <div class="container py-2 text-center">
+            <div class="container py-2">
                 <div class="d-flex justify-content-start"> 
                     <h1 class="font-weight-bold px-2 py-4">Events</h1>
                     </div>  
                     {% with messages = get_flashed_messages() %}
-                    {% if messages %}
-                       {% for message in messages %}
-                       <div class="d-flex justify-content-center">
-                       <div class="alert alert-success" role="alert">
-                          {{ message }}
-                        </div>
-                        </div>
-                       {% endfor %}
-                    {% endif %}
-                 {% endwith %}         
+            {% if messages %}
+               {% for message in messages %}
+               {% if message == 'Delete is not possible for this record' %}
+               <div class="alert alert-danger" role="alert">
+                {{ message }}
+                </div>
+                   {% else %}
+                   <div class="alert alert-success" role="alert">
+                    {{ message }}
+                    </div>
+                       {% endif %}
+                
+               {% endfor %}
+            {% endif %}
+         {% endwith %}
+               
                  
                             <table class="table table-striped">
                                 <thead class="thead-dark">
-                                <th>
-                                    Customer Name
-                                </th>
-                                <th>
+                                <th class="header" scope="col">
                                     Event ID
                                 </th>
-                                <th>
+                                <th class="header" scope="col">
+                                    Customer Name
+                                </th>
+                                <th class="header" scope="col">
                                     Phone Number  
                                 </th>       
-                                <th>
+                                <th class="header" scope="col">
                                     Email
                                 </th>
-                                <th>
+                                <th class="header" scope="col">
                                     Event Date
                                 </th>
-                                <th>
+                                <th class="header" scope="col">
                                     Status
                                </th>
-                                <th><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#EventModal">
+                                <th class="header" scope="col"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#EventModal">
                                     Add Event
                                 </button></th>
                               
@@ -73,8 +82,8 @@
                             <tbody>
                                 {% for event in events %}
                                 <tr>
+                                <td>{{ event.Event_Order_ID}}</td>    
                                 <td>{{ event.First_Name }} {{ event.Last_Name }}</td>
-                                <td>{{ event.Event_Order_ID}}</td>
                                 <td>{{ event.Phone }}</td>
                                 <td>{{ event.Email }}</td>
                                 <td>{{ event.Event_Time.strftime('%m-%d-%Y') }}</td>
@@ -92,7 +101,7 @@
 
 <!-- Modal for Event form-->
 <div class="modal fade" id="EventModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" style="width:50%" role="document">
     <div class="modal-content">
         <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">New Event</h5>
@@ -101,84 +110,115 @@
         </button>
         </div>
         <div class="modal-body">
+            <label style="color:red">*</label> <label>Indicates required field</label> 
             <form action = "{{ request.path }}" method = "post">
+                <input type="hidden" name="check" value="event">   
                 <div class="row">
-                    <div class="col">
-                <input type="hidden" name="check" value="event">                                     
-                <label>Category</label>
-                <select class="form-control" name="category" required>
-                    <option disabled selected value> -- Select an option -- </option>
-                    {% for category in eventCategory %}
-                        <option value="{{category.Event_Category_ID}}">{{category.Event_Category_Name}}</option>
-                        {% endfor %}
-                    
-                </select>                            
-                <label>Customer</label>
+                    <div class="col-3">
+                        <label>Customer</label> <label style="color:red">*</label>
                 <select class="form-control" name="customer" required>
-                    <option disabled selected value> -- Select an option -- </option>
+                    <option disabled selected>Select an option</option>
                     {% for customer in customers %}
                         <option value="{{customer.Customer_ID}}">{{customer.First_Name}} {{customer.Last_Name}} </option>
-                        {% endfor %}
-                        
+                        {% endfor %} 
                     </select>
-                <label>Order Status</label>
-                <select class="form-control" name="status" required> 
-                    <option disabled selected value> -- Select an option -- </option>                                          
-                    {% for status in statuses %}
-                        <option value="{{status.Event_Status_ID}}">{{status.Event_Status}}</option>
-                        {% endfor %}
-                    
-                    </select>
-                <label>Date</label>
-                <input type="date" class="form-control" name="eventTime" required>
-                <label>Theme</label>
+                    </div>
+                    <div class="col-3"> 
+                    <label>Date</label> <label style="color:red">*</label>
+                    <input type="date" class="form-control" name="eventTime" required>  
+                    </div>
+                    <div class="col-3">
+                <label>Theme</label> <label style="color:red">*</label>
                 <input type="text" class="form-control" name="theme">
-                <label>Event Description</label>
-                <input type="text" class="form-control" name="eventDesc" required>
-                <label>Delivery</label>
-                <select class="form-control" name="delivery" required>  
-                    <option disabled selected value> -- Select an option -- </option>                                          
-                    <option value="Yes">Yes</option>
-                    <option value="No">No</option>
-                   
-                </select>
-               <!-- <label>Employee Assignment</label>
-                <select class="form-control" name="employeeAssignment">
-                    <option disabled selected value> -- Select an option -- </option>
-                    {% for employee in employees %}
-                        <option value="{{employee.Emp_ID}}">{{employee.Emp_Last_Name}}</option>
-                    {% endfor %}
-            </select>
-        -->
                 </div>
-                <div class="col">
-                <label>Setup</label>
-                <select class="form-control" name="setup" required>    
-                    <option disabled selected value> -- Select an option -- </option>                                       
+                <div class="col-3">
+                    <label>Venue</label> <label style="color:red">*</label>
+                <input type="text" class="form-control" name="location" required>
+                </div>
+                </div>
+                <br>
+                <div class="row">
+                    <div class="col-3">  
+                        <label>Category</label> <label style="color:red">*</label>
+                        <select class="form-control" name="category" required>
+                            <option disabled selected>Select a category</option>
+                            {% for category in eventCategory %}
+                            <option value="{{category.Event_Category_ID}}">{{category.Event_Category_Name}}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="col-3">                  
+                        <label>Order Status</label> <label style="color:red">*</label>
+                        <select class="form-control" name="status" required> 
+                            <option disabled selected>Select a status</option>                                          
+                            {% for status in statuses %}
+                                <option value="{{status.Event_Status_ID}}">{{status.Event_Status}}</option>
+                            {% endfor %}    
+                        </select>
+                    </div>
+  
+                    <div class="col-3">
+                <label>Delivery</label> <label style="color:red">*</label>
+                <select class="form-control" name="delivery" required>                                            
                     <option value="Yes">Yes</option>
                     <option value="No">No</option>
-                    
+                    <option disabled selected value>Select a delivery</option>
                 </select>
-                <label>Location</label>
-                <input type="text" class="form-control" name="location" required>
-                <label>Restrictions</label>
-                <input type="text" class="form-control" name="restrictions" required>
-                <label>Address</label>
+                </div>
+                <div class="col-3">  
+                <label>Setup</label> <label style="color:red">*</label>
+                <select class="form-control" name="setup" required>   
+                    <option disabled selected value>Select a setup</option>                                      
+                    <option value="Yes">Yes</option>
+                    <option value="No">No</option>
+                </select>
+                </div>
+                </div>
+                
+                <br>
+                <div class="row">
+                
+                <div class="col-5">
+                <label>Address</label> <label style="color: red">*</label>
                 <input type="text" class="form-control" name="address" required>
-                <label>City</label>
-                <input type="text" class="form-control" name="city" required>
-                <label>Zip Code</label>
-                <input type="number" min="0" step="1" class="form-control" name="zip" required>
-                <label>State</label>
+                </div>
+                <div class="col-3">
+                <label>City</label> <label style="color:red">*</label>
+                <input type="text" class="form-control" name="city" required>  
+                </div>
+                <div class="col-2"> 
+                    <label>State</label> <label style="color:red">*</label>
                 <select class="form-control" name="state">
                     {% for state in stateList %}
-                            <option value="{{state.State_ID}}">{{state.State_Name}}</option> 
+                        <option value="{{state.State_ID}}">{{state.State_Name}}</option> 
                     {% endfor %}
-                </select>
+                </select>                                         
+                </div>
+                <div class="col-2"> 
+                    <label>Zip Code</label> <label style="color:red">*</label>
+                    <input type="text" class="form-control" name="zip" required>
+              
+                </div>
+                </div>
+                
+                <br>
+                <div class='row'>
+                    <div class="col">   
+                        <label>Event Description</label> <label style="color:red">*</label>
+                        <textarea rows = "2" class="form-control" name="eventDesc" required></textarea>
+                        </div>
+                    </div>
+                <div class='row'>
+                    <div class="col">  
+                        <label>Restrictions</label>
+                        <textarea rows = "2" class="form-control" name="restrictions"></textarea>
+                        </div>
+                        </div>
 
-               </div>
         </div>
+     
         <div class="modal-footer">
+            
             <input type='submit' class="btn btn-secondary" value="Save">
             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
         </form>

@@ -1,0 +1,126 @@
+{% extends "base.html" %}
+
+{% block active %}
+<a class="nav-link " href="/">Home</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/Appointments">Appointments</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/Customer">Customers</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/Employee">Employees</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/EventOrders">Event Orders</a>
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/Payment">Payments</a> 
+</li>
+<li class="nav-item">
+<a class="nav-link" href="/Vendor">Vendors</a>  
+</li>
+<li class="nav-item">
+    <a class="nav-link" href="/Misc">Misc</a>
+    </li>
+<li class="nav-item">
+    <a class="nav-link active" href="/Reports">Reports</a>
+    </li>
+
+{% endblock %}
+
+{% block content %}
+<div class="container-fluid">          
+    <div class="p-5 mb-4 rounded-3"> 
+        <div class="container py-2">
+            <div class="d-flex justify-content-start"> 
+                <h1 class="font-weight-bold px-2 py-4">Reports</h1>
+                </div>    
+
+
+                <!-- Row 1-->
+                <div class="row py-3">
+                        <div class="col-8">
+                            <table class="table">
+                                <thead>
+                                <th>
+                                Event Report
+                                </th>
+                                <form action ="{{ request.path }}" method = 'post'>
+                                    <input type="hidden" name="check" value="event">
+                                <th><select class="form-control" name="event" required>
+                                <option disabled selected value>-- Please select an event --</option>
+                                {% for event in events %}
+                                    <option value="{{event.Event_Order_ID}}">ID: {{event.Event_Order_ID}} || Customer: {{event.First_Name}} {{event.Last_Name}}</option>
+                                    {% endfor %}
+    
+                                </select>
+                                </th>
+                             <th>
+                                <input type="submit" class="btn btn-secondary" value="View Report">
+                                </form></th>
+                                </thead>
+                                <thead>
+                            <th>Appointments in next 30 days</th>
+                            <th></th>
+                            <th><a href="/appointmentReport"><button class="btn btn-secondary">View Report</button></a>
+                                            </th>
+                                </thead>
+                                <thead>
+                                    <th>Events in the next 30 days</th>
+                                    <th></th>
+                                    <th><a href="/eventListReport"><button class="btn btn-secondary">View Report</button></a></th>
+                                </thead>
+                                <thead>
+                                    <th>Services provided by Vendors</th>
+                                    <th><form action ="{{ request.path }}" method = 'post'>
+                                        <input type="hidden" name="check" value="vendor">
+                                        <select class="form-control" name="vendorSelected" required>
+                                        <option disabled selected value>-- Please select a vendor --</option>
+                                        {% for vendor in vendors %}
+                                            <option value="{{vendor.Vendor_ID}}">{{vendor.Vendor_Name}}</option>
+                                            {% endfor %}
+            
+                                        </select></th>
+                                    <th>
+                                        <input type="submit" class="btn btn-secondary" value="View Report"></form>
+                                    </th>
+                                    </thead>
+                                    <thead>
+                                    <th>Employee Assignments</th>
+                                    <th><form action = "{{ request.path }}" method='post'>
+                                        <input type="hidden" name="check" value="employeeCheck">
+                                        <select class="form-control" name="employee">
+                                            <option selected disabled>-- Please select an employee --</option>
+                                            {% for employee in employees %}
+                                            <option value="{{employee.Emp_ID}}">{{employee.Emp_First_Name}} {{employee.Emp_Last_Name}}</option>
+                                            {% endfor %}
+                                        </select>
+                                    </th>
+                                    <th> <input type='submit' class='btn btn-secondary' value='View Report'></th>
+                                    </form></th>
+                        
+            
+                                </thead>
+                            </table>
+                            </div>
+                        <div class="col">
+
+                        </div>
+                        <div class="col">
+
+                        </div>
+                    
+
+                    </div>
+                            </div>
+                    </div>
+                </div>
+
+
+
+
+
+
+{% endblock %}

@@ -4,6 +4,23 @@
      <div class="container">
             <div class="p-5 mb-4 bg-light rounded-3">
                 <div class="container-fluid py-5 text-center">
+                    {% with messages = get_flashed_messages() %}
+                    {% if messages %}
+                       {% for message in messages %}
+                       {% if message == 'Delete is not possible for this record' %}
+                       <div class="alert alert-danger" role="alert">
+                        {{ message }}
+                        </div>
+                           {% else %}
+                           <div class="alert alert-success" role="alert">
+                            {{ message }}
+                            </div>
+                               {% endif %}
+                        
+                       {% endfor %}
+                    {% endif %}
+                 {% endwith %}
+                
                     <h1 class="display-5 fw-bold">{% for events in event %} Event for {{ events.Event_Time.strftime('%m-%d-%Y')}} {% endfor %}</h1>
                       
                         <table class="table">
