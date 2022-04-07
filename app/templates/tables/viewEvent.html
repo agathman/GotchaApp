@@ -108,13 +108,13 @@
                 
             </div>
     <div class="row">
-                <div class='col-10'> 
+                <div class='col-12'> 
                     <table class='table'>
                         <thead class="thead-dark">
                         <th style='width: 15%'>
                             Event ID
                         </th>
-                        <th>
+                        <th style='width: 25%'>
                             Customer
                         </th>
                         <th style='width: 25%'>
@@ -125,6 +125,9 @@
                         </th>
                         <th style='width: 25%'>
                             Event Date
+                        </th>
+                        <th>
+                            Status
                         </th>
                         <th>
                             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateEventModal">
@@ -140,8 +143,9 @@
                             <td>{{ event.Phone }}</td>
                             <td>{{ event.Email }}</td>
                             <td>{{ event.Event_Time.strftime('%m-%d-%Y') }}</td>
+                            <td>{{ event.Event_Status}}</td>
                             <td> 
-                            <button type="button" class="btn px-2" data-toggle="modal" data-target="#deleteEvent"><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button>
+                            <div class='d-flex justify-content-center'><button type="button" class="btn px-2" data-toggle="modal" data-target="#deleteEvent"><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button></div>
                             </td>
                             </tr>
                             {% endfor %}
@@ -279,14 +283,11 @@
     </div>
     </div>
   
+<div class="row">
 
-
-<div class="col">
-<table class="table table-bordered">
+<div class="col-12">
+<table class="table">
     <thead class="thead-dark">
-        <th>
-            Status
-        </th>
         <th>
             Theme
         </th>
@@ -320,7 +321,6 @@
     <tbody>
         {% for event in events %}
         <tr>
-        <td>{{ event.Event_Status}}</td>
         <td>{{ event.Event_Theme }}</td>
         <td>{{ event.Event_Order_Desc }}</td>
         <td>{{ event.Event_Setup }}</td>
@@ -335,11 +335,14 @@
     </tbody>        
     </table>
 </div>
-
+</div>
+<br>
+<br>
 
 <div class="row">
     <div class="col-8"> 
         <h3 class="font-weight-bold">Order Lines</h3>
+
 <table class="table table-striped">
     <thead class="thead-dark">
         <th style="width: 15%">
@@ -351,9 +354,11 @@
         <th>
             Service
         </th>
-        <th> <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#OrderLineModal">
-            Add Order Line
-        </button> </th>
+        <th> 
+            <div class='d-flex justify-content-end'><button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#OrderLineModal">
+             Add Order Line
+             </button> </div>
+      </th>
         
     </thead>
     <tbody>
@@ -379,7 +384,7 @@
             <td>
                 {{orderLine.Product_Service}}
             </td>
-            <td><div class="d-flex">
+            <td><div class='d-flex justify-content-end'>
                 <div class="p-2">
                 <button type="submit" class="btn"><img src="{{url_for('static', filename='save-fill.svg')}}"></button></div>
             </form>
@@ -387,7 +392,7 @@
                     <input type="hidden" name="check" value="delOrderLineCheck">
                     <input type="hidden" name="delOrderLineID" value="{{orderLine.Event_Order_Line_ID}}">
                 <div class="p-2">
-                <button type="submit" class="btn"><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button></div></div></form>
+                <button type="submit" class="btn"><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button></div></form>
             </td>
         </tr>
         {% endfor %}
@@ -396,10 +401,10 @@
 </div>
 
 </div>
-<div class="row">
-
-<div class="col-8">
-    <h3 class="font-weight-bold">Vendor Services</h3>
+<br>
+<div class='row'>
+    <div class="col-8"> 
+        <h3 class="font-weight-bold">Vendor Services</h3>
     <table class="table table-striped">
         <thead class="thead-dark">
             <th>
@@ -408,15 +413,15 @@
             <th>
                 Service
             </th>
-            <th style="width: 15">
+            <th style="width: 15%">
                 Date
             </th>
             <th style="width: 24%">
                 Status
             </th>
-            <th> <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addVendorServiceModal">
+            <th> <div class='d-flex justify-content-end'><button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addVendorServiceModal">
                 Add Service
-            </button> </th>
+            </button></div> </th>
         </thead>
         <tbody>
             {% for vendorService in vendorServices %}
@@ -438,7 +443,7 @@
                         <option value="{{status.Event_Status_ID}}">{{status.Event_Status}}</option>
                         {% endif %}
                         {% endfor %}</td>
-                <td><div class="d-flex flex-row">
+                <td><div class='d-flex justify-content-end'>
                     <div class="p-2">
                     <button type="submit" class="btn"><img src="{{url_for('static', filename='save-fill.svg')}}"></button></div></form>
                     <form action = "{{ request.path }}" method = "POST">
@@ -454,7 +459,8 @@
     </table>
 </div>
 </div>
-<!-- Vendor Service Row-->
+
+<br>
 <div class="row">
     <div class="col-8">
         <h3 class="font-weight-bold">Employees Assigned</h3>
@@ -466,9 +472,9 @@
                 <th>
                     Date Assigned
                 </th>       
-                <th> <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addEmployeeAssignModal">
+                <th style="width: 20%"><div class='d-flex justify-content-end'> <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addEmployeeAssignModal">
                     Add Employee
-                </button> </th>
+                </button></div></th>
             </thead>
             <tbody>
                 {% for employeeAssignment in employeeAssignments %}
@@ -481,7 +487,7 @@
                     <td><form action = "{{ request.path }}" method = "POST">
                         <input type="hidden" name="check" value="delEmployeeAssign">
                         <input type="hidden" name="delEmployeeID" value="{{employeeAssignment.Employee_Assignment_ID}}">
-                    <button type="submit" class="btn"><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button></form></td>
+                        <div class='d-flex justify-content-center'><button type="submit" class="btn"><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button></div></form></td>
                 </tr>
                 {% endfor %}
             </tbody>       

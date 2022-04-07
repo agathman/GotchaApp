@@ -12,18 +12,41 @@
       background-position: center;
       background-size: cover;
       background-repeat: repeat-x;
+      font-family: Arial, Helvetica, sans-serif;
     }
-    .navbar-custom {
-      background-color: antiquewhite;
+    .navbar-custom{
+      background-color: #BBD6F2;
+
     }
+      
+ 
     
     .btn-secondary{
-    background: #ef7c6a;
+    background: #566370;
     border: 1px solid #eee;
     }
     .btn-primary{
       background: #ef7c6a;
       border: 1px solid #eee;
+    }
+    th{
+      background-color:  #355270;
+      color: white;
+    }
+    .nav-link {
+      font-size:larger;
+      color: #566370!important;
+      }
+    .nav-item {
+      color:#566370;
+      background-color:#BBD6F2 ;
+    }
+    .nav-link:hover {
+      color: white !important;
+    }
+    .active {
+      color: white !important;
+      background-color:#BBD6F2!important;
     }
   
     .header {
@@ -33,20 +56,20 @@
     </style>
  </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-custom align-items-end" >
+    <nav class="navbar navbar-expand-lg navbar-custom" >
          
         <a class="navbar-brand" href="#"><img src="../assets/colorLogo.png" alt="Creations By ChaCha" width="150" height="150"></a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
-      
+      <br>
         <div class="collapse navbar-collapse" id="navbarSupportedContent" >
-          <ul class="nav nav-tabs justify-content-center align-items-end">
-            <li class="nav-item">
+          <br>
+          <ul class="navbar-nav bd-navbar-nav  flex-row">
+    
               {% block active %}
               {% endblock %}
 
-            {% block nav %}{% endblock %}
           
           </ul>  
         </div>
@@ -54,7 +77,6 @@
 
           {% block content %}{% endblock %}
                  
-    </footer>
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
