@@ -29,7 +29,7 @@
 {% endblock %}
 
 {% block content %}
-<div class="container-fluid text-center">          
+<div class="container-fluid">          
     <div class="p-5 mb-4 rounded-3">
         <div class="row">
             <div class="col-4">
@@ -58,7 +58,7 @@
         </div> 
         <div class="col"></div>
         </div>
-            <div class="container py-5 text-center">
+            <div class="container py-5 ">
 
     
 <div class="row">
@@ -112,7 +112,7 @@
                 <input type="hidden" name="check" value="updateCatCheck">
                 <input type="hidden" name="catID" value="{{category.Event_Category_ID}}">
             <td><input type="text" class="form-control" name="category" value="{{category.Event_Category_Name}}"> </td>
-            <td><div class="d-flex justify-content-center">
+            <td><div class="d-flex ">
                 <div class="p-2"><button type='submit' class="btn"><img src="{{url_for('static', filename='save-fill.svg')}}"></button></div>
             </form>
                 
@@ -149,7 +149,7 @@
                             <input type="hidden" name="check" value="statCheck">
                             <input type="hidden" name="statID" value="{{status.Event_Status_ID}}">
                             <td><input type="text" class="form-control" name="status" value="{{status.Event_Status}}"></td>
-                            <td><div class="d-flex justify-content-center">
+                            <td><div class="d-flex">
                                 <div class="p-2"><button type='submit' class="btn"><img src="{{url_for('static', filename='save-fill.svg')}}"></button></div>
                             </form>
                                 
@@ -185,7 +185,7 @@
                                     <input type="hidden" name="productID" value="{{productService.Product_Service_ID}}">
                                     <td><input type="text" class="form-control" name="productService" value="{{productService.Product_Service}}"></td>
                                     <td>
-                                        <div class="d-flex justify-content-center">
+                                        <div class="d-flex ">
                                             <div class="p-2"><button type='submit' class="btn"><img src="{{url_for('static', filename='save-fill.svg')}}"></button></div></form>
                                         
                                         <form action="{{ request.path }}" method="POST">
@@ -220,7 +220,7 @@
                                     <input type="hidden" name="paymentID" value="{{payment.Payment_Type_ID}}">
                                     <td><input type="text" class="form-control" name="paymentType" value="{{payment.Payment_Type_Name}}"></td>
                                     <td>
-                                        <div class="d-flex justify-content-center">
+                                        <div class="d-flex">
                                         <div class="p-2">
                                         <button type='submit' class="btn"><img src="{{url_for('static', filename='save-fill.svg')}}"></button></form></div>
                                         <form action="{{ request.path }}" method="POST">
