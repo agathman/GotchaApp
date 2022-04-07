@@ -54,7 +54,7 @@
                 
                 
                     
-                    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                         <div class="modal-content">
                             <div class="modal-header">
@@ -64,6 +64,9 @@
                             </button>
                             </div>
                             <div class="modal-body">
+                                <label style="color:red">*</label> <label>Indicates required field</label> 
+                                <div class="row">
+                                    <div class="col-5">
                                 <form action = "{{ request.path }}" method = "post">
                                     <input type="hidden" name="check" value="newAppointment">
                                     <label>Customer</label>
@@ -72,8 +75,13 @@
                                         {% for customer in customers %}
                                             <option value="{{customer.Customer_ID}}">{{customer.First_Name}} {{customer.Last_Name}} </option> 
                                             {% endfor %}
+                                        
                                         </select>
-                                        <label>Appointment Date</label>
+                                    </div>
+                                </div>
+                                        <div class="row">
+                                            <div class="col-5">
+                                        <label>Date</label>
                                         <input type="date" name="date" class="form-control" required>
                                         <label>Time</label>
                                         <select class="form-control" name="time" required>
@@ -99,6 +107,8 @@
                                             <option value="17:30">5:30 P.M.</option>
                                         </select>                                     
                                 </div>
+                            </div>
+                        </div>
                             <div class="modal-footer">
                                 <input type='submit' class="btn btn-secondary" value="Save">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
