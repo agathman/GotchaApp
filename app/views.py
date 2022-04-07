@@ -459,7 +459,7 @@ def viewEvent(eventID):
             
 
 
-    return render_template('tables/viewEvent.html', employeeAssignments = empAssignmentList, vendorServices = vendorServiceList, categories = Event_Category.query.all(), events = eventOrder, orderLines = orderLines, vendors = Vendor.query.all(), statuses = Event_Status.query.all(), services = Product_Service.query.all(), employees = Employee.query.all())
+    return render_template('tables/viewEvent.html', states = State.query.all(), employeeAssignments = empAssignmentList, vendorServices = vendorServiceList, categories = Event_Category.query.all(), events = eventOrder, orderLines = orderLines, vendors = Vendor.query.all(), statuses = Event_Status.query.all(), services = Product_Service.query.all(), employees = Employee.query.all())
 
 
  # Temporary - ORDER LINE now viewable in EVENT DETAIL route
