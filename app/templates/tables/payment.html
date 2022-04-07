@@ -117,7 +117,7 @@
 
         <!-- Modal CREATE payment -->
         <div class="modal fade" id="addPaymentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog modal-lg" style="width:40%" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">New Payment</h5>
@@ -127,7 +127,9 @@
                 </div>
                 <div class="modal-body">
                     <form action = "{{ request.path }}" method = "post">
-                        <label>Payment Type</label>
+                        <div class="row">
+                        <div class="col-5">
+                        <label>Type</label>
                         <input type="hidden" name='check' value="addPayment">
                         <select class="form-control" name="payType">
                         <option disabled selected value> -- Select an option -- </option>
@@ -135,6 +137,8 @@
                             <option value="{{type.Payment_Type_ID}}">{{type.Payment_Type_Name}}</option> 
                             {% endfor %}
                         </select>
+                    </div>
+                    <div class="col">
                         <label>Event Order</label>
                         <select class="form-control" name="eventOrder">
                         <option disabled selected value> -- Select an option -- </option>
@@ -142,11 +146,19 @@
                             <option value="{{event.Event_Order_ID}}">Event ID: {{event.Event_Order_ID}} Customer: {{ event.First_Name}} {{event.Last_Name}}</option>
                             {% endfor %}
                         </select>
+                    </div>
+                    </div>
+                    <br>
+                    <div class="row">
+                    <div class="col">
                         <label>Initial Payment Date</label>
                         <input type="date" class="form-control" name="initDate">
+                    </div>
+                    <div class="col">
                         <label>Full Payment Date</label>
                         <input type="date" class="form-control" name="fullDate">
-                   
+                    </div>
+                    </div>
                     
                 </div>
                 <div class="modal-footer">
@@ -161,7 +173,7 @@
         <!-- Modal UPDATE payment -->
         {% for payment in payments %}
         <div class="modal fade" id="updatePaymentModal{{payment.Payment_ID}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog" role="document">
+            <div class="modal-dialog modal-lg" style="width:40%" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">New Appointment</h5>
@@ -171,6 +183,8 @@
                 </div>
                 <div class="modal-body">
                     <form action = "{{ request.path }}" method = "post">
+                        <div class="row">
+                            <div class="col-5">
                         <input type="hidden" name="check" value="updatePayment">
                         <input type="hidden" name="paymentID" value="{{payment.Payment_ID}}">
                         <label>Payment Type</label>
@@ -180,6 +194,8 @@
                             <option value="{{type.Payment_Type_ID}}">{{type.Payment_Type_Name}}</option> 
                             {% endfor %}
                         </select>
+                    </div>
+                    <div class="col">
                         <label>Event Order</label>
                         <select class="form-control" name="eventOrder">
                         <option selected value="{{payment.Event_Order_ID}}"> <b>Event ID:</b> {{payment.Event_Order_ID}} <b>Date:</b> {{ payment.First_Name}} {{payment.Last_Name}} </option>
@@ -187,13 +203,23 @@
                             <option value="{{event.Event_Order_ID}}">Event ID: {{event.Event_Order_ID}} Customer: {{ event.First_Name}} {{event.Last_Name}}</option>
                             {% endfor %}
                         </select>
+                    </div>
+                </div>
+                <br>
+                    <div class="row">
+                        <div class="col">
                         <label>Initial Payment Date</label>
                         <input type="date" class="form-control" value="{{payment.Payment_Date_Init}}" name="initDate">
+                        </div>
+                        <div class="col">
                         <label>Full Payment Date</label>
                         <input type="date" class="form-control" value="{{payment.Payment_Date_Full}}" name="fullDate">
+                    </div>
+                    </div>
+                </div>
                    
                     
-                </div>
+
                 <div class="modal-footer">
                     <input type='submit' class="btn btn-secondary" value="Save">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
