@@ -64,18 +64,29 @@
                             </button>
                             </div>
                             <div class="modal-body">
+                                <label style="color:red">*</label> <label>Indicates required field</label> 
+                                <div class="row">
                                 <form action = "{{ request.path }}" method = "post">
+                                    
                                     <input type="hidden" name="check" value="newAppointment">
-                                    <label>Customer</label>
+                                    <div class="col">
+                                    <label>Customer</label> <label style="color:red">*</label>
                                     <select class="form-control" name="customerID">
                                         <option disabled selected value> -- Select an option -- </option>
                                         {% for customer in customers %}
                                             <option value="{{customer.Customer_ID}}">{{customer.First_Name}} {{customer.Last_Name}} </option> 
                                             {% endfor %}
                                         </select>
-                                        <label>Appointment Date</label>
+                                        </div>
+                                    </div>
+                                    <br>
+                                    <div class="row">
+                                        <div class="col">
+                                        <label>Appointment Date</label>  <label style="color:red">*</label>
                                         <input type="date" name="date" class="form-control" required>
-                                        <label>Time</label>
+                                        </div>
+                                        <div class="col">
+                                        <label>Time</label> <label style="color:red">*</label>
                                         <select class="form-control" name="time" required>
                                             <option value="8:00">8:00 A.M</option>
                                             <option value="8:30">8:30 A.M</option>
@@ -99,6 +110,8 @@
                                             <option value="17:30">5:30 P.M.</option>
                                         </select>                                     
                                 </div>
+                                </div>
+                                </div>
                             <div class="modal-footer">
                                 <input type='submit' class="btn btn-secondary" value="Save">
                                 <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -111,19 +124,19 @@
                        <table class="table table-striped">
                         <thead class="thead-dark">
                             <tr>
-                                <th class="header" scope="col">
+                                <th class="header" style="width: 19%" scope="col">
                                     Customer
                                    </th>
-                                <th class="header" scope="col">
+                                <th class="header"  style="width: 15%" scope="col">
                                     Appointment Date
                                 </th>
-                                <th class="header" scope="col">
+                                <th class="header" style="width: 15%" scope="col">
                                     Time
                                 </th>
-                                <th class="header" scope="col">
+                                <th class="header" style="width: 20%" scope="col">
                                     Event Order
                                    </th>
-                                    <th class="header" scope="col">
+                                    <th class="header" style="width: 15%" scope="col">
                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
                                             Add Appointment
                                           </button>

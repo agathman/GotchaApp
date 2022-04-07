@@ -185,40 +185,68 @@
         <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">New Customer</h5>
+            <h5 class="modal-title" id="exampleModalLabel">Edit Employee</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">&times;</span>
             </button>
             </div>
             <div class="modal-body">
+                <label style="color:red">*</label> <label>Indicates required field</label> 
                 <form action = "{{ request.path }}" method = "post">
+                    <div class="row">
+                        <div class="col">
                     <input type="hidden" name="check" value="updateEmployee">
                     <input type="hidden" name="employeeID" value="{{employee.Emp_ID}}">
-                    <label>First Name</label>
+                    <label>First Name</label> <label style="color:red">*</label>
                     <input type="text" pattern="[A-Za-z]{1,250}" class="form-control" name="firstName" value="{{employee.Emp_First_Name}}" maxlength="250" required>
-                    <label>Last Name</label> 
+                    </div>
+                    <div class="col">
+                    <label>Last Name</label> <label style="color:red">*</label>
                     <input type="text" pattern="[A-Za-z]{1,250}" class="form-control" name="lastName" value="{{employee.Emp_Last_Name}}" maxlength="250" required>
-                    <label>Address</label>
+                    </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-4">
+                            <label>Phone</label> <label style="color:red">*</label>
+                            <input type="tel" class="form-control" name="phone" pattern="[(0-9)]{3}-[0-9]{3}-[0-9]{4}" value="{{employee.Emp_Phone}}" required>
+                                <small>Format: 555-456-7890</small>
+                                </div>
+                        <div class="col">
+                            <label>Email</label> <label style="color:red">*</label>
+                            <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" class="form-control" name="email" value="{{employee.Emp_Email}}" maxlength="250" required> 
+                            <small class="form-text" text-muted>Format: username@email.com</small> 
+                        </div>
+                    </div>
+                    <br>
+                    <label>Position</label> <label style="color:red">*</label>
+                    <input type="text" pattern="[A-Za-z ]{1,250}" class="form-control" name="position" value="{{employee.Emp_Position}}" required>
+                    <br>
+                    <div class="row">
+                        <div class="col">
+                    <label>Address</label> <label style="color:red">*</label>
                     <input type="text"  pattern="[A-Za-z0-9 ]{1,250}" class="form-control" name="address" value="{{employee.Emp_Mailing_Address}}" maxlength="250" required>
-                    <label>City</label>
+                    </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-5">
+                    <label>City</label> <label style="color:red">*</label>
                     <input type="text"  pattern="[A-Za-z]{1,250}" class="form-control" name="city" value="{{employee.Emp_Mailing_City}}" maxlength="250" required>
-                    <label>State</label>
+                    </div>
+                        <div class="col-3">
+                    <label>State</label> <label style="color:red">*</label>
                     <select class="form-control" name="state">
                         <option selected value="{{employee.State_ID}}">{{employee.State_Name}}</option>
                         {% for state in stateList %}
                             <option value="{{state.State_ID}}">{{state.State_Name}}</option> 
                         {% endfor %}
                     </select>
-                    <label>Zip Code</label>
+                    </div>
+                    <div class="col-3">
+                    <label>Zip Code</label> <label style="color:red">*</label>
                     <input type="text" pattern="[(0-9)]{1,5}" maxlength="10"  class="form-control" name="zip" value="{{employee.Emp_Zip_Code}}" input required >
-                    <label>Phone</label>
-                    <input type="tel" class="form-control" name="phone" pattern="[(0-9)]{3}-[0-9]{3}-[0-9]{4}" value="{{employee.Emp_Phone}}" required>
-                        <small>Format: 555-456-7890</small>
-                        <br>
-                    <label>Email</label>
-                    <input type="email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" class="form-control" name="email" value="{{employee.Emp_Email}}" maxlength="250" required>                    
-                    <label>Position</label>
-                    <input type="text" pattern="[A-Za-z ]{1,250}" class="form-control" name="position" value="{{employee.Emp_Position}}" required>
+                    </div>
+                    </div>              
+        
                     
             </div>
             <div class="modal-footer">
