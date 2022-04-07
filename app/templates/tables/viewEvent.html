@@ -68,6 +68,7 @@
         </div>
     </div>
     
+
     <!-- Start of View -->
     <div class="container-fluid">          
         <div class="p-5 mb-4 rounded-3">
@@ -77,11 +78,8 @@
                 <div class="col">
                     <h2 class='font-weight-bold text-left'>Event Details</h2>   
               </div>
-              <div class="col"></div>
-              <div class="col"></div>
               </div>
               <div class="row">
-                <div class="col"></div>
                 
                
                
@@ -107,15 +105,17 @@
                 
         
             </div>
-                <div class="col-4">
-                </div>
                 
             </div>
+<<<<<<< HEAD
     
 <div class="row">
             <div class="col">
 
     </div>
+=======
+    <div class="row">
+>>>>>>> 1f61e38d2cfaee581bcb29ada7446b779b6399cc
                 <div class='col-10'> 
                     <table class='table'>
                         <thead class="thead-dark">
@@ -159,8 +159,6 @@
             
                 
 
-</div>
-<div class="col">  
 </div>
 </div>
 
@@ -297,11 +295,9 @@
     </tbody>        
     </table>
 </div>
-<div class='col'></div>
 
 
 <div class="row">
-    <div class="col"></div>
     <div class="col-8"> 
         <h3 class="font-weight-bold">Order Lines</h3>
 <table class="table table-striped">
@@ -343,7 +339,7 @@
             <td>
                 {{orderLine.Product_Service}}
             </td>
-            <td><div class="d-flex justify-content-center">
+            <td><div class="d-flex">
                 <div class="p-2">
                 <button type="submit" class="btn"><img src="{{url_for('static', filename='save-fill.svg')}}"></button></div>
             </form>
@@ -358,10 +354,10 @@
     </tbody>
 </table>
 </div>
-<div class="col"></div>
+
 </div>
 <div class="row">
-    <div class="col"></div>
+
 <div class="col-8">
     <h3 class="font-weight-bold">Vendor Services</h3>
     <table class="table table-striped">
@@ -417,12 +413,9 @@
     
     </table>
 </div>
-    <div class="col"></div>
 </div>
 <!-- Vendor Service Row-->
 <div class="row">
-    <div class="col">
-    </div>
     <div class="col-8">
         <h3 class="font-weight-bold">Employees Assigned</h3>
         <table class="table table-striped">
@@ -456,7 +449,6 @@
 
 
     </div>
-    <div class="col"></div>
 </div>
 
 </div>
@@ -536,7 +528,7 @@
         </div>
 
         <div class="modal fade" id="addEmployeeAssignModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-            <div class="modal-dialog modal-sm" role="document">
+            <div class="modal-dialog modal-lg" style="width:20%" role="document">
             <div class="modal-content">
                 <div class="modal-header">
                 <h5 class="modal-title" id="addEmployeeAssignModal">New Employee Assignment</h5>
@@ -562,12 +554,8 @@
                             <option value="{{employee.Emp_ID}}">{{employee.Emp_First_Name}} {{employee.Emp_Last_Name}}</option> 
                             {% endfor %} 
                         </select>
-                                </div>
-                            <div class="col">
-                        
-                        </div>                     
+                                </div>                  
                       
-                        <div class="col"></div>
                         </div>       
         
                     
