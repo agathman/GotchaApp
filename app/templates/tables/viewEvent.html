@@ -111,7 +111,8 @@
                 </div>
                 
             </div>
-    <div class="row">
+    
+<div class="row">
             <div class="col">
 
     </div>
@@ -556,6 +557,7 @@
                             <div class="col-8">
                                 <label>Employee</label> <label style="color:red">*</label>
                         <select class="form-control" name="employeeID">
+                            <option disabled selected>Select an employee</option>
                         {% for employee in employees %}
                             <option value="{{employee.Emp_ID}}">{{employee.Emp_First_Name}} {{employee.Emp_Last_Name}}</option> 
                             {% endfor %} 
