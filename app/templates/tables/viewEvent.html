@@ -22,12 +22,19 @@
                             <option value="{{status.Event_Status_ID}}">{{status.Event_Status}}</option>
                             {% endfor %}
                         </select>
+<<<<<<< HEAD
                     <label>Date</label> <label style="color:red">*</label>
                     <input type="date" name="date" class="form-control" required>                                
                     <label>Product Service</label>  <label style="color:red">*</label>
                
                     <select class="form-control" name="service" required>  <label style="color:red">*</label>
                         <option selected disabled value>Select a product service</option>
+=======
+                    <label>Date</label>
+                    <input type="date" name="date" class="form-control" required>                                
+                    <label>Product Service</label>
+                    <select class="form-control" name="service" required>
+>>>>>>> 6de0ef24bf4c14d56cd86ff37916f46ab34b2bd9
                         {% for service in services %}
                         <option value="{{service.Product_Service_ID}}">{{service.Product_Service}}</option>
                         {% endfor %}
@@ -238,13 +245,21 @@
             <div class="row">
                 <div class="col">
              <label>Event Description</label> <label style="color:red">*</label>
+<<<<<<< HEAD
                 <textarea rows='2' pattern="{1,250}" class="form-control" name="eventDesc" value="{{event.Event_Order_Desc}}" required>{{event.Event_Order_Desc}}</textarea>
+=======
+                <textarea rows='2' pattern="{1,250}" maxlength="250" class="form-control" name="eventDesc" value="{{event.Event_Order_Desc}}" required></textarea>
+>>>>>>> 6de0ef24bf4c14d56cd86ff37916f46ab34b2bd9
                 </div>
                 </div>
                 <div class='row'>
                     <div class="col">     
               <label>Restrictions</label>
+<<<<<<< HEAD
                 <textarea pattern="{1,250}"  class="form-control" name="restrictions" value="{{event.Event_Restriction_Desc}}" required>{{event.Event_Restriction_Desc}}</textarea>
+=======
+                <textarea pattern="{1,250}" maxlength="250"  class="form-control" name="restrictions" value="{{event.Event_Restriction_Desc}}"></textarea>
+>>>>>>> 6de0ef24bf4c14d56cd86ff37916f46ab34b2bd9
                     </div>
                     </div>
             {% endfor %}
