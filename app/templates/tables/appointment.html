@@ -25,10 +25,7 @@
                        {% endfor %}
                     {% endif %}
                  {% endwith %}
-                 <div class="separator"></div>
-                
-                
-                    
+             
                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">
                         <div class="modal-content">
@@ -160,7 +157,7 @@
                                             <input type="hidden" value="{{appointment.Event_Order_ID}}" name="event">
                                             {% else %}
                                                 <select class="form-control" name="event" required>
-                                                <option disabled selected value> -- Select an Event -- </option>
+                                                <option selected value="None"> -- Select an Event -- </option>
                                                 {% for event in events %}
                                                 <option value="{{event.Event_Order_ID}}">ID: {{event.Event_Order_ID}} Customer: {{event.First_Name}} {{event.Last_Name}} </option> 
                                                 {% endfor %}

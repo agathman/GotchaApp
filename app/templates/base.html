@@ -26,7 +26,9 @@
     }
 
 
-
+.nav-link:hover{
+  background-color: #dbd4e4 !important;
+}
   
   
 .header {
@@ -46,11 +48,10 @@
   position: fixed;
   top: 0;
   left: 0;
-  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
+  box-shadow: 3px 3px 10px  rgba(0, 0, 0, 0.2);
   transition: all 0.4s;
   background-color: #A084C2;
  
-  
 }
 
 .page-content {
@@ -70,29 +71,11 @@
   margin: 0;
 }
 
-@media (max-width: 768px) {
-  #sidebar {
-    margin-left: -17rem;
-  }
-  #sidebar.active {
-    margin-left: 0;
-  }
-  #content {
-    width: 100%;
-    margin: 0;
-  }
-  #content.active {
-    margin-left: 17rem;
-    width: calc(100% - 17rem);
-  }
-  body {
-  min-height: 100vh;
-  overflow-x: hidden;
-}
+
 
 .separator {
   margin: 3rem 0;
-  border-bottom: 1px dashed #fff;
+  border-bottom: 1px dashed #A084C2;
 }
 
 .text-uppercase {
@@ -100,22 +83,20 @@
 }
 
 .text-gray {
-  color: #aaa;
+  color: rgb(255, 255, 255);
   }
 li {
-  background-color: #E0C7FF !important;
+  background-color: rgb(255, 255, 255) !important;
 }
 .bg-nav {
-  background-color: #E0C7FF !important;
+  background-color: rgb(255, 255, 255) !important;
 
 }
 .nav-link {
-  background-color: #E0C7FF !important;
+  background-color: rgb(255, 255, 255) !important;
 }
-a {
-  background-color: #E0C7FF !important;
-}
-}
+
+
 
 
     </style>
@@ -123,7 +104,7 @@ a {
   <body>
 
     <div class="vertical-nav" id="sidebar">
-      <div class="py-4 px-3 mb-4">
+      <div class="py-2 px-3 mb-4">
       <div class="media d-flex justify-content-center"><img src="../assets/colorLogo.png" alt="..." width="170" class="mr-3 rounded-circle img-thumbnail shadow-sm">
        
       </div>
@@ -131,52 +112,52 @@ a {
     <ul class="nav flex-column mb-0">
       
       <li class="nav-item">
-        <a class="nav-link text-dark font-italic bg-light" href="/">
+        <a class="nav-link text-dark font-italic" style='background-color: rgb(255, 255, 255)' href="/">
         <i class="fa fa-th-large mr-3 text-primary fa-fw" ></i>
         Home
     </a>
     </li>
     <li class="nav-item">
-      <a class="nav-link text-dark font-italic bg-light bg-light" href="/Appointments"><i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
+      <a class="nav-link text-dark font-italic" style='background-color: rgb(255, 255, 255)'href="/Appointments"><i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
         Appointments
     </a>
     </li>
     <li class="nav-item">
-    <a class="nav-link text-dark font-italic bg-light" href="/Customer"><i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
+    <a class="nav-link text-dark font-italic" style='background-color: rgb(255, 255, 255)' href="/Customer"><i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
         Customers
     </a>
     </li>
     <li class="nav-item">
-    <a class="nav-link text-dark font-italic bg-light" href="/Employee"><i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
+    <a class="nav-link text-dark font-italic" style='background-color: rgb(255, 255, 255)' href="/Employee"><i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
         Employees
     </a>
     </li>
     <li class="nav-item">
-    <a class="nav-link text-dark font-italic bg-light" href="/EventOrders"><i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
+    <a class="nav-link text-dark font-italic" style='background-color: rgb(255, 255, 255)' href="/EventOrders"><i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
         Events
     </a>
     </li>
     <li class="nav-item">
-    <a class="nav-link text-dark font-italic bg-light" href="/Payment"><i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
+    <a class="nav-link text-dark font-italic"  style='background-color: rgb(255, 255, 255)'href="/Payment"><i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
        Payments
     </a>
     <li class="nav-item">
-    <a class="nav-link text-dark font-italic bg-light" href="/Vendor"><i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
+    <a class="nav-link text-dark font-italic" style='background-color: rgb(255, 255, 255)' href="/Vendor"><i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
         Vendors
     </a>
     </li>
     <li class="nav-item">
-        <a class="nav-link text-dark font-italic bg-light" href="/Misc"><i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
+        <a class="nav-link text-dark font-italic" style='background-color: rgb(255, 255, 255)' href="/Misc"><i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
             Misc
         </a>
         </li>
     <li class="nav-item">
-        <a class="nav-link text-dark font-italic bg-light" href="/Reports"><i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
+        <a class="nav-link text-dark font-italic" style='background-color: rgb(255, 255, 255)' href="/Reports"><i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
             Reports
         </a>
         </li>
     </ul>
-    <div class="bottom-nav" style="background-color: whitesmoke; height: 100%;">
+    <div class="bottom-nav" style="background-color: rgb(255, 255, 255); height: 100%;">
 
     </div>
     </div>
@@ -198,10 +179,11 @@ a {
       </nav>
     -->
     <div class="page-content" id="content">      
-    <div class="p-5 top-shadow" style="background-color:#A084C2; height: 100%">
+      <div class="p-4 top-shadow" style="background-color:#A084C2; height: 100%">
+   
       
       {% block top %} {% endblock %}
-      </div>
+     </div>
     {% block content %}
     
     {% endblock %}

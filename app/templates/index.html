@@ -1,72 +1,8 @@
 <!DOCTYPE html>
 {% extends "base.html" %}
-<!-- {% block active %}
-<li class="nav-item">
-    <a class="nav-link text-dark font-italic bg-light" href="/">
-    <i class="fa fa-th-large mr-3 text-primary fa-fw"></i>
-    Home
-</a>
-</li>
-<li class="nav-item">
-<a class="nav-link text-dark font-italic bg-light" href="/Appointments"><i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
-    Appointments
-</a>
-</li>
-<li class="nav-item">
-<a class="nav-link text-dark font-italic bg-light" href="/Customer"><i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
-    Customers
-</a>
-</li>
-<li class="nav-item">
-<a class="nav-link text-dark font-italic bg-light" href="/Employee"><i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
-    Employees
-</a>
-</li>
-<li class="nav-item">
-<a class="nav-link text-dark font-italic bg-light" href="/EventOrders"><i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
-    Events
-</a>
-</li>
-<li class="nav-item">
-<a class="nav-link text-dark font-italic bg-light" href="/Payment"><i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
-   Payments
-</a>
-<li class="nav-item">
-<a class="nav-link text-dark font-italic bg-light" href="/Vendor"><i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
-    Vendors
-</a>
-</li>
-<li class="nav-item">
-    <a class="nav-link text-dark font-italic bg-light" href="/Misc"><i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
-        Misc
-    </a>
-    </li>
-<li class="nav-item">
-    <a class="nav-link text-dark font-italic bg-light" href="/Reports"><i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
-        Reports
-    </a>
-    </li>
-    
-
-{% endblock %}-->
-{% block top %}
-<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal">
-    Add Customer
-</button>
-
-<!-- Modal button for new appointment-->
-<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#AppointmentModal">
-    Add Appointment
-</button>
-
-<!-- Modal button for add event-->
-<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#EventModal">
-    Add Event
-</button>
-
-{% endblock %}
 
 {% block content %}
+
    
         {% with messages = get_flashed_messages() %}
         {% if messages %}
@@ -84,8 +20,24 @@
            {% endfor %}
         {% endif %}
      {% endwith %}
-        <div class="separator"></div>
-<div class="container-md px-5 py-4">
+   
+<div class="container-md px-5 py-2">
+    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal">
+        Add Customer
+    </button>
+    
+    <!-- Modal button for new appointment-->
+    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#AppointmentModal">
+        Add Appointment
+    </button>
+    
+    <!-- Modal button for add event-->
+    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#EventModal">
+        Add Event
+    </button>
+    <br>
+    <br>
+    
 <div class="row">        
 <div class="col-lg-6">
 <h2 class="font-weight-bold px-2">Events Within 30 Days</h2>
@@ -239,11 +191,12 @@
             <div class="modal-body">
                 <label style="color:red">*</label> <label>Indicates required field</label> 
                 <div class="row">
-                    <div class="col-5">
+                    <div class="col-6">
                 <form action = "{{ request.path }}" method = "post">
                     <input type="hidden" name="check" value="appointment">
                     <label>Customer</label> <label style="color:red">*</label>
                     <select class="form-control" name="customerID">
+                        <option selected disabled>Select a customer</option>
                     {% for customer in newAppointment %}
                         <option value="{{customer.Customer_ID}}">{{customer.First_Name}} {{customer.Last_Name}} </option> 
                         {% endfor %}

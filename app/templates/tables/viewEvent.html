@@ -12,19 +12,22 @@
             </button>
             </div>
             <div class="modal-body">
+                <label style="color:red">*</label> <label>Indicates required field</label> 
                 <form action = "{{ request.path }}" method = "POST">
                     <input type="hidden" name="check" value="orderLine">
-                    <label>Status</label>
-                    <select class="form-control" name="status" required>                                           
+                    <label>Status</label>  <label style="color:red">*</label>
+                    <select class="form-control" name="status" required> 
+                    <option selected disabled value>Select a status</option>                                          
                         {% for status in statuses %}
                             <option value="{{status.Event_Status_ID}}">{{status.Event_Status}}</option>
                             {% endfor %}
-                            <option disabled selected value> -- Select an option -- </option>
                         </select>
-                    <label>Date</label>
-                    <input type="date" name="date" class="form-control">                                
-                    <label>Product Service</label>
-                    <select class="form-control" name="service" required>
+                    <label>Date</label> <label style="color:red">*</label>
+                    <input type="date" name="date" class="form-control" required>                                
+                    <label>Product Service</label>  <label style="color:red">*</label>
+               
+                    <select class="form-control" name="service" required>  <label style="color:red">*</label>
+                        <option selected disabled value>Select a product service</option>
                         {% for service in services %}
                         <option value="{{service.Product_Service_ID}}">{{service.Product_Service}}</option>
                         {% endfor %}
@@ -82,19 +85,19 @@
                 <div class='col-12'> 
                     <table class='table'>
                         <thead class="thead">
-                        <th style='width: 15%'>
+                        <th>
                             Event ID
                         </th>
-                        <th style='width: 25%'>
+                        <th>
                             Customer
                         </th>
-                        <th style='width: 25%'>
+                        <th>
                             Phone Number  
                         </th>       
                         <th>
                             Email
                         </th>
-                        <th style='width: 25%'>
+                        <th>
                             Event Date
                         </th>
                         <th>
@@ -209,12 +212,12 @@
             <div class="row">
                 <div class="col-5">
                     <label>Address</label> <label style="color:red">*</label>
-                    <input type="text" pattern="[A-Za-z0-9 ]{1,250}" class="form-control" name="address" value="{{event.Event_Address}}" required>
+                    <input type="text" pattern="[A-Za-z0-9 .]{1,250}" class="form-control" name="address" value="{{event.Event_Address}}" required>
             </div>
             
                 <div class="col-3">   
                     <label>City</label> <label style="color:red">*</label>
-                    <input type="text" pattern="[A-Za-z]{1,250}" class="form-control" name="city" value="{{event.Event_City}}" required>
+                    <input type="text" pattern="[A-Za-z ]{1,250}" class="form-control" name="city" value="{{event.Event_City}}" required>
                 </div>
 
                 <div class="col-2"> 
@@ -235,13 +238,13 @@
             <div class="row">
                 <div class="col">
              <label>Event Description</label> <label style="color:red">*</label>
-                <textarea rows='2' pattern="{1,250}" class="form-control" name="eventDesc" value="{{event.Event_Order_Desc}}" required></textarea>
+                <textarea rows='2' pattern="{1,250}" class="form-control" name="eventDesc" value="{{event.Event_Order_Desc}}" required>{{event.Event_Order_Desc}}</textarea>
                 </div>
                 </div>
                 <div class='row'>
                     <div class="col">     
               <label>Restrictions</label>
-                <textarea pattern="{1,250}"  class="form-control" name="restrictions" value="{{event.Event_Restriction_Desc}}" required></textarea>
+                <textarea pattern="{1,250}"  class="form-control" name="restrictions" value="{{event.Event_Restriction_Desc}}" required>{{event.Event_Restriction_Desc}}</textarea>
                     </div>
                     </div>
             {% endfor %}
@@ -262,7 +265,7 @@
         <th>
             Theme
         </th>
-        <th style="width: 20%">
+        <th>
             Description
         </th>
         <th>
@@ -400,13 +403,12 @@
                 <td>{{vendorService.Vendor_Name}}</td>
                 <form action = "{{ request.path }}" method = "POST">
                     <input type="hidden" name='check' value="updateVendorService">
-                    <input type="hidden" name='venServiceID' value="{{vendorService.Vendor_ID}}">
+                    <input type="hidden" name='venServiceID' value="{{vendorService.Vendor_Service_ID}}">
                 <td> 
                    {{vendorService.Vendor_Services}}
                 </td>
-                <td><input type='date' class='form-control' name='date' value="{{vendorService.Date.strftime('%Y-%m-%d')}}"></td>
+                <td><input type='date' class='form-control' name='date' value="{{vendorService.Date.strftime('%Y-%m-%d')}}" required></td>
                 <td>
-                    <input type="hidden" name="currStatus" value="{{vendorService.Vendor_Service_Status_ID}}">
                     <select class='form-control' name="statusUpdate">
                         <option selected value="{{vendorService.Vendor_Service_Status_ID}}">{{vendorService.Event_Status}}</option>
                         {% for status in statuses %}
@@ -453,7 +455,7 @@
                     <td>{{employeeAssignment.Emp_First_Name}} {{employeeAssignment.Emp_Last_Name}}</td>
                   
                     <td> 
-                       {{employeeAssignment.Assignment_Start_Date}}
+                       {{employeeAssignment.Assignment_Start_Date.strftime('%m-%d-%Y')}}
                     </td>
                     <td><form action = "{{ request.path }}" method = "POST">
                         <input type="hidden" name="check" value="delEmployeeAssign">
@@ -513,13 +515,13 @@
                     <form action = "{{ request.path }}" method = "POST">
                         <input type="hidden" name="check" value="addVendorService">
                         <label>Vendor</label>
-                        <select class="form-control" name="vendor">
+                        <select class="form-control" name="vendor" required>
                         {% for vendor in vendors %}
                             <option value="{{vendor.Vendor_ID}}">{{vendor.Vendor_Name}}</option> 
                             {% endfor %} 
                         </select>
                         {% for event in events %}
-                        <input type="hidden" name="event" value="{{event.Event_Order_ID}}">
+                        <input type="hidden" name="event" value="{{event.Event_Order_ID}}" required>
                         {% endfor %}
                         <label>Service</label>
                         <input type='text' class="form-control" name="service" required>

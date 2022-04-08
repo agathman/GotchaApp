@@ -108,8 +108,11 @@ def viewAppointment():
             updatedDateTime = updateDate + ' ' + updateTime
             updateDateObj = datetime.strptime(updatedDateTime, '%Y-%m-%d %H:%M')
             appointment.Datetime = updateDateObj
-            appointment.Event_Order_ID = request.form['event']
-            db.session.commit()
+            if request.form['event'] == 'None':
+                appointment.Event_Order_ID = None
+            else:
+                appointment.Event_Order_ID = request.form['event']
+                db.session.commit()
             flash('Success! Appointment updated.')
 
         # Delete Appoinment
@@ -179,6 +182,7 @@ def viewCustomer():
                     flash('Error: Cannot delete customer with an associated event')
                     return redirect(url_for('my_view.viewCustomer'))
             else:
+                flash('Success! Customer deleted')
                 db.session.commit()          
     return render_template('tables/customer.html', customers = Customers, stateList = State.query.all() )
 
@@ -247,7 +251,7 @@ def viewEventOrder():
         .join(State, State.State_ID == Event_Order.State_ID)\
         .add_columns(Event_Order.Event_Order_ID, Event_Category.Event_Category_Name, Customer.First_Name, Customer.Last_Name, Customer.Phone, Customer.Email, Event_Status.Event_Status, Event_Order.Event_Time, Event_Order.Event_Theme,
         Event_Order.Event_Order_Desc, Event_Order.Event_Delivery, Event_Order.Event_Setup, Event_Order.Event_Location_Name, Event_Order.Event_Restriction_Desc, Event_Order.Event_Address, Event_Order.Event_City,
-        State.State_Abbreviation, Event_Order.Event_Zip_Code).order_by(Event_Order.Event_Time)
+        State.State_Abbreviation, Event_Order.Event_Zip_Code).order_by(Event_Order.Event_Order_Status_ID, Event_Order.Event_Time)
 
     if request.method == 'POST':
         #Form request to add Category
@@ -376,19 +380,12 @@ def viewEvent(eventID):
         if request.form['check'] == 'updateVendorService':
             vendorServiceID = request.form['venServiceID']
             vendorServiceforUpdate = Vendor_Service.query.get(vendorServiceID)
-            currStatus = request.form['currStatus']
-            updateStatus = request.form['statusUpdate']
-            dateFound = request.form['date']
-            if updateStatus == '0':
-                vendorServiceforUpdate.Vendor_Service_Status_ID = currStatus
-                vendorServiceforUpdate.Vendor_Service_Line_Date = dateFound
-                db.session.commit()
-                flash('Success! Vendor Service updated.')
-            else:
-                vendorServiceforUpdate.Vendor_Service_Status_ID = updateStatus
-                vendorServiceforUpdate.Vendor_Service_Line_Date = dateFound
-                db.session.commit()
-                flash('Success! Vendor Service updated.')
+        
+            vendorServiceforUpdate.Vendor_Service_Status_ID = request.form['statusUpdate']
+            vendorServiceforUpdate.Vendor_Service_Line_Date = request.form['date']
+            db.session.commit()
+            flash('Success! Vendor Service updated.')
+      
             
             return redirect(url_for('my_view.viewEvent', eventID = foundEventID))
            
@@ -755,7 +752,8 @@ def viewVendorService(vendorID):
         .join(Event_Status, Vendor_Service.Vendor_Service_Status_ID == Event_Status.Event_Status_ID)\
         .join(Event_Order, Vendor_Service.Event_Order_ID == Event_Order.Event_Order_ID)\
         .add_columns(Vendor_Service.Vendor_Service_ID, Vendor_Service.Vendor_Services, Vendor.Vendor_ID, Vendor.Vendor_Name,
-        Vendor_Service.Date, Event_Order.Event_Order_ID, Vendor_Service.Vendor_Service_Status_ID, Event_Status.Event_Status_ID, Event_Status.Event_Status)
+        Vendor_Service.Date, Event_Order.Event_Order_ID, Vendor_Service.Vendor_Service_Status_ID, Event_Status.Event_Status_ID, Event_Status.Event_Status)\
+            .order_by(Vendor_Service.Vendor_Service_Status_ID)
 
     vendorName = Vendor.query.filter_by(Vendor_ID = vendorID)\
         .add_columns(Vendor.Vendor_ID, Vendor.Vendor_Name)

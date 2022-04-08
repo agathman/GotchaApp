@@ -1,27 +1,5 @@
 {% extends "base.html" %}
 
-{% block top %}      
-<button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseCat" aria-expanded="false" aria-controls="collapseCat">
- View Categories
-</button>
-
-
-    <button class="btn btn-secondary collapsed" data-toggle="collapse" data-target="#collapseStatus" aria-expanded="false" aria-controls="collapseStatus">
-        View Statuses
-      </button>
-  
-
-    <button class="btn btn-secondary collapsed" data-toggle="collapse" data-target="#collapseService" aria-expanded="false" aria-controls="collapseService">
-            View Product Services
-        </button>
-   
-
-    <button class="btn btn-secondary collapsed" data-toggle="collapse" data-target="#collapsePayType" aria-expanded="false" aria-controls="collapsPayType">
-       View Payment Types
-        </button>
-        {% endblock %}
-
-
 {% block content %}   
 
  
@@ -32,6 +10,24 @@
 
                     <h1 class="font-weight-bold px-2 py-4">Miscellaneous</h1>
                     </div>
+                    <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseCat" aria-expanded="false" aria-controls="collapseCat">
+                        View Categories
+                       </button>
+                       
+                       
+                           <button class="btn btn-secondary collapsed" data-toggle="collapse" data-target="#collapseStatus" aria-expanded="false" aria-controls="collapseStatus">
+                               View Statuses
+                             </button>
+                         
+                       
+                           <button class="btn btn-secondary collapsed" data-toggle="collapse" data-target="#collapseService" aria-expanded="false" aria-controls="collapseService">
+                                   View Product Services
+                               </button>
+                          
+                       
+                           <button class="btn btn-secondary collapsed" data-toggle="collapse" data-target="#collapsePayType" aria-expanded="false" aria-controls="collapsPayType">
+                              View Payment Types
+                               </button>
     
         </div>
         <div class="col-4"> 
@@ -75,7 +71,7 @@
         <th>
              Categories              
         </th>
-        <th> <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#CatModal">
+        <th> <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#CatModal">
             Add Category
             </button> 
         </th>
@@ -112,7 +108,7 @@
                     <th>
                         Status
                     </th>
-                    <th><button type="submit" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#statusModal">
+                    <th><button type="submit" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#statusModal">
                         Add Status
                     </button>
                 </th>
@@ -148,7 +144,7 @@
                             <th>
                                 Product Service
                             </th>
-                            <th> <button type="button" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#ServiceModal">
+                            <th> <button type="button" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#ServiceModal">
                                 Add Product Service
                                 </button></th>
                         </thead>
@@ -183,7 +179,7 @@
                             <th>
                                 Payment Type
                             </th>
-                            <th>  <button type="submit" class="btn btn-primary btn-sm" data-toggle="modal" data-target="#payTypeModal">
+                            <th>  <button type="submit" class="btn btn-secondary btn-sm" data-toggle="modal" data-target="#payTypeModal">
                                 Add Payment Type
                             </button></th>
                         </thead>

@@ -92,7 +92,7 @@
                                 {% for customer in customers %}
                                 <tr>
                             
-                                <td>{{ customer.First_Name}} {{ customer.Last_Name }}</td>
+                                <td>{{ customer.Last_Name }}, {{ customer.First_Name}}</td>
                                 <td>{{ customer.Phone }}</td>
                                 <td>{{ customer.Email }}</td>
                                 <td>{{ customer.Mailing_Address }}</td>
@@ -257,7 +257,7 @@
                     <div class="col-3">
                         <label>State</label> <label style="color:red">*</label>
                         <select class="form-control" name="state">
-                            <option selected value="{{customer.State_ID}}">{{customer.State_Abbreviation}}</option>
+                            <option selected value="{{customer.State_ID}}">{{customer.State_Name}}</option>
                             {% for state in stateList %}
                                 <option value="{{state.State_ID}}">{{state.State_Name}}</option> 
                             {% endfor %}

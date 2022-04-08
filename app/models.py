@@ -105,7 +105,7 @@ class Event_Order(db.Model):
     Event_Address = db.Column(db.String(250), nullable=False)
     Event_City = db.Column(db.String(100), nullable=False)
     State_ID = db.Column(db.SmallInteger, db.ForeignKey('State.State_ID'), nullable=False)
-    Event_Zip_Code = db.Column(db.SmallInteger, nullable=False)
+    Event_Zip_Code = db.Column(db.String(10), nullable=False)
 
     
 

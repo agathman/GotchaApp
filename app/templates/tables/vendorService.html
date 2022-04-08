@@ -97,7 +97,8 @@
         <div class="modal-body">
             <form action = "{{ request.path }}" method = "POST">
                 <input type="hidden" name="check" value="addVendorService">
-                <label>Vendor</label>
+                <label style="color:red">*</label><label>Indicate required field</label>
+                <label>Vendor</label> <label style="color:red">*</label>
                 {% for vendor in vendorName %}
                 <input type="hidden" name='vendor' value="{{vendor.Vendor_ID}}"> 
                 <input type="text" class="form-control" value="{{vendor.Vendor_Name}}" disabled>
@@ -107,24 +108,24 @@
                     <option value="{{vendor.Vendor_ID}}">{{vendor.Vendor_Name}}</option> 
                     {% endfor %} 
                 </select> -->
-                <label>Event</label>
-                <select class="form-control" name="event">
+                <label>Event</label>  <label style="color:red">*</label>
+                <select class="form-control" name="event" required>
                     <option disabled selected value> -- Select an option -- </option>
                     {% for event in events %} 
                     <option value="{{event.Event_Order_ID}}">{{event.Event_Order_ID}} : {{event.First_Name}} {{event.Last_Name}}</option>
                     {% endfor %}
                 </select>
-                <label>Service</label>
+                <label>Service</label> <label style="color:red">*</label>
                 <input type='text' class="form-control" name="service" required>
-                <label>Status</label>
+                <label>Status</label> <label style="color:red">*</label>
                 <select class="form-control" name="status" required>     
                     <option disabled selected value> -- Select an option -- </option>                                     
                     {% for status in statuses %}
                         <option value="{{status.Event_Status_ID}}">{{status.Event_Status}}</option>
                         {% endfor %}
                     </select>
-                <label>Date</label>
-                <input type="date" name="date" class="form-control">           
+                <label>Date</label> <label style="color:red">*</label>
+                <input type="date" name="date" class="form-control" required>           
 
             
         </div>
