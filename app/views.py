@@ -179,7 +179,7 @@ def viewCustomer():
                 db.session.flush()
             except exc.IntegrityError:
                     db.session.rollback()  
-                    flash('Error: Cannot delete customer with an associated event')
+                    flash('Cannot delete customer with an associated event')
                     return redirect(url_for('my_view.viewCustomer'))
             else:
                 flash('Success! Customer deleted')
@@ -192,7 +192,8 @@ def viewCustomer():
 def viewEmployee():
     Employees = Employee.query.join(State, Employee.State_ID == State.State_ID)\
         .add_columns(Employee.Emp_ID, Employee.Emp_First_Name, Employee.Emp_Last_Name, Employee.Emp_Mailing_Address, Employee.Emp_Mailing_City, 
-                     State.State_Abbreviation, Employee.State_ID, State.State_Name, Employee.Emp_Zip_Code, Employee.Emp_Phone, Employee.Emp_Email, Employee.Emp_Position)
+                     State.State_Abbreviation, Employee.State_ID, State.State_Name, Employee.Emp_Zip_Code, Employee.Emp_Phone, Employee.Emp_Email, Employee.Emp_Position)\
+                     .order_by(Employee.Emp_Last_Name)
 
     if request.method == 'POST':
         if request.form['check'] == 'addEmployee':
@@ -315,7 +316,7 @@ def viewEvent(eventID):
     
     empAssignmentList = Employee_Assignment.query.filter_by(Event_Order_ID = eventID)\
         .join(Employee, Employee_Assignment.Employee_ID == Employee.Emp_ID)\
-        .add_columns(Employee_Assignment.Employee_Assignment_ID, Employee.Emp_First_Name, Employee.Emp_Last_Name, Employee_Assignment.Assignment_Start_Date)
+        .add_columns(Employee_Assignment.Employee_Assignment_ID, Employee.Emp_ID, Employee.Emp_First_Name, Employee.Emp_Last_Name, Employee_Assignment.Assignment_Start_Date)
         
 
 
@@ -354,8 +355,18 @@ def viewEvent(eventID):
         
         if request.form['check'] == 'addEmployeeAssign':
             employee = Employee_Assignment(date.today(), request.form['employeeID'], foundEventID)
-            db.session.add(employee)
-            db.session.commit()
+            try:
+                db.session.add(employee)
+                db.session.flush()
+            except exc.IntegrityError:
+                db.session.rollback()  
+                flash('Error: Employee already belongs to this event')
+                return redirect(url_for('my_view.viewEvent', eventID = foundEventID))
+            else:
+                db.session.commit()
+                flash('Success! Employee added.')
+
+
         
         if request.form['check'] == 'updateOrderLine':
             orderLineID = request.form['orderLineID']
@@ -382,7 +393,7 @@ def viewEvent(eventID):
             vendorServiceforUpdate = Vendor_Service.query.get(vendorServiceID)
         
             vendorServiceforUpdate.Vendor_Service_Status_ID = request.form['statusUpdate']
-            vendorServiceforUpdate.Vendor_Service_Line_Date = request.form['date']
+            vendorServiceforUpdate.Date = request.form['date']
             db.session.commit()
             flash('Success! Vendor Service updated.')
       
@@ -456,7 +467,7 @@ def viewEvent(eventID):
             
 
 
-    return render_template('tables/viewEvent.html', states = State.query.all(), employeeAssignments = empAssignmentList, vendorServices = vendorServiceList, categories = Event_Category.query.all(), events = eventOrder, orderLines = orderLines, vendors = Vendor.query.all(), statuses = Event_Status.query.all(), services = Product_Service.query.all(), employees = Employee.query.all())
+    return render_template('tables/viewEvent.html', states = State.query.all(), employeeAssignments = empAssignmentList, vendorServices = vendorServiceList, categories = Event_Category.query.all(), events = eventOrder, orderLines = orderLines, vendors = Vendor.query.all(), statuses = Event_Status.query.all(), services = Product_Service.query.all(), employees = Employee.query.order_by(Employee.Emp_Last_Name).all())
 
 
  # Temporary - ORDER LINE now viewable in EVENT DETAIL route

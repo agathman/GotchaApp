@@ -277,11 +277,11 @@
                         </div>
                         <div class="col-3">
                     <label>Theme</label> <label style="color:red">*</label>
-                    <input type="text" class="form-control" name="theme">
+                    <input type="text" class="form-control" pattern="{1,250}" name="theme">
                     </div>
                     <div class="col-3">
                         <label>Venue</label> <label style="color:red">*</label>
-                    <input type="text" class="form-control" name="location" required>
+                    <input type="text" class="form-control" pattern="{1,250} name="location" required>
                     </div>
                     </div>
                     <br>
@@ -328,11 +328,11 @@
                     
                     <div class="col-5">
                     <label>Address</label> <label style="color: red">*</label>
-                    <input type="text" class="form-control" name="address" required>
+                    <input type="text" class="form-control" pattern="[A-Za-z0-9 ]{1,250}" name="address" required>
                     </div>
                     <div class="col-3">
                     <label>City</label> <label style="color:red">*</label>
-                    <input type="text" class="form-control" name="city" required>  
+                    <input type="text" class="form-control" pattern="[A-Za-z ]{1,250}" name="city" required>  
                     </div>
                     <div class="col-2"> 
                         <label>State</label> <label style="color:red">*</label>
@@ -344,7 +344,7 @@
                     </div>
                     <div class="col-2"> 
                         <label>Zip Code</label> <label style="color:red">*</label>
-                        <input type="text" class="form-control" name="zip" required>
+                        <input type="text" class="form-control" pattern="[(0-9)]{1,5}" name="zip" required>
                   
                     </div>
                     </div>

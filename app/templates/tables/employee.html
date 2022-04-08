@@ -33,9 +33,14 @@
             
         
      <div class="container-md py-4 px-5">
-                <div class="d-flex justify-content-start"> 
+                
                     <h1 class="font-weight-bold px-2 py-4">Employees</h1>
-                    </div>  
+                  
+                    <div class="row">
+                        <div class="col-4"></div>
+                        <div class="col-2 text-center">
+                    
+                                     
                     {% with messages = get_flashed_messages() %}
                     {% if messages %}
                        {% for message in messages %}
@@ -52,7 +57,12 @@
                        {% endfor %}
                     {% endif %}
                  {% endwith %}
-                
+               
+                 <div class="col-4">
+
+                 </div>
+                 </div>
+                 </div>
 
                       
                         
@@ -182,7 +192,7 @@
                         <div class="row">
                             <div class="col-5">
                         <label>City</label> <label style="color:red">*</label>
-                        <input type="text"  pattern="[A-Za-z]{1,250}" class="form-control" name="city" maxlength="250" required>
+                        <input type="text"  pattern="[A-Za-z ]{1,250}" class="form-control" name="city" maxlength="250" required>
                         </div>
                             <div class="col-3">
                         <label>State</label> <label style="color:red">*</label>
@@ -261,7 +271,7 @@
                     <div class="row">
                         <div class="col-5">
                     <label>City</label> <label style="color:red">*</label>
-                    <input type="text"  pattern="[A-Za-z]{1,250}" class="form-control" name="city" value="{{employee.Emp_Mailing_City}}" maxlength="250" required>
+                    <input type="text"  pattern="[A-Za-z ]{1,250}" class="form-control" name="city" value="{{employee.Emp_Mailing_City}}" maxlength="250" required>
                     </div>
                         <div class="col-3">
                     <label>State</label> <label style="color:red">*</label>

@@ -6,9 +6,12 @@
     
         
             <div class="container-md py-4 px-5">
-                <div class="d-flex justify-content-start"> 
                     <h1 class="font-weight-bold px-2 py-4">Appointments</h1>
-                    </div>                  
+                    <div class="row">
+                        <div class="col-4"></div>
+                        <div class="col-2 text-center">
+                    
+                                     
                     {% with messages = get_flashed_messages() %}
                     {% if messages %}
                        {% for message in messages %}
@@ -25,6 +28,12 @@
                        {% endfor %}
                     {% endif %}
                  {% endwith %}
+               
+                 <div class="col-4">
+
+                 </div>
+                 </div>
+                 </div>
              
                     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                         <div class="modal-dialog" role="document">

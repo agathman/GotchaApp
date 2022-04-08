@@ -30,40 +30,45 @@
                                </button>
     
         </div>
-        <div class="col-4"> 
-            {% with messages = get_flashed_messages() %}
-            {% if messages %}
-               {% for message in messages %}
-               {% if message == 'Delete is not possible for this record' %}
-               <div class="alert alert-danger" role="alert">
-                {{ message }}
-                </div>
-                   {% else %}
-                   <div class="alert alert-success" role="alert">
+        <div class="row px-5">
+            <div class="col-2 text-center">
+                {% with messages = get_flashed_messages() %}
+                {% if messages %}
+                   {% for message in messages %}
+                   {% if message == 'Delete is not possible for this record' %}
+                   <div class="alert alert-danger" role="alert">
                     {{ message }}
                     </div>
-                       {% endif %}
-                
-               {% endfor %}
-            {% endif %}
-         {% endwith %}
-        </div> 
-        <div class="col"></div>
-        </div>
-            <div class="container py-5 ">
+                       {% else %}
+                       <div class="alert alert-success" role="alert">
+                        {{ message }}
+                        </div>
+                           {% endif %}
+                    
+                   {% endfor %}
+                {% endif %}
+             {% endwith %}
+            </div>
+            <div class="col text-center">
+        
+                         
+     
+   
+     <div class="col">
+
+     </div>
+     </div>
+     </div>
+    
 
     
+
+
 <div class="row">
-    <div clas="col-6">
-       
-    </div>
-    <div class="col"></div>
-</div>
-<div class="row">
-    <div class="col-6">
+    <div class="col-4 px-5">
         
         
-        <div id="collapseCat" class="collapse" aria-labelledby="headingOne">
+        <div id="collapseCat" class="collapse show" aria-labelledby="headingOne">
         <div class="card card-body">
    
     <table class="table">

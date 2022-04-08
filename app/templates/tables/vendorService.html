@@ -4,27 +4,38 @@
 {% block content %}
 
 <div class="container-md py-4 px-5">
-            <div class="d-flex justify-content-start"> 
+            
                 <h1 class="font-weight-bold py-4">{% for vendor in vendorName %}
                     Orders from {{vendor.Vendor_Name}}</h1>
                         {% endfor %}
-                </div> 
-                {% with messages = get_flashed_messages() %}
-                {% if messages %}
-                   {% for message in messages %}
-                   {% if message == 'Delete is not possible for this record' %}
-                   <div class="alert alert-danger" role="alert">
-                    {{ message }}
-                    </div>
-                       {% else %}
-                       <div class="alert alert-success" role="alert">
-                        {{ message }}
-                        </div>
-                           {% endif %}
-                    
-                   {% endfor %}
-                {% endif %}
-             {% endwith %}
+
+                        <div class="row">
+                            <div class="col-4"></div>
+                            <div class="col-2 text-center">
+                        
+                                         
+                        {% with messages = get_flashed_messages() %}
+                        {% if messages %}
+                           {% for message in messages %}
+                           {% if message == 'Delete is not possible for this record' %}
+                           <div class="alert alert-danger" role="alert">
+                            {{ message }}
+                            </div>
+                               {% else %}
+                               <div class="alert alert-success" role="alert">
+                                {{ message }}
+                                </div>
+                                   {% endif %}
+                            
+                           {% endfor %}
+                        {% endif %}
+                     {% endwith %}
+                   
+                     <div class="col-4">
+    
+                     </div>
+                     </div>
+                     </div>
             
                 
 <table class="table table-striped">
@@ -98,7 +109,9 @@
             <form action = "{{ request.path }}" method = "POST">
                 <input type="hidden" name="check" value="addVendorService">
                 <label style="color:red">*</label><label>Indicate required field</label>
-                <label>Vendor</label> <label style="color:red">*</label>
+                <div class="row">
+                    <div class="col-5">  
+                <label>Vendor</label>
                 {% for vendor in vendorName %}
                 <input type="hidden" name='vendor' value="{{vendor.Vendor_ID}}"> 
                 <input type="text" class="form-control" value="{{vendor.Vendor_Name}}" disabled>
@@ -108,24 +121,39 @@
                     <option value="{{vendor.Vendor_ID}}">{{vendor.Vendor_Name}}</option> 
                     {% endfor %} 
                 </select> -->
+                </div> 
+                </div>
+                <br>
+                <div class="row">         
+                    <div class="col-5">  
                 <label>Event</label>  <label style="color:red">*</label>
                 <select class="form-control" name="event" required>
-                    <option disabled selected value> -- Select an option -- </option>
+                    <option disabled selected value>Select an option</option>
                     {% for event in events %} 
                     <option value="{{event.Event_Order_ID}}">{{event.Event_Order_ID}} : {{event.First_Name}} {{event.Last_Name}}</option>
                     {% endfor %}
                 </select>
+                </div>
+                    <div class="col-6">  
                 <label>Service</label> <label style="color:red">*</label>
                 <input type='text' class="form-control" name="service" required>
+                </div>
+                </div>
+                <div class="row">
+                    <div class="col-5">  
                 <label>Status</label> <label style="color:red">*</label>
                 <select class="form-control" name="status" required>     
-                    <option disabled selected value> -- Select an option -- </option>                                     
+                    <option disabled selected value>Select an option</option>                                     
                     {% for status in statuses %}
                         <option value="{{status.Event_Status_ID}}">{{status.Event_Status}}</option>
                         {% endfor %}
                     </select>
+                    </div>
+                    <div class="col-sm-5">
                 <label>Date</label> <label style="color:red">*</label>
-                <input type="date" name="date" class="form-control" required>           
+                <input type="date" name="date" class="form-control" required>        
+                </div>
+                </div>   
 
             
         </div>
