@@ -97,12 +97,13 @@
                 </button>
                 </div>
                 <div class="modal-body">
+                    <label style="color:red">*</label> <label>Indicates required field</label> 
                     <form action = "{{ request.path }}" method = "post">
                         <div class="row">
                         <div class="col-5">
-                        <label>Type</label>
+                        <label>Type</label><label style="color:red">*</label>
                         <input type="hidden" name='check' value="addPayment">
-                        <select class="form-control" name="payType">
+                        <select class="form-control" name="payType" required>
                         <option disabled selected value> -- Select an option -- </option>
                             {% for type in types %}
                             <option value="{{type.Payment_Type_ID}}">{{type.Payment_Type_Name}}</option> 
@@ -110,8 +111,8 @@
                         </select>
                     </div>
                     <div class="col">
-                        <label>Event Order</label>
-                        <select class="form-control" name="eventOrder">
+                        <label>Event Order</label><label style="color:red">*</label>
+                        <select class="form-control" name="eventOrder" required>
                         <option disabled selected value> -- Select an option -- </option>
                             {% for event in events %}
                             <option value="{{event.Event_Order_ID}}">Event ID: {{event.Event_Order_ID}} Customer: {{ event.First_Name}} {{event.Last_Name}}</option>
@@ -122,12 +123,12 @@
                     <br>
                     <div class="row">
                     <div class="col">
-                        <label>Initial Payment Date</label>
-                        <input type="date" class="form-control" name="initDate">
+                        <label>Initial Payment Date</label><label style="color:red">*</label>
+                        <input type="date" class="form-control" name="initDate" required>
                     </div>
                     <div class="col">
-                        <label>Full Payment Date</label>
-                        <input type="date" class="form-control" name="fullDate">
+                        <label>Full Payment Date</label><label style="color:red">*</label>
+                        <input type="date" class="form-control" name="fullDate" required>
                     </div>
                     </div>
                     
