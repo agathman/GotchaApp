@@ -1,41 +1,13 @@
 {% extends "base.html" %}
-{% block active %}
-<a class="nav-link " href="/">Home</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="/Appointments">Appointments</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="/Customer">Customers</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="/Employee">Employees</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="/EventOrders">Event Orders</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="/Payment">Payments</a> 
-</li>
-<li class="nav-item">
-<a class="nav-link active" href="/Vendor">Vendors</a>  
-</li>
-<li class="nav-item">
-    <a class="nav-link" href="/Misc">Misc</a>
-    </li>
-<li class="nav-item">
-    <a class="nav-link" href="/Reports">Reports</a>
-</li>
-{% endblock %}
+
 
 {% block content %}
-<div class="container-fluid">          
-    <div class="p-5 mb-4 rounded-3"> 
-        <div class="container py-2">
+
+<div class="container-md py-4 px-5">
             <div class="d-flex justify-content-start"> 
-                <h1 class="font-weight-bold px-2 py-4">{% for vendor in vendorName %}
-                    <h2>Orders from {{vendor.Vendor_Name}}</h2>
-                        {% endfor %}</h1>
+                <h1 class="font-weight-bold py-4">{% for vendor in vendorName %}
+                    Orders from {{vendor.Vendor_Name}}</h1>
+                        {% endfor %}
                 </div> 
                 {% with messages = get_flashed_messages() %}
                 {% if messages %}
@@ -56,7 +28,7 @@
             
                 
 <table class="table table-striped">
-    <thead class="thead-dark">
+    <thead class="thead">
         <th>
             Event
         </th>
@@ -69,7 +41,7 @@
         <th>
             Status
         </th>
-        <th> <button type="button" class="btn btn-sm btn-primary" data-toggle="modal" data-target="#addVendorServiceModal">
+        <th> <button type="button" class="btn btn-sm btn-secondary" data-toggle="modal" data-target="#addVendorServiceModal">
             Add Service
         </button> </th>
     </thead>
@@ -110,7 +82,7 @@
 
 </div>
 </div>
-</div>
+
 <!-- MODAL -->
 
 <div class="modal fade" id="addVendorServiceModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

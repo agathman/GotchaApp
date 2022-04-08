@@ -1,69 +1,152 @@
 <!DOCTYPE html>
 {% extends "base.html" %}
-{% block active %}
-<a class="nav-link active" href="/">Home</a>
+<!-- {% block active %}
+<li class="nav-item">
+    <a class="nav-link text-dark font-italic bg-light" href="/">
+    <i class="fa fa-th-large mr-3 text-primary fa-fw"></i>
+    Home
+</a>
 </li>
 <li class="nav-item">
-<a class="nav-link" href="/Appointments">Appointments</a>
+<a class="nav-link text-dark font-italic bg-light" href="/Appointments"><i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
+    Appointments
+</a>
 </li>
 <li class="nav-item">
-<a class="nav-link" href="/Customer">Customers</a>
+<a class="nav-link text-dark font-italic bg-light" href="/Customer"><i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
+    Customers
+</a>
 </li>
 <li class="nav-item">
-<a class="nav-link" href="/Employee">Employees</a>
+<a class="nav-link text-dark font-italic bg-light" href="/Employee"><i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
+    Employees
+</a>
 </li>
 <li class="nav-item">
-<a class="nav-link" href="/EventOrders">Event Orders</a>
+<a class="nav-link text-dark font-italic bg-light" href="/EventOrders"><i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
+    Events
+</a>
 </li>
 <li class="nav-item">
-<a class="nav-link" href="/Payment">Payments</a> 
+<a class="nav-link text-dark font-italic bg-light" href="/Payment"><i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
+   Payments
+</a>
+<li class="nav-item">
+<a class="nav-link text-dark font-italic bg-light" href="/Vendor"><i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
+    Vendors
+</a>
 </li>
 <li class="nav-item">
-<a class="nav-link" href="/Vendor">Vendors</a>  
-</li>
-<li class="nav-item">
-    <a class="nav-link" href="/Misc">Misc</a>
+    <a class="nav-link text-dark font-italic bg-light" href="/Misc"><i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
+        Misc
+    </a>
     </li>
 <li class="nav-item">
-    <a class="nav-link" href="/Reports">Reports</a>
+    <a class="nav-link text-dark font-italic bg-light" href="/Reports"><i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
+        Reports
+    </a>
     </li>
     
 
+{% endblock %}-->
+{% block top %}
+<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal">
+    Add Customer
+</button>
+
+<!-- Modal button for new appointment-->
+<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#AppointmentModal">
+    Add Appointment
+</button>
+
+<!-- Modal button for add event-->
+<button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#EventModal">
+    Add Event
+</button>
+
 {% endblock %}
 
-     {% block content %}
+{% block content %}
+   
+        {% with messages = get_flashed_messages() %}
+        {% if messages %}
+           {% for message in messages %}
+           {% if message == 'Delete is not possible for this record' %}
+           <div class="alert alert-danger" role="alert">
+            {{ message }}
+            </div>
+               {% else %}
+               <div class="alert alert-success" role="alert">
+                {{ message }}
+                </div>
+                   {% endif %}
+            
+           {% endfor %}
+        {% endif %}
+     {% endwith %}
+        <div class="separator"></div>
+<div class="container-md px-5 py-4">
+<div class="row">        
+<div class="col-lg-6">
+<h2 class="font-weight-bold px-2">Events Within 30 Days</h2>
 
-     <div class="container-fluid">  
-         
- 
-        <div class="p-5 rounded-3"> 
-            <div class="row">
-                <div class="col-2">
-                    <br>
-                    <br>
-                    <div class="d-flex flex-column">
-        
-                    
-                        <!-- Modal Button for Customer -->
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                            Add Customer
-                        </button>
-                        
-                        <!-- Modal button for new appointment-->
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#AppointmentModal">
-                            Add Appointment
-                        </button>
-                        
-                        <!-- Modal button for add event-->
-                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#EventModal">
-                            Add Event
-                        </button>                              
-                    </div>
-                </div>    
+    <table class="table table-striped">
+        <thead>
+        <tr>
+            <th style="width: 25%">
+                Customer Name
+            </th>
+            <th style="width: 25%">
+                Event Date
+            </th>
+            <th style="width: 20%">Status</th>
+            <th style="width: 20%">View</th>
+            
+        </tr>
+        </thead>
+        <tbody>
+            {% for customer in customers %}
+            {% if customer.Event_Status != 'Completed' %}
+            <tr>
+            <td>{{ customer.First_Name }} {{ customer.Last_Name }}</td>
                 
-      
-         
-              
+            <td>{{ customer.Event_Time.strftime('%m-%d-%Y') }}</td>
+            <td>{{ customer.Event_Status}} </td>
+            <td><a href="/viewEvent/{{customer.Event_Order_ID}}">View</a></td>
+            </tr>
+            {% endif %}
+                {% endfor %}
+        </tbody>
+                
+    </table>
+        </div>
+        <div class="col-lg-6">
+            <h2 class="font-weight-bold px-2">Appointments Within 30 Days</h2>
+                <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>
+                                Customer Name
+                            </th>
+                            <th>
+                                Appointment Date
+                            </th>
+                        </tr>
+                        </thead>
+                        {% for appointment in appointments %}
+                        <tr>
+                            <td>{{appointment.First_Name}} {{appointment.Last_Name}}</td>
+                            <td>{{appointment.Datetime.strftime('%m-%d-%Y') }}</td>
+                        </tr>
+                        {% endfor %}
+                    </thead>
+                </table>
+        
+    </div>
+    </div>
+    </div>
+    </div>
+</div>
 
 <!-- Modal body for Customer -->
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -338,85 +421,5 @@
         </div>
         </div>
     </div>
-
-            {% with messages = get_flashed_messages() %}
-            {% if messages %}
-               {% for message in messages %}
-               {% if message == 'Delete is not possible for this record' %}
-               <div class="alert alert-danger" role="alert">
-                {{ message }}
-                </div>
-                   {% else %}
-                   <div class="alert alert-success" role="alert">
-                    {{ message }}
-                    </div>
-                       {% endif %}
-                
-               {% endfor %}
-            {% endif %}
-         {% endwith %}
-        
-<div class="col-4">
-<h2 class="font-weight-bold px-2">Events Within 30 Days</h2>
-
-    <table class="table">
-        <thead>
-        <tr>
-            <th style="width: 25%">
-                Customer Name
-            </th>
-            <th style="width: 25%">
-                Event Date
-            </th>
-            <th style="width: 20%">Status</th>
-            <th style="width: 20%">View</th>
-            
-        </tr>
-        </thead>
-        <tbody>
-            {% for customer in customers %}
-            {% if customer.Event_Status != 'Completed' %}
-            <tr>
-            <td>{{ customer.First_Name }} {{ customer.Last_Name }}</td>
-                
-            <td>{{ customer.Event_Time.strftime('%m-%d-%Y') }}</td>
-            <td>{{ customer.Event_Status}} </td>
-            <td><a href="/viewEvent/{{customer.Event_Order_ID}}">View</a></td>
-            </tr>
-            {% endif %}
-                {% endfor %}
-        </tbody>
-                
-    </table>
-        </div>
-        <div class="col-4">
-            <h2 class="font-weight-bold px-2">Appointments Within 30 Days</h2>
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>
-                                Customer Name
-                            </th>
-                            <th>
-                                Appointment Date
-                            </th>
-                        </tr>
-                        </thead>
-                        {% for appointment in appointments %}
-                        <tr>
-                            <td>{{appointment.First_Name}} {{appointment.Last_Name}}</td>
-                            <td>{{appointment.Datetime.strftime('%m-%d-%Y') }}</td>
-                        </tr>
-                        {% endfor %}
-                    </thead>
-                </table>
-        
-    </div>
-    </div>
-    </div>
-    </div>
-
-
 {% endblock %}
 
-</html>

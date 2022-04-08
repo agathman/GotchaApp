@@ -1,37 +1,9 @@
 {% extends "base.html" %}
-{% block active %}
-<a class="nav-link " href="/">Home</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="/Appointments">Appointments</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="/Customer">Customers</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="/Employee">Employees</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="/EventOrders">Event Orders</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="/Payment">Payments</a> 
-</li>
-<li class="nav-item">
-<a class="nav-link active" href="/Vendor">Vendors</a>  
-</li>
-<li class="nav-item">
-    <a class="nav-link" href="/Misc">Misc</a>
-    </li>
-<li class="nav-item">
-    <a class="nav-link" href="/Reports">Reports</a>
-    </li>
-{% endblock %}
+
 
      {% block content %}
-     <div class="container-fluid">          
-        <div class="p-5 mb-4 rounded-3"> 
-            <div class="container py-2">
+
+     <div class="container-md py-4 px-5">
                 <div class="d-flex justify-content-start"> 
                     <h1 class="font-weight-bold px-2 py-4">Vendors</h1>
                     </div>  
@@ -110,67 +82,67 @@
 
                   
                             
-                        <table class="table table-striped">
-                            <thead class="thead-dark">
-                              
-                                <th class="header" scope="col">
-                                    Vendor Name
-                                </th>
-                                <th class="header" scope="col">
-                                    Contact
-                                    </th>
-                                <th class="header" scope="col">
-                                    Phone
-                                </th>
-                                <th class="header" scope="col">
-                                    Email
-                                </th>
-                                <th class="header" scope="col">
-                                    Description
-                                </th>
-                                <th class="header" scope="col">
-                                    Services
-                                </th>
-                                <th class="header" scope="col"> 
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-                                        Add Vendor
-                                        </button></th>
-                                  
- 
-                            </tr>
-                            </thead>
-                            <tbody>
-                                {% for vendor in vendors %}
-                                {% if vendor.Vendor_ID != 13 %}
-                                <tr>
-                                <td>{{ vendor.Vendor_Name}}</td>
-                                <td>{{ vendor.First_Name}} {{ vendor.Last_Name}}</td>
-                                <td>{{ vendor.Phone}}</td>
-                                <td>{{ vendor.Email}}</td>
-                                <td>{{ vendor.Vendor_Desc }}</td>
-                                <td><a href="/vendorService/{{vendor.Vendor_ID}}">Orders</a></td>
-                                <td><div class="d-flex flex-row">
-                                    <div class="p-2">
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateVendorModal{{vendor.Vendor_ID}}">
-                                    Edit
-                                </button></div>
+            <table class="table table-striped">
+                <thead class="thead">
+                    
+                    <th class="header" scope="col">
+                        Vendor Name
+                    </th>
+                    <th class="header" scope="col">
+                        Contact
+                        </th>
+                    <th class="header" scope="col">
+                        Phone
+                    </th>
+                    <th class="header" scope="col">
+                        Email
+                    </th>
+                    <th class="header" scope="col">
+                        Description
+                    </th>
+                    <th class="header" scope="col">
+                        Services
+                    </th>
+                    <th class="header" scope="col"> 
+                        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal">
+                            Add Vendor
+                            </button></th>
+                        
+
+                </tr>
+                </thead>
+                <tbody>
+                    {% for vendor in vendors %}
+                    {% if vendor.Vendor_ID != 13 %}
+                    <tr>
+                    <td>{{ vendor.Vendor_Name}}</td>
+                    <td>{{ vendor.First_Name}} {{ vendor.Last_Name}}</td>
+                    <td>{{ vendor.Phone}}</td>
+                    <td>{{ vendor.Email}}</td>
+                    <td>{{ vendor.Vendor_Desc }}</td>
+                    <td><a href="/vendorService/{{vendor.Vendor_ID}}">Orders</a></td>
+                    <td><div class="d-flex flex-row">
+                        <div class="p-2">
+                        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#updateVendorModal{{vendor.Vendor_ID}}">
+                        Edit
+                    </button></div>
                                 
-                                <!-- Delete Form Start-->
-                                    <form action ="{{ request.path }}" method = 'post'>
-                                        <!-- Hidden Field to validate which request to use in the route in views.py (name='check' value='Name to the request portion')-->
-                                    <input type="hidden" name="check" value="deleteVendor">
-                                    <!-- Appointment ID to delete name='Name Field to the request in back end' value='the ID to the object you want to delete'-->
-                                    <input type="hidden" name="deleteVendorID" value="{{vendor.Vendor_ID}}">
-                                <div class='p-2'><button type="submit" class="btn"><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button></div>
-                                    </div></td>
-                                </form>
-                            <!-- Delete END --></td>
-                            </tr>
-                            {% endif %}
-                            {% endfor %}
-                            </tbody>
-                                
-                        </table>
+                    <!-- Delete Form Start-->
+                        <form action ="{{ request.path }}" method = 'post'>
+                            <!-- Hidden Field to validate which request to use in the route in views.py (name='check' value='Name to the request portion')-->
+                        <input type="hidden" name="check" value="deleteVendor">
+                        <!-- Appointment ID to delete name='Name Field to the request in back end' value='the ID to the object you want to delete'-->
+                        <input type="hidden" name="deleteVendorID" value="{{vendor.Vendor_ID}}">
+                    <div class='p-2'><button type="submit" class="btn"><img src="{{url_for('static', filename='trash3-fill.svg')}}"></button></div>
+                        </div></td>
+                    </form>
+                <!-- Delete END --></td>
+                </tr>
+                {% endif %}
+                {% endfor %}
+                </tbody>
+                    
+            </table>
 
                 </div>
             </div>        

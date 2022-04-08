@@ -7,22 +7,13 @@
     crossorigin="anonymous">
    
     <style>
-     body, html{
-      margin: 0;
-      background-position: center;
-      background-size: cover;
-      background-repeat: repeat-x;
-      font-family: Arial, Helvetica, sans-serif;
+    body {
+      background-color: whitesmoke;
+      color: #392F45;
     }
-    .navbar-custom{
-      background-color: #BBD6F2;
 
-    }
-      
- 
-    
     .btn-secondary{
-    background: #566370;
+    background: #615075;
     border: 1px solid #eee;
     }
     .btn-primary{
@@ -30,42 +21,173 @@
       border: 1px solid #eee;
     }
     th{
-      background-color:  #355270;
+      background-color: #392F45;
       color: white;
     }
-    .nav-link {
-      font-size:larger;
-      color: #566370!important;
-      }
-    .nav-item {
-      color:#566370;
-      background-color:#BBD6F2 ;
-    }
-    .nav-link:hover {
-      color: white !important;
-    }
-    .active {
-      color: white !important;
-      background-color:#BBD6F2!important;
-    }
+
+
+
   
-    .header {
-            position: sticky;
-            top:0;
-        }
+  
+.header {
+      position: sticky;
+      top:0;
+      }
+  
+.top-shadow {
+    box-shadow: 3px 3px 10px  rgba(0, 0, 0, 0.2);
+  
+    height: 100vh;
+  }
+  .vertical-nav {
+  min-width: 17rem;
+  width: 17rem;
+  height: 100vh;
+  position: fixed;
+  top: 0;
+  left: 0;
+  box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.6);
+  transition: all 0.4s;
+  background-color: #A084C2;
+ 
+  
+}
+
+.page-content {
+  width: calc(100% - 17rem);
+  margin-left: 17rem;
+  transition: all 0.4s;
+}
+
+/* for toggle behavior */
+
+#sidebar.active {
+  margin-left: -17rem;
+}
+
+#content.active {
+  width: 100%;
+  margin: 0;
+}
+
+@media (max-width: 768px) {
+  #sidebar {
+    margin-left: -17rem;
+  }
+  #sidebar.active {
+    margin-left: 0;
+  }
+  #content {
+    width: 100%;
+    margin: 0;
+  }
+  #content.active {
+    margin-left: 17rem;
+    width: calc(100% - 17rem);
+  }
+  body {
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.separator {
+  margin: 3rem 0;
+  border-bottom: 1px dashed #fff;
+}
+
+.text-uppercase {
+  letter-spacing: 0.1em;
+}
+
+.text-gray {
+  color: #aaa;
+  }
+li {
+  background-color: #E0C7FF !important;
+}
+.bg-nav {
+  background-color: #E0C7FF !important;
+
+}
+.nav-link {
+  background-color: #E0C7FF !important;
+}
+a {
+  background-color: #E0C7FF !important;
+}
+}
+
+
     </style>
  </head>
   <body>
-    <nav class="navbar navbar-expand-lg navbar-custom" >
+
+    <div class="vertical-nav" id="sidebar">
+      <div class="py-4 px-3 mb-4">
+      <div class="media d-flex justify-content-center"><img src="../assets/colorLogo.png" alt="..." width="170" class="mr-3 rounded-circle img-thumbnail shadow-sm">
+       
+      </div>
+    </div>
+    <ul class="nav flex-column mb-0">
+      
+      <li class="nav-item">
+        <a class="nav-link text-dark font-italic bg-light" href="/">
+        <i class="fa fa-th-large mr-3 text-primary fa-fw" ></i>
+        Home
+    </a>
+    </li>
+    <li class="nav-item">
+      <a class="nav-link text-dark font-italic bg-light bg-light" href="/Appointments"><i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
+        Appointments
+    </a>
+    </li>
+    <li class="nav-item">
+    <a class="nav-link text-dark font-italic bg-light" href="/Customer"><i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
+        Customers
+    </a>
+    </li>
+    <li class="nav-item">
+    <a class="nav-link text-dark font-italic bg-light" href="/Employee"><i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
+        Employees
+    </a>
+    </li>
+    <li class="nav-item">
+    <a class="nav-link text-dark font-italic bg-light" href="/EventOrders"><i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
+        Events
+    </a>
+    </li>
+    <li class="nav-item">
+    <a class="nav-link text-dark font-italic bg-light" href="/Payment"><i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
+       Payments
+    </a>
+    <li class="nav-item">
+    <a class="nav-link text-dark font-italic bg-light" href="/Vendor"><i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
+        Vendors
+    </a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark font-italic bg-light" href="/Misc"><i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
+            Misc
+        </a>
+        </li>
+    <li class="nav-item">
+        <a class="nav-link text-dark font-italic bg-light" href="/Reports"><i class="fa fa-address-card mr-3 text-primary fa-fw"></i>
+            Reports
+        </a>
+        </li>
+    </ul>
+    <div class="bottom-nav" style="background-color: whitesmoke; height: 100%;">
+
+    </div>
+    </div>
+    <!--  <nav class="navbar navbar-custom" >
          
         <a class="navbar-brand" href="#"><img src="../assets/colorLogo.png" alt="Creations By ChaCha" width="150" height="150"></a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
+          
       <br>
         <div class="collapse navbar-collapse" id="navbarSupportedContent" >
           <br>
-          <ul class="navbar-nav bd-navbar-nav  flex-row">
+          <ul class="nav navbar-nav">
     
               {% block active %}
               {% endblock %}
@@ -74,8 +196,18 @@
           </ul>  
         </div>
       </nav>
+    -->
+    <div class="page-content" id="content">      
+    <div class="p-5 top-shadow" style="background-color:#A084C2; height: 100%">
+      
+      {% block top %} {% endblock %}
+      </div>
+    {% block content %}
+    
+    {% endblock %}
+    </div>
 
-          {% block content %}{% endblock %}
+        
                  
 
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>

@@ -30,9 +30,9 @@
 {% endblock %}
 
      {% block content %}
-     <div class="container-fluid">          
-        <div class="p-5 mb-4 rounded-3"> 
-            <div class="container py-2">
+            
+        
+     <div class="container-md py-4 px-5">
                 <div class="d-flex justify-content-start"> 
                     <h1 class="font-weight-bold px-2 py-4">Employees</h1>
                     </div>  
@@ -57,7 +57,7 @@
                       
                         
                             <table class='table table-striped'>
-                               <thead class="thead-dark">
+                               <thead class="thead">
                                 <th class="header" scope="col">
                                     First Name
                                 </th>
@@ -85,7 +85,7 @@
                                 <th class="header" scope="col">
                                     Position
                                 </th>
-                                <th class="header" scope="col"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                <th class="header" scope="col"><button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal">
                                     Add Employee
                                  </button></th>
                             </thead>
@@ -104,7 +104,7 @@
                                 <td>
                                     <div class="d-flex flex-row">
                                     <div class="p-2">
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#updateEmployeeModal{{employee.Emp_ID}}">
+                                        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#updateEmployeeModal{{employee.Emp_ID}}">
                                             Edit
                                         </button>
                                         </div>

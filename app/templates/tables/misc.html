@@ -1,39 +1,35 @@
 {% extends "base.html" %}
-{% block active %}
-<a class="nav-link " href="/">Home</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="/Appointments">Appointments</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="/Customer">Customers</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="/Employee">Employees</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="/EventOrders">Event Orders</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="/Payment">Payments</a> 
-</li>
-<li class="nav-item">
-<a class="nav-link" href="/Vendor">Vendors</a>  
-</li>
-<li class="nav-item">
-<a class="nav-link active" href="/Misc">Misc</a>
-</li>
-<li class="nav-item">
-    <a class="nav-link" href="/Reports">Reports</a>
-    </li>
-{% endblock %}
 
-{% block content %}
-<div class="container-fluid">          
-    <div class="p-5 mb-4 rounded-3">
-        <div class="row">
-            <div class="col-4">
-                <div class="d-flex justify-content-start"> 
+{% block top %}      
+<button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseCat" aria-expanded="false" aria-controls="collapseCat">
+ View Categories
+</button>
+
+
+    <button class="btn btn-secondary collapsed" data-toggle="collapse" data-target="#collapseStatus" aria-expanded="false" aria-controls="collapseStatus">
+        View Statuses
+      </button>
+  
+
+    <button class="btn btn-secondary collapsed" data-toggle="collapse" data-target="#collapseService" aria-expanded="false" aria-controls="collapseService">
+            View Product Services
+        </button>
+   
+
+    <button class="btn btn-secondary collapsed" data-toggle="collapse" data-target="#collapsePayType" aria-expanded="false" aria-controls="collapsPayType">
+       View Payment Types
+        </button>
+        {% endblock %}
+
+
+{% block content %}   
+
+ 
+     
+                  
+    <div class="container-md py-4 px-5">
+        <div class="d-flex justify-content-start"> 
+
                     <h1 class="font-weight-bold px-2 py-4">Miscellaneous</h1>
                     </div>
     
@@ -63,28 +59,7 @@
     
 <div class="row">
     <div clas="col-6">
-            <div class="d-flex d'flex-row">
-                <div class="card-header" id="headingOne">
-                <button class="btn btn-secondary" type="button" data-toggle="collapse" data-target="#collapseCat" aria-expanded="false" aria-controls="collapseCat">
-                 View Categories
-                </button>
-                </div>
-                <div class="card-header" id="headingTwo">
-                    <button class="btn btn-secondary collapsed" data-toggle="collapse" data-target="#collapseStatus" aria-expanded="false" aria-controls="collapseStatus">
-                        View Statuses
-                      </button>
-                    </div>
-                <div class="card-header" id="headingThree">
-                    <button class="btn btn-secondary collapsed" data-toggle="collapse" data-target="#collapseService" aria-expanded="false" aria-controls="collapseService">
-                            View Product Services
-                        </button>
-                    </div>
-                <div class="card-header" id="headingFour">
-                    <button class="btn btn-secondary collapsed" data-toggle="collapse" data-target="#collapsePayType" aria-expanded="false" aria-controls="collapsPayType">
-                       View Payment Types
-                        </button>
-                        </div>
-                </div>
+       
     </div>
     <div class="col"></div>
 </div>
@@ -96,7 +71,7 @@
         <div class="card card-body">
    
     <table class="table">
-    <thead class="thead-dark">
+    <thead class="thead">
         <th>
              Categories              
         </th>
@@ -133,7 +108,7 @@
     <div id="collapseStatus" class="collapse" aria-labelledby="headingTwo">
         <div class="card card-body">
             <table class="table">
-                <thead class="thead-dark">
+                <thead class="thead">
                     <th>
                         Status
                     </th>
@@ -169,7 +144,7 @@
             <div id="collapseService" class="collapse" aria-labelledby="headingThree">
                 <div class="card card-body">
                     <table class="table">
-                        <thead class="thead-dark">
+                        <thead class="thead">
                             <th>
                                 Product Service
                             </th>
@@ -204,7 +179,7 @@
             <div id="collapsePayType" class="collapse" aria-labelledby="headingFour">
                 <div class="card card-body">
                     <table class="table">
-                        <thead class="thead-dark">
+                        <thead class="thead">
                             <th>
                                 Payment Type
                             </th>

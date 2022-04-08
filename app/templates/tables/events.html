@@ -1,38 +1,8 @@
 {% extends "base.html" %}
-{% block active %}
-<a class="nav-link " href="/">Home</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="/Appointments">Appointments</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="/Customer">Customers</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="/Employee">Employees</a>
-</li>
-<li class="nav-item">
-<a class="nav-link active" href="/EventOrders">Event Orders</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="/Payment">Payments</a> 
-</li>
-<li class="nav-item">
-<a class="nav-link" href="/Vendor">Vendors</a>  
-</li>
-<li class="nav-item">
-    <a class="nav-link" href="/Misc">Misc</a>
-    </li>
-<li class="nav-item">
-    <a class="nav-link" href="/Reports">Reports</a>
-    </li>
-{% endblock %}
 
 
-     {% block content %}
-     <div class="container-fluid">          
-        <div class="p-5 mb-4 rounded-3"> 
-            <div class="container py-2">
+     {% block content %}        
+     <div class="container-md py-4 px-5">
                 <div class="d-flex justify-content-start"> 
                     <h1 class="font-weight-bold px-2 py-4">Events</h1>
                     </div>  
@@ -55,7 +25,7 @@
                
                  
                             <table class="table table-striped">
-                                <thead class="thead-dark">
+                                <thead class="thead">
                                 <th class="header" scope="col">
                                     Event ID
                                 </th>
@@ -74,7 +44,7 @@
                                 <th class="header" scope="col">
                                     Status
                                </th>
-                                <th class="header" scope="col"><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#EventModal">
+                                <th class="header" scope="col"><button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#EventModal">
                                     Add Event
                                 </button></th>
                               

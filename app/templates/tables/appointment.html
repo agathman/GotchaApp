@@ -1,37 +1,11 @@
 {% extends "base.html" %}
-{% block active %}
-<a class="nav-link " href="/">Home</a>
-</li>
-<li class="nav-item">
-<a class="nav-link active custom-active" href="/Appointments">Appointments</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="/Customer">Customers</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="/Employee">Employees</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="/EventOrders">Event Orders</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="/Payment">Payments</a> 
-</li>
-<li class="nav-item">
-<a class="nav-link" href="/Vendor">Vendors</a>  
-</li>
-<li class="nav-item">
-    <a class="nav-link" href="/Misc">Misc</a>
-    </li>
-<li class="nav-item">
-    <a class="nav-link" href="/Reports">Reports</a>
-    </li>
-{% endblock %}
+
+
 
     {% block content %}
-    <div class="container-fluid">          
-        <div class="p-2 mb-4 rounded-3"> 
-            <div class="container">
+    
+        
+            <div class="container-md py-4 px-5">
                 <div class="d-flex justify-content-start"> 
                     <h1 class="font-weight-bold px-2 py-4">Appointments</h1>
                     </div>                  
@@ -51,6 +25,7 @@
                        {% endfor %}
                     {% endif %}
                  {% endwith %}
+                 <div class="separator"></div>
                 
                 
                     
@@ -121,6 +96,7 @@
                         </div>
                     </div>
                     <p>
+                        
                        <table class="table table-striped">
                         <thead>
                             <tr>
@@ -137,7 +113,7 @@
                                     Event Order
                                    </th>
                                     <th class="header" style="width: 15%" scope="col">
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                                        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#exampleModal">
                                             Add Appointment
                                           </button>
                                     </th>

@@ -1,9 +1,8 @@
 {% extends "base.html" %}
 
      {% block content %}
-     <div class="container">
-            <div class="p-5 mb-4 bg-light rounded-3">
-                <div class="container-fluid py-5 text-center">
+
+     <div class="container-md py-4 px-5">
                     {% with messages = get_flashed_messages() %}
                     {% if messages %}
                        {% for message in messages %}

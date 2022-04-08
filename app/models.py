@@ -4,9 +4,9 @@ from datetime import datetime
 
 class Appointment(db.Model):
     __tablename__ = 'Appointment'
-    Appointment_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    Customer_ID = db.Column(db.Integer, db.ForeignKey('Customer.Customer_ID'), nullable=False)
-    Event_Order_ID = db.Column(db.Integer, db.ForeignKey('Event_Order.Event_Order_ID'), nullable=True)
+    Appointment_ID = db.Column(db.SmallInteger, primary_key=True, autoincrement=True)
+    Customer_ID = db.Column(db.SmallInteger, db.ForeignKey('Customer.Customer_ID'), nullable=False)
+    Event_Order_ID = db.Column(db.SmallInteger, db.ForeignKey('Event_Order.Event_Order_ID'), nullable=True)
     Datetime = db.Column(db.DateTime, nullable=False)
 
     def __init__(self, Customer_ID, Datetime):
@@ -15,15 +15,15 @@ class Appointment(db.Model):
 
 class Customer(db.Model):
     __tablename__ = 'Customer'
-    Customer_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    First_Name = db.Column(db.String(250))
-    Last_Name = db.Column(db.String (250))
-    Phone = db.Column(db.String(12))
-    Email = db.Column(db.String(250))
-    Mailing_Address = db.Column(db.String (250))
-    Mailing_City = db.Column(db.String(250))
-    State_ID = db.Column(db.Integer, db.ForeignKey('State.State_ID'))
-    Mailing_Zip_Code = db.Column(db.String(10))
+    Customer_ID = db.Column(db.SmallInteger, primary_key=True, autoincrement=True)
+    First_Name = db.Column(db.String(250), nullable=False)
+    Last_Name = db.Column(db.String (250), nullable=False)
+    Phone = db.Column(db.String(12), nullable=False)
+    Email = db.Column(db.String(250), nullable=False)
+    Mailing_Address = db.Column(db.String (250), nullable=False)
+    Mailing_City = db.Column(db.String(250), nullable=False)
+    State_ID = db.Column(db.SmallInteger, db.ForeignKey('State.State_ID'), nullable=False)
+    Mailing_Zip_Code = db.Column(db.String(10), nullable=False)
 
     Event_Order = relationship("Event_Order", backref="Customer")
 
@@ -42,16 +42,16 @@ class Customer(db.Model):
 #form created
 class Employee(db.Model):
     __tablename__ = 'Employee'
-    Emp_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    Emp_First_Name = db.Column(db.String(50))
-    Emp_Last_Name = db.Column(db.String(50))
-    Emp_Mailing_Address = db.Column(db.String(250))
-    Emp_Mailing_City = db.Column(db.String(100))
-    State_ID = db.Column(db.Integer, db.ForeignKey('State.State_ID'))
-    Emp_Zip_Code = db.Column(db.String(10))
-    Emp_Phone = db.Column(db.String(12))
-    Emp_Email = db.Column(db.String(100) )
-    Emp_Position = db.Column(db.String(50))
+    Emp_ID = db.Column(db.SmallInteger, primary_key=True, autoincrement=True)
+    Emp_First_Name = db.Column(db.String(50), nullable=False)
+    Emp_Last_Name = db.Column(db.String(50), nullable=False)
+    Emp_Mailing_Address = db.Column(db.String(250), nullable=False)
+    Emp_Mailing_City = db.Column(db.String(100), nullable=False)
+    State_ID = db.Column(db.SmallInteger, db.ForeignKey('State.State_ID'), nullable=False)
+    Emp_Zip_Code = db.Column(db.String(10), nullable=False)
+    Emp_Phone = db.Column(db.String(12), nullable=False)
+    Emp_Email = db.Column(db.String(100), nullable=False )
+    Emp_Position = db.Column(db.String(50), nullable=False)
 
     def __init__(self,Emp_First_Name, Emp_Last_Name, Emp_Mailing_Address, Emp_Mailing_City, State_ID,Emp_Zip_Code, Emp_Phone, Emp_Email, Emp_Position):
         self.Emp_First_Name = Emp_First_Name
@@ -69,10 +69,10 @@ class Employee(db.Model):
 
 class Employee_Assignment(db.Model):
     __tablename__ = 'Employee_Assignment'
-    Employee_Assignment_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    Assignment_Start_Date = db.Column(db.Date)
-    Employee_ID = db.Column(db.Integer, db.ForeignKey('Employee.Emp_ID'))
-    Event_Order_ID = db.Column(db.Integer, db.ForeignKey('Event_Order.Event_Order_ID'), nullable=False)
+    Employee_Assignment_ID = db.Column(db.SmallInteger, primary_key=True, autoincrement=True)
+    Assignment_Start_Date = db.Column(db.Date , nullable=False) 
+    Employee_ID = db.Column(db.SmallInteger, db.ForeignKey('Employee.Emp_ID') , nullable=False)
+    Event_Order_ID = db.Column(db.SmallInteger, db.ForeignKey('Event_Order.Event_Order_ID'), nullable=False)
 
     def __init__(self, Assignment_Start_Date, Employee_ID, Event_Order_ID):
         self.Assignment_Start_Date = Assignment_Start_Date
@@ -83,7 +83,7 @@ class Employee_Assignment(db.Model):
 #form created
 class Event_Category(db.Model):
     __tablename__ = 'Event_Category'
-    Event_Category_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    Event_Category_ID = db.Column(db.SmallInteger, primary_key=True, autoincrement=True)
     Event_Category_Name = db.Column(db.String(150), nullable=False)
 
     def __init__(self, Event_Category_Name):
@@ -91,12 +91,12 @@ class Event_Category(db.Model):
 #form created
 class Event_Order(db.Model):
     __tablename__ = 'Event_Order'
-    Event_Order_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    Event_Category_ID = db.Column(db.Integer, db.ForeignKey('Event_Category.Event_Category_ID'), nullable=False)
-    Customer_ID = db.Column(db.Integer, db.ForeignKey('Customer.Customer_ID'), nullable=False)
-    Event_Order_Status_ID = db.Column(db.Integer, db.ForeignKey('Event_Status.Event_Status_ID'), nullable=False)
+    Event_Order_ID = db.Column(db.SmallInteger, primary_key=True, autoincrement=True)
+    Event_Category_ID = db.Column(db.SmallInteger, db.ForeignKey('Event_Category.Event_Category_ID'), nullable=False)
+    Customer_ID = db.Column(db.SmallInteger, db.ForeignKey('Customer.Customer_ID'), nullable=False)
+    Event_Order_Status_ID = db.Column(db.SmallInteger, db.ForeignKey('Event_Status.Event_Status_ID'), nullable=False)
     Event_Time = db.Column(db.Date, nullable=False)
-    Event_Theme = db.Column(db.String(250), nullable=False)
+    Event_Theme = db.Column(db.String(250), nullable=True)
     Event_Order_Desc = db.Column(db.String (250), nullable=False)
     Event_Delivery = db.Column(db.String (100), nullable=False)
     Event_Setup = db.Column(db.String (250), nullable=False)
@@ -104,8 +104,8 @@ class Event_Order(db.Model):
     Event_Restriction_Desc = db.Column(db.String(250), nullable=True)
     Event_Address = db.Column(db.String(250), nullable=False)
     Event_City = db.Column(db.String(100), nullable=False)
-    State_ID = db.Column(db.Integer, db.ForeignKey('State.State_ID'), nullable=False)
-    Event_Zip_Code = db.Column(db.Integer, nullable=False)
+    State_ID = db.Column(db.SmallInteger, db.ForeignKey('State.State_ID'), nullable=False)
+    Event_Zip_Code = db.Column(db.SmallInteger, nullable=False)
 
     
 
@@ -132,11 +132,11 @@ class Event_Order(db.Model):
 #form created
 class Event_Order_Line(db.Model):
     __tablename__ = 'Event_Order_Line'
-    Event_Order_Line_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    Event_Order_Status_ID = db.Column(db.Integer,db.ForeignKey('Event_Category.Event_Category_ID'), nullable=False)
+    Event_Order_Line_ID = db.Column(db.SmallInteger, primary_key=True, autoincrement=True)
+    Event_Order_Status_ID = db.Column(db.SmallInteger,db.ForeignKey('Event_Category.Event_Category_ID'), nullable=False)
     Event_Order_Line_Date = db.Column(db.Date, nullable=False)
-    Event_Order_ID = db.Column(db.Integer, db.ForeignKey('Event_Order.Event_Order_ID'), nullable=True)
-    Product_Service_ID = db.Column(db.Integer, db.ForeignKey('Product_Service.Product_Service_ID'), nullable=False)
+    Event_Order_ID = db.Column(db.SmallInteger, db.ForeignKey('Event_Order.Event_Order_ID'), nullable=True)
+    Product_Service_ID = db.Column(db.SmallInteger, db.ForeignKey('Product_Service.Product_Service_ID'), nullable=False)
 
 # Class method to GET from DB
 
@@ -152,7 +152,7 @@ class Event_Order_Line(db.Model):
 #form created
 class Event_Status(db.Model):
     __tablename__ = 'Event_Status'
-    Event_Status_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    Event_Status_ID = db.Column(db.SmallInteger, primary_key=True, autoincrement=True)
     Event_Status = db.Column(db.String(50), nullable=False)
 
     Event_Order = relationship('Event_Order', backref='Event_Status') 
@@ -162,9 +162,9 @@ class Event_Status(db.Model):
 #form created
 class Payment(db.Model):
     __tablename__ = 'Payment'
-    Payment_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
-    Payment_Type_ID = db.Column(db.Integer, db.ForeignKey('Payment_Type.Payment_Type_ID'), nullable=False)
-    Event_Order_ID = db.Column(db.Integer, db.ForeignKey('Event_Order.Event_Order_ID'), nullable=False)
+    Payment_ID = db.Column(db.SmallInteger, primary_key=True, autoincrement=True)
+    Payment_Type_ID = db.Column(db.SmallInteger, db.ForeignKey('Payment_Type.Payment_Type_ID'), nullable=False)
+    Event_Order_ID = db.Column(db.SmallInteger, db.ForeignKey('Event_Order.Event_Order_ID'), nullable=False)
     Payment_Date_Init = db.Column(db.Date, nullable=False)
     Payment_Date_Full = db.Column(db.Date, nullable=False)
 
@@ -176,7 +176,7 @@ class Payment(db.Model):
 #form created
 class Payment_Type(db.Model):
     __tablename__ = 'Payment_Type'
-    Payment_Type_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    Payment_Type_ID = db.Column(db.SmallInteger, primary_key=True, autoincrement=True)
     Payment_Type_Name = db.Column(db.String(50), nullable=False)
 
     def __init__(self, Payment_Type_Name):
@@ -184,7 +184,7 @@ class Payment_Type(db.Model):
 #form created
 class Product_Service(db.Model):
     __tablename__ = 'Product_Service'
-    Product_Service_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    Product_Service_ID = db.Column(db.SmallInteger, primary_key=True, autoincrement=True)
     Product_Service = db.Column(db.String(50), nullable=False)
 
     def __init__(self, Product_Service):
@@ -192,7 +192,7 @@ class Product_Service(db.Model):
 #form created
 class State(db.Model):
     __tablename__ = 'State'
-    State_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    State_ID = db.Column(db.SmallInteger, primary_key=True, autoincrement=True)
     State_Name = db.Column(db.String(20), nullable=False)
     State_Abbreviation = db.Column(db.String(2), nullable=False)
 
@@ -203,12 +203,12 @@ class State(db.Model):
 #form created
 class Vendor(db.Model):
     __tablename__ = 'Vendor'
-    Vendor_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    Vendor_ID = db.Column(db.SmallInteger, primary_key=True, autoincrement=True)
     Vendor_Name = db.Column(db.String(50), nullable=False)
     Vendor_Desc = db.Column(db.String(250), nullable=False)
     First_Name = db.Column(db.String(250), nullable=False)
     Last_Name = db.Column(db.String(250), nullable=False)
-    Phone = db.Column(db.String, nullable=False)
+    Phone = db.Column(db.String(12), nullable=False)
     Email = db.Column(db.String(250), nullable=False)
 
     def __init__(self, Vendor_Name, Vendor_Desc, First_Name, Last_Name, Phone, Email):
@@ -222,11 +222,11 @@ class Vendor(db.Model):
 #form creation
 class Vendor_Service(db.Model):
     __tablename__ = 'Vendor_Service'
-    Vendor_Service_ID = db.Column(db.Integer, primary_key=True, autoincrement=True)
+    Vendor_Service_ID = db.Column(db.SmallInteger, primary_key=True, autoincrement=True)
     Vendor_Services = db.Column(db.String(50), nullable=False)
-    Vendor_ID = db.Column(db.Integer, db.ForeignKey('Vendor.Vendor_ID'), nullable=False)
-    Event_Order_ID = db.Column(db.Integer, db.ForeignKey('Event_Order.Event_Order_ID'), nullable=False)
-    Vendor_Service_Status_ID = db.Column(db.Integer, db.ForeignKey('Event_Status.Event_Status_ID'), nullable=False)
+    Vendor_ID = db.Column(db.SmallInteger, db.ForeignKey('Vendor.Vendor_ID'), nullable=False)
+    Event_Order_ID = db.Column(db.SmallInteger, db.ForeignKey('Event_Order.Event_Order_ID'), nullable=False)
+    Vendor_Service_Status_ID = db.Column(db.SmallInteger, db.ForeignKey('Event_Status.Event_Status_ID'), nullable=False)
     Date = db.Column(db.Date, nullable=False)
 
     def __init__(self, Vendor_Services, Vendor_ID, Event_Order_ID, Vendor_Service_Status_ID, Date):

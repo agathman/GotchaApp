@@ -1,39 +1,9 @@
 {% extends "base.html" %}
 
-{% block active %}
-<a class="nav-link " href="/">Home</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="/Appointments">Appointments</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="/Customer">Customers</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="/Employee">Employees</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="/EventOrders">Event Orders</a>
-</li>
-<li class="nav-item">
-<a class="nav-link" href="/Payment">Payments</a> 
-</li>
-<li class="nav-item">
-<a class="nav-link" href="/Vendor">Vendors</a>  
-</li>
-<li class="nav-item">
-    <a class="nav-link" href="/Misc">Misc</a>
-    </li>
-<li class="nav-item">
-    <a class="nav-link active" href="/Reports">Reports</a>
-    </li>
-
-{% endblock %}
 
 {% block content %}
-<div class="container-fluid">          
-    <div class="p-5 mb-4 rounded-3"> 
-        <div class="container py-2">
+
+<div class="container-md py-4 px-5">
             <div class="d-flex justify-content-start"> 
                 <h1 class="font-weight-bold px-2 py-4">Reports</h1>
                 </div>    
@@ -43,7 +13,7 @@
                 <div class="row py-3">
                         <div class="col-8">
                             <table class="table">
-                                <thead>
+                                <thead class="thead-light">
                                 <th>
                                 Event Report
                                 </th>
@@ -60,19 +30,19 @@
                              <th>
                                 <input type="submit" class="btn btn-secondary" value="View Report">
                                 </form></th>
-                                </thead>
-                                <thead>
+                                </thead class="thead-light">
+                                <thead class="thead-light">
                             <th>Appointments in next 30 days</th>
                             <th></th>
                             <th><a href="/appointmentReport"><button class="btn btn-secondary">View Report</button></a>
                                             </th>
-                                </thead>
-                                <thead>
+                                </thead class="thead-light">
+                                <thead class="thead-light">
                                     <th>Events in the next 30 days</th>
                                     <th></th>
                                     <th><a href="/eventListReport"><button class="btn btn-secondary">View Report</button></a></th>
-                                </thead>
-                                <thead>
+                                </thead class="thead-light">
+                                <thead class="thead-light">
                                     <th>Services provided by Vendors</th>
                                     <th><form action ="{{ request.path }}" method = 'post'>
                                         <input type="hidden" name="check" value="vendor">
@@ -86,8 +56,8 @@
                                     <th>
                                         <input type="submit" class="btn btn-secondary" value="View Report"></form>
                                     </th>
-                                    </thead>
-                                    <thead>
+                                    </thead class="thead-light">
+                                    <thead class="thead-light">
                                     <th>Employee Assignments</th>
                                     <th><form action = "{{ request.path }}" method='post'>
                                         <input type="hidden" name="check" value="employeeCheck">
@@ -102,7 +72,7 @@
                                     </form></th>
                         
             
-                                </thead>
+                                </thead class="thead-light">
                             </table>
                             </div>
                         <div class="col">
