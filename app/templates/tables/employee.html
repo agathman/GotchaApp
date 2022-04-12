@@ -160,11 +160,11 @@
                         
                         <input type="hidden" name="employeeID">
                         <label>First Name</label> <label style="color:red">*</label>
-                        <input type="text" pattern="[A-Za-z]{1,250}" class="form-control" name="firstName" maxlength="250" required>
+                        <input type="text" pattern="[A-Za-z ]{1,250}" class="form-control" name="firstName" maxlength="250" required>
                         </div>
                         <div class="col">
                         <label>Last Name</label> <label style="color:red">*</label>
-                        <input type="text" pattern="[A-Za-z]{1,250}" class="form-control" name="lastName" maxlength="250" required>
+                        <input type="text" pattern="[A-Za-z ]{1,250}" class="form-control" name="lastName" maxlength="250" required>
                         </div>
                         </div>
                         <div class="row">
@@ -205,7 +205,7 @@
                         </div>
                         <div class="col-3">
                         <label>Zip Code</label> <label style="color:red">*</label>
-                        <input type="text" pattern="[(0-9)]{1,5}" maxlength="10"  class="form-control" name="zip" input required >
+                        <input type="text" pattern="[(0-9)]{5,5}" maxlength="10"  class="form-control" name="zip" input required >
                         </div>
                         </div>              
                         
@@ -239,11 +239,11 @@
                     
                     <input type="hidden" name="employeeID" value="{{employee.Emp_ID}}">
                     <label>First Name</label> <label style="color:red">*</label>
-                    <input type="text" pattern="[A-Za-z]{1,250}" class="form-control" name="firstName" value="{{employee.Emp_First_Name}}" maxlength="250" required>
+                    <input type="text" pattern="[A-Za-z ]{1,250}" class="form-control" name="firstName" value="{{employee.Emp_First_Name}}" maxlength="250" required>
                     </div>
                     <div class="col">
                     <label>Last Name</label> <label style="color:red">*</label>
-                    <input type="text" pattern="[A-Za-z]{1,250}" class="form-control" name="lastName" value="{{employee.Emp_Last_Name}}" maxlength="250" required>
+                    <input type="text" pattern="[A-Za-z ]{1,250}" class="form-control" name="lastName" value="{{employee.Emp_Last_Name}}" maxlength="250" required>
                     </div>
                     </div>
                     <div class="row">
@@ -284,7 +284,7 @@
                     </div>
                     <div class="col-3">
                     <label>Zip Code</label> <label style="color:red">*</label>
-                    <input type="text" pattern="[(0-9)]{1,5}" maxlength="10"  class="form-control" name="zip" value="{{employee.Emp_Zip_Code}}" input required >
+                    <input type="text" pattern="[(0-9)]{5,5}" maxlength="10"  class="form-control" name="zip" value="{{employee.Emp_Zip_Code}}" input required >
                     </div>
                     </div>              
         

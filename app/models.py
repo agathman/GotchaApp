@@ -110,7 +110,7 @@ class Event_Order(db.Model):
     
 
     def __init__(self, Event_Category_ID, Customer_ID, Event_Order_Status_ID, Event_Time, Event_Theme, Event_Order_Desc, Event_Delivery, Event_Setup, 
-                                Event_Location_Name, Event_Restriction_Desc, Event_Address, Event_City, Event_Zip_Code, State, Feedback):
+                                Event_Location_Name, Event_Restriction_Desc, Event_Address, Event_City, Event_Zip_Code, State):
         # Defines representation for object
             
             self.Event_Category_ID = Event_Category_ID
@@ -127,7 +127,7 @@ class Event_Order(db.Model):
             self.Event_City = Event_City
             self.State_ID = State
             self.Event_Zip_Code = Event_Zip_Code
-            self.Feedback = Feedback
+           
             
 #form created
 class Event_Order_Line(db.Model):

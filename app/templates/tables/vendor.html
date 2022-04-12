@@ -50,18 +50,19 @@
                             </div>
                             <div class="modal-body">
                                 <form action = "{{ request.path }}" method = "post">   
+                                    <label style="color:red">*</label> <label>Indicates required field</label>
                                     <input type="hidden" name="check" value="addVendor">
                                     <label>Vendor Name</label><label style="color:red">*</label>
-                                    <input type="text" class="form-control" name="vendorName" required>
+                                    <input type="text" class="form-control" pattern="[A-Za-z ]{1,250}" name="vendorName" required>
                                     <br>
                                     <div class="row">
                                     <div class="col">
                                     <label>Contact First Name</label><label style="color:red">*</label>
-                                    <input type="text" class="form-control" name="firstName" required>
+                                    <input type="text" class="form-control" pattern="[A-Za-z ]{1,250}" name="firstName" required>
                                 </div>
                                 <div class="col">
                                     <label> Contact Last Name</label><label style="color:red">*</label>
-                                    <input type="text" class="form-control" name="lastName" required>
+                                    <input type="text" class="form-control" pattern="[A-Za-z ]{1,250}" name="lastName" required>
                                 </div>
                                 </div>
                                 <div class="row">
@@ -72,7 +73,7 @@
                                 </div>
                                     <div class="col">
                                     <label>Email</label><label style="color:red">*</label>
-                                    <input type="email" class="form-control" name="email" required>
+                                    <input type="email" class="form-control" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[a-z]{2,}$" name="email" required>
                                     <small class="form-text" text-muted>Format: username@email.com</small>
                                 </div>
                             </div>
@@ -170,36 +171,37 @@
                 </div>
                 <div class="modal-body">
                     <form action = "{{ request.path }}" method = "post">   
+                        <label style="color:red">*</label> <label>Indicates required field</label>
                         <input type="hidden" name="check" value="updateVendor">
                         <input type="hidden" name="vendorID" value="{{vendor.Vendor_ID}}">
-                        <label>Vendor Name</label>
+                        <label>Vendor Name</label> <label style="color:red">*</label>
                         <input type="text" pattern="[A-Za-z ]{1,250}" class="form-control" name="vendorName" value="{{vendor.Vendor_Name}}" required>
                         <br>
                         <div class="row">
                             <div class="col">
-                        <label>First Name</label>
-                        <input type="text" pattern="[A-Za-z]{1,250}" class="form-control" value="{{vendor.First_Name}}" name="firstName" required>
+                        <label>First Name</label> <label style="color:red">*</label>
+                        <input type="text" pattern="[A-Za-z ]{1,250}" class="form-control" value="{{vendor.First_Name}}" name="firstName" required>
                             </div>
                             <div class="col">
-                        <label>Last Name</label> 
-                        <input type="text" pattern="[A-Za-z]{1,250}" class="form-control" value="{{vendor.Last_Name}}" name="lastName" required>
+                        <label>Last Name</label> <label style="color:red">*</label>
+                        <input type="text" pattern="[A-Za-z ]{1,250}" class="form-control" value="{{vendor.Last_Name}}" name="lastName" required>
                     </div>
                 </div>
                         
                         <div class="row">
                             <div class="col">
-                        <label>Phone</label>
+                        <label>Phone</label> <label style="color:red">*</label>
                         <input type="tel" class="form-control" name="phone" pattern="[(0-9)]{3}-[0-9]{3}-[0-9]{4}" value="{{vendor.Phone}}" required>
                         <small class="form-text" text-muted>Format: 555-456-7890</small>
                     </div>
                     <div class="col">
-                        <label>Email</label>
-                        <input type="email" maxlength="250" class="form-control" name="email" value="{{vendor.Email}}" required>
+                        <label>Email</label> <label style="color:red">*</label>
+                        <input type="email" pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[a-z]{2,}$" class="form-control" name="email" value="{{vendor.Email}}" required>
                         <small class="form-text" text-muted>Format: username@email.com</small>
                     </div>
                 </div>
                 <br>
-                        <label>Vendor Description</label> 
+                        <label>Vendor Description</label> <label style="color:red">*</label>
                         <textarea rows = "2" class="form-control" pattern="[A-Za-z0-9 ]{1,250}" name="vendorDesc" required>{{vendor.Vendor_Desc}}</textarea>
                         
                 </div>

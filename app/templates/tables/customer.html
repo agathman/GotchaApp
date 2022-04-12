@@ -73,7 +73,7 @@
                             Name
                             </th>
                         
-                        <th class="header" scope="col">
+                        <th class="header" style="width: 15%" scope="col">
                             Phone 
                         </th>
                         <th class="header" style='width: 15%' scope="col">
@@ -155,12 +155,12 @@
                     <label style="color:red">*</label> <label>Indicates required field</label> 
                     <form action = "{{ request.path }}" method = "post">
                         <div class="row">
-                            <div class="col-5">
+                            <div class="col-6">
                         <input type="hidden" name="check" value="addCustomer">
                         <label>First Name</label> <label style="color:red">*</label>
                         <input type="text" class="form-control" pattern="[A-Za-z ]{1,250}" name="firstName" maxlength="250" required>
                         </div>
-                        <div class="col">
+                        <div class="col-6">
                         <label>Last Name</label> <label style="color:red">*</label>
                         <input type="text" class="form-control"  pattern="[A-Za-z ]{1,250}" name="lastName" maxlength="250" required>
                         </div>
@@ -186,17 +186,20 @@
                         <label>City</label> <label style="color:red">*</label>
                         <input type="text" class="form-control" pattern="[A-Za-z ]{1,250}" name="city" maxlength="250" required>
                         </div>
-                            <div class="col-3">
+                        </div>
+                        <div class="row">
+                            <div class="col-4">
                         <label>State</label> <label style="color:red">*</label>
                         <select class="form-control" name="state" value="1">
                             {% for state in stateList %}
                                 <option value="{{state.State_ID}}">{{state.State_Name}}</option> 
                             {% endfor %}
                         </select>
+                
                         </div>
-                        <div class='col'>
+                        <div class='col-3'>
                         <label>Zip Code</label> <label style="color:red">*</label>
-                        <input type="text" class="form-control"  pattern="[(0-9)]{1,5}" name="zip" required>
+                        <input type="text" class="form-control"  pattern="[(0-9)]{5,5}" name="zip" required>
                         </div>
                         </div>
                    
@@ -229,16 +232,16 @@
                     <br>
                     <form action = "{{ request.path }}" method = "post">
                         <div class="row">
-                            <div class="col-5">
+                            <div class="col-6">
                             <input type="hidden" name="check" value="updateCustomer">
                             <input type="hidden" name="customerID" value="{{customer.Customer_ID}}">
                             <label>First Name</label> <label style="color:red">*</label>
-                            <input type="text" pattern="[A-Za-z]{1,250}" class="form-control" name="firstName" value="{{customer.First_Name}}" required>
+                            <input type="text" pattern="[A-Za-z ]{1,250}" class="form-control" name="firstName" value="{{customer.First_Name}}" required>
                             </div>
-                            <div class="col">
+                            <div class="col-6">
                             
                         <label>Last Name</label> <label style="color:red">*</label>
-                        <input type="text" pattern="[A-Za-z]{1,250}" class="form-control" name="lastName" value="{{customer.Last_Name}}" required>
+                        <input type="text" pattern="[A-Za-z ]{1,250}" class="form-control" name="lastName" value="{{customer.Last_Name}}" required>
                             </div>
                             </div>
                             <div class="row">
@@ -250,7 +253,7 @@
                         <br>
                         <div class="col">
                         <label>Email</label> <label style="color:red">*</label>
-                        <input type="email"  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" class="form-control" name="email" value="{{customer.Email}}" required>
+                        <input type="email"  pattern="[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[a-z]{2,}$" class="form-control" name="email" value="{{customer.Email}}" required>
                         <small class="form-text" text-muted>Format: username@email.com</small>
                         
                     </div>
@@ -274,7 +277,7 @@
                     </div>
                     <div class="col">
                         <label>Zip Code</label> <label style="color:red">*</label>
-                        <input type="text" pattern="[(0-9)]{1,5}" min="0" step="1"  class="form-control" name="zip" value="{{customer.Mailing_Zip_Code}}" required >
+                        <input type="text" pattern="[(0-9)]{5,5}" class="form-control" name="zip" value="{{customer.Mailing_Zip_Code}}" required >
                     </div>
                     </div>
                 </div>

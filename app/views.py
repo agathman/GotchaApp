@@ -146,7 +146,7 @@ def viewCustomer():
 #State abb
     Customers = Customer.query.join(State, Customer.State_ID == State.State_ID)\
         .add_columns(Customer.Customer_ID, Customer.First_Name, Customer.Last_Name, Customer.Phone, Customer.Email, Customer.Mailing_Address, Customer.Mailing_City, 
-                     Customer.Mailing_Zip_Code, Customer.State_ID, State.State_Abbreviation)\
+                     Customer.Mailing_Zip_Code, Customer.State_ID, State.State_Name, State.State_Abbreviation)\
                          .order_by(Customer.Last_Name)
     if request.method == 'POST':
     #Form request to add customer
@@ -262,7 +262,7 @@ def viewEventOrder():
         if request.form['check'] == 'event':
             event = Event_Order(request.form['category'], request.form['customer'], request.form['status'], request.form['eventTime'], request.form['theme'], request.form['eventDesc'],
                         request.form['delivery'], request.form['setup'], request.form['location'], request.form['restrictions'], request.form['address'], request.form['city'],
-                        request.form['zip'], request.form['state'], 'Due after event')
+                        request.form['zip'], request.form['state'])
             db.session.add(event)
             db.session.commit()
             flash('Success! Event added.')
@@ -298,7 +298,7 @@ def viewEvent(eventID):
         .join(State, State.State_ID == Event_Order.State_ID)\
         .add_columns(Event_Order.Event_Order_ID, Event_Category.Event_Category_Name, Event_Order.Event_Category_ID, Customer.First_Name, Customer.Last_Name, Customer.Phone, Customer.Email, Event_Order.Event_Order_Status_ID, Event_Status.Event_Status, Event_Order.Event_Time, 
         Event_Order.Event_Theme, Event_Order.Event_Order_Desc, Event_Order.Event_Delivery, Event_Order.Event_Setup, Event_Order.Event_Restriction_Desc, Event_Order.Event_Location_Name, Event_Order.Event_Address, Event_Order.Event_City,
-        State.State_Abbreviation, Event_Order.Event_Zip_Code)
+        State.State_Abbreviation, State.State_Name, State.State_ID, Event_Order.Event_Zip_Code)
     
     orderLines = Event_Order_Line.query.filter_by(Event_Order_ID = eventID)\
         .join(Event_Order, Event_Order.Event_Order_ID == Event_Order_Line.Event_Order_ID)\
@@ -316,9 +316,11 @@ def viewEvent(eventID):
     
     empAssignmentList = Employee_Assignment.query.filter_by(Event_Order_ID = eventID)\
         .join(Employee, Employee_Assignment.Employee_ID == Employee.Emp_ID)\
-        .add_columns(Employee_Assignment.Employee_Assignment_ID, Employee.Emp_ID, Employee.Emp_First_Name, Employee.Emp_Last_Name, Employee_Assignment.Assignment_Start_Date)
+        .add_columns(Employee_Assignment.Employee_Assignment_ID, Employee_Assignment.Employee_ID, Employee.Emp_ID, Employee.Emp_First_Name, Employee.Emp_Last_Name, Employee_Assignment.Assignment_Start_Date)
         
-
+    employeeList = Employee.query.all()
+  
+            
 
 
     if request.method == 'POST':
@@ -350,11 +352,20 @@ def viewEvent(eventID):
             eventFound.Event_Address = request.form['address']
             eventFound.Event_City = request.form['city']
             eventFound.Event_Zip_Code = request.form['zip']
+            eventFound.State_ID = request.form['state']
             db.session.commit()
             flash('Success! Event updated.')
         
         if request.form['check'] == 'addEmployeeAssign':
+          
             employee = Employee_Assignment(date.today(), request.form['employeeID'], foundEventID)
+            for emp in empAssignmentList:
+                if request.form['employeeID'] == str(emp.Employee_ID):
+                    print(f'{employee.Employee_ID} **** {emp.Employee_ID}')
+                    flash('Error: Employee already belongs to this event')
+                    return redirect(url_for('my_view.viewEvent', eventID = foundEventID))
+                
+
             try:
                 db.session.add(employee)
                 db.session.flush()
@@ -365,6 +376,7 @@ def viewEvent(eventID):
             else:
                 db.session.commit()
                 flash('Success! Employee added.')
+            
 
 
         
@@ -467,7 +479,7 @@ def viewEvent(eventID):
             
 
 
-    return render_template('tables/viewEvent.html', states = State.query.all(), employeeAssignments = empAssignmentList, vendorServices = vendorServiceList, categories = Event_Category.query.all(), events = eventOrder, orderLines = orderLines, vendors = Vendor.query.all(), statuses = Event_Status.query.all(), services = Product_Service.query.all(), employees = Employee.query.order_by(Employee.Emp_Last_Name).all())
+    return render_template('tables/viewEvent.html', states = State.query.all(), employeeAssignments = empAssignmentList, vendorServices = vendorServiceList, categories = Event_Category.query.all(), events = eventOrder, orderLines = orderLines, vendors = Vendor.query.all(), statuses = Event_Status.query.all(), services = Product_Service.query.all(), employees = employeeList)
 
 
  # Temporary - ORDER LINE now viewable in EVENT DETAIL route

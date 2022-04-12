@@ -239,7 +239,7 @@
                 <div class="col-2"> 
                     <label>State</label> <label style="color:red">*</label>
                     <select class="form-control" name="state">
-                        <option selected value="{{event.State_ID}}">{{event.State_Abbreviation}}</option>
+                            <option selected value="{{event.State_ID}}">{{event.State_Name}}</option>
                         {% for state in states %}
                             <option value="{{state.State_ID}}">{{state.State_Name}}</option> 
                         {% endfor %}
@@ -247,7 +247,7 @@
                     </div>
                 <div class="col-2">
                     <label>Zip Code</label> <label style="color:red">*</label>
-                    <input type="text" pattern="[(0-9)]{1,5}" min="0" step="1" class="form-control" name="zip" value="{{event.Event_Zip_Code}}" required>                 
+                    <input type="text" pattern="[(0-9)]{5,5}" min="0" step="1" class="form-control" name="zip" value="{{event.Event_Zip_Code}}" required>                 
                 </div>
                 </div>
             
@@ -260,7 +260,7 @@
                 <div class='row'>
                     <div class="col">     
               <label>Restrictions</label>
-                <textarea pattern="{1,250}"  class="form-control" name="restrictions" value="{{event.Event_Restriction_Desc}}" required>{{event.Event_Restriction_Desc}}</textarea>
+                <textarea pattern="{1,250}"  class="form-control" name="restrictions" value="{{event.Event_Restriction_Desc}}">{{event.Event_Restriction_Desc}}</textarea>
                     </div>
                     </div>
             {% endfor %}
