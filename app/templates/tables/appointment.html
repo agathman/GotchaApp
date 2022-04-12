@@ -136,7 +136,7 @@
                                             
                                         <input type="hidden" name="check" value="updateAppointment">
                                         <input type="hidden" name="apptID" value="{{appointment.Appointment_ID}}">
-                                        <td><input type='date' class="form-control" value="{{appointment.Datetime.strftime('%Y-%m-%d')}}" name='updateDate'></td>
+                                        <td><input type='date' class="form-control" value="{{appointment.Datetime.strftime('%Y-%m-%d')}}" name='updateDate' required></td>
                                         <td> <select class="form-control" name="updateTime" required>
                                             <option value="{{appointment.Datetime.strftime('%H:%M')}}">{{appointment.Datetime.strftime('%I:%M %p')}}</option>
                                             <option value="8:00">8:00 A.M</option>
