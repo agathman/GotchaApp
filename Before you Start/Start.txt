@@ -1,7 +1,6 @@
-insatll these in a new terminal
+install these in a new terminal
 
 Python -m venv venv
-
 
 venv\Scripts\activate.ps1
 
@@ -13,13 +12,3 @@ python -m pip install pymssql
 
 flask run 0.0.0.0
 
-  if request.form['check'] == 'customer':
-            customer = Customer(request.form['firstName'], request.form['lastName'], request.form['phone'],
-                        request.form['email'], request.form['address'], request.form['city'], request.form['zip'], request.form['date'], request.form['state'])
-            db.session.add(customer)
-            db.session.commit()
-        elif request.form['check'] == 'appointment':
-            appointment = Appointment(request.form['customerID'], request.form['date'])
-            db.session.add(appointment)
-            db.session.commit()
-        elif request.form['check'] == 'event':
