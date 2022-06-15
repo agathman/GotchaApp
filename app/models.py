@@ -59,7 +59,6 @@ class Employee(db.Model):
         self.Emp_Mailing_Address = Emp_Mailing_Address
         self.Emp_Mailing_City =Emp_Mailing_City
         self.State_ID = State_ID
-        # Tanya- I added this
         self.Emp_Zip_Code= Emp_Zip_Code
         self.Emp_Phone = Emp_Phone
         self.Emp_Email =Emp_Email
